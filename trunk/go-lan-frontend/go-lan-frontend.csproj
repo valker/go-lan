@@ -124,6 +124,20 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\go-engine\go-engine.csproj">
+      <Project>{D4215891-5F94-438A-A08C-7F610A4935C7}</Project>
+      <Name>go-engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\go-netplay\go-netplay.csproj">
+      <Project>{EE00E887-2153-4581-B0E0-BE23040C623D}</Project>
+      <Name>go-netplay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\sgf-interface\sgf-interface.csproj">
+      <Project>{A406F57B-95E8-405D-A212-82580F1921E9}</Project>
+      <Name>sgf-interface</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
