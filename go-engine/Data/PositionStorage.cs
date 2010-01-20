@@ -6,10 +6,6 @@ using Microsoft.Xna.Framework;
 
 namespace go_engine.Data
 {
-    struct Pair<T1, T2>
-    {
-    }
-
     class PositionStorage
     {
         /// <summary>
@@ -24,6 +20,13 @@ namespace go_engine.Data
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Модифицировать поле без учёта правил. Т.е. можно поставить камень, полностью окружённый противником.
+        /// </summary>
+        /// <param name="originPosition">Исходная позиция</param>
+        /// <param name="point">Точка, которую меняем</param>
+        /// <param name="mokuState">новое состояние точки</param>
+        /// <returns>новая (или текущая) позиция</returns>
         private Position Edit(Position originPosition, Point point, MokuState mokuState)
         {
             throw new NotImplementedException();

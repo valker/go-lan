@@ -50,6 +50,7 @@
     <Compile Include="Data\GroupCollection.cs" />
     <Compile Include="Data\MokuField.cs" />
     <Compile Include="Data\MokuState.cs" />
+    <Compile Include="Data\Pair.cs" />
     <Compile Include="Data\Position.cs" />
     <Compile Include="Data\PositionStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
