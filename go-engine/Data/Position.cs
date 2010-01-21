@@ -32,5 +32,17 @@ namespace go_engine.Data
             position.IsEditable = true;
             return position;
         }
+
+        /// <summary>
+        /// Выполняет ход по правилам Го
+        /// </summary>
+        /// <param name="point">точка, в которую ходят</param>
+        /// <param name="player">игрок, который делает ход</param>
+        /// <param name="Rules">особенности правил</param>
+        /// <returns>новая позиция и число съеденных камней</returns>
+        internal Pair<Position, int> Move(Microsoft.Xna.Framework.Point point, MokuState player, Rules Rules)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
