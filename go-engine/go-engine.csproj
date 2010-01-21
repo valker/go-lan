@@ -49,11 +49,14 @@
   <ItemGroup>
     <Compile Include="Data\Group.cs" />
     <Compile Include="Data\GroupCollection.cs" />
+    <Compile Include="Data\KoRule.cs" />
     <Compile Include="Data\MokuField.cs" />
     <Compile Include="Data\MokuState.cs" />
     <Compile Include="Data\Pair.cs" />
+    <Compile Include="Data\Points.cs" />
     <Compile Include="Data\Position.cs" />
     <Compile Include="Data\PositionStorage.cs" />
+    <Compile Include="Data\Rules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\PositionStorageTest.cs" />
   </ItemGroup>

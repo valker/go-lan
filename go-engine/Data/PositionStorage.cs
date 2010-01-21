@@ -11,9 +11,15 @@ namespace go_engine.Data
         private Dictionary<Position, Position> _childToParent = new Dictionary<Position, Position>();
         private Dictionary<Position, ICollection<Position>> _parentToChildren = new Dictionary<Position, ICollection<Position>>();
 
+        public Rules Rules { get; private set; }
+
         public PositionStorage(int size)
         {
             Initial = Position.CreateInitial(size);
+            OnAddNewPosition(Initial);
+            Rules = new Rules();
+            Rules.Ko = KoRule.SuperPositioned;
+            Rules.Points = Points.Empty;
         }
 
         public Position Initial { get; private set; }
@@ -61,27 +67,17 @@ namespace go_engine.Data
             return position;
         }
 
-        private void AddRelationship(Position parent, Position child)
-        {
-            // добавить ссылку ребёнок -> родитель
-            _childToParent.Add(child, parent);
-
-            // добавить ссылку родитель -> ребёнок
-            if(!_parentToChildren.ContainsKey(parent))
-            {
-                _parentToChildren.Add(parent, new List<Position>());
-            }
-            _parentToChildren[parent].Add(child);
-        }
-
         /// <summary>
         /// Получить родительскую позицию для данной исходной
         /// </summary>
         /// <param name="position">Исходная позиция</param>
-        /// <returns>Родительская позиция. null, если данная позиция корневая</returns>
+        /// <returns>Родительская позиция.
+        /// null, если данная позиция корневая</returns>
         public Position GetParentPosition(Position position)
         {
-            throw new NotImplementedException();
+            Position parent;
+            parent = _childToParent.TryGetValue(position, out parent) ? parent : null;
+            return parent;
         }
 
         /// <summary>
@@ -91,7 +87,24 @@ namespace go_engine.Data
         /// <returns>Дочерние позиции для данной исходной</returns>
         public IEnumerable<Position> GetChildPositions(Position position)
         {
-            throw new NotImplementedException();
+            return _parentToChildren[position];
+        }
+
+        private void OnAddNewPosition(Position position)
+        {
+            _parentToChildren.Add(position, new List<Position>());
+        }
+
+        private void AddRelationship(Position parent, Position child)
+        {
+            // добавить ссылку ребёнок -> родитель
+            _childToParent.Add(child, parent);
+
+            // добавить контейнер для детей нового ребёнка
+            OnAddNewPosition(child);
+
+            // добавить ссылку родитель -> ребёнок
+            _parentToChildren[parent].Add(child);
         }
     }
 }

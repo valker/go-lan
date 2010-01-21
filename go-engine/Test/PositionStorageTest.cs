@@ -11,12 +11,20 @@ namespace go_engine.Test
     [TestFixture]
     class PositionStorageTest
     {
+        private const int size = 9;
+
+        private PositionStorage _storage;
+
+        [TestFixtureSetUp]
+        public void Setup()
+        {
+            _storage = new PositionStorage(size);
+        }
+
         [Test]
         public void TestInitial()
         {
-            const int size = 9;
-            var storage = new PositionStorage(size);
-            var position = storage.Initial;
+            var position = _storage.Initial;
             Assert.IsNotNull(position);
             Assert.IsTrue(position.Size == size);
             Assert.IsTrue(position.IsEditable);
@@ -25,12 +33,17 @@ namespace go_engine.Test
         [Test]
         public void TestEditInitial()
         {
-            const int size = 9;
-            var storage = new PositionStorage(size);
-            var newPosition = storage.Edit(storage.Initial, new Point(1, 1), MokuState.Black);
+            var newPosition = _storage.Edit(_storage.Initial, new Point(1, 1), MokuState.Black);
             Assert.IsNotNull(newPosition);
-            Assert.AreSame(newPosition, storage.Initial);
+            Assert.AreSame(newPosition, _storage.Initial);
             Assert.IsTrue(newPosition.Size == size);
+        }
+
+        [Test]
+        public void TestParentChildRelationship()
+        {
+            var count = _storage.GetChildPositions(_storage.Initial).Count();
+            Assert.IsTrue(count == 0);
         }
     }
 }
