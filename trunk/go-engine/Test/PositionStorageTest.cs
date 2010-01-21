@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace go_engine.Test
 {
     [TestFixture]
-    class PositionStorageTest
+    public class PositionStorageTest
     {
         private const int size = 9;
 

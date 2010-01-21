@@ -33,7 +33,33 @@ namespace go_engine.Data
         /// <returns>новая позиция</returns>
         public Pair<Position, int> Move(Position originPosition, Point point, MokuState player)
         {
-            throw new NotImplementedException();
+            // выполняем ход по правилам го и создаём новую позицию
+            Pair<Position, int> newPosition = originPosition.Move(point, player, Rules);
+
+            // проверяем, что такого хода ещё не делалось из этой позиции
+            var children = GetChildPositions(originPosition);
+
+            bool x = children.Contains(newPosition.First, new DDD());
+
+            if (!x)
+            {
+                // добавляем этот ход 
+                AddRelationship(originPosition, newPosition.First);
+            }
+
+            return newPosition;
+        }
+
+        class DDD : IEqualityComparer<Position>
+        {
+            public bool Equals(Position left, Position right)
+            {
+                throw new NotImplementedException();
+            }
+            public int GetHashCode(Position position)
+            { 
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
