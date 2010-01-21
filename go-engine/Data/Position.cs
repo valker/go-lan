@@ -1,23 +1,35 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace go_engine.Data
 {
-    class Position
+    public class Position
     {
-        private MokuField _field;
+        public MokuField Field { get; private set; }
         private GroupCollection _groups = new GroupCollection();
 
         private Position(int size)
         {
-            _field = new MokuField(size);
+            Field = new MokuField(size);
         }
 
-        public int Size { get { return _field.Size; } }
+        public int Size { get { return Field.Size; } }
 
-        static Position CreateInitial(int size)
+        public bool IsEditable { get; set; }
+
+        public static Position CreateInitial(int size)
         {
-            Position position = new Position(size);
+            var position = new Position(size);
+            position.IsEditable = true;
+            return position;
+        }
+
+        public Position CopyMokuField()
+        {
+            var position = new Position(Size);
+            position.Field = new MokuField(Field);
+            position.IsEditable = true;
             return position;
         }
     }
