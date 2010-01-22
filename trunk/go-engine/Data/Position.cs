@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace go_engine.Data
     public class Position
     {
         public MokuField Field { get; private set; }
-        private GroupCollection _groups = new GroupCollection();
+        private List<Group> _groups = new List<Group>();
 
         private Position(int size)
         {
@@ -40,19 +41,161 @@ namespace go_engine.Data
         /// </summary>
         /// <param name="point">точка, в которую ходят</param>
         /// <param name="player">игрок, который делает ход</param>
-        /// <param name="Rules">особенности правил</param>
         /// <returns>новая позиция и число съеденных камней</returns>
-        internal Pair<Position, int> Move(Point point, MokuState player, Rules Rules)
+        internal Pair<Position, int> Move(Point point, MokuState player)
         {
+            // создать новую позицию, как копию исходной
             var position = new Position(Size);
             position.Field = new MokuField(Field);
-            position._groups = IsEditable ? MakeGroupsFromField() : CopyGroups();
+
+            // поставить точку на поле
+            position.Field.SetAt(point, player);
+
+            // обновить группы для новой позиции
+            var group = UpdateGroups(position, point, player);
+
+            // удалить соседние группы, которые остались без дыханий
+            int stoneCount = RemoveDeathOppositeGroups(position, group);
+
+            return new Pair<Position, int>(position, stoneCount);
+        }
+
+        /// <summary>
+        /// Удалить мёртвые группы противника
+        /// </summary>
+        /// <param name="position">позиция, в которой работаем</param>
+        /// <param name="grp">группа, которая сделала ход</param>
+        /// <returns>количество снятых камней</returns>
+        private static int RemoveDeathOppositeGroups(Position position, Group grp)
+        {
+            // находим соседние группы противника
+            var oppositeGroups = FindOppositeGroup(position, grp);
+
+            var toKill = oppositeGroups.Where(g => !CheckIsLive(g, position)).ToArray();
+
+            int count = 0;
+
+            // для всех групп из списка "на удаление"
+            foreach (Group toKillGrp in toKill)
+            {
+                // добавляем количество камней в группе к количеству снятых с доски камней
+                count += toKillGrp.Count;
+                // убираем группу
+                position._groups.Remove(toKillGrp);
+                // модифицируем поле
+                // TODO: modify the field
+            }
+            // возвращаем количество снятых камней
+            return count;
+        }
+
+        /// <summary>
+        /// Проверяем, что группа жива
+        /// </summary>
+        /// <param name="grp">группа, которая подлажит проверке</param>
+        /// <param name="position">позиция</param>
+        /// <returns>true - группа жива</returns>
+        private static bool CheckIsLive(Group grp, Position position)
+        {
+            var dame = GetDame(grp, position);
+            return dame.Take(1).Count() > 0;
+        }
+
+        private static IEnumerable<Point> GetDame(Group grp, Position position)
+        {
+            return grp.Points.SelectMany(point => GetDame(point, position));
+        }
+
+        private static IEnumerable<Point> GetDame(Point point, Position position)
+        {
+            var neighbourPoints = GetNeighbourPoints(point, position.Size);
+            return neighbourPoints.Where(pnt => position.Field.GetAt(pnt) == MokuState.Empty);
+        }
+
+        private static IEnumerable<Point> GetNeighbourPoints(Point point, int size)
+        {
+            if (point.X > 0)
+            {
+                yield return point.Left();
+            }
+            if (point.Y > 0)
+            {
+                yield return point.Up();
+            }
+            if (point.X < size - 1)
+            {
+                yield return point.Right();
+            }
+            if (point.Y < size - 1)
+            {
+                yield return point.Down();
+            }
+        }
+
+        private static IEnumerable<Group> FindOppositeGroup(Position position, Group grp)
+        {
             throw new NotImplementedException();
         }
 
-        private GroupCollection CopyGroups()
+        private Group UpdateGroups(Position position, Point point, MokuState player)
         {
-            var collection = new GroupCollection();
+            // скопировать группы, если исходная игровая или
+            // создать группы, если исходная редактируемая
+            if (IsEditable)
+            {
+                // создать группы на основе поля
+                position._groups = MakeGroupsFromField(position);
+                foreach (Group grp in position._groups)
+                {
+                    if (grp.Points.Contains(point))
+                    {
+                        return grp;
+                    }
+                }
+                throw new InvalidOperationException("Cannot detect which group contains new stone");
+            }
+            else
+            {
+                position._groups = CopyGroups();
+
+                // получить соседние группы того же цвета
+                var groups = GetNearestGroup(point, player);
+
+                Group group;
+                switch (groups.Count)
+                {
+                case 0: // если их нет
+                    // создаём новую группу
+                    group = new Group(point, player);
+                    position._groups.Add(group);
+                    return group;
+                case 1: // если одна группа
+                    groups[0].Add(point);
+                    return groups[0];
+                default: // если больше одной группы
+                    group = groups[0];
+                    for (int i = 1 ; i < groups.Count; i++)
+                    {
+                        foreach (Point pnt in groups[i].Points)
+                        {
+                            group.Add(pnt);
+                        }
+                        _groups.Remove(groups[i]);
+                    }
+                    group.Add(point);
+                    return group;
+                }
+            }
+        }
+
+        private List<Group> GetNearestGroup(Point point, MokuState player)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<Group> CopyGroups()
+        {
+            var collection = new List<Group>();
             foreach (var grp in _groups)
             {
                 collection.Add(grp.Clone());
@@ -60,19 +203,19 @@ namespace go_engine.Data
             return collection;
         }
 
-        private GroupCollection MakeGroupsFromField()
+        private static List<Group> MakeGroupsFromField(Position position)
         {
             // создать коллекцию групп
-            var collection = new GroupCollection();
+            var collection = new List<Group>();
 
             // создать список камней
-            var points = GeneratePoints(Field);
+            var points = GeneratePoints(position.Field);
 
             // пока список камней не пуст
             while (points.Count > 0)
             {
                 // создать группу из близлежащих камней
-                Group item = ExtractGroup(points, Field);
+                Group item = position.ExtractGroup(points, position.Field);
 
                 // добавить группу в коллекцию
                 collection.Add(item);
@@ -105,11 +248,14 @@ namespace go_engine.Data
                     return false;
                 }
                 return point.First.Distance(pair.First) <= 1;
-            });
+            }).ToArray();
 
             foreach (var pair in selectedNeighbour)
             {
-                grp.Add(pair.First);
+                if (!grp.Points.Contains(pair.First))
+                {
+                    grp.Add(pair.First);
+                }
                 points.Remove(pair);
             }
 

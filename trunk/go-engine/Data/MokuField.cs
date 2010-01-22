@@ -21,6 +21,7 @@ namespace go_engine.Data
         public MokuField(MokuField parent)
         {
             _field = (MokuState[,]) parent._field.Clone();
+            Size = parent.Size;
         }
 
         public MokuState GetAt(Point point)
