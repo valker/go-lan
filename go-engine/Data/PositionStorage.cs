@@ -34,7 +34,7 @@ namespace go_engine.Data
         public Pair<Position, int> Move(Position originPosition, Point point, MokuState player)
         {
             // выполняем ход по правилам го и создаём новую позицию
-            Pair<Position, int> newPosition = originPosition.Move(point, player, Rules);
+            Pair<Position, int> newPosition = originPosition.Move(point, player);
 
             // проверяем, что такого хода ещё не делалось из этой позиции
             var children = GetChildPositions(originPosition);

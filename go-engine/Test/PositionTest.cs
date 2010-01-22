@@ -27,10 +27,7 @@ namespace go_engine.Test
         public void TestFirstMove()
         {
             var position = Position.CreateInitial(9);
-            Rules rules = new Rules();
-            rules.Ko = KoRule.No;
-            rules.Points = Points.Empty;
-            var status = position.Move(new Point(1, 1), MokuState.Black, rules);
+            var status = position.Move(new Point(1, 1), MokuState.Black);
             Assert.IsFalse(status.First.IsEditable);
             Assert.IsTrue(status.Second == 0);
             Assert.AreNotSame(status.First, position);
