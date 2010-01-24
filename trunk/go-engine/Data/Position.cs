@@ -132,9 +132,33 @@ namespace go_engine.Data
             }
         }
 
+        /// <summary>
+        /// Найти группы противника, соседствующие с данной группой
+        /// </summary>
+        /// <param name="position">позиция</param>
+        /// <param name="grp">группа</param>
+        /// <returns></returns>
         private static IEnumerable<Group> FindOppositeGroup(Position position, Group grp)
         {
-            throw new NotImplementedException();
+            MokuState player = Opposite(grp.Player);
+            var oppositePoints = grp.Points.SelectMany(point => GetNeighbourPoints(point, position.Size)).Where(point => position.Field.GetAt(point) == player);
+            oppositePoints = oppositePoints.ToArray();
+            var opposGroups = position._groups.Where(g => g.Points.Intersect(oppositePoints).Count() > 0);
+            opposGroups = opposGroups.ToArray();
+            return opposGroups;
+        }
+
+        private static MokuState Opposite(MokuState mokuState)
+        {
+            switch (mokuState)
+            {
+                case MokuState.Black:
+                    return MokuState.White;
+                case MokuState.White:
+                    return MokuState.Black;
+                default:
+                    throw new ArgumentException("Invalid moku state for the stone");
+            }
         }
 
         private Group UpdateGroups(Position position, Point point, MokuState player)
