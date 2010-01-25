@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace go_engine.Data
 {
-    internal class Group
+    public class Group
     {
         List<Point> _points = new List<Point>();
         public MokuState Player { get; private set; }
@@ -15,23 +15,12 @@ namespace go_engine.Data
             _points.Add(point);
         }
 
-        private Group()
+        public Group(MokuState player)
         {
+            Player = player;
         }
 
-        public IEnumerable<Point> Points { get { return _points; } }
-        public Group Clone()
-        {
-            var group = new Group();
-            group._points = new List<Point>();
-            group._points.Capacity = _points.Count;
-            foreach (var point in _points)
-            {
-                group._points.Add(point);
-            }
-            group.Player = Player;
-            return group;
-        }
+        public ICollection<Point> Points { get { return _points; } }
 
         public int Count { get { return _points.Count; } }
 

@@ -13,18 +13,11 @@ namespace go_engine.Test
     {
         private const int size = 9;
 
-        private PositionStorage _storage;
-
-        [TestFixtureSetUp]
-        public void Setup()
-        {
-            _storage = new PositionStorage(size);
-        }
-
         [Test]
         public void TestInitial()
         {
-            var position = _storage.Initial;
+            var storage = new PositionStorage(size);
+            var position = storage.Initial;
             Assert.IsNotNull(position);
             Assert.IsTrue(position.Size == size);
             Assert.IsTrue(position.IsEditable);
@@ -33,16 +26,31 @@ namespace go_engine.Test
         [Test]
         public void TestEditInitial()
         {
-            var newPosition = _storage.Edit(_storage.Initial, new Point(1, 1), MokuState.Black);
+            var storage = new PositionStorage(size);
+            var newPosition = storage.Edit(storage.Initial, new Point(1, 1), MokuState.Black);
             Assert.IsNotNull(newPosition);
-            Assert.AreSame(newPosition, _storage.Initial);
+            Assert.AreSame(newPosition, storage.Initial);
             Assert.IsTrue(newPosition.Size == size);
+        }
+
+        [Test]
+        public void TestMove()
+        {
+            var storage = new PositionStorage(size);
+            var initial = storage.Initial;
+            var firstMove = storage.Move(initial, new Point(1, 1), MokuState.Black);
+            Assert.AreNotEqual(initial, firstMove.First);
+            Assert.IsTrue(firstMove.Second == 0);
+            var secondMove = storage.Move(firstMove.First, new Point(2, 2), MokuState.White);
+            Assert.AreNotEqual(firstMove.First, secondMove.First);
+            Assert.IsTrue(secondMove.Second == 0);
         }
 
         [Test]
         public void TestParentChildRelationship()
         {
-            var count = _storage.GetChildPositions(_storage.Initial).Count();
+            var storage = new PositionStorage(size);
+            var count = storage.GetChildPositions(storage.Initial).Count();
             Assert.IsTrue(count == 0);
         }
     }

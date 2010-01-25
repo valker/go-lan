@@ -7,30 +7,30 @@ using Microsoft.Xna.Framework;
 
 namespace go_engine.Data
 {
-    public class Position
+    public class Position : IPosition
     {
         public MokuField Field { get; private set; }
-        private List<Group> _groups = new List<Group>();
 
         private Position(int size)
         {
             Field = new MokuField(size);
+            _groupField = new GroupField(size);
         }
 
         public int Size { get { return Field.Size; } }
 
-        public bool IsEditable { get; set; }
+        public bool IsEditable { get; private set; }
 
-        public static Position CreateInitial(int size)
+        public static IPosition CreateInitial(int size)
         {
-            var position = new Position(size);
+            Position position = new Position(size);
             position.IsEditable = true;
             return position;
         }
 
-        public Position CopyMokuField()
+        public IPosition CopyMokuField()
         {
-            var position = new Position(Size);
+            Position position = new Position(Size);
             position.Field = new MokuField(Field);
             position.IsEditable = true;
             return position;
@@ -42,7 +42,7 @@ namespace go_engine.Data
         /// <param name="point">точка, в которую ходят</param>
         /// <param name="player">игрок, который делает ход</param>
         /// <returns>новая позиция и число съеденных камней</returns>
-        internal Pair<Position, int> Move(Point point, MokuState player)
+        public Pair<IPosition, int> Move(Point point, MokuState player)
         {
             // создать новую позицию, как копию исходной
             var position = new Position(Size);
@@ -52,12 +52,12 @@ namespace go_engine.Data
             position.Field.SetAt(point, player);
 
             // обновить группы для новой позиции
-            var group = UpdateGroups(position, point, player);
+            var group = UpdateGroups(position, point, player, IsEditable);
 
             // удалить соседние группы, которые остались без дыханий
             int stoneCount = RemoveDeathOppositeGroups(position, group);
 
-            return new Pair<Position, int>(position, stoneCount);
+            return new Pair<IPosition, int>(position, stoneCount);
         }
 
         /// <summary>
@@ -161,11 +161,19 @@ namespace go_engine.Data
             }
         }
 
-        private Group UpdateGroups(Position position, Point point, MokuState player)
+        /// <summary>
+        /// Обновить данные по группам для нового состояния поля
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="point"></param>
+        /// <param name="player"></param>
+        /// <param name="isParentEditable"></param>
+        /// <returns></returns>
+        private Group UpdateGroups(Position position, Point point, MokuState player, bool isParentEditable)
         {
             // скопировать группы, если исходная игровая или
             // создать группы, если исходная редактируемая
-            if (IsEditable)
+            if (isParentEditable)
             {
                 // создать группы на основе поля
                 position._groups = MakeGroupsFromField(position);
@@ -222,7 +230,7 @@ namespace go_engine.Data
             var collection = new List<Group>();
             foreach (var grp in _groups)
             {
-                collection.Add(grp.Clone());
+                collection.Add(Clone(grp));
             }
             return collection;
         }
@@ -314,5 +322,18 @@ namespace go_engine.Data
             }
             return points;
         }
+
+        public static Group Clone(Group g)
+        {
+            var group = new Group(g.Player);
+            foreach (var point in g.Points)
+            {
+                group.Points.Add(point);
+            }
+            return group;
+        }
+
+        private List<Group> _groups = new List<Group>();
+        private GroupField _groupField;
     }
 }
