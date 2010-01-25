@@ -8,8 +8,8 @@ namespace go_engine.Data
 {
     public class PositionStorage
     {
-        private Dictionary<Position, Position> _childToParent = new Dictionary<Position, Position>();
-        private Dictionary<Position, ICollection<Position>> _parentToChildren = new Dictionary<Position, ICollection<Position>>();
+        private Dictionary<IPosition, IPosition> _childToParent = new Dictionary<IPosition, IPosition>();
+        private Dictionary<IPosition, ICollection<IPosition>> _parentToChildren = new Dictionary<IPosition, ICollection<IPosition>>();
 
         public Rules Rules { get; private set; }
 
@@ -22,7 +22,7 @@ namespace go_engine.Data
             Rules.Points = Points.Empty;
         }
 
-        public Position Initial { get; private set; }
+        public IPosition Initial { get; private set; }
 
         /// <summary>
         /// Произвести ход по правилам Го
@@ -31,10 +31,10 @@ namespace go_engine.Data
         /// <param name="point">точка, в которую произведен ход</param>
         /// <param name="player">игрок, который сделал ход</param>
         /// <returns>новая позиция</returns>
-        public Pair<Position, int> Move(Position originPosition, Point point, MokuState player)
+        public Pair<IPosition, int> Move(IPosition originPosition, Point point, MokuState player)
         {
             // выполняем ход по правилам го и создаём новую позицию
-            Pair<Position, int> newPosition = originPosition.Move(point, player);
+            Pair<IPosition, int> newPosition = originPosition.Move(point, player);
 
             // проверяем, что такого хода ещё не делалось из этой позиции
             var children = GetChildPositions(originPosition);
@@ -50,13 +50,13 @@ namespace go_engine.Data
             return newPosition;
         }
 
-        class DDD : IEqualityComparer<Position>
+        class DDD : IEqualityComparer<IPosition>
         {
-            public bool Equals(Position left, Position right)
+            public bool Equals(IPosition left, IPosition right)
             {
                 throw new NotImplementedException();
             }
-            public int GetHashCode(Position position)
+            public int GetHashCode(IPosition position)
             { 
                 throw new NotImplementedException();
             }
@@ -69,9 +69,9 @@ namespace go_engine.Data
         /// <param name="point">Точка, которую меняем</param>
         /// <param name="mokuState">новое состояние точки</param>
         /// <returns>новая (или текущая) позиция</returns>
-        public Position Edit(Position originPosition, Point point, MokuState mokuState)
+        public IPosition Edit(IPosition originPosition, Point point, MokuState mokuState)
         {
-            Position position;
+            IPosition position;
             // Если исходная позиция "редактируемая", то правим её
             if (originPosition.IsEditable)
             {
@@ -99,9 +99,9 @@ namespace go_engine.Data
         /// <param name="position">Исходная позиция</param>
         /// <returns>Родительская позиция.
         /// null, если данная позиция корневая</returns>
-        public Position GetParentPosition(Position position)
+        public IPosition GetParentPosition(IPosition position)
         {
-            Position parent;
+            IPosition parent;
             parent = _childToParent.TryGetValue(position, out parent) ? parent : null;
             return parent;
         }
@@ -111,17 +111,17 @@ namespace go_engine.Data
         /// </summary>
         /// <param name="position">Исходная позиция</param>
         /// <returns>Дочерние позиции для данной исходной</returns>
-        public IEnumerable<Position> GetChildPositions(Position position)
+        public IEnumerable<IPosition> GetChildPositions(IPosition position)
         {
             return _parentToChildren[position];
         }
 
-        private void OnAddNewPosition(Position position)
+        private void OnAddNewPosition(IPosition position)
         {
-            _parentToChildren.Add(position, new List<Position>());
+            _parentToChildren.Add(position, new List<IPosition>());
         }
 
-        private void AddRelationship(Position parent, Position child)
+        private void AddRelationship(IPosition parent, IPosition child)
         {
             // добавить ссылку ребёнок -> родитель
             _childToParent.Add(child, parent);

@@ -14,19 +14,19 @@ namespace go_engine.Test
         [Test]
         public void TestSize()
         {
-            var position = Position.CreateInitial(9);
+            IPosition position = Position.CreateInitial(9);
             Assert.IsTrue(position.Size == 9);
         }
         [Test]
         public void TestEditable()
         {
-            var position = Position.CreateInitial(9);
+            IPosition position = Position.CreateInitial(9);
             Assert.IsTrue(position.IsEditable);
         }
         [Test]
         public void TestFirstMove()
         {
-            var position = Position.CreateInitial(9);
+            IPosition position = Position.CreateInitial(9);
             var status = position.Move(new Point(1, 1), MokuState.Black);
             Assert.IsFalse(status.First.IsEditable);
             Assert.IsTrue(status.Second == 0);

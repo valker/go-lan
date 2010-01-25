@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Group.cs" />
+    <Compile Include="Data\GroupField.cs" />
+    <Compile Include="Data\IPosition.cs" />
     <Compile Include="Data\KoRule.cs" />
     <Compile Include="Data\MokuField.cs" />
     <Compile Include="Data\MokuState.cs" />
