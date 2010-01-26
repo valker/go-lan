@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace go_engine.Data
@@ -27,7 +28,27 @@ namespace go_engine.Data
 
         public static Point Down(this Point one)
         {
-            return new Point(one.X, one.Y + 2);
+            return new Point(one.X, one.Y + 1);
+        }
+
+        public static IEnumerable<Point> Neighbours(this Point point, int size)
+        {
+            if (point.X > 0)
+            {
+                yield return point.Left();
+            }
+            if (point.Y > 0)
+            {
+                yield return point.Up();
+            }
+            if (point.X < size - 1)
+            {
+                yield return point.Right();
+            }
+            if (point.Y < size - 1)
+            {
+                yield return point.Down();
+            }
         }
     }
 }

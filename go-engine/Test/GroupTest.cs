@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using go_engine.Data;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
@@ -16,8 +13,9 @@ namespace go_engine.Test
         {
             var group = new Group(new Point(1,1), MokuState.Black );
             Assert.IsTrue(group.Count == 1);
-            group.Add(new Point(1,2));
-            Assert.IsTrue(group.Count == 2);
+            var group2 = group.AddPoint(new Point(1,2));
+            Assert.IsTrue(group2.Count == 2);
+            Assert.AreNotEqual(group,group2);
         }
 
         [ExpectedException(typeof(ArgumentException))]
@@ -25,7 +23,7 @@ namespace go_engine.Test
         public void TestAddWithException()
         {
             var group = new Group(new Point(1, 1), MokuState.Black);
-            group.Add(new Point(1, 1));
+            var group2 = group.AddPoint(new Point(1, 1));
         }
     }
 }
