@@ -230,8 +230,9 @@ namespace go_engine.Data
                         {
                             group = group.AddPoint(pnt);
                         }
-                        position._groups.Remove(groups[i]);
                     }
+                    groups.RemoveRange(1, groups.Count - 1);
+                    
                     group = group.AddPoint(point);
                     groups[0] = group;
                     foreach (var pnt in group)
