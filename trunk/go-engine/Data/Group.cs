@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 
 namespace go_engine.Data
 {
@@ -68,8 +67,6 @@ namespace go_engine.Data
             {
                 throw new ArgumentException("This point is in this group.");
             }
-            Debug.Assert(Player != MokuState.Empty);
-            Debug.Assert(Player != MokuState.None);
             Group grp = new Group(point, Player);
             grp = new Group(this, grp);
             return grp;
