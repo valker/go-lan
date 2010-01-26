@@ -10,6 +10,11 @@ namespace go_engine.Data
             _field = new Group[size,size];
         }
 
+        public GroupField(GroupField parent)
+        {
+            _field = (Group[,]) parent._field.Clone();
+        }
+
         public Group GetAt(Point point)
         {
             return _field[point.Y, point.X];
