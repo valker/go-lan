@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using go_engine.Data;
+﻿using go_engine.Data;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 

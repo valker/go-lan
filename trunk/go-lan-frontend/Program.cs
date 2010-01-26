@@ -1,4 +1,5 @@
 using System;
+using go_engine;
 
 namespace go_lan_frontend
 {
@@ -11,6 +12,8 @@ namespace go_lan_frontend
         {
             using (Game1 game = new Game1())
             {
+                GameManager manager = new GameManager();
+                game.Manager = manager;
                 game.Run();
             }
         }

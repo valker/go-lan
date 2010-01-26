@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using go_engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -21,6 +23,9 @@ namespace go_lan_frontend
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+
+        public GameManager Manager { get; set; }
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -36,9 +41,22 @@ namespace go_lan_frontend
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            IsMouseVisible = true;
+            Window.AllowUserResizing = true;
+            Manager.CurrentPositionChanged += ManagerOnPositionChanged;
             base.Initialize();
         }
+
+        private void ManagerOnPositionChanged(object sender, EventArgs args)
+        {
+            _needRedrawPosition = true;
+        }
+
+        // This is a texture we can render.
+        Texture2D myTexture;
+
+        // Set the coordinates to draw the sprite at.
+        Vector2 spritePosition = Vector2.Zero;
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -50,6 +68,10 @@ namespace go_lan_frontend
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            myTexture = Content.Load<Texture2D>("mytexture");
+
         }
 
         /// <summary>
@@ -71,12 +93,63 @@ namespace go_lan_frontend
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                Exit();
+            }
+
+            MouseState state = Mouse.GetState();
+            Debug.WriteLine(state.X + " " + state.Y + " " + state.LeftButton);
 
             // TODO: Add your update logic here
+            // Move the sprite around.
+            UpdateSprite(gameTime);
 
             base.Update(gameTime);
         }
 
+        // Store some information about the sprite's motion.
+        Vector2 spriteSpeed = new Vector2(50.0f, 50.0f);
+        private bool _needRedrawPosition;
+
+        void UpdateSprite(GameTime gameTime)
+        {
+            // Move the sprite by speed, scaled by elapsed time.
+            spritePosition +=
+                spriteSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            int MaxX =
+                graphics.GraphicsDevice.Viewport.Width - myTexture.Width;
+            int MinX = 0;
+            int MaxY =
+                graphics.GraphicsDevice.Viewport.Height - myTexture.Height;
+            int MinY = 0;
+
+            // Check for bounce.
+            if (spritePosition.X > MaxX)
+            {
+                spriteSpeed.X *= -1;
+                spritePosition.X = MaxX;
+            }
+
+            else if (spritePosition.X < MinX)
+            {
+                spriteSpeed.X *= -1;
+                spritePosition.X = MinX;
+            }
+
+            if (spritePosition.Y > MaxY)
+            {
+                spriteSpeed.Y *= -1;
+                spritePosition.Y = MaxY;
+            }
+
+            else if (spritePosition.Y < MinY)
+            {
+                spriteSpeed.Y *= -1;
+                spritePosition.Y = MinY;
+            }
+        }
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -85,8 +158,11 @@ namespace go_lan_frontend
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
 
+            spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+            spriteBatch.Draw(myTexture, spritePosition, Color.White);
+            spriteBatch.End();
+            // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
     }

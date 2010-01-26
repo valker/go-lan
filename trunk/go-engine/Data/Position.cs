@@ -14,6 +14,13 @@ namespace go_engine.Data
         private Position(int size)
         {
             Field = new MokuField(size);
+            for (int x = 0; x < size; x++)
+            {
+                for (int y = 0; y < size; y++)
+                {
+                    Field.SetAt(new Point(x,y), MokuState.Empty);
+                }
+            }
             _groupField = new GroupField(size);
         }
 
@@ -44,6 +51,11 @@ namespace go_engine.Data
         /// <returns>новая позиция и число съеденных камней</returns>
         public Pair<IPosition, int> Move(Point point, MokuState player)
         {
+            var state = Field.GetAt(point);
+            if (state != MokuState.Empty)
+            {
+                throw new GoException(ExceptionReason.Occupped);
+            }
             // создать новую позицию, как копию исходной
             var position = new Position(Size);
             position.Field = new MokuField(Field);
@@ -103,33 +115,12 @@ namespace go_engine.Data
 
         private static IEnumerable<Point> GetDame(Group grp, Position position)
         {
-            return grp.Points.SelectMany(point => GetDame(point, position));
+            return grp.SelectMany(point => GetDame(point, position));
         }
 
         private static IEnumerable<Point> GetDame(Point point, Position position)
         {
-            var neighbourPoints = GetNeighbourPoints(point, position.Size);
-            return neighbourPoints.Where(pnt => position.Field.GetAt(pnt) == MokuState.Empty);
-        }
-
-        private static IEnumerable<Point> GetNeighbourPoints(Point point, int size)
-        {
-            if (point.X > 0)
-            {
-                yield return point.Left();
-            }
-            if (point.Y > 0)
-            {
-                yield return point.Up();
-            }
-            if (point.X < size - 1)
-            {
-                yield return point.Right();
-            }
-            if (point.Y < size - 1)
-            {
-                yield return point.Down();
-            }
+            return point.Neighbours(position.Size).Where(pnt => position.Field.GetAt(pnt) == MokuState.Empty);
         }
 
         /// <summary>
@@ -141,14 +132,14 @@ namespace go_engine.Data
         private static IEnumerable<Group> FindOppositeGroup(Position position, Group grp)
         {
             MokuState player = Opposite(grp.Player);
-            var oppositePoints = grp.Points.SelectMany(point => GetNeighbourPoints(point, position.Size)).Where(point => position.Field.GetAt(point) == player);
+            var oppositePoints = grp.SelectMany(point => point.Neighbours(position.Size)).Where(point => position.Field.GetAt(point) == player);
             oppositePoints = oppositePoints.ToArray();
-            var opposGroups = position._groups.Where(g => g.Points.Intersect(oppositePoints).Count() > 0);
+            var opposGroups = position._groups.Where(g => g.Intersect(oppositePoints).Count() > 0);
             opposGroups = opposGroups.ToArray();
             return opposGroups;
         }
 
-        private static MokuState Opposite(MokuState mokuState)
+        public static MokuState Opposite(MokuState mokuState)
         {
             switch (mokuState)
             {
@@ -179,7 +170,7 @@ namespace go_engine.Data
                 position._groups = MakeGroupsFromField(position);
                 foreach (Group grp in position._groups)
                 {
-                    if (grp.Points.Contains(point))
+                    if (grp.Contains(point))
                     {
                         return grp;
                     }
@@ -208,7 +199,7 @@ namespace go_engine.Data
                     group = groups[0];
                     for (int i = 1 ; i < groups.Count; i++)
                     {
-                        foreach (Point pnt in groups[i].Points)
+                        foreach (Point pnt in groups[i])
                         {
                             group.Add(pnt);
                         }
@@ -222,16 +213,16 @@ namespace go_engine.Data
 
         private List<Group> GetNearestGroup(Point point, MokuState player)
         {
-            throw new NotImplementedException();
+            IEnumerable<Point> neighbours = point.Neighbours(Size);
+            List<Group> groups =
+                neighbours.Select(point1 => _groupField.GetAt(point1)).Where(
+                    grp => grp != null && grp.Player == player).Distinct().ToList();
+            return groups;
         }
 
         private List<Group> CopyGroups()
         {
-            var collection = new List<Group>();
-            foreach (var grp in _groups)
-            {
-                collection.Add(Clone(grp));
-            }
+            var collection = new List<Group>(_groups);
             return collection;
         }
 
@@ -284,7 +275,7 @@ namespace go_engine.Data
 
             foreach (var pair in selectedNeighbour)
             {
-                if (!grp.Points.Contains(pair.First))
+                if (!grp.Contains(pair.First))
                 {
                     grp.Add(pair.First);
                 }
@@ -323,17 +314,31 @@ namespace go_engine.Data
             return points;
         }
 
-        public static Group Clone(Group g)
-        {
-            var group = new Group(g.Player);
-            foreach (var point in g.Points)
-            {
-                group.Points.Add(point);
-            }
-            return group;
-        }
+//        public static Group Clone(Group g)
+//        {
+//            var group = new Group(g.Player);
+//            foreach (var point in g.Points)
+//            {
+//                group.Points.Add(point);
+//            }
+//            return group;
+//        }
 
         private List<Group> _groups = new List<Group>();
         private GroupField _groupField;
+    }
+
+    public class GoException : Exception
+    {
+        public GoException(ExceptionReason reason)
+        {
+            Reason = reason;
+        }
+
+        public ExceptionReason Reason { get; set; }
+    }
+    public enum ExceptionReason
+    {
+        Occupped
     }
 }

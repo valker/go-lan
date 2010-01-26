@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using go_engine.Data;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
@@ -52,6 +49,18 @@ namespace go_engine.Test
             var storage = new PositionStorage(size);
             var count = storage.GetChildPositions(storage.Initial).Count();
             Assert.IsTrue(count == 0);
+        }
+
+        [Test]
+        public void TestEatCorner()
+        {
+            var storage = new PositionStorage(size);
+            var st1 = storage.Move(storage.Initial, new Point(0, 0), MokuState.Black);
+            var st2 = storage.Move(st1.First, new Point(1, 0), MokuState.White);
+            var st3 = storage.Move(st2.First, new Point(3, 3), MokuState.Black);
+            var st4 = storage.Move(st3.First, new Point(0, 1), MokuState.White);
+            Assert.IsTrue(st4.Second == 1);
+            Assert.IsTrue(st4.First.Field.GetAt(new Point(0,0))==MokuState.Empty);
         }
     }
 }
