@@ -30,7 +30,7 @@ namespace win.forms.frontend
 
         private void UpdateGobanImage()
         {
-            var boardInfo = Manager.RootPosition.Size;
+            var boardInfo = Manager.RootPosition.Field.Size;
 
             _CellSize = Math.Min(goban.Width, goban.Height) / boardInfo;
 

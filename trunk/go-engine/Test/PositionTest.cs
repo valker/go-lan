@@ -11,7 +11,7 @@ namespace go_engine.Test
         public void TestSize()
         {
             IPosition position = Position.CreateInitial(9);
-            Assert.IsTrue(position.Size == 9);
+            Assert.IsTrue(position.Field.Size == 9);
         }
         [Test]
         public void TestEditable()

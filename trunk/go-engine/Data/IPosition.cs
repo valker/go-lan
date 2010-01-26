@@ -5,7 +5,6 @@ namespace go_engine.Data
     public interface IPosition
     {
         MokuField Field { get; }
-        int Size { get; }
         bool IsEditable { get; }
         IPosition CopyMokuField();
 

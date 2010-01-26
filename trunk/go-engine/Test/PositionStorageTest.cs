@@ -16,7 +16,7 @@ namespace go_engine.Test
             var storage = new PositionStorage(size);
             var position = storage.Initial;
             Assert.IsNotNull(position);
-            Assert.IsTrue(position.Size == size);
+            Assert.IsTrue(position.Field.Size == size);
             Assert.IsTrue(position.IsEditable);
         }
 
@@ -27,7 +27,7 @@ namespace go_engine.Test
             var newPosition = storage.Edit(storage.Initial, new Point(1, 1), MokuState.Black);
             Assert.IsNotNull(newPosition);
             Assert.AreSame(newPosition, storage.Initial);
-            Assert.IsTrue(newPosition.Size == size);
+            Assert.IsTrue(newPosition.Field.Size == size);
         }
 
         [Test]
@@ -61,6 +61,20 @@ namespace go_engine.Test
             var st4 = storage.Move(st3.First, new Point(0, 1), MokuState.White);
             Assert.IsTrue(st4.Second == 1);
             Assert.IsTrue(st4.First.Field.GetAt(new Point(0,0))==MokuState.Empty);
+        }
+
+        [Test]
+        public void TestEatCombinedGroup()
+        {
+            var storage = new PositionStorage(size);
+            var s1 = storage.Move(storage.Initial, new Point(1, 0), MokuState.Black);
+            var s2 = storage.Move(s1.First, new Point(2, 0), MokuState.White);
+            var s3 = storage.Move(s2.First, new Point(0, 1), MokuState.Black);
+            var s4 = storage.Move(s3.First, new Point(0, 2), MokuState.White);
+            var s5 = storage.Move(s4.First, new Point(0, 0), MokuState.Black);
+            var s6 = storage.Move(s5.First, new Point(1, 1), MokuState.White);
+            Assert.IsTrue(s6.Second == 3);
+            Assert.IsTrue(s6.First.Field.GetAt(new Point(0,0)) == MokuState.Empty);
         }
     }
 }

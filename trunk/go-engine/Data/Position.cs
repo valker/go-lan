@@ -7,12 +7,23 @@ using Microsoft.Xna.Framework;
 
 namespace go_engine.Data
 {
+    /// <summary>
+    /// Класс задаёт конкретную позицию камней, возникшую в игре, или при редактировании поля
+    /// </summary>
     public class Position : IPosition
     {
+        /// <summary>
+        /// Расположение камней
+        /// </summary>
         public MokuField Field { get; private set; }
 
+        /// <summary>
+        /// Создаём позицию с заданным размером
+        /// </summary>
+        /// <param name="size"></param>
         private Position(int size)
         {
+            // создаём новое поле для камней и инициализируем его
             Field = new MokuField(size);
             for (int x = 0; x < size; x++)
             {
@@ -21,10 +32,10 @@ namespace go_engine.Data
                     Field.SetAt(new Point(x,y), MokuState.Empty);
                 }
             }
+
+            // создаём новое поле для ссылок на группы (инициализируется нулями
             _groupField = new GroupField(size);
         }
-
-        public int Size { get { return Field.Size; } }
 
         public bool IsEditable { get; private set; }
 
@@ -37,7 +48,7 @@ namespace go_engine.Data
 
         public IPosition CopyMokuField()
         {
-            Position position = new Position(Size);
+            Position position = new Position(Field.Size);
             position.Field = new MokuField(Field);
             position.IsEditable = true;
             return position;
@@ -57,8 +68,9 @@ namespace go_engine.Data
                 throw new GoException(ExceptionReason.Occupped);
             }
             // создать новую позицию, как копию исходной
-            var position = new Position(Size);
+            var position = new Position(Field.Size);
             position.Field = new MokuField(Field);
+            position._groupField = new GroupField(_groupField);
 
             // поставить точку на поле
             position.Field.SetAt(point, player);
@@ -96,6 +108,11 @@ namespace go_engine.Data
                 position._groups.Remove(toKillGrp);
                 // модифицируем поле
                 // TODO: modify the field
+                foreach (var pnt in toKillGrp)
+                {
+                    position.Field.SetAt(pnt, MokuState.Empty);
+                    position._groupField.SetAt(pnt, null);
+                }
             }
             // возвращаем количество снятых камней
             return count;
@@ -120,7 +137,7 @@ namespace go_engine.Data
 
         private static IEnumerable<Point> GetDame(Point point, Position position)
         {
-            return point.Neighbours(position.Size).Where(pnt => position.Field.GetAt(pnt) == MokuState.Empty);
+            return point.Neighbours(position.Field.Size).Where(pnt => position.Field.GetAt(pnt) == MokuState.Empty);
         }
 
         /// <summary>
@@ -132,7 +149,7 @@ namespace go_engine.Data
         private static IEnumerable<Group> FindOppositeGroup(Position position, Group grp)
         {
             MokuState player = Opposite(grp.Player);
-            var oppositePoints = grp.SelectMany(point => point.Neighbours(position.Size)).Where(point => position.Field.GetAt(point) == player);
+            var oppositePoints = grp.SelectMany(point => point.Neighbours(position.Field.Size)).Where(point => position.Field.GetAt(point) == player);
             oppositePoints = oppositePoints.ToArray();
             var opposGroups = position._groups.Where(g => g.Intersect(oppositePoints).Count() > 0);
             opposGroups = opposGroups.ToArray();
@@ -170,6 +187,14 @@ namespace go_engine.Data
                 position._groups = MakeGroupsFromField(position);
                 foreach (Group grp in position._groups)
                 {
+                    foreach (var pnt in grp)
+                    {
+                        position._groupField.SetAt(pnt, grp);
+                    }
+                }
+
+                foreach (Group grp in position._groups)
+                {
                     if (grp.Contains(point))
                     {
                         return grp;
@@ -182,7 +207,7 @@ namespace go_engine.Data
                 position._groups = CopyGroups();
 
                 // получить соседние группы того же цвета
-                var groups = GetNearestGroup(point, player);
+                var groups = position.GetNearestGroups(point, player);
 
                 Group group;
                 switch (groups.Count)
@@ -191,9 +216,11 @@ namespace go_engine.Data
                     // создаём новую группу
                     group = new Group(point, player);
                     position._groups.Add(group);
+                    position._groupField.SetAt(point, group);
                     return group;
                 case 1: // если одна группа
-                    groups[0].Add(point);
+                    groups[0] = groups[0].AddPoint(point);
+                    position._groupField.SetAt(point, groups[0]);
                     return groups[0];
                 default: // если больше одной группы
                     group = groups[0];
@@ -201,19 +228,24 @@ namespace go_engine.Data
                     {
                         foreach (Point pnt in groups[i])
                         {
-                            group.Add(pnt);
+                            group = group.AddPoint(pnt);
                         }
-                        _groups.Remove(groups[i]);
+                        position._groups.Remove(groups[i]);
                     }
-                    group.Add(point);
+                    group = group.AddPoint(point);
+                    groups[0] = group;
+                    foreach (var pnt in group)
+                    {
+                        position._groupField.SetAt(pnt, group);
+                    }
                     return group;
                 }
             }
         }
 
-        private List<Group> GetNearestGroup(Point point, MokuState player)
+        private List<Group> GetNearestGroups(Point point, MokuState player)
         {
-            IEnumerable<Point> neighbours = point.Neighbours(Size);
+            IEnumerable<Point> neighbours = point.Neighbours(Field.Size);
             List<Group> groups =
                 neighbours.Select(point1 => _groupField.GetAt(point1)).Where(
                     grp => grp != null && grp.Player == player).Distinct().ToList();
