@@ -35,6 +35,11 @@ namespace go_engine.Data
             // выполняем ход по правилам го и создаём новую позицию
             Pair<IPosition, int> newPosition = originPosition.Move(point, player);
 
+            // проверяем, что этот ход не повторялся до этого
+            var distance = GetPositionDistanceImpl(newPosition.First, originPosition);
+
+            Rules.Check(newPosition, distance);
+
             // проверяем, что такого хода ещё не делалось из этой позиции
             var children = GetChildPositions(originPosition);
 
@@ -47,6 +52,27 @@ namespace go_engine.Data
             }
 
             return newPosition;
+        }
+
+        private Pair<int, IPosition> GetPositionDistance(IPosition position)
+        {
+            return GetPositionDistanceImpl(position, position);
+        }
+
+        private Pair<int, IPosition> GetPositionDistanceImpl(IPosition mostYoungestChild, IPosition currentChild)
+        {
+            var parent = GetParentPosition(currentChild);
+            if (parent != null)
+            {
+                // todo: write Equals for Position
+                if (parent.Equals(mostYoungestChild))
+                {
+                    return new Pair<int, IPosition>(0, parent);
+                }
+                var distance = GetPositionDistanceImpl(mostYoungestChild, parent);
+                return distance.First == -1 ? distance : new Pair<int, IPosition>(distance.First + 1, distance.Second);
+            }
+            return new Pair<int, IPosition>(-1, null);
         }
 
         class DDD : IEqualityComparer<IPosition>

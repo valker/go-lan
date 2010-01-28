@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using go_engine.Data;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
@@ -76,5 +77,84 @@ namespace go_engine.Test
             Assert.IsTrue(s6.Second == 3);
             Assert.IsTrue(s6.First.Field.GetAt(new Point(0,0)) == MokuState.Empty);
         }
+
+        [Test]
+        public void TestEatCombinedGroup2()
+        {
+            var storage = new PositionStorage(size);
+            var s1 = storage.Move(storage.Initial, new Point(1, 0), MokuState.Black);
+            var s2 = storage.Move(s1.First, new Point(1, 1), MokuState.White);
+            var s3 = storage.Move(s2.First, new Point(2, 0), MokuState.Black);
+            var s4 = storage.Move(s3.First, new Point(2, 1), MokuState.White);
+            var s5 = storage.Move(s4.First, new Point(0, 1), MokuState.Black);
+            var s6 = storage.Move(s5.First, new Point(3, 0), MokuState.White);
+            var s7 = storage.Move(s6.First, new Point(3, 1), MokuState.White);
+            var s8 = storage.Move(s7.First, new Point(0, 0), MokuState.White);
+            Assert.IsTrue(s8.Second == 2);
+            Assert.IsTrue(s6.First.Field.GetAt(new Point(0, 0)) == MokuState.Empty);
+            Assert.IsTrue(s6.First.Field.GetAt(new Point(0, 0)) == MokuState.Empty);
+        }
+
+        [Test]
+        public void TestWrongDead()
+        {
+            var storage = new PositionStorage(size);
+            var pnts = new Point[]
+                       {
+                           new Point(1, 1), new Point(2, 1), 
+                           new Point(1, 0), new Point(2, 0), 
+                           new Point(1, 2), new Point(2, 2), 
+                           new Point(2, 3), new Point(1, 3), 
+                           new Point(2, 4), new Point(1, 4),
+                           new Point(2, 5), new Point(1, 5), 
+                           new Point(0, 2), new Point(0, 3),
+                       };
+            var player = MokuState.Black;
+            var pos = storage.Initial;
+            int i = 0;
+            foreach (var pnt in pnts)
+            {
+                //if (i == 2)
+                //{
+                //    Debug.Assert(false);
+                //}
+                var result = storage.Move(pos, pnt, player);
+
+                player = Position.Opposite(player);
+                pos = result.First;
+                ++i;
+            }
+        }
+
+        [Test]
+        public void TestKo()
+        {
+            var storage = new PositionStorage(size);
+            var pnts = new Point[]
+                       {
+                            new Point(2,1),new Point(3,1),
+                            new Point(3,2),new Point(2,2),
+                            new Point(2,3),new Point(3,3),
+                            new Point(1,7),new Point(4,2),
+                            new Point(1,2),new Point(4,7),
+                            new Point(3,2),new Point(2,2),                       
+                       };
+            var player = MokuState.Black;
+            var pos = storage.Initial;
+            int i = 0;
+            foreach (var pnt in pnts)
+            {
+                if (i == 11)
+                {
+                    Debug.Assert(false);
+                }
+                var result = storage.Move(pos, pnt, player);
+
+                player = Position.Opposite(player);
+                pos = result.First;
+                ++i;
+            }
+        }
+
     }
 }
