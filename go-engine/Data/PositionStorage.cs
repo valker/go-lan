@@ -54,11 +54,6 @@ namespace go_engine.Data
             return newPosition;
         }
 
-        private Pair<int, IPosition> GetPositionDistance(IPosition position)
-        {
-            return GetPositionDistanceImpl(position, position);
-        }
-
         private Pair<int, IPosition> GetPositionDistanceImpl(IPosition mostYoungestChild, IPosition currentChild)
         {
             var parent = GetParentPosition(currentChild);
@@ -67,7 +62,7 @@ namespace go_engine.Data
                 // todo: write Equals for Position
                 if (parent.Equals(mostYoungestChild))
                 {
-                    return new Pair<int, IPosition>(0, parent);
+                    return new Pair<int, IPosition>(2, parent);
                 }
                 var distance = GetPositionDistanceImpl(mostYoungestChild, parent);
                 return distance.First == -1 ? distance : new Pair<int, IPosition>(distance.First + 1, distance.Second);

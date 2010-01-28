@@ -29,5 +29,13 @@ namespace go_engine.Test
             Assert.AreNotSame(status.First, position);
         }
 
+        [Test]
+        public void TestEquals()
+        {
+            PositionStorage st1 = new PositionStorage(9);
+            PositionStorage st2 = new PositionStorage(9);
+            Assert.AreNotEqual(st1, st2);
+            Assert.AreEqual(st1.Initial, st2.Initial);
+        }
     }
 }
