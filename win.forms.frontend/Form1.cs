@@ -72,7 +72,7 @@ namespace win.forms.frontend
 
             int x = e.X / _CellSize;
             int y = e.Y / _CellSize;
-            Debug.WriteLine(string.Format("{0},{1}", x, y));
+            Debug.WriteLine(string.Format("new Point({0},{1}),", x, y));
 
             try
             {

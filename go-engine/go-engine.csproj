@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ExceptionReason.cs" />
+    <Compile Include="Data\GoException.cs" />
     <Compile Include="Data\Group.cs" />
     <Compile Include="Data\GroupField.cs" />
     <Compile Include="Data\IPosition.cs" />

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace go_engine.Data
 {
@@ -18,6 +19,34 @@ namespace go_engine.Data
         {
             Player = player;
             _points.Add(point);
+        }
+
+        public bool Equals(Group other)
+        {
+            return (Player == other.Player) && (_points.Except(other._points).Take(1).Count() == 0) &&
+                   (other._points.Except(_points).Take(1).Count() == 0);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (obj.GetType() != typeof (Group))
+            {
+                return false;
+            }
+            return Equals((Group) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return 0;
         }
 
         public Group(Group first, Group second)

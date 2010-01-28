@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace go_engine.Data
@@ -80,6 +78,12 @@ namespace go_engine.Data
 
             // удалить соседние группы, которые остались без дыханий
             int stoneCount = RemoveDeathOppositeGroups(position, group);
+
+            // проверить живость новой группы
+            if(!CheckIsLive(group, position))
+            {
+                throw new GoException(ExceptionReason.CannotPlaceDead);
+            }
 
             return new Pair<IPosition, int>(position, stoneCount);
         }
@@ -219,9 +223,14 @@ namespace go_engine.Data
                     position._groupField.SetAt(point, group);
                     return group;
                 case 1: // если одна группа
-                    groups[0] = groups[0].AddPoint(point);
-                    position._groupField.SetAt(point, groups[0]);
-                    return groups[0];
+                    var grp = groups[0].AddPoint(point);
+                    foreach (var pnt in grp)
+                    {
+                        position._groupField.SetAt(pnt,grp);
+                    }
+                    position._groups.Remove(groups[0]);
+                    position._groups.Add(grp);
+                    return grp;
                 default: // если больше одной группы
                     group = groups[0];
                     for (int i = 1 ; i < groups.Count; i++)
@@ -231,10 +240,10 @@ namespace go_engine.Data
                             group = group.AddPoint(pnt);
                         }
                     }
-                    groups.RemoveRange(1, groups.Count - 1);
+                    position._groups = position._groups.Except(groups).ToList();
                     
                     group = group.AddPoint(point);
-                    groups[0] = group;
+                    position._groups.Add(group);
                     foreach (var pnt in group)
                     {
                         position._groupField.SetAt(pnt, group);
@@ -246,10 +255,10 @@ namespace go_engine.Data
 
         private List<Group> GetNearestGroups(Point point, MokuState player)
         {
-            IEnumerable<Point> neighbours = point.Neighbours(Field.Size);
-            List<Group> groups =
-                neighbours.Select(point1 => _groupField.GetAt(point1)).Where(
-                    grp => grp != null && grp.Player == player).Distinct().ToList();
+            IEnumerable<Point> neighbours = point.Neighbours(Field.Size).ToArray();
+            var enumerable = neighbours.Select(point1 => _groupField.GetAt(point1)).ToArray();
+            var enumerable1 = enumerable.Where(grp => grp != null && grp.Player == player).ToArray();
+            List<Group> groups = enumerable1.Distinct().ToList();
             return groups;
         }
 
@@ -259,7 +268,7 @@ namespace go_engine.Data
             return collection;
         }
 
-        private static List<Group> MakeGroupsFromField(Position position)
+        private static List<Group> MakeGroupsFromField(IPosition position)
         {
             // создать коллекцию групп
             var collection = new List<Group>();
@@ -271,7 +280,7 @@ namespace go_engine.Data
             while (points.Count > 0)
             {
                 // создать группу из близлежащих камней
-                Group item = position.ExtractGroup(points, position.Field);
+                Group item = ExtractGroup(points, position.Field);
 
                 // добавить группу в коллекцию
                 collection.Add(item);
@@ -287,7 +296,7 @@ namespace go_engine.Data
         /// <param name="points">точки, указывающие на камни</param>
         /// <param name="field">поле</param>
         /// <returns></returns>
-        private Group ExtractGroup(List<Pair<Point, MokuState>> points, MokuField field)
+        private static Group ExtractGroup(List<Pair<Point, MokuState>> points, MokuField field)
         {
             var point = points[0];
             var group = new Group(point.First, point.Second);
@@ -295,7 +304,7 @@ namespace go_engine.Data
             return group;
         }
 
-        private void RecourseExtractGroup(Group grp, Pair<Point, MokuState> point, List<Pair<Point, MokuState>> points)
+        private static void RecourseExtractGroup(Group grp, Pair<Point, MokuState> point, List<Pair<Point, MokuState>> points)
         {
             var selectedNeighbour = points.Where(pair =>
             {
@@ -347,31 +356,7 @@ namespace go_engine.Data
             return points;
         }
 
-//        public static Group Clone(Group g)
-//        {
-//            var group = new Group(g.Player);
-//            foreach (var point in g.Points)
-//            {
-//                group.Points.Add(point);
-//            }
-//            return group;
-//        }
-
         private List<Group> _groups = new List<Group>();
         private GroupField _groupField;
-    }
-
-    public class GoException : Exception
-    {
-        public GoException(ExceptionReason reason)
-        {
-            Reason = reason;
-        }
-
-        public ExceptionReason Reason { get; set; }
-    }
-    public enum ExceptionReason
-    {
-        Occupped
     }
 }
