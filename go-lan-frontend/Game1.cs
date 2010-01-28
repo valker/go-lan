@@ -23,6 +23,9 @@ namespace go_lan_frontend
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        private Camera camera;
+
+        private GameModel board;
 
         public GameManager Manager { get; set; }
 
@@ -30,6 +33,7 @@ namespace go_lan_frontend
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            
         }
 
         /// <summary>
@@ -42,21 +46,9 @@ namespace go_lan_frontend
         {
             // TODO: Add your initialization logic here
             IsMouseVisible = true;
-            Window.AllowUserResizing = true;
-            Manager.CurrentPositionChanged += ManagerOnPositionChanged;
+            camera = new Camera(new Vector3(-8, -516, -424), GraphicsDevice.Viewport);
             base.Initialize();
         }
-
-        private void ManagerOnPositionChanged(object sender, EventArgs args)
-        {
-            _needRedrawPosition = true;
-        }
-
-        // This is a texture we can render.
-        Texture2D myTexture;
-
-        // Set the coordinates to draw the sprite at.
-        Vector2 spritePosition = Vector2.Zero;
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -66,12 +58,9 @@ namespace go_lan_frontend
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            myTexture = Content.Load<Texture2D>("mytexture");
-
+            
+            board = new GameModel(Content.Load<Model>("Models/goBoard"));
+            board.Texture = Content.Load<Texture2D>("Textures/Oak1");
         }
 
         /// <summary>
@@ -97,59 +86,23 @@ namespace go_lan_frontend
             {
                 Exit();
             }
-
-            MouseState state = Mouse.GetState();
-            Debug.WriteLine(state.X + " " + state.Y + " " + state.LeftButton);
-
-            // TODO: Add your update logic here
-            // Move the sprite around.
-            UpdateSprite(gameTime);
+            //if (Keyboard.GetState().IsKeyDown(Keys.Q))
+            //    camera.Position += new Vector3(1,0,0);
+            //if (Keyboard.GetState().IsKeyDown(Keys.A))
+            //    camera.Position += new Vector3(-1, 0, 0);
+            //if (Keyboard.GetState().IsKeyDown(Keys.W))
+            //    camera.Position += new Vector3(0, 1, 0);
+            //if (Keyboard.GetState().IsKeyDown(Keys.S))
+            //    camera.Position += new Vector3(0, -1, 0);
+            //if (Keyboard.GetState().IsKeyDown(Keys.E))
+            //    camera.Position += new Vector3(0, 0, 1);
+            //if (Keyboard.GetState().IsKeyDown(Keys.D))
+            //    camera.Position += new Vector3(0, 0, -1);
 
             base.Update(gameTime);
         }
-
-        // Store some information about the sprite's motion.
-        Vector2 spriteSpeed = new Vector2(50.0f, 50.0f);
-        private bool _needRedrawPosition;
-
-        void UpdateSprite(GameTime gameTime)
-        {
-            // Move the sprite by speed, scaled by elapsed time.
-            spritePosition +=
-                spriteSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            int MaxX =
-                graphics.GraphicsDevice.Viewport.Width - myTexture.Width;
-            int MinX = 0;
-            int MaxY =
-                graphics.GraphicsDevice.Viewport.Height - myTexture.Height;
-            int MinY = 0;
-
-            // Check for bounce.
-            if (spritePosition.X > MaxX)
-            {
-                spriteSpeed.X *= -1;
-                spritePosition.X = MaxX;
-            }
-
-            else if (spritePosition.X < MinX)
-            {
-                spriteSpeed.X *= -1;
-                spritePosition.X = MinX;
-            }
-
-            if (spritePosition.Y > MaxY)
-            {
-                spriteSpeed.Y *= -1;
-                spritePosition.Y = MaxY;
-            }
-
-            else if (spritePosition.Y < MinY)
-            {
-                spriteSpeed.Y *= -1;
-                spritePosition.Y = MinY;
-            }
-        }
+        
+        
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -157,13 +110,32 @@ namespace go_lan_frontend
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
-            spriteBatch.Draw(myTexture, spritePosition, Color.White);
-            spriteBatch.End();
-            // TODO: Add your drawing code here
+            
+            DrawModel(board);
+            
             base.Draw(gameTime);
+        }
+
+
+        /// <summary>
+        /// Draw model with Basic Effect
+        /// </summary>
+        /// <param name="model">GameModel for Drawing</param>
+        private void DrawModel(GameModel model)
+        {
+            foreach (ModelMesh mesh in model.Model.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.EnableDefaultLighting();
+                    effect.World = model.World;
+                    effect.View = camera.View;
+                    effect.Projection = camera.Projection;
+                    effect.TextureEnabled = true;
+                    effect.Texture = model.Texture;
+                }
+                mesh.Draw();
+            }
         }
     }
 }
