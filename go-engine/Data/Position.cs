@@ -140,7 +140,6 @@ namespace go_engine.Data
                 // убираем группу
                 position._groups.Remove(toKillGrp);
                 // модифицируем поле
-                // TODO: modify the field
                 foreach (var pnt in toKillGrp)
                 {
                     position.Field.SetAt(pnt, MokuState.Empty);
