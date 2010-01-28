@@ -43,7 +43,7 @@ namespace go_engine.Data
             // проверяем, что такого хода ещё не делалось из этой позиции
             var children = GetChildPositions(originPosition);
 
-            bool x = children.Contains(newPosition.First, new DDD());
+            bool x = children.Contains(newPosition.First);
 
             if (!x)
             {
@@ -59,7 +59,6 @@ namespace go_engine.Data
             var parent = GetParentPosition(currentChild);
             if (parent != null)
             {
-                // todo: write Equals for Position
                 if (parent.Equals(mostYoungestChild))
                 {
                     return new Pair<int, IPosition>(2, parent);
@@ -68,18 +67,6 @@ namespace go_engine.Data
                 return distance.First == -1 ? distance : new Pair<int, IPosition>(distance.First + 1, distance.Second);
             }
             return new Pair<int, IPosition>(-1, null);
-        }
-
-        class DDD : IEqualityComparer<IPosition>
-        {
-            public bool Equals(IPosition left, IPosition right)
-            {
-                throw new NotImplementedException();
-            }
-            public int GetHashCode(IPosition position)
-            { 
-                throw new NotImplementedException();
-            }
         }
 
         /// <summary>
