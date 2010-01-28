@@ -61,6 +61,7 @@ namespace go_lan_frontend
             
             board = new GameModel(Content.Load<Model>("Models/goBoard"));
             board.Texture = Content.Load<Texture2D>("Textures/Oak1");
+            board.SetModelEffect(Content.Load<Effect>("Effects/BasicDiffuse"));
         }
 
         /// <summary>
@@ -86,18 +87,18 @@ namespace go_lan_frontend
             {
                 Exit();
             }
-            //if (Keyboard.GetState().IsKeyDown(Keys.Q))
-            //    camera.Position += new Vector3(1,0,0);
-            //if (Keyboard.GetState().IsKeyDown(Keys.A))
-            //    camera.Position += new Vector3(-1, 0, 0);
-            //if (Keyboard.GetState().IsKeyDown(Keys.W))
-            //    camera.Position += new Vector3(0, 1, 0);
-            //if (Keyboard.GetState().IsKeyDown(Keys.S))
-            //    camera.Position += new Vector3(0, -1, 0);
-            //if (Keyboard.GetState().IsKeyDown(Keys.E))
-            //    camera.Position += new Vector3(0, 0, 1);
-            //if (Keyboard.GetState().IsKeyDown(Keys.D))
-            //    camera.Position += new Vector3(0, 0, -1);
+            if (Keyboard.GetState().IsKeyDown(Keys.Q))
+                camera.Position += new Vector3(1, 0, 0);
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+                camera.Position += new Vector3(-1, 0, 0);
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+                camera.Position += new Vector3(0, 1, 0);
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+                camera.Position += new Vector3(0, -1, 0);
+            if (Keyboard.GetState().IsKeyDown(Keys.E))
+                camera.Position += new Vector3(0, 0, 1);
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+                camera.Position += new Vector3(0, 0, -1);
 
             base.Update(gameTime);
         }
@@ -125,14 +126,12 @@ namespace go_lan_frontend
         {
             foreach (ModelMesh mesh in model.Model.Meshes)
             {
-                foreach (BasicEffect effect in mesh.Effects)
+                foreach (Effect effect in mesh.Effects)
                 {
-                    effect.EnableDefaultLighting();
-                    effect.World = model.World;
-                    effect.View = camera.View;
-                    effect.Projection = camera.Projection;
-                    effect.TextureEnabled = true;
-                    effect.Texture = model.Texture;
+                    effect.Parameters["World"].SetValue(model.World);
+                    effect.Parameters["View"].SetValue(camera.View);
+                    effect.Parameters["Projection"].SetValue(camera.Projection);
+                    effect.Parameters["TextureMap"].SetValue(model.Texture);
                 }
                 mesh.Draw();
             }
