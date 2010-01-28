@@ -35,6 +35,35 @@ namespace go_engine.Data
             _groupField = new GroupField(size);
         }
 
+        public bool Equals(Position other)
+        {
+            var b = _groups.Count == other._groups.Count;
+            var b1 = Field.Equals(other.Field);
+            return b && b1;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (obj.GetType() != typeof (Position))
+            {
+                return false;
+            }
+            return Equals((Position) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _groups.Count;
+        }
+
         public bool IsEditable { get; private set; }
 
         public static IPosition CreateInitial(int size)

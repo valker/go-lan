@@ -36,23 +36,55 @@ namespace go_engine.Data
 
         public bool Equals(MokuField other)
         {
-            int size = Size;
-
-            if (size != other.Size)
+            if (ReferenceEquals(null, other))
             {
                 return false;
             }
-            for (int i = 0; i < size; i++)
+            if (ReferenceEquals(this, other))
             {
-                for (int j = 0; j < size; j++)
+                return true;
+            }
+            if (other.Size != Size)
+            {
+                return false;
+            }
+
+            for (int y = 0; y < Size; y++)
+            {
+                for (int x = 0; x < Size; x++)
                 {
-                    if (_field[i,j] != other._field[i,j])
+                    if (_field[y,x] != other._field[y,x])
                     {
                         return false;
                     }
                 }
             }
             return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (obj.GetType() != typeof (MokuField))
+            {
+                return false;
+            }
+            return Equals((MokuField) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((_field != null ? _field.GetHashCode() : 0) * 397) ^ Size;
+            }
         }
     }
 }
