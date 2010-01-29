@@ -6,11 +6,17 @@ go-lan will be a tools that help you to play go with your friend via lan.
 
 To develop you should have Visual Studio 2008 (Express or Professional) and MS XNA Game Studio.
 
+Also NUnit framework is used for testing purposes.
+
 You can download VS2008 Express here:
 http://www.microsoft.com/express/download/
 
 You can download XNA Game Studio 3.1 here:
 http://www.microsoft.com/downloads/details.aspx?FamilyID=80782277-D584-42D2-8024-893FCD9D3E82&displaylang=en
+
+You can get NUnit here:
+http://www.nunit.org/
+Note that we use version 2.4.8.
 
 = Details =
 
