@@ -12,6 +12,10 @@ namespace go_engine.Data
 
         public Rules Rules { get; private set; }
 
+        /// <summary>
+        /// Конструктор, используемый для создания начальной позиции в игре
+        /// </summary>
+        /// <param name="size"></param>
         public PositionStorage(int size)
         {
             Initial = Position.CreateInitial(size);
@@ -21,6 +25,21 @@ namespace go_engine.Data
             Rules.Points = Points.Empty;
         }
 
+        /// <summary>
+        /// Конструктор, используемый для создания предопределённой позиции как стартовой
+        /// </summary>
+        /// <param name="initialPosition"></param>
+        /// <param name="goRules"></param>
+        public PositionStorage(IPosition initialPosition, Rules goRules)
+        {
+            Initial = initialPosition;
+            OnAddNewPosition(Initial);
+            Rules = goRules;
+        }
+
+        /// <summary>
+        /// Возвращает исходную позицию в дереве игры
+        /// </summary>
         public IPosition Initial { get; private set; }
 
         /// <summary>
@@ -54,21 +73,6 @@ namespace go_engine.Data
             return newPosition;
         }
 
-        private Pair<int, IPosition> GetPositionDistanceImpl(IPosition mostYoungestChild, IPosition currentChild)
-        {
-            var parent = GetParentPosition(currentChild);
-            if (parent != null)
-            {
-                if (parent.Equals(mostYoungestChild))
-                {
-                    return new Pair<int, IPosition>(2, parent);
-                }
-                var distance = GetPositionDistanceImpl(mostYoungestChild, parent);
-                return distance.First == -1 ? distance : new Pair<int, IPosition>(distance.First + 1, distance.Second);
-            }
-            return new Pair<int, IPosition>(-1, null);
-        }
-
         /// <summary>
         /// Модифицировать поле без учёта правил. Т.е. можно поставить камень, полностью окружённый противником.
         /// </summary>
@@ -84,7 +88,7 @@ namespace go_engine.Data
             {
                 position = originPosition;
             }
-            // Иначе создаём новую позицию с таким же положением камней, как и у исходной
+                // Иначе создаём новую позицию с таким же положением камней, как и у исходной
             else
             {
                 position = originPosition.CopyMokuField();
@@ -123,11 +127,49 @@ namespace go_engine.Data
             return _parentToChildren[position];
         }
 
+        /// <summary>
+        /// Определить расстояние от текущей позиции, до позиции равной заданной
+        /// </summary>
+        /// <param name="mostYoungestChild">с этой позицией проверяется равность</param>
+        /// <param name="currentChild">позиция, расстояние от которой расчитывается</param>
+        /// <returns></returns>
+        private Pair<int, IPosition> GetPositionDistanceImpl(IPosition mostYoungestChild, IPosition currentChild)
+        {
+            // получить родительскую позицию для текущей
+            var parent = GetParentPosition(currentChild);
+
+            // если родительская позиция существует
+            if (parent != null)
+            {
+                // сравнить её с базой для сравнения
+                if (parent.Equals(mostYoungestChild))
+                {
+                    // если равно, вернуть расстояние равное 2
+                    return new Pair<int, IPosition>(2, parent);
+                }
+                // иначе расчитать расстояние от родительской до равной заданной
+                var distance = GetPositionDistanceImpl(mostYoungestChild, parent);
+                // если достижимо, вернуть (расстояние + 1), если нет, вернуть константу (-1)
+                return distance.First == -1 ? distance : new Pair<int, IPosition>(distance.First + 1, distance.Second);
+            }
+            // недостижимо равенство. возвращаем константу (-1)
+            return new Pair<int, IPosition>(-1, null);
+        }
+
+        /// <summary>
+        /// Произвести действия при добавлении новой позиции в дерево партии
+        /// </summary>
+        /// <param name="position">новая позиция</param>
         private void OnAddNewPosition(IPosition position)
         {
             _parentToChildren.Add(position, new List<IPosition>());
         }
 
+        /// <summary>
+        /// добавить отношение между позициями
+        /// </summary>
+        /// <param name="parent">родительская позиция</param>
+        /// <param name="child">дочерняя позиция</param>
         private void AddRelationship(IPosition parent, IPosition child)
         {
             // добавить ссылку ребёнок -> родитель

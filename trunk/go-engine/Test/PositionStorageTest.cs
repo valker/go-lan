@@ -124,7 +124,7 @@ namespace go_engine.Test
                          });
         }
 
-        private static Pair<IPosition, int> PerformMoves(IEnumerable<Point> pnts)
+        public static Pair<IPosition, int> PerformMoves(IEnumerable<Point> pnts)
         {
             var storage = new PositionStorage(size);
             var player = MokuState.Black;
