@@ -7,10 +7,6 @@ namespace go_engine.Data
     {
         None = 0,
         /// <summary>
-        /// Правило не проверяется
-        /// </summary>
-        No,
-        /// <summary>
         /// Позиция не должна повторять позицию за ход до этого
         /// </summary>
         Simle,
