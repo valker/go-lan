@@ -14,7 +14,7 @@ namespace go_engine.Test
         public void TestWithoutKo()
         {
             GameManager mgr = new GameManager();
-            mgr.Move(mgr.CurrentPosition, new Point(0,0));
+            mgr.Move(new Point(0,0));
         }
     }
 }
