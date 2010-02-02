@@ -65,11 +65,10 @@ namespace go_engine
         /// <summary>
         /// Сделать ход текущим игроком
         /// </summary>
-        /// <param name="position"></param>
         /// <param name="point"></param>
-        public void Move(IPosition position, Point point)
+        public void Move(Point point)
         {
-            var reply = _positionStorage.Move(position, point, CurrentPlayer);
+            var reply = _positionStorage.Move(CurrentPosition, point, CurrentPlayer);
             CurrentPosition = reply.First;
             _eated[CurrentPlayer] += reply.Second;
             CurrentPlayer = Position.Opposite(CurrentPlayer);

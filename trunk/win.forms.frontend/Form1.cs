@@ -76,7 +76,7 @@ namespace win.forms.frontend
 
             try
             {
-                Manager.Move(Manager.CurrentPosition, new Point(x, y));
+                Manager.Move(new Point(x, y));
 
             }
             catch (GoException ex)
