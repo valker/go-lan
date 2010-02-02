@@ -14,8 +14,6 @@ namespace go_engine.Data
         {
             switch (Ko)
             {
-            case KoRule.No:
-                return;
             case KoRule.Simle:
                 if (distance.First == 2)
                 {
