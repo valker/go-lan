@@ -47,7 +47,7 @@ namespace go_engine.Test
             position = position.Move(new Point(1, 1), MokuState.White).First;
             var rules = new Rules { Ko = koRule, Points = Points.Empty };
             var storage = new PositionStorage(position, rules);
-            var result = storage.Move(position, new Point(2, 1), MokuState.Black);
+            var result = storage.Move(position, new Point(2, 0), MokuState.Black);
             result = storage.Move(result.First, new Point(0, 0), MokuState.White);
             result = storage.Move(result.First, new Point(1, 0), MokuState.Black);
         }
