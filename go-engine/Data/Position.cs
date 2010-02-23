@@ -10,6 +10,13 @@ namespace go_engine.Data
     /// </summary>
     public class Position : IPosition
     {
+
+        public IPosition Parent { get; set; }
+
+        private List<IPosition> Children = new List<IPosition>();
+
+        
+
         /// <summary>
         /// Расположение камней
         /// </summary>
@@ -386,5 +393,35 @@ namespace go_engine.Data
 
         private List<Group> _groups = new List<Group>();
         private GroupField _groupField;
+
+        #region Члены IPosition
+
+
+        public IPosition GetParentPosition()
+        {
+            return this.Parent;
+        }
+
+        public IEnumerable<IPosition> GetChildrenPositions()
+        {
+            return Children;
+        }
+
+        #endregion
+
+        #region Члены IPosition
+
+
+        public void SetParent(IPosition parent)
+        {
+            Parent = parent;
+        }
+
+        public void AddChild(IPosition child)
+        {
+            Children.Add(child);
+        }
+
+        #endregion
     }
 }
