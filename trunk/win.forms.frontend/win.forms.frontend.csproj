@@ -65,6 +65,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="StoneControl.resx">
+      <DependentUpon>StoneControl.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -77,6 +80,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="StoneControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StoneControl.Designer.cs">
+      <DependentUpon>StoneControl.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using go_engine;
 using go_engine.Data;
 using Point=Microsoft.Xna.Framework.Point;
+using System.Collections.Generic;
 
 namespace win.forms.frontend
 {
@@ -17,10 +18,29 @@ namespace win.forms.frontend
             InitializeComponent();
         }
 
+        Dictionary<MokuState, Label> labels = new Dictionary<MokuState, Label>();
+
         private void Form1_Load(object sender, EventArgs e)
         {
             Manager.CurrentPositionChanged += ManagerOnCurrentPositionChanged;
+            Manager.CurrentPlayerChanged += new EventHandler(Manager_CurrentPlayerChanged);
+            Manager.EatedChanged += new EventHandler(Manager_EatedChanged);
+            labels.Add(MokuState.Black, lblBlack);
+            labels.Add(MokuState.White, lblWhite);
             UpdateGobanImage();
+        }
+
+        void Manager_EatedChanged(object sender, EventArgs e)
+        {
+            foreach (var eatedItem in Manager.Eated)
+            {
+                labels[eatedItem.Key].Text = eatedItem.Value.ToString();
+            }
+        }
+
+        void Manager_CurrentPlayerChanged(object sender, EventArgs e)
+        {
+            currentPlayer.IsBlack = Manager.CurrentPlayer == MokuState.Black;
         }
 
         private void ManagerOnCurrentPositionChanged(object sender, EventArgs args)
@@ -83,6 +103,11 @@ namespace win.forms.frontend
             {
                 MessageBox.Show(ex.Reason.ToString());
             }
+        }
+
+        private void goban_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

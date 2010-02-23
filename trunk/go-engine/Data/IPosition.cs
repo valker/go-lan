@@ -15,5 +15,13 @@ namespace go_engine.Data
         /// <param name="player">игрок, который делает ход</param>
         /// <returns>новая позиция и число съеденных камней</returns>
         Pair<IPosition, int> Move(Point point, MokuState player);
+
+        IPosition GetParentPosition();
+
+        System.Collections.Generic.IEnumerable<IPosition> GetChildrenPositions();
+
+        void SetParent(IPosition parent);
+
+        void AddChild(IPosition child);
     }
 }

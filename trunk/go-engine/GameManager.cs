@@ -9,7 +9,7 @@ namespace go_engine
     {
         private readonly PositionStorage _positionStorage;
         private Dictionary<MokuState, int> _eated;
-
+        public IEnumerable<KeyValuePair<MokuState, int>> Eated { get { return _eated; } }
         private IPosition _currentPosition;
 
         public GameManager()
@@ -36,12 +36,41 @@ namespace go_engine
 
         public IPosition RootPosition { get; private set; }
 
-        public MokuState CurrentPlayer { get; private set; }
+        MokuState _currentPlayer=MokuState.Empty;
+        public MokuState CurrentPlayer
+        {
+            get { return _currentPlayer; }
+            private set {
+                if (_currentPlayer == value) return;
+                _currentPlayer = value;
+                InvokeCurrentPlayerChanged(EventArgs.Empty);
+            }
+        }
+
         public event EventHandler CurrentPositionChanged;
+        public event EventHandler CurrentPlayerChanged;
+        public event EventHandler EatedChanged;
 
         private void InvokeCurrentPositionChanged(EventArgs e)
         {
             EventHandler handler = CurrentPositionChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        private void InvokeCurrentPlayerChanged(EventArgs e)
+        {
+            EventHandler handler = CurrentPlayerChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+        private void InvokeEatedChanged(EventArgs e)
+        {
+            EventHandler handler = EatedChanged;
             if (handler != null)
             {
                 handler(this, e);
@@ -70,7 +99,11 @@ namespace go_engine
         {
             var reply = _positionStorage.Move(CurrentPosition, point, CurrentPlayer);
             CurrentPosition = reply.First;
-            _eated[CurrentPlayer] += reply.Second;
+            if (reply.Second != 0)
+            {
+                _eated[CurrentPlayer] += reply.Second;
+                InvokeEatedChanged(EventArgs.Empty);
+            }
             CurrentPlayer = Position.Opposite(CurrentPlayer);
         }
     }

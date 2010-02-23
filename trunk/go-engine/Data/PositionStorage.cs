@@ -7,8 +7,15 @@ namespace go_engine.Data
 {
     public class PositionStorage
     {
-        private Dictionary<IPosition, IPosition> _childToParent = new Dictionary<IPosition, IPosition>();
-        private Dictionary<IPosition, ICollection<IPosition>> _parentToChildren = new Dictionary<IPosition, ICollection<IPosition>>();
+        //private Dictionary<IPosition, IPosition> _childToParent = new Dictionary<IPosition, IPosition>();
+        //private Dictionary<IPosition, ICollection<IPosition>> _parentToChildren = new Dictionary<IPosition, ICollection<IPosition>>();
+
+        private List<IPosition> _positions = new List<IPosition>();
+
+        /// <summary>
+        /// Возвращает исходную позицию в дереве игры
+        /// </summary>
+        public IPosition Initial { get; private set; }
 
         public Rules Rules { get; private set; }
 
@@ -37,10 +44,6 @@ namespace go_engine.Data
             Rules = goRules;
         }
 
-        /// <summary>
-        /// Возвращает исходную позицию в дереве игры
-        /// </summary>
-        public IPosition Initial { get; private set; }
 
         /// <summary>
         /// Произвести ход по правилам Го
@@ -112,9 +115,12 @@ namespace go_engine.Data
         /// null, если данная позиция корневая</returns>
         public IPosition GetParentPosition(IPosition position)
         {
-            IPosition parent;
-            parent = _childToParent.TryGetValue(position, out parent) ? parent : null;
-            return parent;
+            if (position == null)
+            {
+                throw new ArgumentNullException("position");
+            }
+
+            return position.GetParentPosition();
         }
 
         /// <summary>
@@ -124,7 +130,12 @@ namespace go_engine.Data
         /// <returns>Дочерние позиции для данной исходной</returns>
         public IEnumerable<IPosition> GetChildPositions(IPosition position)
         {
-            return _parentToChildren[position];
+            if (position == null)
+            {
+                throw new ArgumentNullException("position");
+            }
+
+            return position.GetChildrenPositions();
         }
 
         /// <summary>
@@ -162,7 +173,8 @@ namespace go_engine.Data
         /// <param name="position">новая позиция</param>
         private void OnAddNewPosition(IPosition position)
         {
-            _parentToChildren.Add(position, new List<IPosition>());
+            _positions.Add(position);
+            //_parentToChildren.Add(position, new List<IPosition>());
         }
 
         /// <summary>
@@ -172,14 +184,17 @@ namespace go_engine.Data
         /// <param name="child">дочерняя позиция</param>
         private void AddRelationship(IPosition parent, IPosition child)
         {
-            // добавить ссылку ребёнок -> родитель
-            _childToParent.Add(child, parent);
+            parent.AddChild(child);
+            child.SetParent(parent);
+            
+            //// добавить ссылку ребёнок -> родитель
+            //_childToParent.Add(child, parent);
 
-            // добавить контейнер для детей нового ребёнка
-            OnAddNewPosition(child);
+            //// добавить контейнер для детей нового ребёнка
+            //OnAddNewPosition(child);
 
-            // добавить ссылку родитель -> ребёнок
-            _parentToChildren[parent].Add(child);
+            //// добавить ссылку родитель -> ребёнок
+            //_parentToChildren[parent].Add(child);
         }
     }
 }
