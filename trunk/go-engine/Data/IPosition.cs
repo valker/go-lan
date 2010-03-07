@@ -23,5 +23,7 @@ namespace go_engine.Data
         void SetParent(IPosition parent);
 
         void AddChild(IPosition child);
+
+        System.Collections.Generic.IDictionary<MokuState, int> GetTerritories();
     }
 }
