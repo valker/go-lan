@@ -18,15 +18,18 @@ namespace win.forms.frontend
             InitializeComponent();
         }
 
-        Dictionary<MokuState, Label> labels = new Dictionary<MokuState, Label>();
+        Dictionary<MokuState, Label> labelsCaptured = new Dictionary<MokuState, Label>();
+        Dictionary<MokuState, Label> labelsTerritory = new Dictionary<MokuState, Label>();
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Manager.CurrentPositionChanged += ManagerOnCurrentPositionChanged;
             Manager.CurrentPlayerChanged += new EventHandler(Manager_CurrentPlayerChanged);
             Manager.EatedChanged += new EventHandler(Manager_EatedChanged);
-            labels.Add(MokuState.Black, lblBlack);
-            labels.Add(MokuState.White, lblWhite);
+            labelsCaptured.Add(MokuState.Black, lblCapturedByBlack);
+            labelsCaptured.Add(MokuState.White, lblCapturedByWhite);
+            labelsTerritory.Add(MokuState.Black, lblTerritoryOfBlack);
+            labelsTerritory.Add(MokuState.White, lblTerritoryOfWhite);
             UpdateGobanImage();
         }
 
@@ -34,7 +37,7 @@ namespace win.forms.frontend
         {
             foreach (var eatedItem in Manager.Eated)
             {
-                labels[eatedItem.Key].Text = eatedItem.Value.ToString();
+                labelsCaptured[eatedItem.Key].Text = eatedItem.Value.ToString();
             }
         }
 
@@ -46,6 +49,16 @@ namespace win.forms.frontend
         private void ManagerOnCurrentPositionChanged(object sender, EventArgs args)
         {
             UpdateGobanImage();
+            UpdateTerritoryCounters();
+        }
+
+        private void UpdateTerritoryCounters()
+        {
+            var terr = Manager.GetTerritories();
+            foreach (var moku in terr.Keys)
+            {
+                labelsTerritory[moku].Text = terr[moku].ToString();
+            }
         }
 
         private void UpdateGobanImage()

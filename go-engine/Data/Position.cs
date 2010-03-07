@@ -423,5 +423,78 @@ namespace go_engine.Data
         }
 
         #endregion
+
+        #region Члены IPosition
+
+
+        public IDictionary<MokuState, int> GetTerritories()
+        {
+            IDictionary<MokuState, int> dict = new Dictionary<MokuState, int>();
+            dict.Add(MokuState.Black, 0);
+            dict.Add(MokuState.White, 0);
+            // 1. получить все пустые поля
+            List<Point> empties = GetEmpties();
+            // 2. пока список пустых полей не пуст
+            var emptyAreas = new List<Group>();
+            foreach(Point empt in empties)
+            {
+                IEnumerable<Group> neigbourAreas = GetNeibourAreas(emptyAreas, empt);
+            // 3. для каждого пустого поля пробовать найти соседей среди пустых областей
+                Group grp = new Group(empt, MokuState.Empty);
+                switch (neigbourAreas.Count())
+                {
+                    // 4. если есть 0 соседей - создать новую область
+                    case 0:
+                        break;
+                    // 5-6. если есть 1 или больше соседей - объединить их в одну область
+                    default:
+                        foreach (var ngrp in neigbourAreas.ToArray())
+                        {
+                            grp = new Group(grp, ngrp);
+                            emptyAreas.Remove(ngrp);
+                        }
+                        break;
+                }
+                emptyAreas.Add(grp);
+            }
+
+            // 7. для каждой области определить, с какими камнями она соседствует
+            int s = Field.Size;
+            foreach (var gr in emptyAreas)
+            {
+                var border = gr.SelectMany(st => st.Neighbours(s)).Where(st => Field.GetAt(st)!= MokuState.Empty).Distinct().ToArray();
+                var colors = border.Select(st => Field.GetAt(st)).Distinct();
+                colors = colors.ToArray();
+                // 8. если только с камнями одного цвета, то добавить площать области к площади
+                // территории данного игрока
+                if (colors.Count() == 1)
+                {
+                    dict[colors.ElementAt(0)] += gr.Count;
+                }
+            }
+            return dict;
+        }
+
+        private IEnumerable<Group> GetNeibourAreas(List<Group> emptyAreas, Point empt)
+        {
+            var nei = empt.Neighbours(Field.Size);
+            return emptyAreas.Where(gr => gr.Intersect(nei).Count() > 0);
+        }
+
+        private List<Point> GetEmpties()
+        {
+            List<Point> lst = new List<Point>();
+            for(int x = 0; x < Field.Size; ++x) {
+                for(int y = 0; y < Field.Size; ++y) {
+                    var p = new Point(x,y);
+                    if(Field.GetAt(p) == MokuState.Empty) {
+                        lst.Add(p);
+                    }
+                }
+            }
+            return lst;
+        }
+
+        #endregion
     }
 }

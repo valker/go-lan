@@ -106,5 +106,10 @@ namespace go_engine
             }
             CurrentPlayer = Position.Opposite(CurrentPlayer);
         }
+
+        public IDictionary<MokuState, int> GetTerritories()
+        {
+            return CurrentPosition.GetTerritories();
+        }
     }
 }
