@@ -1,0 +1,9 @@
+#summary Contains requirement for product from user's perspective
+
+= Introduction =
+
+go-lan purpose is to allow users to play GO using local area network (LAN).
+
+User should be able to start new party, attach to existing party to play or to view.
+
+User should be able to save the party to SGF file (and possibly to other formats) and to restore it later.
