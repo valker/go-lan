@@ -6,4 +6,10 @@ go-lan purpose is to allow users to play GO using local area network (LAN).
 
 User should be able to start new party, attach to existing party to play or to view.
 
+= Persistence =
+
 User should be able to save the party to SGF file (and possibly to other formats) and to restore it later.
+
+= User Interface =
+Basic UI should be standard (Windows Forms or WPF).
+Optionally there could be additional visualization modules DirectX, OpenGL, etc.
