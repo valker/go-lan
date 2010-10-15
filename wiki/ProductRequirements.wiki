@@ -13,3 +13,10 @@ User should be able to save the party to SGF file (and possibly to other formats
 = User Interface =
 Basic UI should be standard (Windows Forms or WPF).
 Optionally there could be additional visualization modules DirectX, OpenGL, etc.
+
+= Modes =
+Program should have 2 modes: playing and reviewing.
+
+==Playing==
+
+==Reviewing==
