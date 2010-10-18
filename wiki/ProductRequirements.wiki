@@ -8,15 +8,25 @@ User should be able to start new party, attach to existing party to play or to v
 
 = Persistence =
 
-User should be able to save the party to SGF file (and possibly to other formats) and to restore it later.
+User should be able to save the party in any time to SGF file (and possibly to other formats) and to restore it later.
 
 = User Interface =
 Basic UI should be standard (Windows Forms or WPF).
 Optionally there could be additional visualization modules DirectX, OpenGL, etc.
+User interface should support all the feature provided by engine in the given mode.
 
 = Modes =
 Program should have 2 modes: playing and reviewing.
 
+== Switching ==
+User could switch from one mode to other in any time and multiple time during session.
+Switching from playing to reviewing is allowed only when 2 players agree to do that.
+Switching from reviewing to playing is initiated by reviewers. He should select one reviewer to be the second player.
+
 ==Playing==
+In playing mode there are 3 stages:
+ # preparing
+ # playing
+ # finishing
 
 ==Reviewing==
