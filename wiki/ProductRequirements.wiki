@@ -15,6 +15,13 @@ Basic UI should be standard (Windows Forms or WPF).
 Optionally there could be additional visualization modules DirectX, OpenGL, etc.
 User interface should support all the feature provided by engine in the given mode.
 
+= Roles =
+The people that interact with program could be separate to the following roles:
+ * Challenger - the person who want to play
+ * Player - the person who play party with the second player. Both players are peers.
+ * Viewer - the person who view the party or reviewing.
+ * Reviewer - the person who demonstrate the party with variations.
+
 = Modes =
 Program should have 2 modes: playing and reviewing.
 
@@ -25,8 +32,9 @@ Switching from reviewing to playing is initiated by reviewers. He should select 
 
 ==Playing==
 In playing mode there are 3 stages:
- # preparing
- # playing
- # finishing
+ # preparing - 2 Challengers are arranging the details of rules of party and start the game.
+ # playing - 2 Players are playing in their order. Viewers could locate existing party and look at the game. It's possible to switch to review mode if one player initiate this process, and other agree. In this case, game timer is stopped. Timer could be restored only in the stop point.
+ # finishing - 2 Players stop playing and solve the score. If the are not agree, they could continue playing.
 
 ==Reviewing==
+Reviewer could move around existing game tree, or make some moves, or to set mark to the field. In any time reviewer could start mini-playing session (without timer) with one of the viewers.
