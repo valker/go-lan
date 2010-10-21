@@ -15,6 +15,27 @@ Basic UI should be standard (Windows Forms or WPF).
 Optionally there could be additional visualization modules DirectX, OpenGL, etc.
 User interface should support all the feature provided by engine in the given mode.
 
+== Field Visualization ==
+The game field should be visualized by one possible way to understand. It means:
+ * Ko-position should be highlighted (if applicable)
+ * Last move should be highlighted
+ * It possible to mark the stones with number of move when the stone was placed.
+ * During scoring the result, the territory should be marked by the colors according to that player whom the territory belongs.
+ * During scoring the result, the death stones should be marked.
+
+== Game Controls ==
+The following controls should be available during the game:
+ * Pass move - perform pass. It tho players passed sequentioanaly the program moves to finishing stage.
+ * Review - if one player ask, and other agree, then program moves to review mode. Player who asked, becomes reviewer.
+ * Pause - it one player ask, and other agree, then program hides the field and stops the timer.
+
+== Review Controls ==
+ * Controls to move around game tree: tree map. next, prev, begin, end
+ * Continue game - players come back to playing mode
+
+== Communications Controls ==
+ * Chat
+
 = Roles =
 The people that interact with program could be separate to the following roles:
  * Challenger - the person who want to play
