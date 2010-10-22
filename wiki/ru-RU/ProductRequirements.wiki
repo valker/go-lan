@@ -1,16 +1,15 @@
 #summary Contains requirement for product from user's perspective
 
-= �������� =
+= Введение =
+Цель go-lan - позволить пользователям поиграть в Го в локальной сети.
+Пользователь должен иметь возможность начать новую игру, подключиться к уже созданной партии чтобы играть или смотреть.
 
-go-lan purpose is to allow users to play GO using local area network (LAN).
+= Сохранение =
 
-User should be able to start new party, attach to existing party to play or to view.
+Пользователь должен иметь возможность сохранить игру в любой момент в формате SGF (и возможно в других
+форматах) чтобы впоследствии востановить состояние игры.
 
-= Persistence =
-
-User should be able to save the party in any time to SGF file (and possibly to other formats) and to restore it later.
-
-= User Interface =
+= Пользовательский интерфейс =
 Basic UI should be standard (Windows Forms or WPF).
 Optionally there could be additional visualization modules DirectX, OpenGL, etc.
 User interface should support all the feature provided by engine in the given mode.
