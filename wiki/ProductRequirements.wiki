@@ -5,10 +5,12 @@
 go-lan purpose is to allow users to play GO using local area network (LAN).
 
 User should be able to start new party, attach to existing party to play or to view.
+= Go Engine =
+Engine should support customization of rules (select from list of predefined), timers, handicaps, etc..
 
 = Persistence =
 
-User should be able to save the party in any time to SGF file (and possibly to other formats) and to restore it later.
+User should be able to save the party in any time to SGF file (and possibly to other formats) and to restore it later. User should be able to restore SGF created by other applications (to review and to play, if possible).
 
 = User Interface =
 Basic UI should be standard (Windows Forms or WPF).
@@ -58,4 +60,4 @@ In playing mode there are 3 stages:
  # finishing - 2 Players stop playing and solve the score. If the are not agree, they could continue playing.
 
 ==Reviewing==
-Reviewer could move around existing game tree, or make some moves, or to set mark to the field. In any time reviewer could start mini-playing session (without timer) with one of the viewers.
+Reviewer could move around existing game tree, or make some moves, or to set mark to the field. In any time reviewer could start mini-playing session (without timer) with one of the viewers. Reviewer could give the control to one of viewers and take control back in any time.
