@@ -2,11 +2,14 @@
 
 = Introduction =
 
-go-lan purpose is to allow users to play GO using local area network (LAN).
+*go-lan* purpose is to allow users to play GO using local area network (LAN).
 
 User should be able to start new party, attach to existing party to play or to view.
+
 = Go Engine =
 Engine should support customization of rules (select from list of predefined), timers, handicaps, etc..
+
+Engine is responsible to report caller by information about what move is allowed and what not and why (to show user detailed info).
 
 = Persistence =
 
