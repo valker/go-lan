@@ -16,7 +16,7 @@ The program should also be used in contest of any levels.
 == Definitions and Abbreviations ==
 *LAN* - local area network.
 
-*KGS* - Internet server providing playing Go. [www.gokgs.com]. It is a reference of implementation custom feature if other is not required explicitly.
+*KGS* - Internet server providing playing Go. [http://www.gokgs.com]. It is a reference of implementation custom feature if other is not required explicitly.
 = Overall Description =
 == Product Perspective ==
 == Product Functions ==
