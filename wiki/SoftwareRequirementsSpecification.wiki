@@ -2,10 +2,21 @@
 
 = Introduction =
 == Product Overview ==
+*go-lan* should be stand-alone application capable to provide playing to Go in local area network. There are a number of servers that allow to play Go in Internet, but there is a lack of program working in local networks.
+
 == Purpose ==
+Main purpose of the program is tête-a-tête playing to Go.
+Additional purpose is to share knowledge about Go by viewing others playing, commenting, reviewing parties.
+
 == Scope ==
+The program audience is the Go amateurs of any level of playing from the beginners up to high levels.
+The program should also be used in contest of any levels.
+
 == Reference ==
 == Definitions and Abbreviations ==
+*LAN* - local area network.
+
+*KGS* - Internet server providing playing Go. [www.gokgs.com]. It is a reference of implementation custom feature if other is not required explicitly.
 = Overall Description =
 == Product Perspective ==
 == Product Functions ==
