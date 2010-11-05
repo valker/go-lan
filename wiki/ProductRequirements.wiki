@@ -2,9 +2,19 @@
 
 = Introduction =
 
-*go-lan* purpose is to allow users to play GO using local area network (LAN).
+Product Name : Go-Lan
+
+Author : Valentin Pimenov
+
+Purpose: is to allow users to play GO using local area network (LAN).
 
 User should be able to start new party, attach to existing party to play or to view.
+
+= Product Overview =
+
+== Playing by LAN ==
+== Contest ==
+== Review by LAN ==
 
 = Go Engine =
 Engine should support customization of rules (select from list of predefined), timers, handicaps, etc..
