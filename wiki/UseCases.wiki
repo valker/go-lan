@@ -1,0 +1,14 @@
+#contain use cases of the program
+
+= Use Cases =
+ # Pair game in local network
+ # Reviewing in local network
+
+= Pair game in local network =
+ # User A starts the program
+ # The main window with goban is shown
+ # List of opponents are shown
+ # User A can select one opponent from the list (if not empty) or change the parameters and begin waiting for the opponents
+ # Parameters of the field/rules/etc are as the same as in the last session.
+ # User can change the parameters
+ # User can press a button 'Wait a opponent'
