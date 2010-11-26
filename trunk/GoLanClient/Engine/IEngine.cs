@@ -6,14 +6,10 @@ using System.Text;
 
 namespace GoLanClient.Engine
 {
-    public interface INeibour
-    {
-        string Name { get; }
-    }
-
     public interface IEngine : INotifyPropertyChanged
     {
         IEnumerable<INeibour> Neibours { get; }
+        ICollection<IRules> Rules { get; }
         void Start();
         event EventHandler<NeiboursChangedEventArgs> NeiboursChanged;
     }

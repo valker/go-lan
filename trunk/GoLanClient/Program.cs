@@ -17,7 +17,9 @@ namespace GoLanClient
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             IEngine engine = new GoLanEngine();
-            Application.Run(new Form1(engine));
+            engine.Rules.Add(new Go.Rules());
+            engine.Rules.Add(new OtherGame.Rules());
+            Application.Run(new MainForm(engine));
         }
     }
 }
