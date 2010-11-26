@@ -12,6 +12,7 @@ namespace GoLanClient.Engine
 
         public GoLanEngine()
         {
+            Rules = new List<IRules>();
             InitializeComponent();
         }
 
@@ -30,7 +31,7 @@ namespace GoLanClient.Engine
             {
                 var removed = _neibours.Except(value);
                 var added = value.Except(_neibours);
-                _neibours = value;
+                _neibours = value.ToArray();
                 foreach (INeibour neibour in removed)
                 {
                     InvokeNeiboursChanged(new NeiboursChangedEventArgs(){Added = false,Neibour = neibour});
@@ -40,6 +41,11 @@ namespace GoLanClient.Engine
                     InvokeNeiboursChanged(new NeiboursChangedEventArgs() { Added = true, Neibour = neibour });
                 }
             }
+        }
+
+        public ICollection<IRules> Rules
+        {
+            get; set;
         }
 
         public void Start()
@@ -61,11 +67,11 @@ namespace GoLanClient.Engine
             // 
             // backgroundWorker1
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SimulateMonitoring);
 
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private void SimulateMonitoring(object sender, DoWorkEventArgs e)
         {
             var me = (BackgroundWorker) sender;
             int i = 1;
@@ -74,21 +80,29 @@ namespace GoLanClient.Engine
                 System.Threading.Thread.Sleep(2000);
                 Neibours = Neibours.Concat(Enumerable.Repeat((INeibour) new Neibour(){Name = i.ToString()}, 1)).ToArray();
                 ++i;
+
+                if (i > 4)
+                {
+                    var position = new Random().Next() % Neibours.Count();
+                    if (position < Neibours.Count())
+                    {
+                        IEnumerable<INeibour> x;
+                        
+                        if (position > 0)
+                        {
+                            x = Neibours.Take(position).ToArray();
+                        } 
+                        else
+                        {
+                            x = Enumerable.Empty<INeibour>();
+                        }
+
+                        IEnumerable<INeibour> enumerable = Neibours.Skip(position + 1).ToArray();
+                        var neibours = x.Concat(enumerable).ToArray();
+                        Neibours = neibours;
+                    }
+                }
             }
-        }
-    }
-
-    public class NeiboursChangedEventArgs : EventArgs
-    {
-        public bool Added { get; set; }
-        public INeibour Neibour { get; set; }
-    }
-
-    internal class Neibour : INeibour
-    {
-        public string Name
-        {
-            get; set;
         }
     }
 }
