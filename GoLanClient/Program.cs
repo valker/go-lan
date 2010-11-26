@@ -1,25 +1,25 @@
-﻿using System;
-using System.Linq;
-using System.Windows.Forms;
-using GoLanClient.Engine;
-using GoLanClient.UI;
+﻿
+using GoLanClient.TextBased;
 
 namespace GoLanClient
 {
+    using Engine;
+
     static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
+        //[STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             IEngine engine = new GoLanEngine();
             engine.Rules.Add(new Go.Rules());
             engine.Rules.Add(new OtherGame.Rules());
-            Application.Run(new MainForm(engine));
+
+            //new Driver(engine).Run();
+            new WinForms.Driver(engine).Run();
         }
+
     }
 }
