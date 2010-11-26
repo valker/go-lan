@@ -6,12 +6,14 @@
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{81F3F80C-2737-4EC4-AEEA-94003AC1D47E}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GoLanClient</RootNamespace>
     <AssemblyName>GoLanClient</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TextBased\Driver.cs" />
     <Compile Include="Engine\IEngine.cs" />
     <Compile Include="Engine\GoLanEngine.cs">
       <SubType>Component</SubType>
@@ -95,6 +98,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="WinForms\Driver.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGoban\Valker.UserControls.csproj">
