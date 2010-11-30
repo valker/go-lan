@@ -1,6 +1,6 @@
-﻿namespace MyGoban
+﻿namespace Valker.PlayOnLan.UI
 {
-    partial class Goban
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -20,30 +20,19 @@
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
+        #region Windows Form Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify 
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // Goban
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.DoubleBuffered = true;
-            this.Name = "Goban";
-            this.Size = new System.Drawing.Size(270, 270);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Goban_MouseClick);
-            this.Resize += new System.EventHandler(this.UserControl1_Resize);
-            this.ResumeLayout(false);
-
+            this.Text = "MainForm";
         }
 
         #endregion
-
     }
 }
