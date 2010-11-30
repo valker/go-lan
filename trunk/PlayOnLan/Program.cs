@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Windows.Forms;
 using GoLanClient.Engine;
-using GoLanClient.UI;
+using Valker.PlayOnLan.UI;
 
-namespace GoLanClient
+namespace Valker.PlayOnLan
 {
     static class Program
     {
@@ -17,7 +17,7 @@ namespace GoLanClient
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             IEngine engine = new GoLanEngine();
-            Application.Run(new Form1(engine));
+            Application.Run(new MainForm(engine));
         }
     }
 }
