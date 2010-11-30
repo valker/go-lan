@@ -45,6 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IGameCommand.cs" />
+    <Compile Include="IGameTree.cs" />
+    <Compile Include="IMoveInfo.cs" />
+    <Compile Include="IPlayer.cs" />
+    <Compile Include="IPlayfield.cs" />
+    <Compile Include="IPosition.cs" />
+    <Compile Include="IRules.cs" />
+    <Compile Include="IViewer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
