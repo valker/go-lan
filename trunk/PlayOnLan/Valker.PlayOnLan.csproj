@@ -89,6 +89,10 @@
       <Project>{CD8A3127-E2DF-48DD-BAA3-D137602CCF08}</Project>
       <Name>Valker.UserControls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Valker.Api\Valker.Api.csproj">
+      <Project>{757447CE-16F5-47D9-9E8B-DA002BDF561F}</Project>
+      <Name>Valker.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
