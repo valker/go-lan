@@ -1,10 +1,10 @@
 #contain use cases of the program
 
-= Use Cases =
- # Pair game in local network
- # Reviewing in local network
+= Варианты использования =
+ # Игра вдвоём по сети
+ # Анализ партии по сети
 
-= Pair game in local network =
+= Игра вдвоём по сети =
  # User A starts the program
  # The main window with goban is shown
  # List of opponents are shown
