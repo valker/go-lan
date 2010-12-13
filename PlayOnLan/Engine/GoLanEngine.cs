@@ -2,24 +2,46 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using GoLanClient.Engine;
+using NetworkConnect.Discovery;
+using NetworkConnect.Notification;
+using Valker.Api;
 
-namespace GoLanClient.Engine
+namespace Valker.PlayOnLan.Engine
 {
     internal class GoLanEngine : Component, IEngine
     {
-        private BackgroundWorker backgroundWorker1;
+        private BackgroundWorker listenerWorker;
+        private BackgroundWorker senderWorker;
         private IEnumerable<INeibour> _neibours = Enumerable.Empty<INeibour>();
+        private Listener _listener;
+        private Sender _sender;
 
-        public GoLanEngine()
+        public GoLanEngine(bool isServer)
         {
+            _isServer = isServer;
+            Name = Guid.NewGuid().ToString();
             InitializeComponent();
         }
 
         public event EventHandler<NeiboursChangedEventArgs> NeiboursChanged;
+        public string Name
+        {
+            get;
+            set;
+        }
 
         private void InvokeNeiboursChanged(NeiboursChangedEventArgs e)
         {
             EventHandler<NeiboursChangedEventArgs> handler = NeiboursChanged;
+            if (handler != null) handler(this, e);
+        }
+
+        public event EventHandler<OnMessageEventArgs> OnMessage;
+
+        private void InvokeOnMessage(OnMessageEventArgs e)
+        {
+            EventHandler<OnMessageEventArgs> handler = OnMessage;
             if (handler != null) handler(this, e);
         }
 
@@ -42,9 +64,25 @@ namespace GoLanClient.Engine
             }
         }
 
+
+        public void Send()
+        {
+            senderWorker.RunWorkerAsync();
+        }
+
+        public void Receive()
+        {
+            listenerWorker.RunWorkerAsync();
+        }
+
+        private Discoverer _discoverer;
+        private bool _isServer;
+
         public void Start()
         {
-            backgroundWorker1.RunWorkerAsync();
+            _discoverer = new Discoverer(Name, _isServer);
+            _discoverer.OnMessage += ForwardLog;
+            _discoverer.StartListener(_isServer);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -57,24 +95,36 @@ namespace GoLanClient.Engine
 
         private void InitializeComponent()
         {
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.listenerWorker = new System.ComponentModel.BackgroundWorker();
+            this.senderWorker = new System.ComponentModel.BackgroundWorker();
             // 
-            // backgroundWorker1
+            // listenerWorker
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.listenerWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
+            // senderWorker
+            // 
+            this.senderWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.senderWorker_DoWork);
 
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            var me = (BackgroundWorker) sender;
-            int i = 1;
-            while (!me.CancellationPending)
-            {
-                System.Threading.Thread.Sleep(2000);
-                Neibours = Neibours.Concat(Enumerable.Repeat((INeibour) new Neibour(){Name = i.ToString()}, 1)).ToArray();
-                ++i;
-            }
+            _listener = new Listener(Name);
+            _listener.OnMessage += ForwardLog;
+            _listener.Run();
+        }
+
+        private void ForwardLog(object sender, OnMessageEventArgs args)
+        {
+            InvokeOnMessage(args);
+        }
+
+        private void senderWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            _sender = new Sender(Name);
+            _sender.OnMessage += ForwardLog;
+            _sender.Run();
         }
     }
 

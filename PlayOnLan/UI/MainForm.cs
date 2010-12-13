@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GoLanClient.Engine;
+using Valker.PlayOnLan.Engine;
 
 namespace Valker.PlayOnLan.UI
 {
@@ -44,6 +45,16 @@ namespace Valker.PlayOnLan.UI
                     listView1.Items.RemoveByKey(e.Neibour.Name);
                 }
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            _engine.Send();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            _engine.Receive();
         }
     }
 }

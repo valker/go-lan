@@ -12,12 +12,13 @@ namespace Valker.PlayServer
     public class Server
     {
 
-        TcpListener listener = new TcpListener();
+        // todo: setup port
+        TcpListener listener = new TcpListener(1);
         public ServerConfig Config { get; set; }
         public Server(ServerConfig config) { Config = config; }
         public void Start() 
         {
-            listener.
+            //listener.
         }
 
 

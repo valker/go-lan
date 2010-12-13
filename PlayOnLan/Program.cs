@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Windows.Forms;
 using GoLanClient.Engine;
+using Valker.Api;
+using Valker.PlayOnLan.Engine;
 using Valker.PlayOnLan.UI;
 
 namespace Valker.PlayOnLan
@@ -12,12 +14,18 @@ namespace Valker.PlayOnLan
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            IEngine engine = new GoLanEngine();
+            IEngine engine = new GoLanEngine(args.FirstOrDefault(s => s == "server") != null);
+            engine.OnMessage += EngineOnOnMessage;
             Application.Run(new MainForm(engine));
+        }
+
+        private static void EngineOnOnMessage(object sender, OnMessageEventArgs args)
+        {
+            Console.WriteLine(args.Message);
         }
     }
 }
