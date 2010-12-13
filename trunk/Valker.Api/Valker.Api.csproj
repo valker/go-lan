@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="IGameCommand.cs" />
     <Compile Include="IGameTree.cs" />
+    <Compile Include="ILoggable.cs" />
     <Compile Include="IMoveInfo.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="IPlayfield.cs" />

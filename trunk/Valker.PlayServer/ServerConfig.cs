@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Valker.PlayServer
 {
-    class ServerConfig
+    public class ServerConfig
     {
         int Port { get; set; }
     }
