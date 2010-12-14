@@ -1,0 +1,32 @@
+﻿===
+REQUEST: CONNECT <username>
+RESPONCE: OK
+===
+DISCONNECT
+RESPONCE: ---
+===
+CREATE <roomname>
+RESPONCE: OK
+RESPONCE: BUSY
+RESPONCE: PROHIBITED
+===
+DELETE <roomname>
+RESPONCE: OK
+===
+KICK <roomname> <username>
+RESPONCE: OK
+===
+LIST
+RESPONCE: <room name="room1"/><room name="room2"/>
+===
+LISTROOM
+RESPONCE: <user name="user1"/><user name="user2"/>
+===
+ENTER <roomname>
+RESPONCE: OK
+RESPONCE: NOT_EXIST
+===
+LEAVE <roomname>
+RESPONCE: OK
+RESPONCE: 
+===

@@ -48,6 +48,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Valker.PlayServer\Valker.PlayServer.csproj">
+      <Project>{E7F4E9EB-09A2-4166-8B11-E0399C8CED99}</Project>
+      <Name>Valker.PlayServer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

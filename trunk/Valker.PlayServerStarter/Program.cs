@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Valker.PlayServer;
 
 namespace Valker.PlayServerStarter
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            IListener listener = new Listener();
+            listener.Start();
+            Console.WriteLine("Press any key...");
+            Console.ReadLine();
         }
     }
 }
