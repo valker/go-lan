@@ -1,16 +1,21 @@
-using System;
-using System.Diagnostics;
-using System.Net;
-using System.Net.Sockets;
-using GapService;
 
 namespace Valker.PlayServer
 {
+    using System;
+    using System.Diagnostics;
+    using System.Net;
+    using System.Net.Sockets;
+    using GapService;
+
     public class ConnectionEstablisher : IConnectionEstablisher
     {
         #region IConnectionEstablisher Members
 
         public event EventHandler<ConnectionEstablishedEventArgs> ConnectionEstablished;
+
+        public int Port { get; private set; }
+
+        public TcpListener TcpListener { get; set; }
 
         public void Start(int port)
         {
@@ -33,27 +38,39 @@ namespace Valker.PlayServer
             }
         }
 
-        public int Port { get; set; }
-
-        public TcpListener TcpListener { get; set; }
+        public void Stop()
+        {
+            TcpListener.Stop();
+        }
 
         #endregion
 
         private void AcceptTcpClientCallback(IAsyncResult result)
         {
+            TcpClient client = ExtractClient(result);
+
+            if (client != null)
+            {
+                var e = new ConnectionEstablishedEventArgs {TcpClient = client};
+                InvokeConnectionEstablished(e);
+            }
+        }
+
+        private TcpClient ExtractClient(IAsyncResult result)
+        {
             var asyncState = (TcpListener) result.AsyncState;
+            TcpClient client = null;
             try
             {
-                TcpClient client = asyncState.EndAcceptTcpClient(result);
-                var e = new ConnectionEstablishedEventArgs();
-                e.TcpClient = client;
-                InvokeConnectionEstablished(e);
+                client = asyncState.EndAcceptTcpClient(result);
                 BeginAcceptTcpClient();
             }
             catch (Exception exception)
             {
                 Debug.WriteLine(exception.ToString());
             }
+
+            return client;
         }
 
         private void BeginAcceptTcpClient()
@@ -63,11 +80,7 @@ namespace Valker.PlayServer
 
         private void InvokeConnectionEstablished(ConnectionEstablishedEventArgs e)
         {
-            EventHandler<ConnectionEstablishedEventArgs> connectionEstablished;
-            lock (this)
-            {
-                connectionEstablished = ConnectionEstablished;
-            }
+            var connectionEstablished = ConnectionEstablished;
             if (connectionEstablished != null)
             {
                 connectionEstablished(this, e);
