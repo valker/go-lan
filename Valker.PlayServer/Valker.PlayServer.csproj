@@ -45,9 +45,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Server.cs" />
+    <Compile Include="AnnouncerInfo.cs" />
+    <Compile Include="CommandReceiver.cs" />
+    <Compile Include="ConnectionEstablishedEventArgs.cs" />
+    <Compile Include="ConnectionEstablisher.cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="GapException.cs" />
+    <Compile Include="GapUtil.cs" />
+    <Compile Include="ICommandReceiver.cs" />
+    <Compile Include="IConnectionEstablisher.cs" />
+    <Compile Include="IClient.cs" />
+    <Compile Include="IIdentifiedClient.cs" />
+    <Compile Include="IListener.cs" />
+    <Compile Include="IListenerCollection.cs" />
+    <Compile Include="IMessageInfo.cs" />
+    <Compile Include="IPassThroughConnection.cs" />
+    <Compile Include="Listener.cs" />
+    <Compile Include="ListenerCollection.cs" />
+    <Compile Include="MessageInfo.cs" />
+    <Compile Include="MessageReceivedEventArgs.cs" />
+    <Compile Include="PassThroughConnection.cs" />
+    <Compile Include="ReadCompletedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConfig.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Protocol.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
