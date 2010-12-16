@@ -2,20 +2,34 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace Valker.PlayServer
 {
+    internal interface IRoom
+    {
+        void AddClient(IClient client);
+        void RemoveClient(IClient client);
+        IEnumerable<IClient> GetClients();
+        string Name { get; }
+    }
+
     public class Listener : IListener
     {
-        private readonly ICollection<IIdentifiedClient> _announcers = new List<IIdentifiedClient>();
+        // List of rooms
+        private List<IRoom> _rooms = new List<IRoom>();
+        // List of clients
+        private List<IClient> _clients = new List<IClient>();
+
+//        private readonly ICollection<IIdentifiedClient> _announcers = new List<IIdentifiedClient>();
         private readonly ICommandReceiver _commandReceiver = new CommandReceiver();
         private readonly IConnectionEstablisher _connectionEstablisher = new ConnectionEstablisher();
-        private readonly IListenerCollection _listenersClients = new ListenerCollection();
-        private readonly List<IPassThroughConnection> _passThroughConnections = new List<IPassThroughConnection>();
-        private readonly DateTime _startTime = DateTime.Now;
+//        private readonly IListenerCollection _listenersClients = new ListenerCollection();
+//        private readonly List<IPassThroughConnection> _passThroughConnections = new List<IPassThroughConnection>();
+//        private readonly DateTime _startTime = DateTime.Now;
 
-        private readonly Dictionary<string, ExecuteCommandDelegate> messageHandlers =
-            new Dictionary<string, ExecuteCommandDelegate>();
+//        private readonly Dictionary<string, ExecuteCommandDelegate> messageHandlers =
+//            new Dictionary<string, ExecuteCommandDelegate>();
 
         public Listener()
         {
@@ -23,11 +37,11 @@ namespace Valker.PlayServer
             _connectionEstablisher.ConnectionEstablished +=
                 OnConnectionEstablished;
             _commandReceiver.MessageReceived += CommandReceiverOnMessageReceived;
-            messageHandlers.Add("LISTEN", CreateListenerClient);
-            messageHandlers.Add("ANNOUNCE", CreateAnnouncerClient);
-            messageHandlers.Add("ACQUIRE", CreateAcquirerClient);
-            messageHandlers.Add("REPORT", ReportClients);
-            messageHandlers.Add("STATUS", ReportStatus);
+//            messageHandlers.Add("LISTEN", CreateListenerClient);
+//            messageHandlers.Add("ANNOUNCE", CreateAnnouncerClient);
+//            messageHandlers.Add("ACQUIRE", CreateAcquirerClient);
+//            messageHandlers.Add("REPORT", ReportClients);
+//            messageHandlers.Add("STATUS", ReportStatus);
         }
 
         public int Port { get; set; }
@@ -48,30 +62,35 @@ namespace Valker.PlayServer
 
         #endregion
 
-        private void ClosePassthrough(IPassThroughConnection passThroughConnection)
-        {
-            _listenersClients.SendMessage("103 DISCONNECTED " + passThroughConnection.Announcer.ID);
-            lock (_passThroughConnections)
-            {
-                _passThroughConnections.Remove(passThroughConnection);
-            }
-        }
+//        private void ClosePassthrough(IPassThroughConnection passThroughConnection)
+//        {
+//            _listenersClients.SendMessage("103 DISCONNECTED " + passThroughConnection.Announcer.ID);
+//            lock (_passThroughConnections)
+//            {
+//                _passThroughConnections.Remove(passThroughConnection);
+//            }
+//        }
 
         private void CommandReceiverOnMessageReceived(object sender, EventArgs args)
         {
-            ExecuteCommandDelegate delegate2;
             var args2 = (MessageReceivedEventArgs) args;
-            string key = args2.Message.Split(new char[] {' '})[0];
-            if (messageHandlers.TryGetValue(key, out delegate2))
-            {
-                delegate2(args2);
-            }
-            else
-            {
-                args2.Client.WriteAsyncAndDispose("402 BAD COMMAND\r\n");
-            }
+            var message = args2.Message;
+            var client = args2.Client;
+
+            //XmlSerializer xmlSerializer = new XmlSerializer(XmlTypeMapping());
+
+//            string key = args2.Message.Split(new char[] {' '})[0];
+//            if (messageHandlers.TryGetValue(key, out delegate2))
+//            {
+//                delegate2(args2);
+//            }
+//            else
+//            {
+//                args2.Client.WriteAsyncAndDispose("402 BAD COMMAND\r\n");
+//            }
         }
 
+/*
         private void CreateAcquirerClient(MessageReceivedEventArgs args)
         {
             Func<IPassThroughConnection, bool> predicate = null;
@@ -121,7 +140,9 @@ namespace Valker.PlayServer
                 }
             }
         }
+*/
 
+/*
         private void CreateAnnouncerClient(MessageReceivedEventArgs args)
         {
             IClient gapClient = args.Client;
@@ -140,7 +161,9 @@ namespace Valker.PlayServer
                 _listenersClients.SendMessage("101 ANNOUNCE " + id);
             }
         }
+*/
 
+/*
         private void CreateListenerClient(MessageReceivedEventArgs args)
         {
             IClient gapClient = args.Client;
@@ -150,7 +173,9 @@ namespace Valker.PlayServer
                 _listenersClients.Add(gapClient);
             }
         }
+*/
 
+/*
         private IIdentifiedClient ExtractAnnouncerByID(string id)
         {
             IIdentifiedClient client;
@@ -169,7 +194,9 @@ namespace Valker.PlayServer
             }
             return client;
         }
+*/
 
+/*
         private static string GetId(string message)
         {
             string[] strArray = message.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
@@ -179,6 +206,7 @@ namespace Valker.PlayServer
             }
             return strArray[1];
         }
+*/
 
         private void OnConnectionEstablished(object sender, ConnectionEstablishedEventArgs args)
         {
@@ -186,12 +214,15 @@ namespace Valker.PlayServer
             _commandReceiver.Start(client);
         }
 
+/*
         private void PassthroughClosed(object sender, EventArgs e)
         {
             var passThroughConnection = (IPassThroughConnection) sender;
             ClosePassthrough(passThroughConnection);
         }
+*/
 
+/*
         private void ReportClients(MessageReceivedEventArgs args)
         {
             string message =
@@ -203,7 +234,9 @@ namespace Valker.PlayServer
                                 delegate(IPassThroughConnection connection) { return ("102 ACQUIRED " + connection.Announcer.ID + "\r\n"); }).ToArray<string>());
             args.Client.WriteAsyncAndDispose(message);
         }
+*/
 
+/*
         private void ReportStatus(MessageReceivedEventArgs args)
         {
             string message =
@@ -214,11 +247,7 @@ namespace Valker.PlayServer
                                   });
             args.Client.WriteAsyncAndDispose(message);
         }
+*/
 
-        #region Nested type: ExecuteCommandDelegate
-
-        private delegate void ExecuteCommandDelegate(MessageReceivedEventArgs args);
-
-        #endregion
     }
 }
