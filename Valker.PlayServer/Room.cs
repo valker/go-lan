@@ -12,6 +12,14 @@ namespace Valker.PlayServer
             PermissionChecker = new PermissionsChecker();
         }
 
+        public Room(string name, IClient creator) : this(name)
+        {
+            Name = name;
+            PermissionsChecker checker = new PermissionsChecker();
+            checker.GrantPermissions(creator, Permissions.All);
+            PermissionChecker = checker;
+        }
+
         /// <summary>
         /// Add new client to the room
         /// </summary>

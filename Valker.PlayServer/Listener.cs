@@ -13,15 +13,8 @@ namespace Valker.PlayServer
         // List of clients
         private List<IClient> _clients = new List<IClient>();
 
-//        private readonly ICollection<IIdentifiedClient> _announcers = new List<IIdentifiedClient>();
         private readonly ICommandReceiver _commandReceiver = new CommandReceiver();
         private readonly IConnectionEstablisher _connectionEstablisher = new ConnectionEstablisher();
-//        private readonly IListenerCollection _listenersClients = new ListenerCollection();
-//        private readonly List<IPassThroughConnection> _passThroughConnections = new List<IPassThroughConnection>();
-//        private readonly DateTime _startTime = DateTime.Now;
-
-//        private readonly Dictionary<string, ExecuteCommandDelegate> messageHandlers =
-//            new Dictionary<string, ExecuteCommandDelegate>();
 
         public Listener()
         {
