@@ -60,13 +60,18 @@
     <Compile Include="IListenerCollection.cs" />
     <Compile Include="IMessageInfo.cs" />
     <Compile Include="IPassThroughConnection.cs" />
+    <Compile Include="IPermissionChecker.cs" />
+    <Compile Include="IRoom.cs" />
     <Compile Include="Listener.cs" />
     <Compile Include="ListenerCollection.cs" />
     <Compile Include="MessageInfo.cs" />
     <Compile Include="MessageReceivedEventArgs.cs" />
     <Compile Include="PassThroughConnection.cs" />
+    <Compile Include="Permissions.cs" />
+    <Compile Include="PermissionsChecker.cs" />
     <Compile Include="ReadCompletedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Room.cs" />
     <Compile Include="ServerConfig.cs" />
   </ItemGroup>
   <ItemGroup>
