@@ -17,9 +17,8 @@ namespace Valker.PlayOnLan.Engine
         private Listener _listener;
         private Sender _sender;
 
-        public GoLanEngine(bool isServer)
+        public GoLanEngine()
         {
-            _isServer = isServer;
             Name = Guid.NewGuid().ToString();
             InitializeComponent();
         }
@@ -67,22 +66,14 @@ namespace Valker.PlayOnLan.Engine
 
         public void Send()
         {
-            senderWorker.RunWorkerAsync();
         }
 
         public void Receive()
         {
-            listenerWorker.RunWorkerAsync();
         }
-
-        private Discoverer _discoverer;
-        private bool _isServer;
 
         public void Start()
         {
-            _discoverer = new Discoverer(Name, _isServer);
-            _discoverer.OnMessage += ForwardLog;
-            _discoverer.StartListener(_isServer);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -110,9 +101,6 @@ namespace Valker.PlayOnLan.Engine
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            _listener = new Listener(Name);
-            _listener.OnMessage += ForwardLog;
-            _listener.Run();
         }
 
         private void ForwardLog(object sender, OnMessageEventArgs args)
@@ -122,9 +110,6 @@ namespace Valker.PlayOnLan.Engine
 
         private void senderWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            _sender = new Sender(Name);
-            _sender.OnMessage += ForwardLog;
-            _sender.Run();
         }
     }
 
