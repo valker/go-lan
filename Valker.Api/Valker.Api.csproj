@@ -53,6 +53,7 @@
     <Compile Include="IPlayfield.cs" />
     <Compile Include="IPosition.cs" />
     <Compile Include="IRules.cs" />
+    <Compile Include="ITransport.cs" />
     <Compile Include="IViewer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
