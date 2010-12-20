@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using GoLanClient.Engine;
 using Valker.Api;
 using Valker.PlayOnLan.Engine;
 using Valker.PlayOnLan.UI;
