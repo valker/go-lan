@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using GoLanClient.Engine;
 using Valker.PlayOnLan.Engine;
 
 namespace Valker.PlayOnLan.UI

@@ -3,15 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using Valker.PlayOnLan.Engine;
 
-namespace GoLanClient.Engine
+namespace Valker.PlayOnLan.Engine
 {
-    public interface INeibour
-    {
-        string Name { get; }
-    }
-
     public interface IEngine : INotifyPropertyChanged, ILoggable
     {
         IEnumerable<INeibour> Neibours { get; }
@@ -21,5 +15,4 @@ namespace GoLanClient.Engine
         void Send();
         void Receive();
     }
-
 }

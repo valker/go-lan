@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using GoLanClient.Engine;
 using NetworkConnect.Discovery;
 using NetworkConnect.Notification;
 using Valker.Api;
@@ -110,20 +109,6 @@ namespace Valker.PlayOnLan.Engine
 
         private void senderWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-        }
-    }
-
-    public class NeiboursChangedEventArgs : EventArgs
-    {
-        public bool Added { get; set; }
-        public INeibour Neibour { get; set; }
-    }
-
-    internal class Neibour : INeibour
-    {
-        public string Name
-        {
-            get; set;
         }
     }
 }

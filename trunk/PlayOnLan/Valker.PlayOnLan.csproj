@@ -55,6 +55,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Engine\ILoggable.cs" />
+    <Compile Include="Engine\INeibour.cs" />
+    <Compile Include="Engine\Neibour.cs" />
+    <Compile Include="Engine\NeiboursChangedEventArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Engine\GoLanEngine.resx">
