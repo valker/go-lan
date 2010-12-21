@@ -6,7 +6,7 @@ using Valker.Api;
 
 namespace Valker.PlayOnLan.Transport
 {
-    class XmppTransport : ITransports 
+    class XmppTransport : ITransport 
     {
     }
 }

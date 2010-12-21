@@ -17,7 +17,7 @@ namespace Valker.PlayOnLan
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            IEngine engine = new GoLanEngine(args.FirstOrDefault(s => s == "server") != null);
+            IEngine engine = new GoLanEngine();
             engine.OnMessage += EngineOnOnMessage;
             Application.Run(new MainForm(engine));
         }
