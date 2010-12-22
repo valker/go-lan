@@ -10,5 +10,9 @@ namespace Valker.Api
     /// </summary>
     public interface ITransport
     {
+        void Start();
+        event EventHandler<ClientEventArgs> ClientAdded;
+        event EventHandler<ClientEventArgs> ClientRemoved;
+        string Name { get; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Linq;
+using System.Diagnostics;
 using System.Windows.Forms;
 using Valker.Api;
-using Valker.PlayOnLan.Engine;
+using Valker.PlayOnLan.Transport;
 using Valker.PlayOnLan.UI;
 
 namespace Valker.PlayOnLan
@@ -17,14 +17,18 @@ namespace Valker.PlayOnLan
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            IEngine engine = new GoLanEngine();
+
+            IEngine engine = new Engine.Engine();
+            //engine.AddTransport(new XmppTransport());
+            var mainForm = new MainForm(engine);
+            engine.AddTransport(new LocalTransport(mainForm));
             engine.OnMessage += EngineOnOnMessage;
-            Application.Run(new MainForm(engine));
+            Application.Run(mainForm);
         }
 
         private static void EngineOnOnMessage(object sender, OnMessageEventArgs args)
         {
-            Console.WriteLine(args.Message);
+            Debug.WriteLine(args.Message);
         }
     }
 }
