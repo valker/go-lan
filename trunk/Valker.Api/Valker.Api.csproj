@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientEventArgs.cs" />
+    <Compile Include="IClient.cs" />
+    <Compile Include="IEngine.cs" />
     <Compile Include="IGameCommand.cs" />
     <Compile Include="IGameTree.cs" />
     <Compile Include="ILoggable.cs" />

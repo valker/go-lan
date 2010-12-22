@@ -6,62 +6,79 @@ using System.Linq;
 using agsXMPP;
 using agsXMPP.protocol.client;
 using agsXMPP.protocol.iq.agent;
+using agsXMPP.protocol.iq.disco;
 using agsXMPP.protocol.iq.roster;
+using agsXMPP.Xml.Dom;
 using NetworkConnect.Discovery;
 using NetworkConnect.Notification;
 using Valker.Api;
 
 namespace Valker.PlayOnLan.Engine
 {
-    internal class GoLanEngine : Component, IEngine
+    internal class Engine : Component, IEngine
     {
         private BackgroundWorker listenerWorker;
         private BackgroundWorker senderWorker;
         private IEnumerable<INeibour> _neibours = Enumerable.Empty<INeibour>();
-        private Listener _listener;
-        private Sender _sender;
-        private XmppClientConnection _connection;
+        private List<ITransport> _transports = new List<ITransport>();
 
-        public GoLanEngine()
+        public Engine()
         {
             Name = Guid.NewGuid().ToString();
             InitializeComponent();
-            _connection = new XmppClientConnection();
-            Jid jid = new Jid("admin@MOSDB9VF4J");
-            _connection.Password = "12345";
-            _connection.Username = jid.User;
-            _connection.Server = jid.Server;
-            _connection.AutoAgents = false;
-            _connection.AutoPresence = true;
-            _connection.AutoRoster = true;
-            _connection.AutoResolveConnectServer = true;
-            _connection.OnRosterStart += xmppCon_OnRosterStart;
-            _connection.OnRosterItem += xmppCon_OnRosterItem;
-            _connection.OnRosterEnd += xmppCon_OnRosterEnd;
-            _connection.OnPresence += xmppCon_OnPresence;
-            _connection.OnMessage += xmppCon_OnMessage;
-            _connection.OnLogin += xmppCon_OnLogin;
-
-            _connection.Open();
 
         }
 
+/*
         private void xmppCon_OnLogin(object sender)
         {
             Debug.WriteLine("Logged");
-            _connection.Status = "ON GAME";
+            _connection.Status = "online";
             _connection.SendMyPresence();
+            _disco.DiscoverItems(new Jid(_connection.Server), Cb);
         }
+*/
 
+/*
+        private void Cb(object sender, IQ iq, object data)
+        {
+            if (iq.Type == IqType.result)
+            {
+                Element query = iq.Query;
+                if (query != null && query.GetType() == typeof(DiscoItems))
+                {
+                    DiscoItems items = query as DiscoItems;
+                    DiscoItem[] itms = items.GetDiscoItems();
+
+                    foreach (DiscoItem itm in itms)
+                    {
+                        if (itm.Jid != null)
+                            _disco.DiscoverInformation(itm.Jid, new IqCB(Cb), itm);
+                    }
+                }
+            }
+        }
+*/
+
+/*
         private void xmppCon_OnMessage(object sender, Message msg)
         {
             Debug.WriteLine(msg.Body);
+            _connection.Send(new Message(new Jid("valker@MOSDB9VF4J"), msg.Body.ToUpper()));
         }
+*/
 
+/*
         private void xmppCon_OnPresence(object sender, Presence pres)
         {
-            Debug.WriteLine(pres.Nickname + " : " + pres.Status);
+            if(pres.Type == PresenceType.subscribe)
+            {
+                Debug.WriteLine("request:" + pres.From);
+                PresenceManager pm = new PresenceManager(_connection);
+                pm.ApproveSubscriptionRequest(pres.From);
+            }
         }
+*/
 
         private void xmppCon_OnRosterEnd(object sender)
         {
@@ -128,8 +145,22 @@ namespace Valker.PlayOnLan.Engine
         {
         }
 
+        public void AddTransport(ITransport transport)
+        {
+            _transports.Add(transport);
+        }
+
         public void Start()
         {
+            foreach (var transport in _transports)
+            {
+                transport.Start();
+            }
+        }
+
+        public IEnumerable<ITransport> Transports
+        {
+            get { return _transports.ToArray(); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
