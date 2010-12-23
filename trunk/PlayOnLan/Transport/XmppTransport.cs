@@ -94,12 +94,12 @@ namespace Valker.PlayOnLan.Transport
             // todo: process _rosterList
             foreach (var item in _rosterList.Except(_tmpRosterList))
             {
-                InvokeClientRemoved(new ClientEventArgs(){Client = new Client(item)});
+                InvokeClientRemoved(new ClientEventArgs(){Client = new XmppClient(item)});
             }
 
             foreach (var item in _tmpRosterList.Except(_rosterList))
             {
-                InvokeClientAdded(new ClientEventArgs(){Client = new Client(item)});
+                InvokeClientAdded(new ClientEventArgs(){Client = new XmppClient(item)});
             }
 
             _rosterList = _tmpRosterList;

@@ -12,7 +12,7 @@ namespace Valker.PlayOnLan.Transport
         private MainForm _mainForm;
         private LocalForm _localForm;
 
-        List<IClient> _clients = new List<IClient>();
+        List<LocalClientForm> _clients = new List<LocalClientForm>();
 
         public LocalTransport(MainForm form)
         {
@@ -25,19 +25,30 @@ namespace Valker.PlayOnLan.Transport
             _localForm.Show(_mainForm);
         }
 
-        public void AddClient(IClient client)
+        public void AddClient(string clientName)
+        {
+            AddClient(CreateClient(clientName));
+        }
+
+        private void AddClient(LocalClientForm client)
         {
             _clients.Add(client);
-            client.Closed += ClientOnClosed;
             InvokeClientAdded(new ClientEventArgs(){Client = client});
+        }
+
+        private LocalClientForm CreateClient(string clientName)
+        {
+            var client = new LocalClientForm(clientName);
+            client.Closed += ClientOnClosed;
+            return client;
         }
 
         private void ClientOnClosed(object sender, EventArgs args)
         {
-            RemoveClient((IClient) sender);
+            RemoveClient((LocalClientForm)sender);
         }
 
-        public void RemoveClient(IClient client)
+        public void RemoveClient(LocalClientForm client)
         {
             _clients.Remove(client);
             InvokeClientRemoved(new ClientEventArgs() { Client = client });
@@ -63,9 +74,9 @@ namespace Valker.PlayOnLan.Transport
             if (handler != null) handler(this, e);
         }
 
-        public IClient FindClient(string name)
+        public LocalClientForm FindClient(string clientName)
         {
-            return _clients.Find(client => client.Name == name);
+            return _clients.Find(client => client.Name == clientName);
         }
     }
 }
