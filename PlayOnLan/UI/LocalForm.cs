@@ -42,7 +42,13 @@ namespace Valker.PlayOnLan.UI
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _transport.AddClient(new LocalClientForm(textBox1.Text));
+            var name = textBox1.Text;
+            if (name.Length == 0)
+            {
+                return;
+            }
+
+            _transport.AddClient(name);
         }
 
         private void button1_Click(object sender, EventArgs e)
