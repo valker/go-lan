@@ -3,17 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.GoPlugin", "GoPlugin\Valker.GoPlugin.csproj", "{CD8A3127-E2DF-48DD-BAA3-D137602CCF08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan", "PlayOnLan\Valker.PlayOnLan.csproj", "{81F3F80C-2737-4EC4-AEEA-94003AC1D47E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.Api", "Valker.PlayOnLan.Api\Valker.PlayOnLan.Api.csproj", "{C4D1DCF4-84AE-409D-A848-BE7D2C2A91F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.Api", "Valker.Api\Valker.Api.csproj", "{757447CE-16F5-47D9-9E8B-DA002BDF561F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.Client", "Valker.PlayOnLan.Client\Valker.PlayOnLan.Client.csproj", "{802E86B6-247C-4D06-90CD-69BB0D8B709D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkConnect", "NetworkConnect\NetworkConnect.csproj", "{F8CDF8EF-E337-47AF-B30A-E874D24FD546}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.Server", "Valker.PlayOnLan.Server\Valker.PlayOnLan.Server.csproj", "{F58A7036-E0D3-4C09-A1DE-5525BC6709C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayServer", "Valker.PlayServer\Valker.PlayServer.csproj", "{E7F4E9EB-09A2-4166-8B11-E0399C8CED99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.LocalTransport", "Valker.PlayOnLan.LocalTransport\Valker.PlayOnLan.LocalTransport.csproj", "{1C2EB6D8-9D8C-4555-895C-0F1748B82B0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayServerStarter", "Valker.PlayServerStarter\Valker.PlayServerStarter.csproj", "{F70316A0-9ABA-4C19-9C17-58C0C39A8773}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestXmlSerialization", "TestXmlSerialization\TestXmlSerialization.csproj", "{EDD6D49A-71F1-483B-9582-7196C33BDF89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.XmppTransport", "Valker.PlayOnLan.XmppTransport\Valker.PlayOnLan.XmppTransport.csproj", "{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,30 +23,26 @@ Global
 		{CD8A3127-E2DF-48DD-BAA3-D137602CCF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD8A3127-E2DF-48DD-BAA3-D137602CCF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD8A3127-E2DF-48DD-BAA3-D137602CCF08}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81F3F80C-2737-4EC4-AEEA-94003AC1D47E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81F3F80C-2737-4EC4-AEEA-94003AC1D47E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81F3F80C-2737-4EC4-AEEA-94003AC1D47E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81F3F80C-2737-4EC4-AEEA-94003AC1D47E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{757447CE-16F5-47D9-9E8B-DA002BDF561F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{757447CE-16F5-47D9-9E8B-DA002BDF561F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{757447CE-16F5-47D9-9E8B-DA002BDF561F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{757447CE-16F5-47D9-9E8B-DA002BDF561F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8CDF8EF-E337-47AF-B30A-E874D24FD546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8CDF8EF-E337-47AF-B30A-E874D24FD546}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8CDF8EF-E337-47AF-B30A-E874D24FD546}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8CDF8EF-E337-47AF-B30A-E874D24FD546}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E7F4E9EB-09A2-4166-8B11-E0399C8CED99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7F4E9EB-09A2-4166-8B11-E0399C8CED99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7F4E9EB-09A2-4166-8B11-E0399C8CED99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7F4E9EB-09A2-4166-8B11-E0399C8CED99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F70316A0-9ABA-4C19-9C17-58C0C39A8773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F70316A0-9ABA-4C19-9C17-58C0C39A8773}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F70316A0-9ABA-4C19-9C17-58C0C39A8773}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F70316A0-9ABA-4C19-9C17-58C0C39A8773}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EDD6D49A-71F1-483B-9582-7196C33BDF89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EDD6D49A-71F1-483B-9582-7196C33BDF89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EDD6D49A-71F1-483B-9582-7196C33BDF89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EDD6D49A-71F1-483B-9582-7196C33BDF89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4D1DCF4-84AE-409D-A848-BE7D2C2A91F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4D1DCF4-84AE-409D-A848-BE7D2C2A91F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4D1DCF4-84AE-409D-A848-BE7D2C2A91F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4D1DCF4-84AE-409D-A848-BE7D2C2A91F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{802E86B6-247C-4D06-90CD-69BB0D8B709D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{802E86B6-247C-4D06-90CD-69BB0D8B709D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{802E86B6-247C-4D06-90CD-69BB0D8B709D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{802E86B6-247C-4D06-90CD-69BB0D8B709D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F58A7036-E0D3-4C09-A1DE-5525BC6709C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F58A7036-E0D3-4C09-A1DE-5525BC6709C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F58A7036-E0D3-4C09-A1DE-5525BC6709C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F58A7036-E0D3-4C09-A1DE-5525BC6709C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C2EB6D8-9D8C-4555-895C-0F1748B82B0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C2EB6D8-9D8C-4555-895C-0F1748B82B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C2EB6D8-9D8C-4555-895C-0F1748B82B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C2EB6D8-9D8C-4555-895C-0F1748B82B0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

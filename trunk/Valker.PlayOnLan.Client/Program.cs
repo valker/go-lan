@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MyGoban
+namespace Valker.PlayOnLan.Client
 {
-    class GoRules //: IRules
+    class Program
     {
+        static void Main() {}
     }
 }
