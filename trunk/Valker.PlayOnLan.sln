@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.Api", "Valker.Api\Va
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkConnect", "NetworkConnect\NetworkConnect.csproj", "{F8CDF8EF-E337-47AF-B30A-E874D24FD546}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{6D63C774-BCF3-4802-BB96-60123EAD36BB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayServer", "Valker.PlayServer\Valker.PlayServer.csproj", "{E7F4E9EB-09A2-4166-8B11-E0399C8CED99}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayServerStarter", "Valker.PlayServerStarter\Valker.PlayServerStarter.csproj", "{F70316A0-9ABA-4C19-9C17-58C0C39A8773}"
@@ -39,10 +37,6 @@ Global
 		{F8CDF8EF-E337-47AF-B30A-E874D24FD546}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8CDF8EF-E337-47AF-B30A-E874D24FD546}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8CDF8EF-E337-47AF-B30A-E874D24FD546}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D63C774-BCF3-4802-BB96-60123EAD36BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D63C774-BCF3-4802-BB96-60123EAD36BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D63C774-BCF3-4802-BB96-60123EAD36BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D63C774-BCF3-4802-BB96-60123EAD36BB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E7F4E9EB-09A2-4166-8B11-E0399C8CED99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E7F4E9EB-09A2-4166-8B11-E0399C8CED99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7F4E9EB-09A2-4166-8B11-E0399C8CED99}.Release|Any CPU.ActiveCfg = Release|Any CPU

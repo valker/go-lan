@@ -10,7 +10,6 @@ using agsXMPP.protocol.iq.disco;
 using agsXMPP.protocol.iq.roster;
 using agsXMPP.Xml.Dom;
 using NetworkConnect.Discovery;
-using NetworkConnect.Notification;
 using Valker.Api;
 
 namespace Valker.PlayOnLan.Engine

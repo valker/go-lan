@@ -46,15 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Discovery\Discoverer.cs" />
-    <Compile Include="Notification\Listener.cs" />
-    <Compile Include="Notification\Sender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Utils\Utils.csproj">
-      <Project>{6D63C774-BCF3-4802-BB96-60123EAD36BB}</Project>
-      <Name>Utils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Valker.Api\Valker.Api.csproj">
       <Project>{757447CE-16F5-47D9-9E8B-DA002BDF561F}</Project>
       <Name>Valker.Api</Name>
