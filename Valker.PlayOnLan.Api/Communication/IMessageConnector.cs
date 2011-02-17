@@ -13,5 +13,6 @@ namespace Valker.PlayOnLan.Api.Communication
         void SendMessage(string message);
 
         event EventHandler<MessageEventArgs> MessageArrived;
+        string Name { get; set; }
     }
 }

@@ -11,10 +11,8 @@ namespace Valker.PlayOnLan.Client
         public LocalMessageConnector(LocalTransport transport, string name)
         {
             _parent = transport;
-            _name = name;
+            Name = name;
         }
-
-        protected string _name { get; set; }
 
         #region Implementation of IMessageConnector
 
@@ -24,6 +22,10 @@ namespace Valker.PlayOnLan.Client
         }
 
         public event EventHandler<MessageEventArgs> MessageArrived = delegate {  };
+        public string Name
+        {
+            get;set;
+        }
 
         #endregion
 

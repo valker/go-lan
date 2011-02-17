@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Client.Communication;
 
 namespace Valker.PlayOnLan.Client
@@ -23,7 +24,7 @@ namespace Valker.PlayOnLan.Client
 
         private void ClientOnSupportedGamesChanged(object sender, SupportedGamesChangedEventArgs args)
         {
-            listBox1.DataSource = args.Games;
+            listBox1.DataSource = args.Games.Select(s => s + '(' + ((IMessageConnector)args.Sender).Name + ')').ToArray();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
