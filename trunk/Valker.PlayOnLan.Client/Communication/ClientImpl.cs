@@ -12,7 +12,7 @@ using Valker.PlayOnLan.XmppTransport;
 
 namespace Valker.PlayOnLan.Client.Communication
 {
-    public class ClientImpl : ClientMessageExecuter
+    public class ClientImpl : IClientMessageExecuter
     {
         private List<IMessageConnector> _connectors = new List<IMessageConnector>();
         private ServerImpl _localServer;
@@ -21,12 +21,12 @@ namespace Valker.PlayOnLan.Client.Communication
         {
             var localTransport = new LocalTransport();
             IMessageConnector serverConnector = localTransport.CreateMessageConnector("server");
-            IMessageConnector clientConnector = localTransport.CreateMessageConnector("client");
+            IMessageConnector clientConnector = localTransport.CreateMessageConnector("Local");
 
             this._localServer = new ServerImpl(new []{serverConnector});
 
             this._connectors.Add(clientConnector);
-            this._connectors.Add(new XmppTransportImpl());
+            this._connectors.Add(new XmppTransportImpl("Xmpp"));
 
             foreach (IMessageConnector connector in _connectors)
             {
@@ -36,10 +36,10 @@ namespace Valker.PlayOnLan.Client.Communication
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
         {
-            var serializer = new XmlSerializer(typeof (Message), new Type[] {typeof (RetrieveSupportedGamesResponceMessage)});
+            var serializer = new XmlSerializer(typeof(ClientMessage), new[] { typeof(RetrieveSupportedGamesResponceMessage) });
             var stringReader = new StringReader(args.Message);
-            var msg = (Message) serializer.Deserialize(stringReader);
-            msg.Execute(this);
+            var msg = (ClientMessage) serializer.Deserialize(stringReader);
+            msg.Execute(this, sender);
         }
 
         public void RetrieveSupportedGames()
@@ -56,13 +56,13 @@ namespace Valker.PlayOnLan.Client.Communication
             }
         }
 
-        #region Overrides of ClientMessageExecuter
+        #region Overrides of IClientMessageExecuter
 
         public event EventHandler<SupportedGamesChangedEventArgs> SupportedGamesChanged = delegate { };
 
-        public override void UpdateSupportedGames(string[] games)
+        public virtual void UpdateSupportedGames(object sender, string[] games)
         {
-            SupportedGamesChanged(this, new SupportedGamesChangedEventArgs(games));
+            SupportedGamesChanged(this, new SupportedGamesChangedEventArgs(games, sender));
         }
 
         #endregion
@@ -70,10 +70,13 @@ namespace Valker.PlayOnLan.Client.Communication
 
     public class SupportedGamesChangedEventArgs : EventArgs
     {
-        public SupportedGamesChangedEventArgs(string[] games)
+        public SupportedGamesChangedEventArgs(string[] games, object sender)
         {
             Games = games;
+            Sender = sender;
         }
+
+        public object Sender { get; set; }
 
         public string[] Games { get; set; }
     }

@@ -9,7 +9,7 @@ using Valker.PlayOnLan.Server.Messages;
 
 namespace Valker.PlayOnLan.Server
 {
-    public class ServerImpl : ServerMessageExecuter
+    public class ServerImpl : IServerMessageExecuter
     {
         private IEnumerable<IMessageConnector> _connectors;
         private static string[] _games = new[] {"Go", "Atari go", "Gomoku", "Tic-tac-toe"};
@@ -23,7 +23,7 @@ namespace Valker.PlayOnLan.Server
             }
         }
 
-        public override void Send(string message)
+        public virtual void Send(string message)
         {
             foreach (var connector in _connectors)
             {
@@ -34,12 +34,12 @@ namespace Valker.PlayOnLan.Server
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
         {
             var message = args.Message;
-            XmlSerializer serializer = new XmlSerializer(typeof(Message), new [] {typeof(RetrieveSupportedGamesMessage)});
-            Message msgObject = (Message) serializer.Deserialize(new StringReader(message));
+            var serializer = new XmlSerializer(typeof(ServerMessage), new [] {typeof(RetrieveSupportedGamesMessage)});
+            var msgObject = (ServerMessage)serializer.Deserialize(new StringReader(message));
             msgObject.Execute(this);
         }
 
-        public override string[] RetrieveSupportedGames()
+        public virtual string[] RetrieveSupportedGames()
         {
             return _games;
         }
