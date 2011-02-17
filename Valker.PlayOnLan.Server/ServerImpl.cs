@@ -22,7 +22,7 @@ namespace Valker.PlayOnLan.Server
 
         #region IServerMessageExecuter Members
 
-        public virtual void Send(string message)
+        public void Send(string message)
         {
             foreach (IMessageConnector connector in this._connectors)
             {
@@ -30,7 +30,7 @@ namespace Valker.PlayOnLan.Server
             }
         }
 
-        public virtual string[] RetrieveSupportedGames()
+        public string[] RetrieveSupportedGames()
         {
             return _games;
         }

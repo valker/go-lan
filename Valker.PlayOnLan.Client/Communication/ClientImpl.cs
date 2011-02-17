@@ -13,16 +13,19 @@ namespace Valker.PlayOnLan.Client.Communication
 {
     public class ClientImpl : IClientMessageExecuter
     {
+        /// <summary>
+        /// Available connections (local, xmpp)
+        /// </summary>
         private List<IMessageConnector> _connectors = new List<IMessageConnector>();
+
+        /// <summary>
+        /// Local server should work within each client
+        /// </summary>
         private ServerImpl _localServer;
 
         public ClientImpl()
         {
-            var localTransport = new LocalTransport();
-            IMessageConnector serverConnector = localTransport.CreateMessageConnector("server");
-            IMessageConnector clientConnector = localTransport.CreateMessageConnector("Local");
-
-            this._localServer = new ServerImpl(new[] {serverConnector});
+            IMessageConnector clientConnector = this.CreateLocalServer();
 
             this._connectors.Add(clientConnector);
             this._connectors.Add(new XmppTransportImpl("Xmpp"));
@@ -31,6 +34,16 @@ namespace Valker.PlayOnLan.Client.Communication
             {
                 connector.MessageArrived += this.ConnectorOnMessageArrived;
             }
+        }
+
+        private IMessageConnector CreateLocalServer()
+        {
+            var localTransport = new LocalTransport();
+            IMessageConnector serverConnector = localTransport.CreateMessageConnector("server");
+            IMessageConnector clientConnector = localTransport.CreateMessageConnector("Local");
+
+            this._localServer = new ServerImpl(new[] {serverConnector});
+            return clientConnector;
         }
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
@@ -57,7 +70,7 @@ namespace Valker.PlayOnLan.Client.Communication
 
         #region Overrides of IClientMessageExecuter
 
-        public virtual void UpdateSupportedGames(object sender, string[] games)
+        public void UpdateSupportedGames(object sender, string[] games)
         {
             this.SupportedGamesChanged(this, new SupportedGamesChangedEventArgs(games, sender));
         }
