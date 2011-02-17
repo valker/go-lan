@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Server;
 using Valker.PlayOnLan.Server.Messages;
+using Valker.PlayOnLan.Server.Messages.Client;
+using Valker.PlayOnLan.Server.Messages.Server;
 using Valker.PlayOnLan.XmppTransport;
 
 namespace Valker.PlayOnLan.Client.Communication
@@ -23,12 +22,12 @@ namespace Valker.PlayOnLan.Client.Communication
             IMessageConnector serverConnector = localTransport.CreateMessageConnector("server");
             IMessageConnector clientConnector = localTransport.CreateMessageConnector("Local");
 
-            this._localServer = new ServerImpl(new []{serverConnector});
+            this._localServer = new ServerImpl(new[] {serverConnector});
 
             this._connectors.Add(clientConnector);
             this._connectors.Add(new XmppTransportImpl("Xmpp"));
 
-            foreach (IMessageConnector connector in _connectors)
+            foreach (IMessageConnector connector in this._connectors)
             {
                 connector.MessageArrived += this.ConnectorOnMessageArrived;
             }
@@ -36,7 +35,7 @@ namespace Valker.PlayOnLan.Client.Communication
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
         {
-            var serializer = new XmlSerializer(typeof(ClientMessage), new[] { typeof(RetrieveSupportedGamesResponceMessage) });
+            var serializer = new XmlSerializer(typeof (ClientMessage), ClientMessageTypes.Types);
             var stringReader = new StringReader(args.Message);
             var msg = (ClientMessage) serializer.Deserialize(stringReader);
             msg.Execute(this, sender);
@@ -44,13 +43,13 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void RetrieveSupportedGames()
         {
-            SendMessage(new RetrieveSupportedGamesMessage());
+            this.SendMessage(new RetrieveSupportedGamesMessage());
         }
 
         private void SendMessage(Message message)
         {
-            var messageText = message.ToString();
-            foreach (IMessageConnector connector in _connectors)
+            string messageText = message.ToString();
+            foreach (IMessageConnector connector in this._connectors)
             {
                 connector.SendMessage(messageText);
             }
@@ -58,12 +57,12 @@ namespace Valker.PlayOnLan.Client.Communication
 
         #region Overrides of IClientMessageExecuter
 
-        public event EventHandler<SupportedGamesChangedEventArgs> SupportedGamesChanged = delegate { };
-
         public virtual void UpdateSupportedGames(object sender, string[] games)
         {
-            SupportedGamesChanged(this, new SupportedGamesChangedEventArgs(games, sender));
+            this.SupportedGamesChanged(this, new SupportedGamesChangedEventArgs(games, sender));
         }
+
+        public event EventHandler<SupportedGamesChangedEventArgs> SupportedGamesChanged = delegate { };
 
         #endregion
     }
@@ -72,8 +71,8 @@ namespace Valker.PlayOnLan.Client.Communication
     {
         public SupportedGamesChangedEventArgs(string[] games, object sender)
         {
-            Games = games;
-            Sender = sender;
+            this.Games = games;
+            this.Sender = sender;
         }
 
         public object Sender { get; set; }

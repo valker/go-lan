@@ -5,7 +5,7 @@ namespace Valker.PlayOnLan.Client.Communication
 {
     public class LocalTransport
     {
-        List<LocalMessageConnector> connectors = new List<LocalMessageConnector>();
+        private List<LocalMessageConnector> connectors = new List<LocalMessageConnector>();
 
         public IMessageConnector CreateMessageConnector(string name)
         {
@@ -16,7 +16,7 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void SendMessage(LocalMessageConnector connector, string message)
         {
-            foreach (var localMessageConnector in connectors)
+            foreach (LocalMessageConnector localMessageConnector in this.connectors)
             {
                 if (!ReferenceEquals(localMessageConnector, connector))
                 {

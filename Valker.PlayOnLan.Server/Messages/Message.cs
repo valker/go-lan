@@ -4,7 +4,6 @@ using System.Xml.Serialization;
 
 namespace Valker.PlayOnLan.Server.Messages
 {
-
     /// <summary>
     /// Base class for messages that are going between client and server
     /// </summary>
@@ -26,7 +25,7 @@ namespace Valker.PlayOnLan.Server.Messages
     {
         public static string Perform(Type baseClass, Type thisType, object objectToSerialize)
         {
-            var serializer = new XmlSerializer(baseClass, new[] { thisType });
+            var serializer = new XmlSerializer(baseClass, new[] {thisType});
             var writer = new StringWriter();
             serializer.Serialize(writer, objectToSerialize);
             return writer.GetStringBuilder().ToString();

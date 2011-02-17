@@ -4,11 +4,6 @@ namespace Valker.PlayOnLan.Client
 {
     internal class GameInfo
     {
-        public override string ToString()
-        {
-            return this.GameName + " - " + this.Connector.Name;
-        }
-
         public GameInfo(string gameName, IMessageConnector connector)
         {
             this.GameName = gameName;
@@ -18,5 +13,10 @@ namespace Valker.PlayOnLan.Client
         private IMessageConnector Connector { get; set; }
 
         private string GameName { get; set; }
+
+        public override string ToString()
+        {
+            return this.GameName + " - " + this.Connector.Name;
+        }
     }
 }

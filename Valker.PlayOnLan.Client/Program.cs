@@ -3,9 +3,9 @@ using Valker.PlayOnLan.Client.Communication;
 
 namespace Valker.PlayOnLan.Client
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        private static void Main()
         {
             var client = new ClientImpl();
             Form form = new MainForm(client);
