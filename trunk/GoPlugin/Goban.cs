@@ -1,29 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using MyGoban.Properties;
 
 namespace MyGoban
 {
     public partial class Goban : UserControl, INotifyPropertyChanged
     {
+        private const double BoardHeight = 454.5;
+        private const double BoardWidth = 424.2;
+        private const double CellHeight = 24.7;
+        private const double CellWidth = 23.0;
         private const int DefaultN = 19;
-        public event EventHandler<MouseEventArgs> ClickedOnBoard;
-
-        private void InvokeClickedOnBoard(MouseEventArgs e)
-        {
-            EventHandler<MouseEventArgs> handler = ClickedOnBoard;
-            if (handler != null) handler(this, e);
-        }
-
-        private int _n;
+        private const double HoshiDiameter = 4.0;
+        private const int Offset = 10;
+        private const double StoneDiameter = 22.5;
 
         private Stone[,] _field = new Stone[19,19];
+        private int _n;
+
+        public Goban()
+        {
+            this.Hoshi = Enumerable.Empty<Point>();
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.N = DefaultN;
+            this.InitializeComponent();
+        }
 
         public double K { get; private set; }
         public double LeftMargin { get; private set; }
@@ -33,79 +38,20 @@ namespace MyGoban
         [DefaultValue(DefaultN)]
         public int N
         {
-            get { return _n; }
+            get { return this._n; }
             set
             {
-                if(_n == value) return;
-                _n = value;
-                Field = new Stone[_n, _n];
-                InvokePropertyChanged(new PropertyChangedEventArgs("N"));
-                Hoshi = GetHoshi(_n);
-                Recalculate();
-                Invalidate();
+                if (this._n == value)
+                {
+                    return;
+                }
+                this._n = value;
+                this.Field = new Stone[this._n,this._n];
+                this.InvokePropertyChanged(new PropertyChangedEventArgs("N"));
+                this.Hoshi = GetHoshi(this._n);
+                this.Recalculate();
+                this.Invalidate();
             }
-        }
-
-        // size in millimeters
-        const double CellWidth = 23.0;
-        const double CellHeight = 24.7;
-
-        const double BoardWidth = 424.2;
-        const double BoardHeight = 454.5;
-
-        private const double HoshiDiameter = 4.0;
-
-        private const double StoneDiameter = 22.5;
-
-        private const int Offset = 10;
-
-        public Goban()
-        {
-            Hoshi = Enumerable.Empty<Point>();
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            N = DefaultN;
-            InitializeComponent();
-        }
-
-        public void SetStone(int x, int y, Stone stone, bool invalidate)
-        {
-            Field[x, y] = stone;
-            if (invalidate)
-            {
-                Rectangle rc = GetRect(x,y);
-                rc.Width++;
-                rc.Height++;
-                Invalidate(rc);
-            }
-        }
-
-        public void SetStone(Point point, Stone stone)
-        {
-            SetStone(point.X, point.Y, stone, true);
-        }
-
-        public Stone GetStone(int x, int y)
-        {
-            return Field[x, y];
-        }
-
-        public Stone GetStone(Point point)
-        {
-            return GetStone(point.X, point.Y);
-        }
-
-        private void Recalculate()
-        {
-            LeftMargin = (BoardWidth - ((N - 1.0)*CellWidth))/2.0;
-            TopMargin = (BoardHeight - ((N - 1.0)*CellHeight))/2.0;
-
-            int min = Math.Min(Size.Height - Offset * 2, Size.Width - Offset * 2);
-            K = min/BoardHeight;
-
-            var boardWidthInPixels = K*BoardWidth;
-            var boardHeightInPixels = K*BoardHeight;
-            OffsetX = (int) ((Size.Width - boardWidthInPixels)/2);
-            OffsetY = (int) ((Size.Height - boardHeightInPixels)/2);
         }
 
         protected int OffsetX { get; set; }
@@ -116,38 +62,97 @@ namespace MyGoban
 
         internal Stone[,] Field
         {
-            get { return _field; }
-            set { _field = value; }
+            get { return this._field; }
+            set { this._field = value; }
+        }
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        public event EventHandler<MouseEventArgs> ClickedOnBoard;
+
+        private void InvokeClickedOnBoard(MouseEventArgs e)
+        {
+            EventHandler<MouseEventArgs> handler = this.ClickedOnBoard;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        // size in millimeters
+
+        public void SetStone(int x, int y, Stone stone, bool invalidate)
+        {
+            this.Field[x, y] = stone;
+            if (invalidate)
+            {
+                Rectangle rc = this.GetRect(x, y);
+                rc.Width++;
+                rc.Height++;
+                Invalidate(rc);
+            }
+        }
+
+        public void SetStone(Point point, Stone stone)
+        {
+            this.SetStone(point.X, point.Y, stone, true);
+        }
+
+        public Stone GetStone(int x, int y)
+        {
+            return this.Field[x, y];
+        }
+
+        public Stone GetStone(Point point)
+        {
+            return this.GetStone(point.X, point.Y);
+        }
+
+        private void Recalculate()
+        {
+            this.LeftMargin = (BoardWidth - ((this.N - 1.0) * CellWidth)) / 2.0;
+            this.TopMargin = (BoardHeight - ((this.N - 1.0) * CellHeight)) / 2.0;
+
+            int min = Math.Min(this.Size.Height - Offset * 2, this.Size.Width - Offset * 2);
+            this.K = min / BoardHeight;
+
+            double boardWidthInPixels = this.K * BoardWidth;
+            double boardHeightInPixels = this.K * BoardHeight;
+            this.OffsetX = (int) ((this.Size.Width - boardWidthInPixels) / 2);
+            this.OffsetY = (int) ((this.Size.Height - boardHeightInPixels) / 2);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            int width = (int)(BoardWidth * K);
-            int height = (int)(BoardHeight*K);
-            e.Graphics.DrawImage(Properties.Resources.bamboo_resized, OffsetX, OffsetY, width, height);
-            DrawGrid(e);
-            DrawHoshi(e, Hoshi);
-            DrawStones(e);
+            var width = (int) (BoardWidth * this.K);
+            var height = (int) (BoardHeight * this.K);
+            e.Graphics.DrawImage(Resources.bamboo_resized, this.OffsetX, this.OffsetY, width, height);
+            this.DrawGrid(e);
+            this.DrawHoshi(e, this.Hoshi);
+            this.DrawStones(e);
         }
 
         private void DrawStones(PaintEventArgs args)
         {
-            int n = N;
-            for(int x = 0; x < n; ++x)
+            int n = this.N;
+            for (int x = 0; x < n; ++x)
             {
-                for(int y = 0; y < n; ++y)
+                for (int y = 0; y < n; ++y)
                 {
-                    Stone stone = Field[x, y];
-                    if(stone != Stone.None)
+                    Stone stone = this.Field[x, y];
+                    if (stone != Stone.None)
                     {
                         Color color = stone == Stone.Black ? Color.Black : Color.White;
 
-                        Rectangle rect = GetRect(x, y);
+                        Rectangle rect = this.GetRect(x, y);
 
-                        args.Graphics.FillEllipse(new SolidBrush(color), rect) ;
+                        args.Graphics.FillEllipse(new SolidBrush(color), rect);
                         args.Graphics.DrawEllipse(Pens.Black, rect);
-
                     }
                 }
             }
@@ -155,23 +160,23 @@ namespace MyGoban
 
         private Rectangle GetRect(int x, int y)
         {
-            int rectx = OffsetX + (int) ((LeftMargin + x * CellWidth - StoneDiameter / 2.0) * K);
-            int recty = OffsetY + (int) ((TopMargin + y * CellHeight - CellHeight / 2.0)*K);
+            int rectx = this.OffsetX + (int) ((this.LeftMargin + x * CellWidth - StoneDiameter / 2.0) * this.K);
+            int recty = this.OffsetY + (int) ((this.TopMargin + y * CellHeight - CellHeight / 2.0) * this.K);
 
-            var rectw = (int) (CellWidth*K);
-            var recth = (int) (CellHeight*K);
-            return new Rectangle(rectx, recty, rectw,recth);
+            var rectw = (int) (CellWidth * this.K);
+            var recth = (int) (CellHeight * this.K);
+            return new Rectangle(rectx, recty, rectw, recth);
         }
 
         private void DrawHoshi(PaintEventArgs args, IEnumerable<Point> points)
         {
-            foreach (var point in points)
+            foreach (Point point in points)
             {
-                int x = OffsetX + (int) ((LeftMargin + point.X * CellWidth - HoshiDiameter / 2.0) * K);
-                int y = OffsetY + (int) ((TopMargin + point.Y*CellHeight - HoshiDiameter / 2.0) * K);
-                int width = (int) (HoshiDiameter*K);
-                int height = (int) (HoshiDiameter*K);
-                args.Graphics.FillEllipse(Brushes.Black, x,y,width, height);
+                int x = this.OffsetX + (int) ((this.LeftMargin + point.X * CellWidth - HoshiDiameter / 2.0) * this.K);
+                int y = this.OffsetY + (int) ((this.TopMargin + point.Y * CellHeight - HoshiDiameter / 2.0) * this.K);
+                var width = (int) (HoshiDiameter * this.K);
+                var height = (int) (HoshiDiameter * this.K);
+                args.Graphics.FillEllipse(Brushes.Black, x, y, width, height);
             }
         }
 
@@ -179,84 +184,88 @@ namespace MyGoban
         {
             switch (n)
             {
-                case 9:
-                    return new[]
-                               {new Point(2, 2), new Point(2, 6), new Point(6, 2), new Point(6, 6), new Point(4, 4),};
+            case 9:
+                return new[] {new Point(2, 2), new Point(2, 6), new Point(6, 2), new Point(6, 6), new Point(4, 4),};
 
-                case 13:
-                    return new[]
-                               {
-                                   new Point(3, 3), new Point(3, 6), new Point(3, 9),
-                                   new Point(6, 3), new Point(6, 6), new Point(6, 9),
-                                   new Point(9, 3), new Point(9, 6), new Point(9, 9),
-                               };
-                case 19:
-                    return new[]
-                               {
-                                   new Point(3, 3), new Point(3, 9), new Point(3, 15),
-                                   new Point(9, 3), new Point(9, 9), new Point(9, 15),
-                                   new Point(15, 3), new Point(15, 9), new Point(15, 15),
-                               };
+            case 13:
+                return new[]
+                       {
+                           new Point(3, 3), new Point(3, 6), new Point(3, 9), new Point(6, 3), new Point(6, 6),
+                           new Point(6, 9), new Point(9, 3), new Point(9, 6), new Point(9, 9),
+                       };
+            case 19:
+                return new[]
+                       {
+                           new Point(3, 3), new Point(3, 9), new Point(3, 15), new Point(9, 3), new Point(9, 9),
+                           new Point(9, 15), new Point(15, 3), new Point(15, 9), new Point(15, 15),
+                       };
 
-                default:
-                    return new[] {new Point((n-1)/2, (n-1)/2),};
+            default:
+                return new[] {new Point((n - 1) / 2, (n - 1) / 2),};
             }
         }
 
         private void DrawGrid(PaintEventArgs e)
         {
-            for(int i = 0; i < N; ++i)
+            for (int i = 0; i < this.N; ++i)
             {
-                var x = OffsetX + (int) ((LeftMargin + CellWidth*i)*K);
-                var y1 = OffsetY + (int)(TopMargin * K);
-                var y2 = OffsetY + (int)((TopMargin + (N - 1) * CellHeight) * K);
+                int x = this.OffsetX + (int) ((this.LeftMargin + CellWidth * i) * this.K);
+                int y1 = this.OffsetY + (int) (this.TopMargin * this.K);
+                int y2 = this.OffsetY + (int) ((this.TopMargin + (this.N - 1) * CellHeight) * this.K);
                 e.Graphics.DrawLine(Pens.Black, x, y1, x, y2);
 
-                var y = OffsetY + (int)((TopMargin + CellHeight * i) * K);
-                var x1 = OffsetX + (int)(LeftMargin * K);
-                var x2 = OffsetX + (int)((LeftMargin + (N - 1) * CellWidth) * K);
+                int y = this.OffsetY + (int) ((this.TopMargin + CellHeight * i) * this.K);
+                int x1 = this.OffsetX + (int) (this.LeftMargin * this.K);
+                int x2 = this.OffsetX + (int) ((this.LeftMargin + (this.N - 1) * CellWidth) * this.K);
                 e.Graphics.DrawLine(Pens.Black, x1, y, x2, y);
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private void InvokePropertyChanged(PropertyChangedEventArgs e)
         {
-            PropertyChangedEventHandler changed = PropertyChanged;
-            if (changed != null) changed(this, e);
+            PropertyChangedEventHandler changed = this.PropertyChanged;
+            if (changed != null)
+            {
+                changed(this, e);
+            }
         }
 
         private void UserControl1_Resize(object sender, EventArgs e)
         {
-            Recalculate();
+            this.Recalculate();
         }
 
         private void Goban_MouseClick(object sender, MouseEventArgs e)
         {
-            int x = e.X - OffsetX;
-            int y = e.Y - OffsetY;
+            int x = e.X - this.OffsetX;
+            int y = e.Y - this.OffsetY;
 
-            double xd = x/K;
-            double yd = y/K;
+            double xd = x / this.K;
+            double yd = y / this.K;
 
-            double xm = xd - LeftMargin;
-            double ym = yd - TopMargin;
+            double xm = xd - this.LeftMargin;
+            double ym = yd - this.TopMargin;
 
             double xc = xm + CellWidth / 2;
-            double yc = ym + CellHeight/2;
+            double yc = ym + CellHeight / 2;
 
 #if false
             Debug.WriteLine("xd,yd:" + xd + " " + yd);
             Debug.WriteLine("xm,ym:" + xm + " " + ym);
             Debug.WriteLine("xc,yc:" + xc + " " + yc);
 #endif
-            if (xc <= 0.0 || yc <= 0.0) return;
-            var xr = (int) (xc/CellWidth);
-            var yr = (int) (yc/CellHeight);
-            if (xr > (N - 1) || yr > (N - 1)) return;
+            if (xc <= 0.0 || yc <= 0.0)
+            {
+                return;
+            }
+            var xr = (int) (xc / CellWidth);
+            var yr = (int) (yc / CellHeight);
+            if (xr > (this.N - 1) || yr > (this.N - 1))
+            {
+                return;
+            }
 
-            InvokeClickedOnBoard(new MouseEventArgs(e.Button, e.Clicks, xr, yr, 0));
+            this.InvokeClickedOnBoard(new MouseEventArgs(e.Button, e.Clicks, xr, yr, 0));
         }
     }
 }

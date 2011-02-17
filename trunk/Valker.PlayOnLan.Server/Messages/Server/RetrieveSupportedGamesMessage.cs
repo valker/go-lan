@@ -1,12 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
-using Valker.PlayOnLan.Api.Communication;
+﻿using Valker.PlayOnLan.Api.Communication;
+using Valker.PlayOnLan.Server.Messages.Client;
 
-namespace Valker.PlayOnLan.Server.Messages
+namespace Valker.PlayOnLan.Server.Messages.Server
 {
     public class RetrieveSupportedGamesMessage : ServerMessage
     {
@@ -14,10 +9,10 @@ namespace Valker.PlayOnLan.Server.Messages
 
         public override void Execute(IServerMessageExecuter server)
         {
-            var array = server.RetrieveSupportedGames();
+            string[] array = server.RetrieveSupportedGames();
             var message = new RetrieveSupportedGamesResponceMessage();
             message.Responce = array;
-            var str = message.ToString();
+            string str = message.ToString();
             server.Send(str);
         }
 

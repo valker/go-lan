@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Valker.PlayOnLan.Api.Communication
 {
@@ -10,9 +7,9 @@ namespace Valker.PlayOnLan.Api.Communication
     /// </summary>
     public interface IMessageConnector
     {
+        string Name { get; set; }
         void SendMessage(string message);
 
         event EventHandler<MessageEventArgs> MessageArrived;
-        string Name { get; set; }
     }
 }

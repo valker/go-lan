@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.XmppTransport
@@ -11,10 +8,14 @@ namespace Valker.PlayOnLan.XmppTransport
     {
         public XmppTransportImpl(string name)
         {
-            Name = name;
+            this.Name = name;
         }
 
+        #region IMessageConnector Members
+
         public string Name { get; set; }
+
+        #endregion
 
         #region Implementation of IMessageConnector
 

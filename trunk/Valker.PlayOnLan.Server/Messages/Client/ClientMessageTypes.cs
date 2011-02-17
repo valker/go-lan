@@ -1,6 +1,6 @@
 using System;
 
-namespace Valker.PlayOnLan.Server.Messages
+namespace Valker.PlayOnLan.Server.Messages.Client
 {
     public static class ClientMessageTypes
     {

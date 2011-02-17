@@ -1,6 +1,6 @@
 using Valker.PlayOnLan.Api.Communication;
 
-namespace Valker.PlayOnLan.Server.Messages
+namespace Valker.PlayOnLan.Server.Messages.Client
 {
     public class RetrieveSupportedGamesResponceMessage : ClientMessage
     {
