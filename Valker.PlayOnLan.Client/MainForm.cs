@@ -24,7 +24,7 @@ namespace Valker.PlayOnLan.Client
 
         private void ClientOnSupportedGamesChanged(object sender, SupportedGamesChangedEventArgs args)
         {
-            listBox1.DataSource = args.Games.Select(s => s + '(' + ((IMessageConnector)args.Sender).Name + ')').ToArray();
+            listBox1.DataSource = args.Games.Select(s => new GameInfo(s,(IMessageConnector)args.Sender)).ToArray();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
