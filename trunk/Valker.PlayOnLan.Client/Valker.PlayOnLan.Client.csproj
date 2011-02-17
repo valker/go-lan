@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Communication\ClientImpl.cs" />
     <Compile Include="Communication\LocalTransport.cs" />
+    <Compile Include="GameInfo.cs" />
     <Compile Include="LocalMessageConnector.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
