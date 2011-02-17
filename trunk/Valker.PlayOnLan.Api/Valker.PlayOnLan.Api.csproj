@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communication\IMessageConnector.cs" />
+    <Compile Include="Communication\MessageEventArgs.cs" />
+    <Compile Include="Communication\MessageExecuter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
