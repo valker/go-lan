@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.Client", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.Server", "Valker.PlayOnLan.Server\Valker.PlayOnLan.Server.csproj", "{F58A7036-E0D3-4C09-A1DE-5525BC6709C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.LocalTransport", "Valker.PlayOnLan.LocalTransport\Valker.PlayOnLan.LocalTransport.csproj", "{1C2EB6D8-9D8C-4555-895C-0F1748B82B0E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.XmppTransport", "Valker.PlayOnLan.XmppTransport\Valker.PlayOnLan.XmppTransport.csproj", "{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}"
 EndProject
 Global
@@ -35,10 +33,6 @@ Global
 		{F58A7036-E0D3-4C09-A1DE-5525BC6709C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F58A7036-E0D3-4C09-A1DE-5525BC6709C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F58A7036-E0D3-4C09-A1DE-5525BC6709C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C2EB6D8-9D8C-4555-895C-0F1748B82B0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C2EB6D8-9D8C-4555-895C-0F1748B82B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C2EB6D8-9D8C-4555-895C-0F1748B82B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C2EB6D8-9D8C-4555-895C-0F1748B82B0E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -45,9 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Messages\Client\AcknowledgeDropMessage.cs" />
+    <Compile Include="Messages\Client\AcknowledgePartyBeginMessage.cs" />
+    <Compile Include="Messages\Client\AcknowledgeRegistrationMessage.cs" />
     <Compile Include="Messages\Client\ClientMessage.cs" />
     <Compile Include="Messages\Client\ClientMessageTypes.cs" />
+    <Compile Include="Messages\Client\PartyBeginNotificationMessage.cs" />
     <Compile Include="Messages\Message.cs" />
+    <Compile Include="Messages\Server\AcceptNewPartyMessage.cs" />
+    <Compile Include="Messages\Server\DropNewPartyMessage.cs" />
+    <Compile Include="Messages\Server\RegisterNewPartyMessage.cs" />
+    <Compile Include="Messages\Client\RegistredPartiesMessage.cs" />
+    <Compile Include="Messages\Server\RetrieveRegistredPartiesMessage.cs" />
     <Compile Include="Messages\Server\RetrieveSupportedGamesMessage.cs" />
     <Compile Include="Messages\Client\RetrieveSupportedGamesResponceMessage.cs" />
     <Compile Include="Messages\Server\ServerMessage.cs" />
