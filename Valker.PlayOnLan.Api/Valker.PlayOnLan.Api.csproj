@@ -49,6 +49,7 @@
     <Compile Include="Communication\IMessageConnector.cs" />
     <Compile Include="Communication\IServerMessageExecuter.cs" />
     <Compile Include="Communication\MessageEventArgs.cs" />
+    <Compile Include="Communication\PartyStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

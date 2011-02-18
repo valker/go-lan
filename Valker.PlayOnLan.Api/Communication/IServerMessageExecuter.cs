@@ -4,5 +4,6 @@ namespace Valker.PlayOnLan.Api.Communication
     {
         string[] RetrieveSupportedGames();
         void Send(string message);
+        PartyStatus RegisterNewParty(string name, string gameId);
     }
 }
