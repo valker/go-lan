@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using MyGoban;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Client.Communication;
 using Valker.PlayOnLan.Server;
@@ -40,7 +39,9 @@ namespace Valker.PlayOnLan.Client
             {
                 data.Add(this.GetPartyInfoString(pair.Key, pair.Value));
             }
-            listBox2.DataSource = data;
+
+            listBox2.Invoke(new Action(delegate { listBox2.DataSource = data; }));
+            
         }
 
         private string GetPartyInfoString(GameIdentifier gameIdentifier, PartyState state)
@@ -75,7 +76,7 @@ namespace Valker.PlayOnLan.Client
 
         private static GameIdentifier GenerateKey(PartyState state, IMessageConnector connector)
         {
-            return new GameIdentifier {Connector = connector, GameType =  state.GameId, Name = state.Name};
+            return new GameIdentifier {Connector = connector, GameType =  state.GameTypeId, Name = state.Name};
         }
 
 
@@ -86,22 +87,31 @@ namespace Valker.PlayOnLan.Client
 
         private void ClientOnSupportedGamesChanged(object sender, SupportedGamesChangedEventArgs args)
         {
-            var gameInfos = args.Games.Select(s => new GameInfo(s, (IMessageConnector) args.Sender)).ToArray();
-            foreach (GameInfo info in gameInfos)
+            if (_gameNames.Count == 0)
             {
-                _gameNames.Add(info.GameId, info.ToString());
+                var gameInfos = args.Games.Select(s => new GameInfo(s, (IMessageConnector) args.Sender)).ToArray();
+                foreach (GameInfo info in gameInfos)
+                {
+                    _gameNames.Add(info.GameId, info.ToString());
+                }
+                this.listBox1.DataSource = gameInfos;
             }
-            this.listBox1.DataSource = gameInfos;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Text = _client.Name;
             this._client.RetrieveSupportedGames();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this._client.RegisterNewParty(this.textBox1.Text, (GameInfo) this.listBox1.SelectedItem);
+            this._client.RegisterNewParty((GameInfo) this.listBox1.SelectedItem);
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _client.Dispose();
         }
     }
 }

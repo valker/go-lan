@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
     {
         #region Overrides of ServerMessage
 
-        public override void Execute(IServerMessageExecuter server)
+        public override void Execute(IServerMessageExecuter server, object sender)
         {
             throw new NotImplementedException();
         }
