@@ -51,7 +51,9 @@
   <ItemGroup>
     <Compile Include="Communication\ClientImpl.cs" />
     <Compile Include="Communication\LocalTransport.cs" />
+    <Compile Include="Communication\PartyStatesArgs.cs" />
     <Compile Include="Communication\SupportedGamesChangedEventArgs.cs" />
+    <Compile Include="GameIdentifier.cs" />
     <Compile Include="LocalMessageConnector.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -66,6 +68,10 @@
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GoPlugin\Valker.GoPlugin.csproj">
+      <Project>{CD8A3127-E2DF-48DD-BAA3-D137602CCF08}</Project>
+      <Name>Valker.GoPlugin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api.csproj">
       <Project>{C4D1DCF4-84AE-409D-A848-BE7D2C2A91F5}</Project>
       <Name>Valker.PlayOnLan.Api</Name>

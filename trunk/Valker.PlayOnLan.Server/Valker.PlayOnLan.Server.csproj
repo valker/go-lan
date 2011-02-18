@@ -56,14 +56,13 @@
     <Compile Include="Messages\Server\AcceptNewPartyMessage.cs" />
     <Compile Include="Messages\Server\DropNewPartyMessage.cs" />
     <Compile Include="Messages\Server\RegisterNewPartyMessage.cs" />
-    <Compile Include="Messages\Client\RegistredPartiesMessage.cs" />
+    <Compile Include="Messages\Client\UpdatePartyStatesMessage.cs" />
     <Compile Include="Messages\Server\RetrieveRegistredPartiesMessage.cs" />
     <Compile Include="Messages\Server\RetrieveSupportedGamesMessage.cs" />
     <Compile Include="Messages\Client\RetrieveSupportedGamesResponceMessage.cs" />
     <Compile Include="Messages\Server\ServerMessage.cs" />
     <Compile Include="Messages\Server\ServerMessageTypes.cs" />
     <Compile Include="Messages\Server\SingleServerMessage.cs" />
-    <Compile Include="PartyRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerGameInfo.cs" />
     <Compile Include="ServerImpl.cs" />

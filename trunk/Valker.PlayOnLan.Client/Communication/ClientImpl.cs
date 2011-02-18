@@ -85,10 +85,23 @@ namespace Valker.PlayOnLan.Client.Communication
             this.MessageToShow(this, new MessageEventArgs(text));
         }
 
+        public void UpdatePartyStates(PartyState[] partyStates, IMessageConnector sender)
+        {
+            this.PartyStatesChanged(this, new PartyStatesArgs(partyStates, sender));
+        }
+
         public event EventHandler<SupportedGamesChangedEventArgs> SupportedGamesChanged = delegate { };
 
         public event EventHandler<MessageEventArgs> MessageToShow = delegate { };
 
+        public event EventHandler<PartyStatesArgs> PartyStatesChanged = delegate { };
+
         #endregion
+
+        public string GetGameName(string type)
+        {
+            // todo: fix me
+            return "aaa";
+        }
     }
 }

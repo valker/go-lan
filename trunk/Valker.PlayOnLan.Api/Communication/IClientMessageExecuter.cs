@@ -4,5 +4,6 @@ namespace Valker.PlayOnLan.Api.Communication
     {
         void UpdateSupportedGames(object sender, string[] games);
         void ShowMessage(string text);
+        void UpdatePartyStates(PartyState[] partyStates, IMessageConnector sender);
     }
 }

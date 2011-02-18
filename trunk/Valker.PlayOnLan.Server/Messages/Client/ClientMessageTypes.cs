@@ -10,7 +10,7 @@ namespace Valker.PlayOnLan.Server.Messages.Client
                                                     typeof (AcknowledgeRegistrationMessage),
                                                     typeof (AcknowledgeDropMessage), typeof (AcknowledgePartyBeginMessage),
                                                     typeof (PartyBeginNotificationMessage),
-                                                    typeof (RegistredPartiesMessage),
+                                                    typeof (UpdatePartyStatesMessage),
                                                 };
 
         public static Type[] Types

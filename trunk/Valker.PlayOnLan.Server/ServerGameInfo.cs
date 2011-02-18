@@ -2,7 +2,7 @@ using System;
 
 namespace Valker.PlayOnLan.Server
 {
-    class ServerGameInfo
+    public class ServerGameInfo
     {
         public override string ToString()
         {
