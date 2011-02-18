@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Client.Communication
 {
-    public class LocalTransport
+    public class LocalTransport : IDisposable
     {
         private List<LocalMessageConnector> connectors = new List<LocalMessageConnector>();
 
@@ -24,5 +25,17 @@ namespace Valker.PlayOnLan.Client.Communication
                 }
             }
         }
+
+        #region Implementation of IDisposable
+
+        public void Dispose()
+        {
+            foreach (LocalMessageConnector connector in connectors)
+            {
+                connector.DisposeImpl();
+            }
+        }
+
+        #endregion
     }
 }

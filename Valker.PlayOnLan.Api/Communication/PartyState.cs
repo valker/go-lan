@@ -14,8 +14,14 @@ namespace Valker.PlayOnLan.Api.Communication
 
         public PartyStatus Status { get; set; }
 
-        public string Name { get; set; }
+        public IPlayer[] players { get; set; }
 
-        public string GameId { get; set; }
+        public string GameTypeId { get; set; }
+    }
+
+    public interface IPlayer
+    {
+        IMessageConnector connector { get; set; }
+        string Name { get; set; }
     }
 }

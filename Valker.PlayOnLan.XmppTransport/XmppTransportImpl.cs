@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using Valker.PlayOnLan.Api.Communication;
 
@@ -19,12 +19,24 @@ namespace Valker.PlayOnLan.XmppTransport
 
         #region Implementation of IMessageConnector
 
-        public void SendMessage(string message)
+        public void Send(string message)
         {
             Trace.WriteLine("TODO: implement send message");
         }
 
         public event EventHandler<MessageEventArgs> MessageArrived;
+        public event EventHandler Closed;
+
+        #endregion
+
+        #region Implementation of IDisposable
+
+        public void Dispose()
+        {
+            // todo: to be implemented
+            return;
+            throw new NotImplementedException();
+        }
 
         #endregion
     }

@@ -7,44 +7,27 @@ using Valker.PlayOnLan.Server;
 using Valker.PlayOnLan.Server.Messages;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
-using Valker.PlayOnLan.XmppTransport;
 
 namespace Valker.PlayOnLan.Client.Communication
 {
-    public class ClientImpl : IClientMessageExecuter
+    public class ClientImpl : IClientMessageExecuter, IDisposable
     {
         /// <summary>
         /// Available connections (local, xmpp)
         /// </summary>
         private List<IMessageConnector> _connectors = new List<IMessageConnector>();
 
-        /// <summary>
-        /// Local server should work within each client
-        /// </summary>
-        private ServerImpl _localServer;
-
-        public ClientImpl()
+        public ClientImpl(string name, IEnumerable<IMessageConnector> connectors)
         {
-            IMessageConnector clientConnector = this.CreateLocalServer();
-
-            this._connectors.Add(clientConnector);
-            this._connectors.Add(new XmppTransportImpl("Xmpp"));
-
-            foreach (IMessageConnector connector in this._connectors)
+            Name = name;
+            _connectors.AddRange(connectors);
+            foreach (IMessageConnector connector in _connectors)
             {
                 connector.MessageArrived += this.ConnectorOnMessageArrived;
             }
         }
 
-        private IMessageConnector CreateLocalServer()
-        {
-            var localTransport = new LocalTransport();
-            IMessageConnector serverConnector = localTransport.CreateMessageConnector("server");
-            IMessageConnector clientConnector = localTransport.CreateMessageConnector("Local");
-
-            this._localServer = new ServerImpl(new[] {serverConnector});
-            return clientConnector;
-        }
+        public string Name { get; set; }
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
         {
@@ -64,13 +47,13 @@ namespace Valker.PlayOnLan.Client.Communication
             string messageText = message.ToString();
             foreach (IMessageConnector connector in this._connectors)
             {
-                connector.SendMessage(messageText);
+                connector.Send(messageText);
             }
         }
 
-        public void RegisterNewParty(string name, GameInfo gameInfo)
+        public void RegisterNewParty(GameInfo gameInfo)
         {
-            this.SendMessage(new RegisterNewPartyMessage(name, gameInfo));
+            this.SendMessage(new RegisterNewPartyMessage(Name, gameInfo));
         }
 
         #region Overrides of IClientMessageExecuter
@@ -98,10 +81,16 @@ namespace Valker.PlayOnLan.Client.Communication
 
         #endregion
 
-        public string GetGameName(string type)
+        #region Implementation of IDisposable
+
+        public void Dispose()
         {
-            // todo: fix me
-            return "aaa";
+            foreach (IMessageConnector connector in _connectors)
+            {
+                connector.Dispose();
+            }
         }
+
+        #endregion
     }
 }

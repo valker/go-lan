@@ -1,5 +1,7 @@
 ﻿using System.Windows.Forms;
+using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Client.Communication;
+using Valker.PlayOnLan.XmppTransport;
 
 namespace Valker.PlayOnLan.Client
 {
@@ -7,8 +9,12 @@ namespace Valker.PlayOnLan.Client
     {
         private static void Main()
         {
-            var client = new ClientImpl();
-            Form form = new MainForm(client);
+            IMessageConnector xmppServer = new XmppTransportImpl("Xmpp server");
+
+            // local server
+            var server = new Server.ServerImpl(new[]{xmppServer});
+
+            Form form = new ServerForm(server);
             Application.Run(form);
         }
     }

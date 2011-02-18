@@ -23,16 +23,15 @@ namespace Valker.PlayOnLan.Server
 
         private List<PartyState> _partyStates = new List<PartyState>();
 
-        private IEnumerable<IMessageConnector> _connectors;
+        private List<IMessageConnector> _connectors = new List<IMessageConnector>();
 
         private BackgroundWorker _worker = new BackgroundWorker();
 
         public ServerImpl(IEnumerable<IMessageConnector> connectors)
         {
-            this._connectors = connectors;
             foreach (IMessageConnector connector in connectors)
             {
-                connector.MessageArrived += this.ConnectorOnMessageArrived;
+                this.AddConnector(connector);
             }
 
             _worker.DoWork += WorkerOnDoWork;
@@ -60,22 +59,19 @@ namespace Valker.PlayOnLan.Server
         {
             foreach (IMessageConnector connector in this._connectors)
             {
-                connector.SendMessage(message);
+                connector.Send(message);
             }
         }
 
         public PartyStatus RegisterNewParty(string name, string gameId)
         {
-            var game = _games.First(info => info.Id == gameId);
-            if(this._partyStates.FirstOrDefault(partyState => partyState.Name == name) != null)
+            if(this._partyStates.FirstOrDefault(partyState => partyState.players.FirstOrDefault(player => player.Name == name) != null) != null)
             {
                 return PartyStatus.NameDuplicated;
             }
 
-            var state = new PartyState();
-            state.Name = name;
-            state.Status = PartyStatus.PartyRegistred;
-            state.GameId = gameId;
+            var state = new PartyState {Status = PartyStatus.PartyRegistred, GameTypeId = gameId};
+            state.players = new[] {new Player(){connector = null, Name = name}};
 
             this._partyStates.Add(state);
             return PartyStatus.PartyRegistred;
@@ -93,7 +89,40 @@ namespace Valker.PlayOnLan.Server
             string message = args.Message;
             var serializer = new XmlSerializer(typeof (ServerMessage), ServerMessageTypes.Types);
             var msgObject = (ServerMessage) serializer.Deserialize(new StringReader(message));
-            msgObject.Execute(this);
+            msgObject.Execute(this, sender);
         }
+
+        public void AddConnector(IMessageConnector connector)
+        {
+            connector.MessageArrived += this.ConnectorOnMessageArrived;
+            connector.Closed += ConnectorOnClosed;
+            _connectors.Add(connector);
+        }
+
+        private void ConnectorOnClosed(object sender, EventArgs args)
+        {
+            var connector = (IMessageConnector) sender;
+            _connectors.Remove(connector);
+            _partyStates.RemoveAll(state => state.Name == connector.Name);
+        }
+    }
+
+    public class Player : IPlayer
+    {
+        #region Implementation of IPlayer
+
+        public IMessageConnector connector
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public string Name
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        #endregion
     }
 }
