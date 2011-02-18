@@ -68,6 +68,11 @@ namespace Valker.PlayOnLan.Client.Communication
             }
         }
 
+        public void RegisterNewParty(string name, GameInfo gameInfo)
+        {
+            this.SendMessage(new RegisterNewPartyMessage(name, gameInfo));
+        }
+
         #region Overrides of IClientMessageExecuter
 
         public void UpdateSupportedGames(object sender, string[] games)
@@ -75,21 +80,15 @@ namespace Valker.PlayOnLan.Client.Communication
             this.SupportedGamesChanged(this, new SupportedGamesChangedEventArgs(games, sender));
         }
 
-        public event EventHandler<SupportedGamesChangedEventArgs> SupportedGamesChanged = delegate { };
-
-        #endregion
-    }
-
-    public class SupportedGamesChangedEventArgs : EventArgs
-    {
-        public SupportedGamesChangedEventArgs(string[] games, object sender)
+        public void ShowMessage(string text)
         {
-            this.Games = games;
-            this.Sender = sender;
+            this.MessageToShow(this, new MessageEventArgs(text));
         }
 
-        public object Sender { get; set; }
+        public event EventHandler<SupportedGamesChangedEventArgs> SupportedGamesChanged = delegate { };
 
-        public string[] Games { get; set; }
+        public event EventHandler<MessageEventArgs> MessageToShow = delegate { };
+
+        #endregion
     }
 }

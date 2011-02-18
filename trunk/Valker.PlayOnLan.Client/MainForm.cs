@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Client.Communication;
+using Valker.PlayOnLan.Server;
 
 namespace Valker.PlayOnLan.Client
 {
@@ -14,7 +15,13 @@ namespace Valker.PlayOnLan.Client
         {
             this._client = client;
             this._client.SupportedGamesChanged += this.ClientOnSupportedGamesChanged;
+            this._client.MessageToShow += this.ClientOnMessageToShow;
             this.InitializeComponent();
+        }
+
+        private void ClientOnMessageToShow(object sender, MessageEventArgs args)
+        {
+            MessageBox.Show(args.Message);
         }
 
         private void ClientOnSupportedGamesChanged(object sender, SupportedGamesChangedEventArgs args)
@@ -26,6 +33,11 @@ namespace Valker.PlayOnLan.Client
         private void MainForm_Load(object sender, EventArgs e)
         {
             this._client.RetrieveSupportedGames();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this._client.RegisterNewParty(this.textBox1.Text, (GameInfo) this.listBox1.SelectedItem);
         }
     }
 }

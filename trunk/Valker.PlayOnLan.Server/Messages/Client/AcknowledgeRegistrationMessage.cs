@@ -6,13 +6,25 @@ using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
-    class AcknowledgeRegistrationMessage : ClientMessage
+    public class AcknowledgeRegistrationMessage : ClientMessage
     {
+        public AcknowledgeRegistrationMessage()
+        {
+        }
+
+        public AcknowledgeRegistrationMessage(bool status)
+        {
+            Status = status;
+        }
+
+        public bool Status { get; set; }
+
         #region Overrides of ClientMessage
 
         public override void Execute(IClientMessageExecuter client, object sender)
         {
-            throw new NotImplementedException();
+            var text = Status ? "Registred OK" : "Didn't registred";
+            client.ShowMessage(text);
         }
 
         #endregion

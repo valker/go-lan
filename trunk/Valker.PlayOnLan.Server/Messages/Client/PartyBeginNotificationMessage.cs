@@ -6,7 +6,7 @@ using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
-    class PartyBeginNotificationMessage : ClientMessage
+    public class PartyBeginNotificationMessage : ClientMessage
     {
         #region Overrides of ClientMessage
 

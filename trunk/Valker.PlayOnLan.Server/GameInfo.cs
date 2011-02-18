@@ -1,18 +1,23 @@
+using System;
 using Valker.PlayOnLan.Api.Communication;
 
-namespace Valker.PlayOnLan.Client
+namespace Valker.PlayOnLan.Server
 {
-    internal class GameInfo
+    public class GameInfo
     {
         public GameInfo(string gameName, IMessageConnector connector)
         {
-            this.GameName = gameName;
+            var gameId = gameName.Split(',');
+            this.GameName = gameId[0];
+            this.GameId = gameId[1];
             this.Connector = connector;
         }
 
-        private IMessageConnector Connector { get; set; }
+        public IMessageConnector Connector { get; set; }
 
         private string GameName { get; set; }
+
+        public string GameId { get; set; }
 
         public override string ToString()
         {

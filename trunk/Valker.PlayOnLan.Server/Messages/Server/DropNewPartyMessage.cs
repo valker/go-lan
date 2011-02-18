@@ -6,7 +6,7 @@ using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Server.Messages.Server
 {
-    class DropNewPartyMessage : ServerMessage
+    public class DropNewPartyMessage : ServerMessage
     {
         #region Overrides of ServerMessage
 

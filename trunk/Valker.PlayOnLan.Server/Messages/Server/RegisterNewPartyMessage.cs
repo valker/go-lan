@@ -1,18 +1,34 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Valker.PlayOnLan.Api.Communication;
+using Valker.PlayOnLan.Server.Messages.Client;
 
 namespace Valker.PlayOnLan.Server.Messages.Server
 {
-    class RegisterNewPartyMessage : ServerMessage
+    public class RegisterNewPartyMessage : SingleServerMessage
     {
+        public RegisterNewPartyMessage()
+        {
+        }
+
+        public RegisterNewPartyMessage(string name, GameInfo info) : base(info.Connector)
+        {
+            Name = name;
+            GameId = info.GameId;
+        }
+
+        public string GameId { get; set; }
+
+        public string Name { get; set; }
+
         #region Overrides of ServerMessage
 
         public override void Execute(IServerMessageExecuter server)
         {
-            throw new NotImplementedException();
+            PartyStatus status = server.RegisterNewParty(this.Name, this.GameId);
+            server.Send(new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred).ToString());
         }
 
         #endregion
