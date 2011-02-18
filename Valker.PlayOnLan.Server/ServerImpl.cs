@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Communication;
+using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
 
 namespace Valker.PlayOnLan.Server
@@ -18,9 +21,11 @@ namespace Valker.PlayOnLan.Server
                                                               new ServerGameInfo("Tic-tac-toe", Guid.NewGuid())
                                                           };
 
-        private List<PartyRequest> _requests = new List<PartyRequest>();
+        private List<PartyState> _partyStates = new List<PartyState>();
 
         private IEnumerable<IMessageConnector> _connectors;
+
+        private BackgroundWorker _worker = new BackgroundWorker();
 
         public ServerImpl(IEnumerable<IMessageConnector> connectors)
         {
@@ -29,6 +34,24 @@ namespace Valker.PlayOnLan.Server
             {
                 connector.MessageArrived += this.ConnectorOnMessageArrived;
             }
+
+            _worker.DoWork += WorkerOnDoWork;
+            _worker.RunWorkerAsync();
+        }
+
+        private void WorkerOnDoWork(object sender, DoWorkEventArgs args)
+        {
+            while (true)
+            {
+                Thread.Sleep(15000);
+                this.UpdatePartyStates();
+            }
+        }
+
+        public void UpdatePartyStates()
+        {
+            var msg = new UpdatePartyStatesMessage(this._partyStates);
+            this.Send(msg.ToString());
         }
 
         #region IServerMessageExecuter Members
@@ -44,13 +67,17 @@ namespace Valker.PlayOnLan.Server
         public PartyStatus RegisterNewParty(string name, string gameId)
         {
             var game = _games.First(info => info.Id == gameId);
-            var request = new PartyRequest(name, game);
-            if(_requests.FirstOrDefault(partyRequest => partyRequest.Name == name) != null)
+            if(this._partyStates.FirstOrDefault(partyState => partyState.Name == name) != null)
             {
                 return PartyStatus.NameDuplicated;
             }
 
-            _requests.Add(request);
+            var state = new PartyState();
+            state.Name = name;
+            state.Status = PartyStatus.PartyRegistred;
+            state.GameId = gameId;
+
+            this._partyStates.Add(state);
             return PartyStatus.PartyRegistred;
         }
 
