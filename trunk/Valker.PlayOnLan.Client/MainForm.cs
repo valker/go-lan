@@ -76,7 +76,8 @@ namespace Valker.PlayOnLan.Client
 
         private static GameIdentifier GenerateKey(PartyState state, IMessageConnector connector)
         {
-            return new GameIdentifier {Connector = connector, GameType =  state.GameTypeId, Name = state.Name};
+            var value = new GameIdentifier() {Connector = connector, GameType = state.GameTypeId, Name = state.playerNames[0]};
+            return value;
         }
 
 

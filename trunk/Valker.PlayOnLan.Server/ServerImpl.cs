@@ -63,7 +63,7 @@ namespace Valker.PlayOnLan.Server
             }
         }
 
-        public PartyStatus RegisterNewParty(string name, string gameId)
+        public PartyStatus RegisterNewParty(string name, string gameId, IMessageConnector connector)
         {
             if(this._partyStates.FirstOrDefault(partyState => partyState.players.FirstOrDefault(player => player.Name == name) != null) != null)
             {
@@ -71,7 +71,8 @@ namespace Valker.PlayOnLan.Server
             }
 
             var state = new PartyState {Status = PartyStatus.PartyRegistred, GameTypeId = gameId};
-            state.players = new[] {new Player(){connector = null, Name = name}};
+            state.players = new[] {new Player(){connector = connector, Name = name}};
+            state.playerNames = new[] {name};
 
             this._partyStates.Add(state);
             return PartyStatus.PartyRegistred;
@@ -103,7 +104,8 @@ namespace Valker.PlayOnLan.Server
         {
             var connector = (IMessageConnector) sender;
             _connectors.Remove(connector);
-            _partyStates.RemoveAll(state => state.Name == connector.Name);
+            throw new NotImplementedException();
+            //_partyStates.RemoveAll(state => state.Name == connector.Name);
         }
     }
 
@@ -113,14 +115,12 @@ namespace Valker.PlayOnLan.Server
 
         public IMessageConnector connector
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get; set;
         }
 
         public string Name
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get; set;
         }
 
         #endregion
