@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Valker.PlayOnLan.Api.Communication
 {
@@ -14,7 +15,10 @@ namespace Valker.PlayOnLan.Api.Communication
 
         public PartyStatus Status { get; set; }
 
+        [XmlIgnore]
         public IPlayer[] players { get; set; }
+
+        public string[] playerNames { get; set; }
 
         public string GameTypeId { get; set; }
     }
