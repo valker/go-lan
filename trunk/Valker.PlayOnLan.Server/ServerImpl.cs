@@ -104,25 +104,13 @@ namespace Valker.PlayOnLan.Server
         {
             var connector = (IMessageConnector) sender;
             _connectors.Remove(connector);
-            throw new NotImplementedException();
-            //_partyStates.RemoveAll(state => state.Name == connector.Name);
+            var parties = _partyStates.Where(state => state.players.FirstOrDefault(player => player.connector == connector) != null).ToArray();
+            foreach (var partyState in parties)
+            {
+                partyState.Dispose();
+                _partyStates.Remove(partyState);
+            }
+            UpdatePartyStates();
         }
-    }
-
-    public class Player : IPlayer
-    {
-        #region Implementation of IPlayer
-
-        public IMessageConnector connector
-        {
-            get; set;
-        }
-
-        public string Name
-        {
-            get; set;
-        }
-
-        #endregion
     }
 }

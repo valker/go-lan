@@ -21,6 +21,11 @@ namespace Valker.PlayOnLan.Api.Communication
         public string[] playerNames { get; set; }
 
         public string GameTypeId { get; set; }
+
+        public void Dispose()
+        {
+            // todo : implement notification of players
+        }
     }
 
     public interface IPlayer
