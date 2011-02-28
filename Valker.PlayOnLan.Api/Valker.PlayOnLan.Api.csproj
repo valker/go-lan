@@ -51,10 +51,14 @@
     <Compile Include="Communication\MessageEventArgs.cs" />
     <Compile Include="Communication\PartyState.cs" />
     <Compile Include="Communication\PartyStatus.cs" />
+    <Compile Include="Game\IGameType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Game" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

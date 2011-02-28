@@ -21,7 +21,7 @@ namespace Valker.PlayOnLan.XmppTransport
 
         public void Send(string message)
         {
-            Trace.WriteLine("TODO: implement send message");
+            // TODO: implement send message
         }
 
         public event EventHandler<MessageEventArgs> MessageArrived;
@@ -33,9 +33,8 @@ namespace Valker.PlayOnLan.XmppTransport
 
         public void Dispose()
         {
-            // todo: to be implemented
+            // TODO: to be implemented
             return;
-            throw new NotImplementedException();
         }
 
         #endregion

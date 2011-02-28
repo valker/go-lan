@@ -80,6 +80,12 @@
   <ItemGroup>
     <Content Include="Readme.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api.csproj">
+      <Project>{C4D1DCF4-84AE-409D-A848-BE7D2C2A91F5}</Project>
+      <Name>Valker.PlayOnLan.Api</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

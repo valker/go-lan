@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Xml.Serialization;
+
 using Valker.PlayOnLan.Api.Communication;
+using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
 
@@ -13,18 +15,20 @@ namespace Valker.PlayOnLan.Server
 {
     public class ServerImpl : IServerMessageExecuter
     {
-        private static readonly ServerGameInfo[] _games = new[]
-                                                          {
-                                                              new ServerGameInfo("Go", Guid.NewGuid()),
-                                                              new ServerGameInfo("Atari go", Guid.NewGuid()),
-                                                              new ServerGameInfo("Gomoku", Guid.NewGuid()),
-                                                              new ServerGameInfo("Tic-tac-toe", Guid.NewGuid())
-                                                          };
+//        private static readonly ServerGameInfo[] _games3 = new[]
+//                                                          {
+//                                                              new ServerGameInfo("Go", Guid.NewGuid()),
+//                                                              new ServerGameInfo("Atari go", Guid.NewGuid()),
+//                                                              new ServerGameInfo("Gomoku", Guid.NewGuid()),
+//                                                              new ServerGameInfo("Tic-tac-toe", Guid.NewGuid())
+//                                                          };
+//        
+        private static readonly IGameType[] _games = new IGameType[] { new MyGoban.GoRules(), new TicTacToePlugin.TicTacToeGame()};
 
         private List<PartyState> _partyStates = new List<PartyState>();
 
         private List<IMessageConnector> _connectors = new List<IMessageConnector>();
-
+        
         private BackgroundWorker _worker = new BackgroundWorker();
 
         public ServerImpl(IEnumerable<IMessageConnector> connectors)
