@@ -92,5 +92,10 @@ namespace Valker.PlayOnLan.Client.Communication
         }
 
         #endregion
+
+        internal void AcceptParty(PartyInfo partyInfo)
+        {
+            SendMessage(new AcceptNewPartyMessage(partyInfo.Name, partyInfo.GameType, Name));
+        }
     }
 }

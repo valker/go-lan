@@ -29,7 +29,6 @@ namespace Valker.PlayOnLan.Server.Messages.Server
         {
             PartyStatus status = server.RegisterNewParty(this.Name, this.GameId, (IMessageConnector) sender);
             var message = new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred).ToString();
-            //server.Send(message);
             ((IMessageConnector)sender).Send(message);
             server.UpdatePartyStates();
         }

@@ -87,6 +87,12 @@ namespace Valker.PlayOnLan.Server
             return _games.Select(info => info.Name + ',' + info.ID).ToArray();
         }
 
+
+        public void AcceptPartyRequest(string RequesterName, string GameType, string AccepterName)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
@@ -157,6 +163,7 @@ namespace Valker.PlayOnLan.Server
 
             _players.Remove(playerInfo);
         }
+
 
     }
 }

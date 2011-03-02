@@ -6,5 +6,7 @@ namespace Valker.PlayOnLan.Api.Communication
         void Send(string message);
         PartyStatus RegisterNewParty(string name, string gameId, IMessageConnector connector);
         void UpdatePartyStates();
+
+        void AcceptPartyRequest(string RequesterName, string GameType, string AccepterName);
     }
 }
