@@ -15,11 +15,19 @@ namespace Valker.PlayOnLan.Server
 {
     public class ServerImpl : IServerMessageExecuter
     {
-        private static readonly IGameServer[] _games = new IGameType[] { /*new MyGoban.GoRules(),*/ new TicTacToePlugin.TicTacToeGame() }.Select(plugin => plugin.CreateServer()).ToArray();
+        // Games that are supported by this server
+        private static readonly IGameServer[] _games = new IGameType[] 
+        { 
+            /*new MyGoban.GoRules(),*/ 
+            new TicTacToePlugin.TicTacToeGame() 
+        }.Select(plugin => plugin.CreateServer()).ToArray();
 
         private List<PartyState> _partyStates = new List<PartyState>();
 
-        private List<IMessageConnector> _connectors = new List<IMessageConnector>();
+        //private List<IMessageConnector> _connectors = new List<IMessageConnector>();
+        private List<ConnectionInfo> _connections = new List<ConnectionInfo>();
+
+        private List<PlayerInfo> _players = new List<PlayerInfo>();
         
         private BackgroundWorker _worker = new BackgroundWorker();
 
@@ -53,9 +61,9 @@ namespace Valker.PlayOnLan.Server
 
         public void Send(string message)
         {
-            foreach (IMessageConnector connector in this._connectors)
+            foreach (var connector in this._connections)
             {
-                connector.Send(message);
+                connector.Connector.Send(message);
             }
         }
 
@@ -89,24 +97,66 @@ namespace Valker.PlayOnLan.Server
             msgObject.Execute(this, sender);
         }
 
+        public bool AddConnector(IMessageConnector connector, string playerName)
+        {
+            if (_players.FirstOrDefault(pl => pl.Name == playerName) != null)
+            {
+                return false;
+            }
+
+            connector.MessageArrived += this.ConnectorOnMessageArrived;
+            connector.Closed += ConnectorOnClosed;
+            var connectionInfo = new ConnectionInfo() { Connector = connector };
+            _connections.Add(connectionInfo);
+            var playerInfo = new PlayerInfo();
+            playerInfo.Connection = connectionInfo;
+            playerInfo.Name = playerName;
+
+            _players.Add(playerInfo);
+            return true;
+        }
+
         public void AddConnector(IMessageConnector connector)
         {
             connector.MessageArrived += this.ConnectorOnMessageArrived;
             connector.Closed += ConnectorOnClosed;
-            _connectors.Add(connector);
+            _connections.Add(new ConnectionInfo() { Connector = connector });
         }
+
 
         private void ConnectorOnClosed(object sender, EventArgs args)
         {
             var connector = (IMessageConnector) sender;
-            _connectors.Remove(connector);
-            var parties = _partyStates.Where(state => state.players.FirstOrDefault(player => player.connector == connector) != null).ToArray();
+
+            var connectionInfo = _connections.Find(ci => ci.Connector.Equals(connector));
+
+            foreach (var player in GetPlayersByConnection(connectionInfo))
+            {
+                RemovePlayer(player);
+            }
+
+            _connections.Remove(connectionInfo);
+
+            UpdatePartyStates();
+        }
+
+        private PlayerInfo[] GetPlayersByConnection(ConnectionInfo connectionInfo)
+        {
+            var playerToRemove = _players.Where(pl => pl.Connection.Equals(connectionInfo)).ToArray();
+            return playerToRemove;
+        }
+
+        private void RemovePlayer(PlayerInfo playerInfo)
+        {
+            var parties = _partyStates.Where(state => state.players.FirstOrDefault(player => player.Name == playerInfo.Name) != null).ToArray();
             foreach (var partyState in parties)
             {
                 partyState.Dispose();
                 _partyStates.Remove(partyState);
             }
-            UpdatePartyStates();
+
+            _players.Remove(playerInfo);
         }
+
     }
 }

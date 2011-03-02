@@ -6,23 +6,36 @@ namespace Valker.PlayOnLan.Client.Communication
 {
     public class LocalTransport : IDisposable
     {
-        private List<LocalMessageConnector> connectors = new List<LocalMessageConnector>();
+        LocalMessageConnector _serverConnector;
 
-        public IMessageConnector CreateMessageConnector(string name)
+        public LocalMessageConnector ServerConnector
         {
-            var connector = new LocalMessageConnector(this, name);
-            this.connectors.Add(connector);
-            return connector;
+            get { return _serverConnector; }
         }
+
+        LocalMessageConnector _clientConnector;
+
+        public LocalMessageConnector ClientConnector
+        {
+            get { return _clientConnector; }
+        }
+
+        public LocalTransport()
+        {
+            _serverConnector = new LocalMessageConnector(this, "server");
+            _clientConnector = new LocalMessageConnector(this, "client");
+        }
+
 
         public void SendMessage(LocalMessageConnector connector, string message)
         {
-            foreach (LocalMessageConnector localMessageConnector in this.connectors)
+            if (ReferenceEquals(connector, ClientConnector))
             {
-                if (!ReferenceEquals(localMessageConnector, connector))
-                {
-                    localMessageConnector.OnMessageArrived(message);
-                }
+                ServerConnector.OnMessageArrived(message);
+            }
+            else
+            {
+                ClientConnector.OnMessageArrived(message);
             }
         }
 
@@ -30,10 +43,8 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void Dispose()
         {
-            foreach (LocalMessageConnector connector in connectors)
-            {
-                connector.DisposeImpl();
-            }
+            ClientConnector.DisposeImpl();
+            ServerConnector.DisposeImpl();
         }
 
         #endregion
