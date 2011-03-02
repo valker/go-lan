@@ -10,19 +10,31 @@ using System;
 
 namespace Valker.PlayOnLan.Api.Game
 {
-	/// <summary>
-	/// Description of GameType.
-	/// </summary>
-	public interface IGameType
-	{
-		string Name {get;}
-		string ID {get;}
-		IGameServer CreateServer();
-		IGameClient CreateClient();
-	}
-	
-	public interface IGameServer{}
+    /// <summary>
+    /// Description of GameType.
+    /// </summary>
+    public interface IGameType
+    {
+        /// <summary>
+        /// Describes the name of the game on original language
+        /// </summary>
+        string Name {get;}
 
-	public interface IGameClient{}
-	
+        /// <summary>
+        /// Defines the unique identifier of the game type
+        /// </summary>
+        string ID {get;}
+
+        /// <summary>
+        /// Creates server component of the game
+        /// </summary>
+        /// <returns></returns>
+        IGameServer CreateServer();
+
+        /// <summary>
+        /// Creates client component of the game
+        /// </summary>
+        /// <returns></returns>
+        IGameClient CreateClient();
+    }
 }
