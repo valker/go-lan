@@ -15,15 +15,7 @@ namespace Valker.PlayOnLan.Server
 {
     public class ServerImpl : IServerMessageExecuter
     {
-//        private static readonly ServerGameInfo[] _games3 = new[]
-//                                                          {
-//                                                              new ServerGameInfo("Go", Guid.NewGuid()),
-//                                                              new ServerGameInfo("Atari go", Guid.NewGuid()),
-//                                                              new ServerGameInfo("Gomoku", Guid.NewGuid()),
-//                                                              new ServerGameInfo("Tic-tac-toe", Guid.NewGuid())
-//                                                          };
-//        
-        private static readonly IGameType[] _games = new IGameType[] { new MyGoban.GoRules(), new TicTacToePlugin.TicTacToeGame()};
+        private static readonly IGameServer[] _games = new IGameType[] { /*new MyGoban.GoRules(),*/ new TicTacToePlugin.TicTacToeGame() }.Select(plugin => plugin.CreateServer()).ToArray();
 
         private List<PartyState> _partyStates = new List<PartyState>();
 
@@ -84,7 +76,7 @@ namespace Valker.PlayOnLan.Server
 
         public string[] RetrieveSupportedGames()
         {
-            return _games.Select(info => info.ToString()).ToArray();
+            return _games.Select(info => info.Name + ',' + info.ID).ToArray();
         }
 
         #endregion

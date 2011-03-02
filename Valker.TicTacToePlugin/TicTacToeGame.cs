@@ -11,36 +11,36 @@ using System.Collections.Generic;
 
 namespace Valker.TicTacToePlugin
 {
-	/// <summary>
-	/// Description of MyClass.
-	/// </summary>
-	public class TicTacToeGame : Valker.PlayOnLan.Api.Game.IGameType
-	{
-		
-		public override string ToString() {
-			return Name + ',' + ID;
-		}
+    /// <summary>
+    /// Description of MyClass.
+    /// </summary>
+    public class TicTacToeGame : Valker.PlayOnLan.Api.Game.IGameType
+    {
+        
+        public override string ToString() {
+            return Name + ',' + ID;
+        }
 
-		public string Name {
-			get {
-				return "Крестики-нолики";
-			}
-		}
-		
-		public Valker.PlayOnLan.Api.Game.IGameServer CreateServer()
-		{
-			throw new NotImplementedException();
-		}
-		
-		public Valker.PlayOnLan.Api.Game.IGameClient CreateClient()
-		{
-			throw new NotImplementedException();
-		}
-		
-		public string ID {
-			get {
-				return "161DB3D0-94C3-44b7-AA60-ED0061706D74";
-			}
-		}
-	}
+        public string Name {
+            get {
+                return "Крестики-нолики";
+            }
+        }
+        
+        public Valker.PlayOnLan.Api.Game.IGameServer CreateServer()
+        {
+            return new TicTacToeServer(this);
+        }
+        
+        public Valker.PlayOnLan.Api.Game.IGameClient CreateClient()
+        {
+            throw new NotImplementedException();
+        }
+        
+        public string ID {
+            get {
+                return "161DB3D0-94C3-44b7-AA60-ED0061706D74";
+            }
+        }
+    }
 }
