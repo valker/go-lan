@@ -34,14 +34,14 @@ namespace Valker.PlayOnLan.Client
 
         private void UpdatePartyStatesView()
         {
-            List<string> data = new List<string>();
+            listView1.Invoke(new Action(delegate { listView1.Items.Clear(); }));
             foreach (KeyValuePair<GameIdentifier, PartyState> pair in this._partyStates)
             {
-                data.Add(this.GetPartyInfoString(pair.Key, pair.Value));
+                listView1.Invoke(new Action(delegate {
+                    var item = new ListViewItem(new string[] { pair.Key.Name, _gameNames[pair.Key.GameType], pair.Value.Status.ToString() });
+                    listView1.Items.Add(item);
+                }));
             }
-
-            listBox2.Invoke(new Action(delegate { listBox2.DataSource = data; }));
-            
         }
 
         private string GetPartyInfoString(GameIdentifier gameIdentifier, PartyState state)
