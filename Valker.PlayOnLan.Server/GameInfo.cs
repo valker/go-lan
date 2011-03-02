@@ -21,7 +21,7 @@ namespace Valker.PlayOnLan.Server
 
         public override string ToString()
         {
-            return this.GameName + " - " + this.Connector.Name;
+            return this.GameName;
         }
     }
 }
