@@ -3,12 +3,13 @@ using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Client
 {
-    class GameIdentifier : IEquatable<GameIdentifier>
+    class PartyInfo : IEquatable<PartyInfo>
     {
         public string Name { get; set; }
         public string GameType { get; set; }
+        public PartyStatus Status { get; set; }
 
-        public bool Equals(GameIdentifier other)
+        public bool Equals(PartyInfo other)
         {
             if (ReferenceEquals(null, other))
             {
@@ -18,7 +19,7 @@ namespace Valker.PlayOnLan.Client
             {
                 return true;
             }
-            return Equals(other.Name, this.Name) && Equals(other.GameType, this.GameType) && Equals(other.Connector, this.Connector);
+            return Equals(other.Name, this.Name) && Equals(other.GameType, this.GameType) && Equals(other.Connector, this.Connector) && Equals(other.Status, Status);
         }
 
         public override bool Equals(object obj)
@@ -31,11 +32,11 @@ namespace Valker.PlayOnLan.Client
             {
                 return true;
             }
-            if (obj.GetType() != typeof (GameIdentifier))
+            if (obj.GetType() != typeof (PartyInfo))
             {
                 return false;
             }
-            return this.Equals((GameIdentifier) obj);
+            return this.Equals((PartyInfo) obj);
         }
 
         public override int GetHashCode()
@@ -45,16 +46,17 @@ namespace Valker.PlayOnLan.Client
                 int result = this.Name.GetHashCode();
                 result = (result * 397) ^ this.GameType.GetHashCode();
                 result = (result * 397) ^ this.Connector.GetHashCode();
+                result = (result * 397) ^ this.Status.GetHashCode();
                 return result;
             }
         }
 
-        public static bool operator ==(GameIdentifier left, GameIdentifier right)
+        public static bool operator ==(PartyInfo left, PartyInfo right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(GameIdentifier left, GameIdentifier right)
+        public static bool operator !=(PartyInfo left, PartyInfo right)
         {
             return !Equals(left, right);
         }

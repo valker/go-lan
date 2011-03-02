@@ -21,7 +21,7 @@ namespace Valker.PlayOnLan.Client
             this.InitializeComponent();
         }
 
-        Dictionary<GameIdentifier, PartyState> _partyStates = new Dictionary<GameIdentifier, PartyState>();
+        List<PartyInfo> _partyStates = new List<PartyInfo>();
 
         private void ClientOnPartyStatesChanged(object sender, PartyStatesArgs args)
         {
@@ -35,16 +35,17 @@ namespace Valker.PlayOnLan.Client
         private void UpdatePartyStatesView()
         {
             listView1.Invoke(new Action(delegate { listView1.Items.Clear(); }));
-            foreach (KeyValuePair<GameIdentifier, PartyState> pair in this._partyStates)
+            foreach (PartyInfo info in _partyStates)
             {
                 listView1.Invoke(new Action(delegate {
-                    var item = new ListViewItem(new string[] { pair.Key.Name, _gameNames[pair.Key.GameType], pair.Value.Status.ToString() });
+                    var item = new ListViewItem(new string[] { info.Name, _gameNames[info.GameType], info.Status.ToString() });
+                    item.Tag = info;
                     listView1.Items.Add(item);
                 }));
             }
         }
 
-        private string GetPartyInfoString(GameIdentifier gameIdentifier, PartyState state)
+        private string GetPartyInfoString(PartyInfo gameIdentifier, PartyState state)
         {
             return gameIdentifier.Name + " " + this.GetGameName(gameIdentifier.GameType) + state.Status;
         }
@@ -56,11 +57,11 @@ namespace Valker.PlayOnLan.Client
 
         private void UpdatePartyStatesData(PartyStatesArgs args)
         {
-            var toRemove = new List<GameIdentifier>();
-            foreach (var key in this._partyStates.Keys.Where(identifier => identifier.Connector.Equals(args.Connector)))
+            var toRemove = new List<PartyInfo>();
+            foreach (var info in this._partyStates.Where(inf => inf.Connector.Equals(args.Connector)))
             {
                 // this state is not actual
-                toRemove.Add(key);
+                toRemove.Add(info);
             }
 
             foreach (var gameIdentifier in toRemove)
@@ -70,13 +71,13 @@ namespace Valker.PlayOnLan.Client
 
             foreach (var partyState in args.States)
             {
-                this._partyStates.Add(GenerateKey(partyState, args.Connector), partyState);
+                this._partyStates.Add(GenerateKey(partyState, args.Connector));
             }
         }
 
-        private static GameIdentifier GenerateKey(PartyState state, IMessageConnector connector)
+        private static PartyInfo GenerateKey(PartyState state, IMessageConnector connector)
         {
-            var value = new GameIdentifier() {Connector = connector, GameType = state.GameTypeId, Name = state.playerNames[0]};
+            var value = new PartyInfo() {Connector = connector, GameType = state.GameTypeId, Name = state.playerNames[0], Status = state.Status};
             return value;
         }
 
@@ -113,6 +114,11 @@ namespace Valker.PlayOnLan.Client
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             _client.Dispose();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this._client.AcceptParty((PartyInfo)this.listView1.SelectedItems[0].Tag);
         }
     }
 }
