@@ -23,7 +23,7 @@ namespace Valker.TicTacToePlugin
 
         public string Name {
             get {
-                return "Крестики-нолики";
+                return "Tic-tac-toe";
             }
         }
         

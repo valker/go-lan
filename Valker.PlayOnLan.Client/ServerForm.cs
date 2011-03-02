@@ -24,13 +24,15 @@ namespace Valker.PlayOnLan.Client
         private void button1_Click(object sender, EventArgs e)
         {
             var transport = new LocalTransport();
-            var serverConnector = transport.CreateMessageConnector("server");
-            var clientConnector = transport.CreateMessageConnector("client");
-            _server.AddConnector(serverConnector);
-            var xmppConnector = new XmppTransport.XmppTransportImpl("xmpp");
-            var client = new ClientImpl(this.textBox1.Text, new []{clientConnector, xmppConnector});
-            var form = new MainForm(client);
-            form.Show(this);
+            var playerName = this.textBox1.Text;
+            var addedOk = _server.AddConnector(transport.ServerConnector, playerName);
+            if (addedOk)
+            {
+                //var xmppConnector = new XmppTransport.XmppTransportImpl("xmpp");
+                var client = new ClientImpl(this.textBox1.Text, new[] { transport.ClientConnector/*, xmppConnector*/ });
+                var form = new MainForm(client);
+                form.Show(this);
+            }
         }
     }
 }
