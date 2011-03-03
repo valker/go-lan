@@ -63,9 +63,9 @@ namespace Valker.PlayOnLan.Client.Communication
             this.SupportedGamesChanged(this, new SupportedGamesChangedEventArgs(games, sender));
         }
 
-        public void ShowMessage(string text)
+        public void ShowMessage(string text, string To)
         {
-            this.MessageToShow(this, new MessageEventArgs(text));
+            this.MessageToShow(this, new MessageEventArgs(text, To));
         }
 
         public void UpdatePartyStates(PartyState[] partyStates, IMessageConnector sender)
@@ -78,6 +78,8 @@ namespace Valker.PlayOnLan.Client.Communication
         public event EventHandler<MessageEventArgs> MessageToShow = delegate { };
 
         public event EventHandler<PartyStatesArgs> PartyStatesChanged = delegate { };
+
+        public event EventHandler<AcceptedPlayerEventArgs> AcceptedPlayer = delegate { };
 
         #endregion
 
@@ -97,5 +99,20 @@ namespace Valker.PlayOnLan.Client.Communication
         {
             SendMessage(new AcceptNewPartyMessage(partyInfo.Name, partyInfo.GameType, Name));
         }
+
+        internal void RegisterNewPlayer()
+        {
+            SendMessage(new RegisterNewPlayerMessage() { Name = Name });
+        }
+
+        #region IClientMessageExecuter Members
+
+
+        public void AcceptNewPlayer(bool status)
+        {
+            AcceptedPlayer(this, new AcceptedPlayerEventArgs() { Status = status });
+        }
+
+        #endregion
     }
 }

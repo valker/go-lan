@@ -54,18 +54,22 @@ namespace Valker.PlayOnLan.Server
         public void UpdatePartyStates()
         {
             var msg = new UpdatePartyStatesMessage(this._partyStates);
-            this.Send(msg.ToString());
+
+            //this.Send(msg.ToString());
         }
 
         #region IServerMessageExecuter Members
 
-        public void Send(string message)
-        {
-            foreach (var connector in this._connections)
-            {
-                connector.Connector.Send(message);
-            }
-        }
+        //public void Send(string message)
+        //{
+
+        //    var connections = this._connections.ToArray();
+
+        //    foreach (ConnectionInfo connector in connections)
+        //    {
+        //        connector.Connector.Send(message);
+        //    }
+        //}
 
         public PartyStatus RegisterNewParty(string name, string gameId, IMessageConnector connector)
         {
@@ -100,26 +104,7 @@ namespace Valker.PlayOnLan.Server
             string message = args.Message;
             var serializer = new XmlSerializer(typeof (ServerMessage), ServerMessageTypes.Types);
             var msgObject = (ServerMessage) serializer.Deserialize(new StringReader(message));
-            msgObject.Execute(this, sender);
-        }
-
-        public bool AddConnector(IMessageConnector connector, string playerName)
-        {
-            if (_players.FirstOrDefault(pl => pl.Name == playerName) != null)
-            {
-                return false;
-            }
-
-            connector.MessageArrived += this.ConnectorOnMessageArrived;
-            connector.Closed += ConnectorOnClosed;
-            var connectionInfo = new ConnectionInfo() { Connector = connector };
-            _connections.Add(connectionInfo);
-            var playerInfo = new PlayerInfo();
-            playerInfo.Connection = connectionInfo;
-            playerInfo.Name = playerName;
-
-            _players.Add(playerInfo);
-            return true;
+            msgObject.Execute(this, (IClientInfo)sender);
         }
 
         public void AddConnector(IMessageConnector connector)
@@ -146,9 +131,11 @@ namespace Valker.PlayOnLan.Server
             UpdatePartyStates();
         }
 
+        Dictionary<PlayerInfo, ConnectionInfo> d1 = new Dictionary<PlayerInfo, ConnectionInfo>();
+
         private PlayerInfo[] GetPlayersByConnection(ConnectionInfo connectionInfo)
         {
-            var playerToRemove = _players.Where(pl => pl.Connection.Equals(connectionInfo)).ToArray();
+            var playerToRemove = d1.Where(pl => pl.Value.Equals(connectionInfo)).Select(pl => pl.Key).ToArray();
             return playerToRemove;
         }
 
@@ -165,5 +152,24 @@ namespace Valker.PlayOnLan.Server
         }
 
 
+
+        #region IServerMessageExecuter Members
+
+
+        public void RegisterNewPlayer(string Name, IMessageConnector connector)
+        {
+            bool status = false;
+            if (_players.FirstOrDefault(pl => pl.Name == Name) == null)
+            {
+                var playerInfo = new PlayerInfo() { Name = Name };
+                _players.Add(playerInfo);
+                d1.Add(playerInfo, new ConnectionInfo() { Connector = connector });
+                status = true;
+            }
+            
+            Send(new AcceptNewPlayerMessage() { Status = status }.ToString());
+        }
+
+        #endregion
     }
 }

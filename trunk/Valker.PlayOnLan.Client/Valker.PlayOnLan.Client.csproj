@@ -53,12 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communication\AcceptedPlayerEventArgs.cs" />
     <Compile Include="Communication\ClientImpl.cs" />
     <Compile Include="Communication\LocalTransport.cs" />
     <Compile Include="Communication\PartyStatesArgs.cs" />
     <Compile Include="Communication\SupportedGamesChangedEventArgs.cs" />
     <Compile Include="GameIdentifier.cs" />
-    <Compile Include="LocalMessageConnector.cs" />
+    <Compile Include="Communication\LocalMessageConnector.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

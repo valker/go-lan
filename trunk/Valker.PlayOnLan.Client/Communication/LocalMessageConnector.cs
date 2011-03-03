@@ -16,20 +16,15 @@ namespace Valker.PlayOnLan.Client
 
         #region Implementation of IMessageConnector
 
-        public void Send(string message)
-        {
-            this._parent.SendMessage(this, message);
-        }
-
         public event EventHandler<MessageEventArgs> MessageArrived = delegate { };
         public event EventHandler Closed = delegate { };
         public string Name { get; set; }
 
         #endregion
 
-        public void OnMessageArrived(string message)
+        public void OnMessageArrived(string message, string To)
         {
-            this.MessageArrived(this, new MessageEventArgs(message));
+            this.MessageArrived(this, new MessageEventArgs(message, To));
         }
 
         #region Implementation of IDisposable
@@ -47,5 +42,25 @@ namespace Valker.PlayOnLan.Client
             Closed(this, EventArgs.Empty);
             Closed = null;
         }
+
+        #region IMessageConnector Members
+
+
+        public string[] Clients
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        #endregion
+
+        #region IMessageConnector Members
+
+
+        public void Send(string To, string message)
+        {
+            _parent.SendMessage(this, message, To);
+        }
+
+        #endregion
     }
 }
