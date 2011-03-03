@@ -25,11 +25,11 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 
         #region Overrides of ServerMessage
 
-        public override void Execute(IServerMessageExecuter server, object sender)
+        public override void Execute(IServerMessageExecuter server, IClientInfo client)
         {
-            PartyStatus status = server.RegisterNewParty(this.Name, this.GameId, (IMessageConnector) sender);
+            PartyStatus status = server.RegisterNewParty(this.Name, this.GameId, (IMessageConnector) client);
             var message = new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred).ToString();
-            ((IMessageConnector)sender).Send(message);
+            client.Connector.Send(client.Identifier, message);
             server.UpdatePartyStates();
         }
 

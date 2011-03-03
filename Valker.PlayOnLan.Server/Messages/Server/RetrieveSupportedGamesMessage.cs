@@ -7,7 +7,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
     {
         #region Overrides of Message
 
-        public override void Execute(IServerMessageExecuter server, object sender)
+        public override void Execute(IServerMessageExecuter server, IClientInfo sender)
         {
             string[] array = server.RetrieveSupportedGames();
             var message = new RetrieveSupportedGamesResponceMessage();

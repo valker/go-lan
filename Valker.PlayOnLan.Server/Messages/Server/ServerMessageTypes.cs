@@ -8,7 +8,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
                                                 {
                                                     typeof (RetrieveSupportedGamesMessage),
                                                     typeof (RegisterNewPartyMessage), typeof (AcceptNewPartyMessage),
-                                                    typeof (DropNewPartyMessage), typeof (RetrieveRegistredPartiesMessage),
+                                                    typeof (DropNewPartyMessage), typeof (RetrieveRegistredPartiesMessage), typeof(RegisterNewPlayerMessage), 
                                                 };
 
         public static Type[] Types

@@ -4,6 +4,7 @@ using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.XmppTransport
 {
+#if false
     public class XmppTransportImpl : IMessageConnector
     {
         public XmppTransportImpl(string name)
@@ -39,4 +40,5 @@ namespace Valker.PlayOnLan.XmppTransport
 
         #endregion
     }
+#endif
 }

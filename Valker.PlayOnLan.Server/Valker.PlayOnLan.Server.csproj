@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ConnectionInfo.cs" />
     <Compile Include="GameInfo.cs" />
+    <Compile Include="Messages\Client\AcceptNewPlayerMessage.cs" />
     <Compile Include="Messages\Client\AcknowledgeDropMessage.cs" />
     <Compile Include="Messages\Client\AcknowledgePartyBeginMessage.cs" />
     <Compile Include="Messages\Client\AcknowledgeRegistrationMessage.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Messages\Server\DropNewPartyMessage.cs" />
     <Compile Include="Messages\Server\RegisterNewPartyMessage.cs" />
     <Compile Include="Messages\Client\UpdatePartyStatesMessage.cs" />
+    <Compile Include="Messages\Server\RegisterNewPlayerMessage.cs" />
     <Compile Include="Messages\Server\RetrieveRegistredPartiesMessage.cs" />
     <Compile Include="Messages\Server\RetrieveSupportedGamesMessage.cs" />
     <Compile Include="Messages\Client\RetrieveSupportedGamesResponceMessage.cs" />

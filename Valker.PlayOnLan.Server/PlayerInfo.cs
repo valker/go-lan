@@ -7,8 +7,6 @@ namespace Valker.PlayOnLan.Server
 {
     class PlayerInfo
     {
-        public ConnectionInfo Connection { get; set; }
-
         public string Name { get; set; }
     }
 }
