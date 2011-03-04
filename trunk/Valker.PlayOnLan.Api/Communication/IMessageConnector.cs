@@ -10,17 +10,18 @@ namespace Valker.PlayOnLan.Api.Communication
         /// <summary>
         /// Identifier of connection type (local, xmpp, etc.)
         /// </summary>
-        string Name { get; set; }
+        string ConnectorName { get; set; }
 
         /// <summary>
         /// Send message
         /// </summary>
         /// <param name="message">message to be sent</param>
-        /// <param name="To">destination of the message</param>
-        void Send(object To, string message);
+        /// <param name="Recepient">destination of the message</param>
+        void Send(object Recepient, string message);
 
         /// <summary>
         /// Client identifiers connected to this connector
+        /// <remark>used in server part</remark>
         /// </summary>
         string[] Clients { get; }
 

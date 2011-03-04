@@ -2,13 +2,17 @@ namespace Valker.PlayOnLan.Api.Communication
 {
     public interface IServerMessageExecuter
     {
-        string[] RetrieveSupportedGames();
+        /// <summary>
+        /// Send the message to receipient
+        /// </summary>
+        /// <param name="recepient"></param>
+        /// <param name="message"></param>
         void Send(IClientInfo recepient, string message);
-        PartyStatus RegisterNewParty(string name, string gameId, IClientInfo client);
+
+        string[] RetrieveSupportedGames();
+        PartyStatus RegisterNewParty(IClientInfo client, string name, string gameId);
         void UpdatePartyStates();
-
         void AcceptPartyRequest(string RequesterName, string GameType, string AccepterName);
-
-        void RegisterNewPlayer(string Name, IClientInfo connector);
+        void RegisterNewPlayer(IClientInfo client, string Name);
     }
 }
