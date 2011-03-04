@@ -53,7 +53,7 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void RegisterNewParty(GameInfo gameInfo)
         {
-            this.SendMessage(new RegisterNewPartyMessage(Name, gameInfo));
+            this.SendMessage(new RegisterNewPartyMessage(gameInfo));
         }
 
         #region Overrides of IClientMessageExecuter

@@ -22,12 +22,14 @@ namespace Valker.PlayOnLan.Server
             new TicTacToePlugin.TicTacToeGame() 
         }.Select(plugin => plugin.CreateServer()).ToArray();
 
+        // Added when new party registred
+        // Removed when party is removed, OR client that register the party is removed
         private List<PartyState> _partyStates = new List<PartyState>();
 
+        // Added when new transport is attached to the server
         private List<IMessageConnector> _connectors = new List<IMessageConnector>();
 
-        private List<IClientInfo> _clients = new List<IClientInfo>();
-
+        // Added when new player is registred
         private List<IPlayer> _players = new List<IPlayer>();
         
         private BackgroundWorker _worker = new BackgroundWorker();
@@ -56,26 +58,27 @@ namespace Valker.PlayOnLan.Server
         {
             var msg = new UpdatePartyStatesMessage(this._partyStates);
 
-            //this.Send(msg.ToString());
+            Send(null, msg.ToString());
         }
 
         #region IServerMessageExecuter Members
 
-        public PartyStatus RegisterNewParty(IClientInfo client, string playerName, string gameId)
+        public PartyStatus RegisterNewParty(IClientInfo client, string gameId)
         {
-            if(this._partyStates.FirstOrDefault(partyState => partyState.players.FirstOrDefault(player => player.Name == playerName) != null) != null)
+            var player = _players.FirstOrDefault(pl => pl.Client.Equals(client));
+            if (player == null)
             {
-                return PartyStatus.NameDuplicated;
+                throw new ArgumentException("Cannot find player of this client");
             }
 
-            if (_players.FirstOrDefault(player => player.Client.Equals(client)) != null)
+            if (this._partyStates.FirstOrDefault(partyState => partyState.Players.FirstOrDefault(pl => pl.Equals(player)) != null) != null)
             {
                 return PartyStatus.ClientDuplicated;
             }
 
             var state = new PartyState {Status = PartyStatus.PartyRegistred, GameTypeId = gameId};
-            state.players = new[] {new Player(){Client = client, Name = playerName}};
-            state.playerNames = new[] {playerName};
+            state.Players = new[] {player};
+            state.Names = new[] {player.PlayerName};
 
             this._partyStates.Add(state);
             return PartyStatus.PartyRegistred;
@@ -119,11 +122,6 @@ namespace Valker.PlayOnLan.Server
                 RemovePlayer(player);
             }
 
-            foreach (var client in GetClientsByConnection(connector))
-            {
-                _clients.Remove(client);
-            }
-
             UpdatePartyStates();
         }
 
@@ -133,15 +131,9 @@ namespace Valker.PlayOnLan.Server
             return players;
         }
 
-        private IClientInfo[] GetClientsByConnection(IMessageConnector connector)
-        {
-            var clients = _clients.Where(cl => cl.ClientConnector.Equals(connector)).ToArray();
-            return clients;
-        }
-
         private void RemovePlayer(IPlayer playerInfo)
         {
-            var parties = _partyStates.Where(state => state.players.FirstOrDefault(player => player.Name == playerInfo.Name) != null).ToArray();
+            var parties = _partyStates.Where(state => state.Players.FirstOrDefault(player => player.PlayerName == playerInfo.PlayerName) != null).ToArray();
             foreach (var partyState in parties)
             {
                 partyState.Dispose();
@@ -159,9 +151,9 @@ namespace Valker.PlayOnLan.Server
         public void RegisterNewPlayer(IClientInfo client, string Name)
         {
             bool status = false;
-            if (_players.FirstOrDefault(pl => pl.Name == Name) == null)
+            if (_players.FirstOrDefault(pl => pl.PlayerName == Name) == null)
             {
-                var player = new Player() { Name = Name, Client = client };
+                var player = new Player() { PlayerName = Name, Client = client };
                 _players.Add(player);
                 status = true;
             }
@@ -173,10 +165,24 @@ namespace Valker.PlayOnLan.Server
 
         #region IServerMessageExecuter Members
 
-
+        /// <summary>
+        /// Send the message to the given recepient
+        /// </summary>
+        /// <param name="recepient">if null, then to all recepient</param>
+        /// <param name="message"></param>
         public void Send(IClientInfo recepient, string message)
         {
-            recepient.ClientConnector.Send("_server", recepient.ClientIdentifier, message);
+            if (recepient != null)
+            {
+                recepient.ClientConnector.Send("_server", recepient.ClientIdentifier, message);
+            }
+            else
+            {
+                foreach (var client in _players.Select(p => p.Client))
+                {
+                    Send(client, message);
+                }
+            }
         }
 
         #endregion

@@ -71,13 +71,13 @@ namespace Valker.PlayOnLan.Client
 
             foreach (var partyState in args.States)
             {
-                this._partyStates.Add(GenerateKey(partyState, args.Connector));
+                this._partyStates.Add(CreatePartyInfo(partyState, args.Connector));
             }
         }
 
-        private static PartyInfo GenerateKey(PartyState state, IMessageConnector connector)
+        private static PartyInfo CreatePartyInfo(PartyState state, IMessageConnector connector)
         {
-            var value = new PartyInfo() {Connector = connector, GameType = state.GameTypeId, Name = state.playerNames[0], Status = state.Status};
+            var value = new PartyInfo() {Connector = connector, GameType = state.GameTypeId, Name = state.Names[0], Status = state.Status};
             return value;
         }
 

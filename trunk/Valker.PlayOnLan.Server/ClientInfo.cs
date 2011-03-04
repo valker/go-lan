@@ -26,7 +26,8 @@ namespace Valker.PlayOnLan.Server
 
         public bool Equals(IClientInfo other)
         {
-            throw new NotImplementedException();
+            return this.ClientConnector.Equals(other.ClientConnector) 
+                && this.ClientIdentifier.Equals(other.ClientIdentifier);
         }
 
         #endregion
