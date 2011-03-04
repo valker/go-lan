@@ -6,7 +6,7 @@ namespace Valker.PlayOnLan.Server
     {
         #region Implementation of IPlayer
 
-        public IMessageConnector connector
+        public IClientInfo Client
         {
             get; set;
         }

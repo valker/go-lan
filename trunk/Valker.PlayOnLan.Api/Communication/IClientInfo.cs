@@ -8,6 +8,6 @@ namespace Valker.PlayOnLan.Api.Communication
     public interface IClientInfo : IEquatable<IClientInfo>
     {
         IMessageConnector Connector { get; }
-        string Identifier { get; }
+        object Identifier { get; }
     }
 }

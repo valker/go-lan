@@ -30,7 +30,7 @@ namespace Valker.PlayOnLan.Api.Communication
 
     public interface IPlayer
     {
-        IMessageConnector connector { get; set; }
+        IClientInfo Client { get; set; }
         string Name { get; set; }
     }
 }

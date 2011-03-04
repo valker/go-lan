@@ -4,7 +4,7 @@ namespace Valker.PlayOnLan.Api.Communication
 {
     public class MessageEventArgs : EventArgs
     {
-        public MessageEventArgs(string message, string client)
+        public MessageEventArgs(string message, object client)
         {
             this.Message = message;
             Client = client;
@@ -12,6 +12,6 @@ namespace Valker.PlayOnLan.Api.Communication
 
         public string Message { get; set; }
 
-        public string Client { get; set; }
+        public object Client { get; set; }
     }
 }

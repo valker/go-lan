@@ -23,8 +23,8 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 
         public override void Execute(IClientMessageExecuter client, object sender)
         {
-            var text = Status ? "Registred OK" : "Didn't registred";
-            client.ShowMessage(text);
+            //var text = Status ? "Registred OK" : "Didn't registred";
+            //client.ShowMessage(text);
         }
 
         #endregion

@@ -5,7 +5,7 @@ namespace Valker.PlayOnLan.Api.Communication
     /// <summary>
     /// Defines an interface of the thing that allows to send and receive messages
     /// </summary>
-    public interface IMessageConnector : IDisposable, IEquatable<IMessageConnector>
+    public interface IMessageConnector : IDisposable
     {
         /// <summary>
         /// Identifier of connection type (local, xmpp, etc.)
@@ -17,7 +17,7 @@ namespace Valker.PlayOnLan.Api.Communication
         /// </summary>
         /// <param name="message">message to be sent</param>
         /// <param name="To">destination of the message</param>
-        void Send(string To, string message);
+        void Send(object To, string message);
 
         /// <summary>
         /// Client identifiers connected to this connector

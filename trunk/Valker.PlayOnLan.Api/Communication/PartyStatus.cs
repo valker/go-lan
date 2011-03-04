@@ -5,6 +5,7 @@ namespace Valker.PlayOnLan.Api.Communication
         None = 0,
         PartyRegistred,
         NameDuplicated,
-        UnexpectedError
+        UnexpectedError,
+        ClientDuplicated
     }
 }
