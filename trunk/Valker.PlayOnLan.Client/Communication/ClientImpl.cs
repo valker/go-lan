@@ -7,6 +7,7 @@ using Valker.PlayOnLan.Server;
 using Valker.PlayOnLan.Server.Messages;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
+using System.Windows.Forms;
 
 namespace Valker.PlayOnLan.Client.Communication
 {
@@ -17,6 +18,11 @@ namespace Valker.PlayOnLan.Client.Communication
         /// </summary>
         private List<IMessageConnector> _connectors = new List<IMessageConnector>();
 
+        /// <summary>
+        /// Name of the player
+        /// </summary>
+        public string Name { get; set; }
+
         public ClientImpl(string name, IEnumerable<IMessageConnector> connectors)
         {
             Name = name;
@@ -26,8 +32,6 @@ namespace Valker.PlayOnLan.Client.Communication
                 connector.MessageArrived += this.ConnectorOnMessageArrived;
             }
         }
-
-        public string Name { get; set; }
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
         {
@@ -42,7 +46,7 @@ namespace Valker.PlayOnLan.Client.Communication
             this.SendMessage(new RetrieveSupportedGamesMessage());
         }
 
-        private void SendMessage(Message message)
+        private void SendMessage(Valker.PlayOnLan.Server.Messages.Message message)
         {
             string messageText = message.ToString();
             foreach (IMessageConnector connector in this._connectors)
@@ -51,7 +55,7 @@ namespace Valker.PlayOnLan.Client.Communication
             }
         }
 
-        public void RegisterNewParty(GameInfo gameInfo)
+        public void RegisterNewParty(GameInfo gameInfo, Form parent)
         {
             this.SendMessage(new RegisterNewPartyMessage(gameInfo));
         }

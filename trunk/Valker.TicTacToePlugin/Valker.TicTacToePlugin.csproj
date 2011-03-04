@@ -42,6 +42,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TicTacToeClient.cs" />
     <Compile Include="TicTacToeGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TicTacToeServer.cs" />

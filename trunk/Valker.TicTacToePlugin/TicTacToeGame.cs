@@ -7,14 +7,14 @@
  * Для изменения этого шаблона используйте Сервис | Настройка | Кодирование | Правка стандартных заголовков.
  */
 using System;
-using System.Collections.Generic;
+using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.TicTacToePlugin
 {
     /// <summary>
     /// Description of MyClass.
     /// </summary>
-    public class TicTacToeGame : Valker.PlayOnLan.Api.Game.IGameType
+    public class TicTacToeGame : IGameType
     {
         
         public override string ToString() {
@@ -27,14 +27,14 @@ namespace Valker.TicTacToePlugin
             }
         }
         
-        public Valker.PlayOnLan.Api.Game.IGameServer CreateServer()
+        public IGameServer CreateServer()
         {
             return new TicTacToeServer(this);
         }
         
-        public Valker.PlayOnLan.Api.Game.IGameClient CreateClient()
+        public IGameClient CreateClient()
         {
-            throw new NotImplementedException();
+            return new TicTacToeClient();
         }
         
         public string ID {
