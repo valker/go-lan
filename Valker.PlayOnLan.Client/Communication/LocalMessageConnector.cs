@@ -11,14 +11,14 @@ namespace Valker.PlayOnLan.Client
         public LocalMessageConnector(LocalTransport transport, string name)
         {
             this._parent = transport;
-            this.Name = name;
+            this.ConnectorName = name;
         }
 
         #region Implementation of IMessageConnector
 
         public event EventHandler<MessageEventArgs> MessageArrived = delegate { };
         public event EventHandler Closed = delegate { };
-        public string Name { get; set; }
+        public string ConnectorName { get; set; }
 
         #endregion
 

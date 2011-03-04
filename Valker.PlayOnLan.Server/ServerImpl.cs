@@ -61,7 +61,7 @@ namespace Valker.PlayOnLan.Server
 
         #region IServerMessageExecuter Members
 
-        public PartyStatus RegisterNewParty(string playerName, string gameId, IClientInfo client)
+        public PartyStatus RegisterNewParty(IClientInfo client, string playerName, string gameId)
         {
             if(this._partyStates.FirstOrDefault(partyState => partyState.players.FirstOrDefault(player => player.Name == playerName) != null) != null)
             {
@@ -129,13 +129,13 @@ namespace Valker.PlayOnLan.Server
 
         private IPlayer[] GetPlayersByConnection(IMessageConnector connector)
         {
-            var players = _players.Where(pl => pl.Client.Connector.Equals(connector)).ToArray();
+            var players = _players.Where(pl => pl.Client.ClientConnector.Equals(connector)).ToArray();
             return players;
         }
 
         private IClientInfo[] GetClientsByConnection(IMessageConnector connector)
         {
-            var clients = _clients.Where(cl => cl.Connector.Equals(connector)).ToArray();
+            var clients = _clients.Where(cl => cl.ClientConnector.Equals(connector)).ToArray();
             return clients;
         }
 
@@ -156,7 +156,7 @@ namespace Valker.PlayOnLan.Server
         #region IServerMessageExecuter Members
 
 
-        public void RegisterNewPlayer(string Name, IClientInfo client)
+        public void RegisterNewPlayer(IClientInfo client, string Name)
         {
             bool status = false;
             if (_players.FirstOrDefault(pl => pl.Name == Name) == null)

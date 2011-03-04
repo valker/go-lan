@@ -10,7 +10,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
     {
         public override void Execute(IServerMessageExecuter server, IClientInfo sender)
         {
-            server.RegisterNewPlayer(Name, sender);
+            server.RegisterNewPlayer(sender, Name);
         }
 
         public string Name { get; set; }
