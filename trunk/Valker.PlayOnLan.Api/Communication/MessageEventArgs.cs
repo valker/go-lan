@@ -4,14 +4,17 @@ namespace Valker.PlayOnLan.Api.Communication
 {
     public class MessageEventArgs : EventArgs
     {
-        public MessageEventArgs(string message, object client)
+        public MessageEventArgs(object fromIdentifier, object toIdentifier, string message)
         {
-            this.Message = message;
-            Client = client;
+            Message = message;
+            FromIdentifier = fromIdentifier;
+            ToIdentifier = toIdentifier;
         }
 
         public string Message { get; set; }
 
-        public object Client { get; set; }
+        public object FromIdentifier { get; set; }
+
+        public object ToIdentifier { get; set; }
     }
 }

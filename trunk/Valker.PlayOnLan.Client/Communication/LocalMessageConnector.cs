@@ -22,9 +22,9 @@ namespace Valker.PlayOnLan.Client
 
         #endregion
 
-        public void OnMessageArrived(string message, object To)
+        public void OnMessageArrived(object fromIdentifier, object toIdentifier, string message)
         {
-            this.MessageArrived(this, new MessageEventArgs(message, To));
+            this.MessageArrived(this, new MessageEventArgs(fromIdentifier, toIdentifier, message));
         }
 
         #region Implementation of IDisposable
@@ -56,9 +56,9 @@ namespace Valker.PlayOnLan.Client
         #region IMessageConnector Members
 
 
-        public void Send(object To, string message)
+        public void Send(object fromIdentifier, object toIdentifier, string message)
         {
-            _parent.SendMessage(this, message, To);
+            _parent.SendMessage(this, fromIdentifier, toIdentifier, message);
         }
 
         #endregion

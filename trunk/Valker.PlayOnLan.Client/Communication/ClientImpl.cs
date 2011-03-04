@@ -47,7 +47,7 @@ namespace Valker.PlayOnLan.Client.Communication
             string messageText = message.ToString();
             foreach (IMessageConnector connector in this._connectors)
             {
-                connector.Send("_server", messageText);
+                connector.Send("_server", Name, messageText);
             }
         }
 

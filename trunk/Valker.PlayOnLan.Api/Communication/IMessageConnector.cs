@@ -16,8 +16,9 @@ namespace Valker.PlayOnLan.Api.Communication
         /// Send message
         /// </summary>
         /// <param name="message">message to be sent</param>
-        /// <param name="Recepient">destination of the message</param>
-        void Send(object Recepient, string message);
+        /// <param name="fromIdentifier">from who this message</param>
+        /// <param name="toIdentifier">to who this message</param>
+        void Send(object fromIdentifier, object toIdentifier, string message);
 
         /// <summary>
         /// Client identifiers connected to this connector

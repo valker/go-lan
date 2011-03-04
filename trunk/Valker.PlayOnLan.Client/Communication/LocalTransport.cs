@@ -22,20 +22,19 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public LocalTransport()
         {
-            _serverConnector = new LocalMessageConnector(this, "server");
-            _clientConnector = new LocalMessageConnector(this, "client");
+            _serverConnector = new LocalMessageConnector(this, "_server");
+            _clientConnector = new LocalMessageConnector(this, "_client");
         }
 
-
-        public void SendMessage(LocalMessageConnector From, string message, object To)
+        public void SendMessage(LocalMessageConnector sourceConnector, object fromIdentifier, object toIdentifier, string message)
         {
-            if (ReferenceEquals(From, ClientConnector))
+            if (ReferenceEquals(sourceConnector, ClientConnector))
             {
-                ServerConnector.OnMessageArrived(message, To);
+                ServerConnector.OnMessageArrived(fromIdentifier, toIdentifier, message);
             }
             else
             {
-                ClientConnector.OnMessageArrived(message, To);
+                ClientConnector.OnMessageArrived(fromIdentifier, toIdentifier, message);
             }
         }
 
