@@ -108,7 +108,7 @@ namespace Valker.PlayOnLan.Client
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this._client.RegisterNewParty((GameInfo) this.listBox1.SelectedItem);
+            this._client.RegisterNewParty((GameInfo) this.listBox1.SelectedItem, this);
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)

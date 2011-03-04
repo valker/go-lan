@@ -7,5 +7,6 @@ namespace Valker.PlayOnLan.Api.Game
 {
     public interface IGameClient
     {
+        IGameParameters CreateParameters();
     }
 }

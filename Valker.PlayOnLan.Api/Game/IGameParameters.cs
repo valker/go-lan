@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Valker.PlayOnLan.Api.Game
 {
-    public class IGameParameters
+    public interface IGameParameters
     {
     }
 }
