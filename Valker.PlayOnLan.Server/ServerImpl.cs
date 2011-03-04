@@ -99,7 +99,7 @@ namespace Valker.PlayOnLan.Server
             string message = args.Message;
             var serializer = new XmlSerializer(typeof (ServerMessage), ServerMessageTypes.Types);
             var msgObject = (ServerMessage) serializer.Deserialize(new StringReader(message));
-            msgObject.Execute(this, (IClientInfo)sender);
+            msgObject.Execute(this, new ClientInfo() { ClientConnector = (IMessageConnector)sender, ClientIdentifier = args.ToIdentifier});
         }
 
         public void AddConnector(IMessageConnector connector)
@@ -176,7 +176,7 @@ namespace Valker.PlayOnLan.Server
 
         public void Send(IClientInfo recepient, string message)
         {
-            throw new NotImplementedException();
+            recepient.ClientConnector.Send("_server", recepient.ClientIdentifier, message);
         }
 
         #endregion
