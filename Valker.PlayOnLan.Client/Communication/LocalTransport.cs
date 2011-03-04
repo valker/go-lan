@@ -27,7 +27,7 @@ namespace Valker.PlayOnLan.Client.Communication
         }
 
 
-        public void SendMessage(LocalMessageConnector From, string message, string To)
+        public void SendMessage(LocalMessageConnector From, string message, object To)
         {
             if (ReferenceEquals(From, ClientConnector))
             {
@@ -49,9 +49,5 @@ namespace Valker.PlayOnLan.Client.Communication
 
         #endregion
 
-        internal void SendMessage(LocalMessageConnector localMessageConnector, string message, string To)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

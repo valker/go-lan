@@ -22,7 +22,7 @@ namespace Valker.PlayOnLan.Client
 
         #endregion
 
-        public void OnMessageArrived(string message, string To)
+        public void OnMessageArrived(string message, object To)
         {
             this.MessageArrived(this, new MessageEventArgs(message, To));
         }
@@ -56,7 +56,7 @@ namespace Valker.PlayOnLan.Client
         #region IMessageConnector Members
 
 
-        public void Send(string To, string message)
+        public void Send(object To, string message)
         {
             _parent.SendMessage(this, message, To);
         }

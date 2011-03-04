@@ -12,8 +12,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
             string[] array = server.RetrieveSupportedGames();
             var message = new RetrieveSupportedGamesResponceMessage();
             message.Responce = array;
-            string str = message.ToString();
-            server.Send(str);
+            server.Send(sender, message.ToString());
         }
 
         #endregion

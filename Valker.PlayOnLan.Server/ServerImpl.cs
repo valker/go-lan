@@ -24,10 +24,11 @@ namespace Valker.PlayOnLan.Server
 
         private List<PartyState> _partyStates = new List<PartyState>();
 
-        //private List<IMessageConnector> _connectors = new List<IMessageConnector>();
-        private List<ConnectionInfo> _connections = new List<ConnectionInfo>();
+        private List<IMessageConnector> _connectors = new List<IMessageConnector>();
 
-        private List<PlayerInfo> _players = new List<PlayerInfo>();
+        private List<IClientInfo> _clients = new List<IClientInfo>();
+
+        private List<IPlayer> _players = new List<IPlayer>();
         
         private BackgroundWorker _worker = new BackgroundWorker();
 
@@ -60,27 +61,21 @@ namespace Valker.PlayOnLan.Server
 
         #region IServerMessageExecuter Members
 
-        //public void Send(string message)
-        //{
-
-        //    var connections = this._connections.ToArray();
-
-        //    foreach (ConnectionInfo connector in connections)
-        //    {
-        //        connector.Connector.Send(message);
-        //    }
-        //}
-
-        public PartyStatus RegisterNewParty(string name, string gameId, IMessageConnector connector)
+        public PartyStatus RegisterNewParty(string playerName, string gameId, IClientInfo client)
         {
-            if(this._partyStates.FirstOrDefault(partyState => partyState.players.FirstOrDefault(player => player.Name == name) != null) != null)
+            if(this._partyStates.FirstOrDefault(partyState => partyState.players.FirstOrDefault(player => player.Name == playerName) != null) != null)
             {
                 return PartyStatus.NameDuplicated;
             }
 
+            if (_players.FirstOrDefault(player => player.Client.Equals(client)) != null)
+            {
+                return PartyStatus.ClientDuplicated;
+            }
+
             var state = new PartyState {Status = PartyStatus.PartyRegistred, GameTypeId = gameId};
-            state.players = new[] {new Player(){connector = connector, Name = name}};
-            state.playerNames = new[] {name};
+            state.players = new[] {new Player(){Client = client, Name = playerName}};
+            state.playerNames = new[] {playerName};
 
             this._partyStates.Add(state);
             return PartyStatus.PartyRegistred;
@@ -111,7 +106,7 @@ namespace Valker.PlayOnLan.Server
         {
             connector.MessageArrived += this.ConnectorOnMessageArrived;
             connector.Closed += ConnectorOnClosed;
-            _connections.Add(new ConnectionInfo() { Connector = connector });
+            _connectors.Add(connector);
         }
 
 
@@ -119,27 +114,32 @@ namespace Valker.PlayOnLan.Server
         {
             var connector = (IMessageConnector) sender;
 
-            var connectionInfo = _connections.Find(ci => ci.Connector.Equals(connector));
-
-            foreach (var player in GetPlayersByConnection(connectionInfo))
+            foreach (var player in GetPlayersByConnection(connector))
             {
                 RemovePlayer(player);
             }
 
-            _connections.Remove(connectionInfo);
+            foreach (var client in GetClientsByConnection(connector))
+            {
+                _clients.Remove(client);
+            }
 
             UpdatePartyStates();
         }
 
-        Dictionary<PlayerInfo, ConnectionInfo> d1 = new Dictionary<PlayerInfo, ConnectionInfo>();
-
-        private PlayerInfo[] GetPlayersByConnection(ConnectionInfo connectionInfo)
+        private IPlayer[] GetPlayersByConnection(IMessageConnector connector)
         {
-            var playerToRemove = d1.Where(pl => pl.Value.Equals(connectionInfo)).Select(pl => pl.Key).ToArray();
-            return playerToRemove;
+            var players = _players.Where(pl => pl.Client.Connector.Equals(connector)).ToArray();
+            return players;
         }
 
-        private void RemovePlayer(PlayerInfo playerInfo)
+        private IClientInfo[] GetClientsByConnection(IMessageConnector connector)
+        {
+            var clients = _clients.Where(cl => cl.Connector.Equals(connector)).ToArray();
+            return clients;
+        }
+
+        private void RemovePlayer(IPlayer playerInfo)
         {
             var parties = _partyStates.Where(state => state.players.FirstOrDefault(player => player.Name == playerInfo.Name) != null).ToArray();
             foreach (var partyState in parties)
@@ -156,18 +156,27 @@ namespace Valker.PlayOnLan.Server
         #region IServerMessageExecuter Members
 
 
-        public void RegisterNewPlayer(string Name, IMessageConnector connector)
+        public void RegisterNewPlayer(string Name, IClientInfo client)
         {
             bool status = false;
             if (_players.FirstOrDefault(pl => pl.Name == Name) == null)
             {
-                var playerInfo = new PlayerInfo() { Name = Name };
-                _players.Add(playerInfo);
-                d1.Add(playerInfo, new ConnectionInfo() { Connector = connector });
+                var player = new Player() { Name = Name, Client = client };
+                _players.Add(player);
                 status = true;
             }
             
-            Send(new AcceptNewPlayerMessage() { Status = status }.ToString());
+            Send(client, new AcceptNewPlayerMessage() { Status = status }.ToString());
+        }
+
+        #endregion
+
+        #region IServerMessageExecuter Members
+
+
+        public void Send(IClientInfo recepient, string message)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

@@ -27,7 +27,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 
         public override void Execute(IServerMessageExecuter server, IClientInfo client)
         {
-            PartyStatus status = server.RegisterNewParty(this.Name, this.GameId, (IMessageConnector) client);
+            PartyStatus status = server.RegisterNewParty(this.Name, this.GameId, client);
             var message = new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred).ToString();
             client.Connector.Send(client.Identifier, message);
             server.UpdatePartyStates();

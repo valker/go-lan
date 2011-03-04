@@ -47,7 +47,7 @@ namespace Valker.PlayOnLan.Client.Communication
             string messageText = message.ToString();
             foreach (IMessageConnector connector in this._connectors)
             {
-                connector.Send(messageText);
+                connector.Send("_server", messageText);
             }
         }
 
@@ -61,11 +61,6 @@ namespace Valker.PlayOnLan.Client.Communication
         public void UpdateSupportedGames(object sender, string[] games)
         {
             this.SupportedGamesChanged(this, new SupportedGamesChangedEventArgs(games, sender));
-        }
-
-        public void ShowMessage(string text, string To)
-        {
-            this.MessageToShow(this, new MessageEventArgs(text, To));
         }
 
         public void UpdatePartyStates(PartyState[] partyStates, IMessageConnector sender)
