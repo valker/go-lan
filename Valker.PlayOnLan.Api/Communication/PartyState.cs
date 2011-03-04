@@ -16,9 +16,9 @@ namespace Valker.PlayOnLan.Api.Communication
         public PartyStatus Status { get; set; }
 
         [XmlIgnore]
-        public IPlayer[] players { get; set; }
+        public IPlayer[] Players { get; set; }
 
-        public string[] playerNames { get; set; }
+        public string[] Names { get; set; }
 
         public string GameTypeId { get; set; }
 
@@ -31,6 +31,6 @@ namespace Valker.PlayOnLan.Api.Communication
     public interface IPlayer
     {
         IClientInfo Client { get; set; }
-        string Name { get; set; }
+        string PlayerName { get; set; }
     }
 }

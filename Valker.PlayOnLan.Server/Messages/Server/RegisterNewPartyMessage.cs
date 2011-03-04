@@ -13,21 +13,18 @@ namespace Valker.PlayOnLan.Server.Messages.Server
         {
         }
 
-        public RegisterNewPartyMessage(string name, GameInfo info) : base(info.Connector)
+        public RegisterNewPartyMessage(GameInfo info) : base(info.Connector)
         {
-            Name = name;
             GameId = info.GameId;
         }
 
         public string GameId { get; set; }
 
-        public string Name { get; set; }
-
         #region Overrides of ServerMessage
 
         public override void Execute(IServerMessageExecuter server, IClientInfo client)
         {
-            PartyStatus status = server.RegisterNewParty(client, this.Name, this.GameId);
+            PartyStatus status = server.RegisterNewParty(client, this.GameId);
             var message = new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred).ToString();
             server.Send(client, message);
             server.UpdatePartyStates();

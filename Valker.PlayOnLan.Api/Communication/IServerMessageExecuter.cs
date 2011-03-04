@@ -10,7 +10,7 @@ namespace Valker.PlayOnLan.Api.Communication
         void Send(IClientInfo recepient, string message);
 
         string[] RetrieveSupportedGames();
-        PartyStatus RegisterNewParty(IClientInfo client, string name, string gameId);
+        PartyStatus RegisterNewParty(IClientInfo client, string gameId);
         void UpdatePartyStates();
         void AcceptPartyRequest(string RequesterName, string GameType, string AccepterName);
         void RegisterNewPlayer(IClientInfo client, string Name);
