@@ -11,12 +11,12 @@ namespace Valker.TicTacToePlugin
     {
         #region IGameClient Members
 
-        public IGameParameters CreateParameters()
+        public IGameParameters CreateParameters(Form parent)
         {
             var f = new ParametersForm();
-            if (f.Show(parent) == DialogResult.OK)
+            if (f.ShowDialog(parent) == DialogResult.OK)
             {
-                return new TicTacToeParameters() { ColumnWidthChangedEventArgs = int.Parse(f.txtWidth) };
+                return new TicTacToeParameters() { Width = int.Parse(f.txtWidth.Text), Stones = int.Parse(f.txtStones.Text) };
             }
             throw new NotImplementedException();
         }

@@ -91,6 +91,10 @@
       <Project>{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}</Project>
       <Name>Valker.PlayOnLan.XmppTransport</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Valker.TicTacToePlugin\Valker.TicTacToePlugin.csproj">
+      <Project>{FB9112A4-2831-4A21-8D07-F0D8D1A41F75}</Project>
+      <Name>Valker.TicTacToePlugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
