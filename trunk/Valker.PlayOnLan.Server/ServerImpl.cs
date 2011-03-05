@@ -63,7 +63,7 @@ namespace Valker.PlayOnLan.Server
 
         #region IServerMessageExecuter Members
 
-        public PartyStatus RegisterNewParty(IClientInfo client, string gameId)
+        public PartyStatus RegisterNewParty(IClientInfo client, string gameId, string parameters)
         {
             var player = _players.FirstOrDefault(pl => pl.Client.Equals(client));
             if (player == null)

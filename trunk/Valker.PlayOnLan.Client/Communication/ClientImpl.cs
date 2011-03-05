@@ -8,6 +8,8 @@ using Valker.PlayOnLan.Server.Messages;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
 using System.Windows.Forms;
+using Valker.PlayOnLan.Api.Game;
+using Valker.TicTacToePlugin;
 
 namespace Valker.PlayOnLan.Client.Communication
 {
@@ -57,7 +59,10 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void RegisterNewParty(GameInfo gameInfo, Form parent)
         {
-            this.SendMessage(new RegisterNewPartyMessage(gameInfo));
+            IGameType game = new TicTacToeGame();
+            var client = game.CreateClient();
+            var parameters = client.CreateParameters(parent);
+            this.SendMessage(new RegisterNewPartyMessage(gameInfo.GameId, parameters.ToString()));
         }
 
         #region Overrides of IClientMessageExecuter

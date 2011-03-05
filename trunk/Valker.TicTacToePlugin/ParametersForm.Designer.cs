@@ -78,7 +78,6 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "OK";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // ParametersForm
             // 
@@ -105,8 +104,8 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtWidth;
-        private System.Windows.Forms.TextBox txtStones;
         private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.TextBox txtWidth;
+        public System.Windows.Forms.TextBox txtStones;
     }
 }
