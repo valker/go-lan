@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Client.Communication;
 using Valker.PlayOnLan.Server;
+using Valker.TicTacToePlugin;
 
 namespace Valker.PlayOnLan.Client
 {
@@ -16,9 +17,15 @@ namespace Valker.PlayOnLan.Client
         {
             this._client = client;
             this._client.SupportedGamesChanged += this.ClientOnSupportedGamesChanged;
-            this._client.MessageToShow += this.ClientOnMessageToShow;
             this._client.PartyStatesChanged += this.ClientOnPartyStatesChanged;
+            _client.AcceptedRegistration += new EventHandler<AcceptedRegistrationEventArgs>(_client_AcceptedRegistration);
             this.InitializeComponent();
+        }
+
+        void _client_AcceptedRegistration(object sender, AcceptedRegistrationEventArgs e)
+        {
+            goban1.N = ((TicTacToeParameters)_client.Parameters).Width;
+            goban1.Visible = true;
         }
 
         List<PartyInfo> _partyStates = new List<PartyInfo>();
@@ -57,17 +64,19 @@ namespace Valker.PlayOnLan.Client
 
         private void UpdatePartyStatesData(PartyStatesArgs args)
         {
-            var toRemove = new List<PartyInfo>();
-            foreach (var info in this._partyStates.Where(inf => inf.Connector.Equals(args.Connector)))
-            {
-                // this state is not actual
-                toRemove.Add(info);
-            }
+            //var toRemove = new List<PartyInfo>();
+            //foreach (var info in this._partyStates.Where(inf => inf.Connector.Equals(args.Connector)))
+            //{
+            //    // this state is not actual
+            //    toRemove.Add(info);
+            //}
 
-            foreach (var gameIdentifier in toRemove)
-            {
-                this._partyStates.Remove(gameIdentifier);
-            }
+            //foreach (var gameIdentifier in toRemove)
+            //{
+            //    this._partyStates.Remove(gameIdentifier);
+            //}
+
+            _partyStates.Clear();
 
             foreach (var partyState in args.States)
             {
@@ -118,6 +127,7 @@ namespace Valker.PlayOnLan.Client
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (listView1.SelectedItems.Count < 1) return;
             this._client.AcceptParty((PartyInfo)this.listView1.SelectedItems[0].Tag);
         }
     }

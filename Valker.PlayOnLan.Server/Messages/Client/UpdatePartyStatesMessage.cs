@@ -13,7 +13,7 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 
         public UpdatePartyStatesMessage(List<PartyState> requests)
         {
-            this.Info = requests.Where(state => state.Status == PartyStatus.PartyRegistred).ToArray();
+            this.Info = requests.ToArray();
         }
 
         public PartyState[] Info { get; set; }

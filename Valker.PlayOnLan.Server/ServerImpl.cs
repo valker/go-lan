@@ -10,6 +10,7 @@ using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
+using Valker.TicTacToePlugin;
 
 namespace Valker.PlayOnLan.Server
 {
@@ -54,11 +55,11 @@ namespace Valker.PlayOnLan.Server
             }
         }
 
-        public void UpdatePartyStates()
+        public void UpdatePartyStates(IClientInfo clientInfo = null)
         {
             var msg = new UpdatePartyStatesMessage(this._partyStates);
 
-            Send(null, msg.ToString());
+            Send(clientInfo, msg.ToString());
         }
 
         #region IServerMessageExecuter Members
@@ -78,7 +79,6 @@ namespace Valker.PlayOnLan.Server
 
             var state = new PartyState {Status = PartyStatus.PartyRegistred, GameTypeId = gameId};
             state.Players = new[] {player};
-            state.Names = new[] {player.PlayerName};
 
             this._partyStates.Add(state);
             return PartyStatus.PartyRegistred;
@@ -92,7 +92,14 @@ namespace Valker.PlayOnLan.Server
 
         public void AcceptPartyRequest(string RequesterName, string GameType, string AccepterName)
         {
-            throw new NotImplementedException();
+            var party = _partyStates.First(g => g.Players.FirstOrDefault(p => p.PlayerName == RequesterName) != null);
+            var players = new List<IPlayer>(party.Players);
+            var player = _players.First(p => p.PlayerName == AccepterName);
+            players.Add(player);
+            party.Status = PartyStatus.Running;
+            IGameServer server = new TicTacToeGame().CreateServer();
+            party.Server = server;
+            UpdatePartyStates();
         }
 
         #endregion
@@ -159,6 +166,10 @@ namespace Valker.PlayOnLan.Server
             }
             
             Send(client, new AcceptNewPlayerMessage() { Status = status }.ToString());
+            if (status)
+            {
+                UpdatePartyStates(client);
+            }
         }
 
         #endregion
