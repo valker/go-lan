@@ -37,6 +37,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.goban1 = new MyGoban.Goban();
             this.SuspendLayout();
             // 
             // listBox1
@@ -49,7 +50,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(138, 29);
+            this.button1.Location = new System.Drawing.Point(15, 130);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -63,9 +64,9 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3});
-            this.listView1.Location = new System.Drawing.Point(219, 29);
+            this.listView1.Location = new System.Drawing.Point(12, 198);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(340, 175);
+            this.listView1.Size = new System.Drawing.Size(218, 87);
             this.listView1.TabIndex = 2;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -94,7 +95,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(216, 13);
+            this.label2.Location = new System.Drawing.Point(12, 182);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 13);
             this.label2.TabIndex = 3;
@@ -102,7 +103,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(138, 58);
+            this.button2.Location = new System.Drawing.Point(12, 291);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 4;
@@ -110,11 +111,20 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // goban1
+            // 
+            this.goban1.Location = new System.Drawing.Point(245, 29);
+            this.goban1.Name = "goban1";
+            this.goban1.Size = new System.Drawing.Size(540, 592);
+            this.goban1.TabIndex = 5;
+            this.goban1.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(783, 445);
+            this.ClientSize = new System.Drawing.Size(806, 646);
+            this.Controls.Add(this.goban1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -141,5 +151,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
+        private MyGoban.Goban goban1;
     }
 }

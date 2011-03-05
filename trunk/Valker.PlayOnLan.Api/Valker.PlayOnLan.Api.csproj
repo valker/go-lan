@@ -55,8 +55,9 @@
     <Compile Include="Communication\IMessageConnector.cs" />
     <Compile Include="Communication\IServerMessageExecuter.cs" />
     <Compile Include="Communication\MessageEventArgs.cs" />
-    <Compile Include="Communication\PartyState.cs" />
-    <Compile Include="Communication\PartyStatus.cs" />
+    <Compile Include="Game\IPlayer.cs" />
+    <Compile Include="Game\PartyState.cs" />
+    <Compile Include="Game\PartyStatus.cs" />
     <Compile Include="Game\IGameClient.cs" />
     <Compile Include="Game\IGameParameters.cs" />
     <Compile Include="Game\IGameServer.cs" />

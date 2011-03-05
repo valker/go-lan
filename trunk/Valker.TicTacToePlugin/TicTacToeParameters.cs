@@ -6,7 +6,7 @@ using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.TicTacToePlugin
 {
-    class TicTacToeParameters : IGameParameters
+    public class TicTacToeParameters : IGameParameters
     {
         public int Stones { get; set; }
 

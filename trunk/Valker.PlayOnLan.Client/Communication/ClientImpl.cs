@@ -25,6 +25,8 @@ namespace Valker.PlayOnLan.Client.Communication
         /// </summary>
         public string Name { get; set; }
 
+        public IGameParameters Parameters { get; private set; }
+
         public ClientImpl(string name, IEnumerable<IMessageConnector> connectors)
         {
             Name = name;
@@ -61,8 +63,8 @@ namespace Valker.PlayOnLan.Client.Communication
         {
             IGameType game = new TicTacToeGame();
             var client = game.CreateClient();
-            var parameters = client.CreateParameters(parent);
-            this.SendMessage(new RegisterNewPartyMessage(gameInfo.GameId, parameters.ToString()));
+            Parameters = client.CreateParameters(parent);
+            this.SendMessage(new RegisterNewPartyMessage(gameInfo.GameId, Parameters.ToString()));
         }
 
         #region Overrides of IClientMessageExecuter
@@ -79,11 +81,11 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public event EventHandler<SupportedGamesChangedEventArgs> SupportedGamesChanged = delegate { };
 
-        public event EventHandler<MessageEventArgs> MessageToShow = delegate { };
-
         public event EventHandler<PartyStatesArgs> PartyStatesChanged = delegate { };
 
         public event EventHandler<AcceptedPlayerEventArgs> AcceptedPlayer = delegate { };
+
+        public event EventHandler<AcceptedRegistrationEventArgs> AcceptedRegistration = delegate { };
 
         #endregion
 
@@ -115,6 +117,17 @@ namespace Valker.PlayOnLan.Client.Communication
         public void AcceptNewPlayer(bool status)
         {
             AcceptedPlayer(this, new AcceptedPlayerEventArgs() { Status = status });
+        }
+
+        #endregion
+
+        #region IClientMessageExecuter Members
+
+
+        public void AcknowledgeRegistration(bool Status)
+        {
+            if (!Status) return;
+            AcceptedRegistration(this, new AcceptedRegistrationEventArgs() { Status = Status });
         }
 
         #endregion

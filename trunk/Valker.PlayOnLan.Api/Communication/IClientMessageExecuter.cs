@@ -6,5 +6,7 @@ namespace Valker.PlayOnLan.Api.Communication
         void UpdatePartyStates(PartyState[] partyStates, IMessageConnector sender);
 
         void AcceptNewPlayer(bool status);
+
+        void AcknowledgeRegistration(bool Status);
     }
 }
