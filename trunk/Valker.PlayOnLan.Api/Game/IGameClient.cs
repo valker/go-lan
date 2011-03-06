@@ -9,5 +9,6 @@ namespace Valker.PlayOnLan.Api.Game
     public interface IGameClient
     {
         IGameParameters CreateParameters(Form parent);
+        Form CreatePlayingForm();
     }
 }

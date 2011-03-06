@@ -51,6 +51,12 @@
     <Compile Include="ParametersForm.Designer.cs">
       <DependentUpon>ParametersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PlayingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlayingForm.Designer.cs">
+      <DependentUpon>PlayingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TicTacToeClient.cs" />
     <Compile Include="TicTacToeGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,6 +64,10 @@
     <Compile Include="TicTacToeServer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GoPlugin\Valker.GoPlugin.csproj">
+      <Project>{CD8A3127-E2DF-48DD-BAA3-D137602CCF08}</Project>
+      <Name>Valker.GoPlugin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api.csproj">
       <Project>{C4D1DCF4-84AE-409D-A848-BE7D2C2A91F5}</Project>
       <Name>Valker.PlayOnLan.Api</Name>
@@ -66,6 +76,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ParametersForm.resx">
       <DependentUpon>ParametersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlayingForm.resx">
+      <DependentUpon>PlayingForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
