@@ -87,6 +87,8 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public event EventHandler<AcceptedRegistrationEventArgs> AcceptedRegistration = delegate { };
 
+        public event EventHandler<AcknowledgedRegistrationEventArgs> AcknowledgedRegistration = delegate { };
+
         #endregion
 
         #region Implementation of IDisposable

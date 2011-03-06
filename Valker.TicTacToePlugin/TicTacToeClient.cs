@@ -22,5 +22,11 @@ namespace Valker.TicTacToePlugin
         }
 
         #endregion
+
+
+        public Form CreatePlayingForm()
+        {
+            return new PlayingForm();
+        }
     }
 }

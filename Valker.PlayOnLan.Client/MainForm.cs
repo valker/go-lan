@@ -19,13 +19,20 @@ namespace Valker.PlayOnLan.Client
             this._client.SupportedGamesChanged += this.ClientOnSupportedGamesChanged;
             this._client.PartyStatesChanged += this.ClientOnPartyStatesChanged;
             _client.AcceptedRegistration += new EventHandler<AcceptedRegistrationEventArgs>(_client_AcceptedRegistration);
+            _client.AcknowledgedRegistration += new EventHandler<AcknowledgedRegistrationEventArgs>(AcknowledgedRegistation);
             this.InitializeComponent();
+        }
+
+        void AcknowledgedRegistation(object sender, AcknowledgedRegistrationEventArgs e)
+        {
+            var form = new TicTacToeGame().CreateClient().CreatePlayingForm();
+            form.Show(this);
         }
 
         void _client_AcceptedRegistration(object sender, AcceptedRegistrationEventArgs e)
         {
-            goban1.N = ((TicTacToeParameters)_client.Parameters).Width;
-            goban1.Visible = true;
+            var form = new TicTacToeGame().CreateClient().CreatePlayingForm();
+            form.Show(this);
         }
 
         List<PartyInfo> _partyStates = new List<PartyInfo>();

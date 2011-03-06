@@ -37,7 +37,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.goban1 = new MyGoban.Goban();
             this.SuspendLayout();
             // 
             // listBox1
@@ -111,20 +110,11 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // goban1
-            // 
-            this.goban1.Location = new System.Drawing.Point(245, 29);
-            this.goban1.Name = "goban1";
-            this.goban1.Size = new System.Drawing.Size(540, 592);
-            this.goban1.TabIndex = 5;
-            this.goban1.Visible = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(806, 646);
-            this.Controls.Add(this.goban1);
+            this.ClientSize = new System.Drawing.Size(237, 322);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -151,6 +141,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
-        private MyGoban.Goban goban1;
     }
 }
