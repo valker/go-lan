@@ -23,6 +23,7 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 
         public override void Execute(IClientMessageExecuter client, object sender)
         {
+            if (client == null) throw new ArgumentNullException();
             client.AcknowledgeRegistration(Status);
         }
 

@@ -7,7 +7,10 @@ namespace Valker.PlayOnLan.Server
     {
         public GameInfo(string gameName, IMessageConnector connector)
         {
+            if (gameName == null) throw new ArgumentNullException();
+            if (connector == null) throw new ArgumentNullException();
             var gameId = gameName.Split(',');
+            if (gameId.Length < 2) throw new ArgumentException();
             this.GameName = gameId[0];
             this.GameId = gameId[1];
             this.Connector = connector;

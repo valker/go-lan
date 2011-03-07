@@ -9,6 +9,7 @@ namespace Valker.PlayOnLan.Server.Messages.Client
     {
         public override void Execute(Api.Communication.IClientMessageExecuter client, object sender)
         {
+            if (client == null) throw new ArgumentNullException();
             client.AcceptNewPlayer(Status);
         }
 

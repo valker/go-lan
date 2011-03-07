@@ -14,7 +14,7 @@ using Valker.TicTacToePlugin;
 
 namespace Valker.PlayOnLan.Server
 {
-    public class ServerImpl : IServerMessageExecuter
+    public class ServerImpl : IServerMessageExecuter, IDisposable
     {
         // Games that are supported by this server
         private static readonly IGameServer[] _games = new IGameType[] 
@@ -37,18 +37,25 @@ namespace Valker.PlayOnLan.Server
 
         public ServerImpl(IEnumerable<IMessageConnector> connectors)
         {
+            if (connectors == null) throw new ArgumentNullException();
+
             foreach (IMessageConnector connector in connectors)
             {
-                this.AddConnector(connector);
+                if (connector != null)
+                {
+                    this.AddConnector(connector);
+                }
             }
 
             _worker.DoWork += WorkerOnDoWork;
+            _worker.WorkerSupportsCancellation = true;
             _worker.RunWorkerAsync();
         }
 
         private void WorkerOnDoWork(object sender, DoWorkEventArgs args)
         {
-            while (true)
+            BackgroundWorker me = (BackgroundWorker) sender;
+            while (!me.CancellationPending)
             {
                 Thread.Sleep(15000);
                 this.UpdatePartyStates();
@@ -92,9 +99,14 @@ namespace Valker.PlayOnLan.Server
 
         public void AcceptPartyRequest(string RequesterName, string GameType, string AccepterName)
         {
-            var party = _partyStates.First(g => g.Players.FirstOrDefault(p => p.PlayerName == RequesterName) != null);
+            if (RequesterName == null) throw new ArgumentNullException();
+            if (GameType == null) throw new ArgumentNullException();
+            if (AccepterName == null) throw new ArgumentNullException();
+            var party = _partyStates.FirstOrDefault(g => g.Players.FirstOrDefault(p => p.PlayerName == RequesterName) != null);
+            if (party == null) throw new ArgumentException();
             var players = new List<IPlayer>(party.Players);
-            var player = _players.First(p => p.PlayerName == AccepterName);
+            var player = _players.FirstOrDefault(p => p.PlayerName == AccepterName);
+            if (player == null) throw new ArgumentException();
             players.Add(player);
             party.Status = PartyStatus.Running;
             IGameServer server = new TicTacToeGame().CreateServer();
@@ -114,6 +126,8 @@ namespace Valker.PlayOnLan.Server
 
         public void AddConnector(IMessageConnector connector)
         {
+            if (connector == null) throw new ArgumentNullException();
+
             connector.MessageArrived += this.ConnectorOnMessageArrived;
             connector.Closed += ConnectorOnClosed;
             _connectors.Add(connector);
@@ -157,6 +171,11 @@ namespace Valker.PlayOnLan.Server
 
         public void RegisterNewPlayer(IClientInfo client, string Name)
         {
+            if (client == null)
+            {
+                throw new ArgumentNullException("client");
+            }
+
             bool status = false;
             if (_players.FirstOrDefault(pl => pl.PlayerName == Name) == null)
             {
@@ -197,5 +216,11 @@ namespace Valker.PlayOnLan.Server
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            _worker.CancelAsync();
+            _worker.Dispose();
+        }
     }
 }

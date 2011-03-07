@@ -1,5 +1,6 @@
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Server.Messages.Client;
+using System;
 
 namespace Valker.PlayOnLan.Server.Messages.Server
 {
@@ -9,6 +10,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 
         public override void Execute(IServerMessageExecuter server, IClientInfo sender)
         {
+            if (server == null) throw new ArgumentNullException();
             string[] array = server.RetrieveSupportedGames();
             var message = new RetrieveSupportedGamesResponceMessage();
             message.Responce = array;
