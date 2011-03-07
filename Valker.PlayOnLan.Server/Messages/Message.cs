@@ -25,6 +25,10 @@ namespace Valker.PlayOnLan.Server.Messages
     {
         public static string Perform(Type baseClass, Type thisType, object objectToSerialize)
         {
+            if (baseClass == null) throw new ArgumentNullException();
+            if (thisType == null) throw new ArgumentNullException();
+            if (objectToSerialize == null) throw new ArgumentNullException();
+
             var serializer = new XmlSerializer(baseClass, new[] {thisType});
             var writer = new StringWriter();
             serializer.Serialize(writer, objectToSerialize);

@@ -1,4 +1,5 @@
 using Valker.PlayOnLan.Api.Communication;
+using System;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
@@ -8,6 +9,7 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 
         public override void Execute(IClientMessageExecuter client, object sender)
         {
+            if (client == null) throw new ArgumentNullException();
             client.UpdateSupportedGames(sender, this.Responce);
         }
 

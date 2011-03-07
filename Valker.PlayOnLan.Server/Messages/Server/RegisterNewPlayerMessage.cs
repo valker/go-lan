@@ -10,6 +10,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
     {
         public override void Execute(IServerMessageExecuter server, IClientInfo sender)
         {
+            if (server == null) throw new ArgumentNullException();
             server.RegisterNewPlayer(sender, Name);
         }
 
