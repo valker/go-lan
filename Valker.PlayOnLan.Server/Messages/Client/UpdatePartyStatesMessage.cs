@@ -13,6 +13,7 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 
         public UpdatePartyStatesMessage(List<PartyState> requests)
         {
+            if (requests == null) throw new ArgumentNullException();
             this.Info = requests.ToArray();
         }
 
