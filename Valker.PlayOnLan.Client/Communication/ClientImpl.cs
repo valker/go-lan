@@ -4,7 +4,6 @@ using System.IO;
 using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Server;
-using Valker.PlayOnLan.Server.Messages;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
 using System.Windows.Forms;

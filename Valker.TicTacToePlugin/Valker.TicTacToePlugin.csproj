@@ -64,13 +64,13 @@
     <Compile Include="TicTacToeServer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GoPlugin\Valker.GoPlugin.csproj">
-      <Project>{CD8A3127-E2DF-48DD-BAA3-D137602CCF08}</Project>
-      <Name>Valker.GoPlugin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api.csproj">
       <Project>{C4D1DCF4-84AE-409D-A848-BE7D2C2A91F5}</Project>
       <Name>Valker.PlayOnLan.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Valker.PlayOnLan.Goban\Valker.PlayOnLan.Goban2010.csproj">
+      <Project>{F8EC897D-A0A6-4BF7-9C06-038FA9EBE5BB}</Project>
+      <Name>Valker.PlayOnLan.Goban2010</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

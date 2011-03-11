@@ -43,7 +43,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
             PartyStatus status = server.RegisterNewParty(client, this.GameId, this.Parameters);
             var message = new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred).ToString();
             server.Send(client, message);
-            server.UpdatePartyStates();
+            server.UpdatePartyStates(null);
         }
 
         #endregion
