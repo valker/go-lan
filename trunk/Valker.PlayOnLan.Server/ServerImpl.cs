@@ -58,11 +58,11 @@ namespace Valker.PlayOnLan.Server
             while (!me.CancellationPending)
             {
                 Thread.Sleep(15000);
-                this.UpdatePartyStates();
+                this.UpdatePartyStates(null);
             }
         }
 
-        public void UpdatePartyStates(IClientInfo clientInfo = null)
+        public void UpdatePartyStates(IClientInfo clientInfo)
         {
             var msg = new UpdatePartyStatesMessage(this._partyStates);
 
@@ -111,7 +111,7 @@ namespace Valker.PlayOnLan.Server
             party.Status = PartyStatus.Running;
             IGameServer server = new TicTacToeGame().CreateServer();
             party.Server = server;
-            UpdatePartyStates();
+            UpdatePartyStates(null);
         }
 
         #endregion
@@ -143,7 +143,7 @@ namespace Valker.PlayOnLan.Server
                 RemovePlayer(player);
             }
 
-            UpdatePartyStates();
+            UpdatePartyStates(null);
         }
 
         private IPlayer[] GetPlayersByConnection(IMessageConnector connector)

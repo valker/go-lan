@@ -1,8 +1,6 @@
-﻿using Valker.PlayOnLan.Goban;
-
-namespace Valker.TicTacToePlugin
+﻿namespace Valker.PlayOnLan.Goban
 {
-    partial class PlayingForm
+    partial class GobanControl
     {
         /// <summary>
         /// Required designer variable.
@@ -22,38 +20,30 @@ namespace Valker.TicTacToePlugin
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.goban1 = new GobanControl();
             this.SuspendLayout();
             // 
-            // goban1
-            // 
-            this.goban1.Location = new System.Drawing.Point(12, 12);
-            this.goban1.Name = "goban1";
-            this.goban1.Size = new System.Drawing.Size(447, 394);
-            this.goban1.TabIndex = 0;
-            // 
-            // PlayingForm
+            // GobanControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(543, 418);
-            this.Controls.Add(this.goban1);
-            this.Name = "PlayingForm";
-            this.Text = "PlayingForm";
+            this.DoubleBuffered = true;
+            this.Name = "GobanControl";
+            this.Size = new System.Drawing.Size(270, 270);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Goban_MouseClick);
+            this.Resize += new System.EventHandler(this.UserControl1_Resize);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private GobanControl goban1;
     }
 }
