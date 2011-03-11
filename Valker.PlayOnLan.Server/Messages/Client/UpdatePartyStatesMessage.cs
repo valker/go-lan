@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Valker.PlayOnLan.Api.Communication;
+using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {

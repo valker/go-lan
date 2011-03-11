@@ -1,0 +1,228 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B9280EFA-4DC9-4F64-ABC6-86A0EBCD31FA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Valker.PlayOnLan.Server2008.Tests</RootNamespace>
+    <AssemblyName>Valker.PlayOnLan.Server2008.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ExtendedReflection, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Moles.Framework, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Pex.Framework, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Pex.Linq, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Valker.PlayOnLan.Server2008.Moles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api2008.csproj">
+      <Project>{A6CD4BA3-A312-46F8-9978-A49ED132B0F6}</Project>
+      <Name>Valker.PlayOnLan.Api2008</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Valker.PlayOnLan.Server\Valker.PlayOnLan.Server2008.csproj">
+      <Project>{C2F403D0-E775-43CE-B1B1-B8A46593E6D4}</Project>
+      <Name>Valker.PlayOnLan.Server2008</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AcceptNewPartyMessageTest.AccepterNameGet.g.cs">
+      <DependentUpon>AcceptNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcceptNewPartyMessageTest.AccepterNameSet.g.cs">
+      <DependentUpon>AcceptNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcceptNewPartyMessageTest.Constructor.g.cs">
+      <DependentUpon>AcceptNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcceptNewPartyMessageTest.cs" />
+    <Compile Include="AcceptNewPartyMessageTest.Execute.g.cs">
+      <DependentUpon>AcceptNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcceptNewPartyMessageTest.GameTypeGet.g.cs">
+      <DependentUpon>AcceptNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcceptNewPartyMessageTest.GameTypeSet.g.cs">
+      <DependentUpon>AcceptNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcceptNewPartyMessageTest.RequesterNameGet.g.cs">
+      <DependentUpon>AcceptNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcceptNewPartyMessageTest.RequesterNameSet.g.cs">
+      <DependentUpon>AcceptNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcceptNewPlayerMessageTest.cs" />
+    <Compile Include="AcceptNewPlayerMessageTest.Execute.g.cs">
+      <DependentUpon>AcceptNewPlayerMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcknowledgeDropMessageTest.cs" />
+    <Compile Include="AcknowledgeDropMessageTest.Execute.g.cs">
+      <DependentUpon>AcknowledgeDropMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcknowledgePartyBeginMessageTest.cs" />
+    <Compile Include="AcknowledgePartyBeginMessageTest.Execute.g.cs">
+      <DependentUpon>AcknowledgePartyBeginMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcknowledgeRegistrationMessageTest.Constructor.g.cs">
+      <DependentUpon>AcknowledgeRegistrationMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AcknowledgeRegistrationMessageTest.cs" />
+    <Compile Include="AcknowledgeRegistrationMessageTest.Execute.g.cs">
+      <DependentUpon>AcknowledgeRegistrationMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientMessageTest.cs" />
+    <Compile Include="ClientMessageTest.Execute.g.cs">
+      <DependentUpon>ClientMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientMessageTypesTest.cs" />
+    <Compile Include="ClientMessageTypesTest.TypesGet.g.cs">
+      <DependentUpon>ClientMessageTypesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DropNewPartyMessageTest.cs" />
+    <Compile Include="DropNewPartyMessageTest.Execute.g.cs">
+      <DependentUpon>DropNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameInfoTest.Constructor.g.cs">
+      <DependentUpon>GameInfoTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameInfoTest.cs" />
+    <Compile Include="MessageTest.cs" />
+    <Compile Include="MessageTest.ToString01.g.cs">
+      <DependentUpon>MessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PartyBeginNotificationMessageTest.cs" />
+    <Compile Include="PartyBeginNotificationMessageTest.Execute.g.cs">
+      <DependentUpon>PartyBeginNotificationMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\PexAssemblyInfo.cs" />
+    <Compile Include="RegisterNewPartyMessageTest.Constructor.g.cs">
+      <DependentUpon>RegisterNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterNewPartyMessageTest.cs" />
+    <Compile Include="RegisterNewPartyMessageTest.Execute.g.cs">
+      <DependentUpon>RegisterNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterNewPartyMessageTest.GameIdGet.g.cs">
+      <DependentUpon>RegisterNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterNewPartyMessageTest.GameIdSet.g.cs">
+      <DependentUpon>RegisterNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterNewPartyMessageTest.ParametersGet.g.cs">
+      <DependentUpon>RegisterNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterNewPartyMessageTest.ParametersSet.g.cs">
+      <DependentUpon>RegisterNewPartyMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterNewPlayerMessageTest.cs" />
+    <Compile Include="RegisterNewPlayerMessageTest.Execute.g.cs">
+      <DependentUpon>RegisterNewPlayerMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RetrieveRegistredPartiesMessageTest.cs" />
+    <Compile Include="RetrieveRegistredPartiesMessageTest.Execute.g.cs">
+      <DependentUpon>RetrieveRegistredPartiesMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RetrieveSupportedGamesMessageTest.cs" />
+    <Compile Include="RetrieveSupportedGamesMessageTest.Execute.g.cs">
+      <DependentUpon>RetrieveSupportedGamesMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RetrieveSupportedGamesResponceMessageTest.cs" />
+    <Compile Include="RetrieveSupportedGamesResponceMessageTest.Execute.g.cs">
+      <DependentUpon>RetrieveSupportedGamesResponceMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServerImplTest.AcceptPartyRequest.g.cs">
+      <DependentUpon>ServerImplTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServerImplTest.AddConnector.g.cs">
+      <DependentUpon>ServerImplTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServerImplTest.Constructor.g.cs">
+      <DependentUpon>ServerImplTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServerImplTest.cs" />
+    <Compile Include="ServerImplTest.Dispose.g.cs">
+      <DependentUpon>ServerImplTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServerImplTest.RegisterNewParty.g.cs">
+      <DependentUpon>ServerImplTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServerImplTest.RegisterNewPlayer.g.cs">
+      <DependentUpon>ServerImplTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServerImplTest.RetrieveSupportedGames.g.cs">
+      <DependentUpon>ServerImplTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServerImplTest.Send.g.cs">
+      <DependentUpon>ServerImplTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServerImplTest.UpdatePartyStates.g.cs">
+      <DependentUpon>ServerImplTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServerMessageTest.cs" />
+    <Compile Include="ServerMessageTest.Execute.g.cs">
+      <DependentUpon>ServerMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServerMessageTypesTest.cs" />
+    <Compile Include="ServerMessageTypesTest.TypesGet.g.cs">
+      <DependentUpon>ServerMessageTypesTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpdatePartyStatesMessageTest.Constructor.g.cs">
+      <DependentUpon>UpdatePartyStatesMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpdatePartyStatesMessageTest.cs" />
+    <Compile Include="UpdatePartyStatesMessageTest.Execute.g.cs">
+      <DependentUpon>UpdatePartyStatesMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XmlSerializerImplTest.cs" />
+    <Compile Include="XmlSerializerImplTest.Perform.g.cs">
+      <DependentUpon>XmlSerializerImplTest.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Moles Include="Valker.PlayOnLan.Server2008.moles" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

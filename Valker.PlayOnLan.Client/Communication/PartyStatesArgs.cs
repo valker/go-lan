@@ -1,5 +1,6 @@
 using System;
 using Valker.PlayOnLan.Api.Communication;
+using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.PlayOnLan.Client.Communication
 {

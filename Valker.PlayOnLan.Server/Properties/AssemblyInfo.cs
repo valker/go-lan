@@ -40,3 +40,5 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: InternalsVisibleTo("Valker.PlayOnLan.Server.Tests")]
 [assembly: InternalsVisibleTo("Valker.PlayOnLan.Server.Explorables")]
+[assembly: InternalsVisibleTo("Valker.PlayOnLan.Server2008.Tests")]
+[assembly: InternalsVisibleTo("Valker.PlayOnLan.Server2008.Explorables")]

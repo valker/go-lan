@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
-using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.Api.Communication;
 
-namespace Valker.PlayOnLan.Api.Communication
+namespace Valker.PlayOnLan.Api.Game
 {
     public class PartyState
     {
@@ -22,12 +20,21 @@ namespace Valker.PlayOnLan.Api.Communication
         public IPlayer[] Players { 
             get 
             {
-                return _players;
+                return this._players;
             } 
             set 
             {
-                _players = value;
-                Names = _players.Select(p => p.PlayerName).ToArray();
+                if(value == null) throw new ArgumentNullException();
+                this._players = value;
+                this.Names = this._players.Select(delegate(IPlayer p)
+                {
+                    if (p == null)
+                    {
+                        throw new InvalidOperationException();
+                    }
+
+                    return p.PlayerName;
+                }).ToArray();
             } 
         }
 
@@ -41,6 +48,6 @@ namespace Valker.PlayOnLan.Api.Communication
         }
 
         [XmlIgnore]
-        public Game.IGameServer Server { get; set; }
+        public IGameServer Server { get; set; }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Communication;
+using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Client.Communication;
 using Valker.PlayOnLan.Server;
 using Valker.TicTacToePlugin;

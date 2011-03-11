@@ -1,3 +1,5 @@
+using Valker.PlayOnLan.Api.Game;
+
 namespace Valker.PlayOnLan.Api.Communication
 {
     public interface IClientMessageExecuter
