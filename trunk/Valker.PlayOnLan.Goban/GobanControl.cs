@@ -42,10 +42,13 @@ namespace Valker.PlayOnLan.Goban
             get { return this._n; }
             set
             {
+                if (value < 3 || value > 100) throw new ArgumentOutOfRangeException();
+
                 if (this._n == value)
                 {
                     return;
                 }
+
                 this._n = value;
                 this.Field = new Stone[this._n,this._n];
                 this.InvokePropertyChanged(new PropertyChangedEventArgs("N"));
@@ -88,6 +91,9 @@ namespace Valker.PlayOnLan.Goban
 
         public void SetStone(int x, int y, Stone stone, bool invalidate)
         {
+            if (x < 0 || y < 0 || x >= _n || y >= _n)
+                throw new ArgumentOutOfRangeException();
+
             this.Field[x, y] = stone;
             if (invalidate)
             {
@@ -105,6 +111,9 @@ namespace Valker.PlayOnLan.Goban
 
         public Stone GetStone(int x, int y)
         {
+            if (x < 0 || y < 0 || x >= _n || y >= _n)
+                throw new ArgumentOutOfRangeException();
+
             return this.Field[x, y];
         }
 

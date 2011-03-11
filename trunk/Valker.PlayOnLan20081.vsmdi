@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestLists xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestList name="Lists of Tests" id="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
+    <RunConfiguration id="e69703cf-8708-4f48-b19e-fff328491cc0" name="Local Test Run" storage="localtestrun.testrunconfig" type="Microsoft.VisualStudio.TestTools.Common.TestRunConfiguration, Microsoft.VisualStudio.QualityTools.Common,   PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestList>
+  <TestList name="Tests Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    <TestLinks>
+      <TestLink id="ec0938bb-8130-afc4-85a1-6dfc370a48ae" name="UpdatePartyStates38901" storage="valker.playonlan.server2008.tests\bin\debug\valker.playonlan.server2008.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="beb3df6f-0a7b-176a-ca65-f5a7ac0c3fed" name="RegisterNewPlayer01" storage="valker.playonlan.server2008.tests\bin\debug\valker.playonlan.server2008.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="1e309425-591c-ea82-f2c2-ce80fed0120a" name="Send01" storage="valker.playonlan.server2008.tests\bin\debug\valker.playonlan.server2008.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="17896207-8c22-8052-7032-cd09be885852" name="UpdatePartyStates38902" storage="valker.playonlan.server2008.tests\bin\debug\valker.playonlan.server2008.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="89bc10d5-24d6-7407-bea8-be405a9f8a63" name="Execute4602" storage="valker.playonlan.server2008.tests\bin\debug\valker.playonlan.server2008.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="6920960e-ace8-a11f-ec4e-199da8ab46f5" name="Execute4601" storage="valker.playonlan.server2008.tests\bin\debug\valker.playonlan.server2008.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="97462080-2107-bea2-fa0b-42d10142293b" name="UpdatePartyStates389" storage="valker.playonlan.server2008.tests\bin\debug\valker.playonlan.server2008.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="0b525289-2a56-0d60-6350-3cfb6aa3c7db" name="Execute46" storage="valker.playonlan.server2008.tests\bin\debug\valker.playonlan.server2008.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="8def3c49-86f6-7709-f9f2-9eef054aa630" name="ToString01296" storage="valker.playonlan.server2008.tests\bin\debug\valker.playonlan.server2008.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="d7a127ec-4369-458a-a011-3b50ab4f4f14" name="ToString01128" storage="valker.playonlan.server2008.tests\bin\debug\valker.playonlan.server2008.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+    </TestLinks>
+  </TestList>
+</TestLists>
