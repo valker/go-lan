@@ -7,6 +7,7 @@
  * Для изменения этого шаблона используйте Сервис | Настройка | Кодирование | Правка стандартных заголовков.
  */
 using System;
+using System.Windows.Forms;
 
 namespace Valker.PlayOnLan.Api.Game
 {
@@ -35,6 +36,6 @@ namespace Valker.PlayOnLan.Api.Game
         /// Creates client component of the game
         /// </summary>
         /// <returns></returns>
-        IGameClient CreateClient();
+        IGameClient CreateClient(Form parent);
     }
 }
