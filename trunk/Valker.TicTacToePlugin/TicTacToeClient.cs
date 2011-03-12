@@ -9,24 +9,23 @@ namespace Valker.TicTacToePlugin
 {
     class TicTacToeClient : IGameClient
     {
-        #region IGameClient Members
-
-        public IGameParameters CreateParameters(Form parent)
+        public TicTacToeClient()
         {
-            var f = new ParametersForm();
-            if (f.ShowDialog(parent) == DialogResult.OK)
+            var form = new ParametersForm();
+            if(form.ShowDialog() == DialogResult.OK)
             {
-                return new TicTacToeParameters() { Width = int.Parse(f.txtWidth.Text), Stones = int.Parse(f.txtStones.Text) };
+                Parameters = form.Parameters;
             }
-            throw new NotImplementedException();
         }
-
-        #endregion
-
 
         public Form CreatePlayingForm()
         {
             return new PlayingForm();
+        }
+
+        public IGameParameters Parameters
+        {
+            get; set;
         }
     }
 }

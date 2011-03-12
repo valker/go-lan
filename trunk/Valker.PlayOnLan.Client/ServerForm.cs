@@ -25,7 +25,7 @@ namespace Valker.PlayOnLan.Client
         {
             var transport = new LocalTransport();
             _server.AddConnector(transport.ServerConnector);
-            var client = new ClientImpl(this.textBox1.Text, new[] { transport.ClientConnector });
+            var client = new ClientImpl(this.textBox1.Text, this, new[] { transport.ClientConnector });
             client.AcceptedPlayer += new EventHandler<AcceptedPlayerEventArgs>(client_AcceptedPlayer);
             client.RegisterNewPlayer();
         }

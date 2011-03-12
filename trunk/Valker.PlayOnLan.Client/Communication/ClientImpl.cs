@@ -19,22 +19,27 @@ namespace Valker.PlayOnLan.Client.Communication
         /// </summary>
         private List<IMessageConnector> _connectors = new List<IMessageConnector>();
 
+        private IGameClient _client;
+
         /// <summary>
         /// Name of the player
         /// </summary>
         public string Name { get; set; }
 
-        public IGameParameters Parameters { get; private set; }
+        //public IGameParameters Parameters { get; private set; }
 
-        public ClientImpl(string name, IEnumerable<IMessageConnector> connectors)
+        public ClientImpl(string name, Form parent, IEnumerable<IMessageConnector> connectors)
         {
             Name = name;
+            Parent = parent;
             _connectors.AddRange(connectors);
             foreach (IMessageConnector connector in _connectors)
             {
                 connector.MessageArrived += this.ConnectorOnMessageArrived;
             }
         }
+
+        protected Form Parent { get; set; }
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
         {
@@ -61,9 +66,9 @@ namespace Valker.PlayOnLan.Client.Communication
         public void RegisterNewParty(GameInfo gameInfo, Form parent)
         {
             IGameType game = new TicTacToeGame();
-            var client = game.CreateClient();
-            Parameters = client.CreateParameters(parent);
-            this.SendMessage(new RegisterNewPartyMessage(gameInfo.GameId, Parameters.ToString()));
+            _client = game.CreateClient(parent);
+            //Parameters = _client.CreateParameters(parent);
+            this.SendMessage(new RegisterNewPartyMessage(gameInfo.GameId, _client.Parameters.ToString()));
         }
 
         #region Overrides of IClientMessageExecuter
@@ -128,7 +133,8 @@ namespace Valker.PlayOnLan.Client.Communication
         public void AcknowledgeRegistration(bool Status)
         {
             if (!Status) return;
-            AcceptedRegistration(this, new AcceptedRegistrationEventArgs() { Status = Status });
+            var form = _client.CreatePlayingForm();
+            form.Show();
         }
 
         #endregion

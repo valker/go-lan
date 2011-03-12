@@ -7,6 +7,7 @@
  * Для изменения этого шаблона используйте Сервис | Настройка | Кодирование | Правка стандартных заголовков.
  */
 using System;
+using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.TicTacToePlugin
@@ -32,7 +33,7 @@ namespace Valker.TicTacToePlugin
             return new TicTacToeServer(this);
         }
         
-        public IGameClient CreateClient()
+        public IGameClient CreateClient(Form parent)
         {
             return new TicTacToeClient();
         }
