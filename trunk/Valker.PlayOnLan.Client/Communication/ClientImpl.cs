@@ -67,8 +67,7 @@ namespace Valker.PlayOnLan.Client.Communication
         {
             IGameType game = new TicTacToeGame();
             _client = game.CreateClient(parent);
-            //Parameters = _client.CreateParameters(parent);
-            this.SendMessage(new RegisterNewPartyMessage(gameInfo.GameId, _client.Parameters.ToString()));
+            SendMessage(new RegisterNewPartyMessage(gameInfo.GameId, _client.Parameters.ToString()));
         }
 
         #region Overrides of IClientMessageExecuter
@@ -130,10 +129,10 @@ namespace Valker.PlayOnLan.Client.Communication
         #region IClientMessageExecuter Members
 
 
-        public void AcknowledgeRegistration(bool Status)
+        public void AcknowledgeRegistration(bool status, string parameters)
         {
-            if (!Status) return;
-            var form = _client.CreatePlayingForm();
+            if (!status) return;
+            var form = _client.CreatePlayingForm(parameters);
             form.Show();
         }
 

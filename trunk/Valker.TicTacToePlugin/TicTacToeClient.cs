@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
+using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Game;
 using System.Windows.Forms;
 
@@ -18,9 +16,11 @@ namespace Valker.TicTacToePlugin
             }
         }
 
-        public Form CreatePlayingForm()
+        public Form CreatePlayingForm(string parameterString)
         {
-            return new PlayingForm();
+            var serializer = TicTacToeParameters.GetSerializer();
+            var parameters = (TicTacToeParameters) serializer.Deserialize(new StringReader(parameterString));
+            return new PlayingForm(parameters.Width);
         }
 
         public IGameParameters Parameters

@@ -9,6 +9,6 @@ namespace Valker.PlayOnLan.Api.Communication
 
         void AcceptNewPlayer(bool status);
 
-        void AcknowledgeRegistration(bool Status);
+        void AcknowledgeRegistration(bool status, string parameters);
     }
 }

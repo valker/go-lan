@@ -10,20 +10,9 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 {
     public class RegisterNewPartyMessage : SingleServerMessage
     {
-        private string gameId;
+        public string GameId { get; set; }
 
-        public string GameId
-        {
-            get { return gameId; }
-            set { gameId = value; }
-        }
-        private string parameters;
-
-        public string Parameters
-        {
-            get { return parameters; }
-            set { parameters = value; }
-        }
+        public string Parameters { get; set; }
 
         public RegisterNewPartyMessage()
         {
@@ -31,8 +20,8 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 
         public RegisterNewPartyMessage(string gameId, string parameters)
         {
-            this.gameId = gameId;
-            this.parameters = parameters;
+            this.GameId = gameId;
+            this.Parameters = parameters;
         }
 
         #region Overrides of ServerMessage
@@ -40,8 +29,8 @@ namespace Valker.PlayOnLan.Server.Messages.Server
         public override void Execute(IServerMessageExecuter server, IClientInfo client)
         {
             if (server == null) throw new ArgumentNullException();
-            PartyStatus status = server.RegisterNewParty(client, this.GameId, this.Parameters);
-            var message = new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred).ToString();
+            PartyStatus status = server.RegisterNewParty(client, GameId, Parameters);
+            var message = new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred, Parameters).ToString();
             server.Send(client, message);
             server.UpdatePartyStates(null);
         }

@@ -4,7 +4,7 @@ namespace Valker.PlayOnLan.Api.Game
 {
     public interface IGameClient
     {
-        Form CreatePlayingForm();
-        IGameParameters Parameters { get; set; }
+        Form CreatePlayingForm(string parameters);
+        IGameParameters Parameters { get; }
     }
 }
