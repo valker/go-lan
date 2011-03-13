@@ -68,7 +68,6 @@
     <Compile Include="Messages\Server\SingleServerMessage.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerGameInfo.cs" />
     <Compile Include="ServerImpl.cs" />
   </ItemGroup>
   <ItemGroup>

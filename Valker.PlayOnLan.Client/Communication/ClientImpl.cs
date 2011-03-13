@@ -21,21 +21,29 @@ namespace Valker.PlayOnLan.Client.Communication
 
         private IGameClient _client;
 
+        private IEnumerable<IGameType> _games = new List<IGameType>(new IGameType[] {new TicTacToeGame()});
+
+        private IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
+
         /// <summary>
         /// Name of the player
         /// </summary>
         public string Name { get; set; }
 
-        //public IGameParameters Parameters { get; private set; }
-
         public ClientImpl(string name, Form parent, IEnumerable<IMessageConnector> connectors)
         {
             Name = name;
             Parent = parent;
-            _connectors.AddRange(connectors);
-            foreach (IMessageConnector connector in _connectors)
+
+            foreach (var game in _games)
             {
-                connector.MessageArrived += this.ConnectorOnMessageArrived;
+                _gameDict.Add(game.ID, game);
+            }
+
+            _connectors.AddRange(connectors);
+            foreach (var connector in _connectors)
+            {
+                connector.MessageArrived += ConnectorOnMessageArrived;
             }
         }
 
@@ -65,7 +73,7 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void RegisterNewParty(GameInfo gameInfo, Form parent)
         {
-            IGameType game = new TicTacToeGame();
+            IGameType game = _gameDict[gameInfo.GameId];
             _client = game.CreateClient(parent);
             SendMessage(new RegisterNewPartyMessage(gameInfo.GameId, _client.Parameters.ToString()));
         }

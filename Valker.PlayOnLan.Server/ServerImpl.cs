@@ -16,12 +16,17 @@ namespace Valker.PlayOnLan.Server
 {
     public class ServerImpl : IServerMessageExecuter, IDisposable
     {
-        // Games that are supported by this server
-        private static readonly IGameServer[] _games = new IGameType[] 
-        { 
-            /*new MyGoban.GoRules(),*/ 
-            new TicTacToePlugin.TicTacToeGame() 
-        }.Select(plugin => plugin.CreateServer()).ToArray();
+        private IEnumerable<IGameType> _games = new List<IGameType>(new IGameType[] { new TicTacToeGame() });
+
+        private IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
+
+
+//        // Games that are supported by this server
+//        private static readonly IGameServer[] _games = new IGameType[] 
+//        { 
+//            /*new MyGoban.GoRules(),*/ 
+//            new TicTacToePlugin.TicTacToeGame() 
+//        }.Select(plugin => plugin.CreateServer()).ToArray();
 
         // Added when new party registred
         // Removed when party is removed, OR client that register the party is removed
@@ -39,11 +44,16 @@ namespace Valker.PlayOnLan.Server
         {
             if (connectors == null) throw new ArgumentNullException();
 
-            foreach (IMessageConnector connector in connectors)
+            foreach (var game in _games)
+            {
+                _gameDict.Add(game.ID, game);
+            }
+
+            foreach (var connector in connectors)
             {
                 if (connector != null)
                 {
-                    this.AddConnector(connector);
+                    AddConnector(connector);
                 }
             }
 
@@ -54,11 +64,11 @@ namespace Valker.PlayOnLan.Server
 
         private void WorkerOnDoWork(object sender, DoWorkEventArgs args)
         {
-            BackgroundWorker me = (BackgroundWorker) sender;
+            var me = (BackgroundWorker) sender;
             while (!me.CancellationPending)
             {
                 Thread.Sleep(15000);
-                this.UpdatePartyStates(null);
+                UpdatePartyStates(null);
             }
         }
 
@@ -79,15 +89,20 @@ namespace Valker.PlayOnLan.Server
                 throw new ArgumentException("Cannot find player of this client");
             }
 
-            if (this._partyStates.FirstOrDefault(partyState => partyState.Players.FirstOrDefault(pl => pl.Equals(player)) != null) != null)
+            if (_partyStates.FirstOrDefault(partyState => partyState.Players.FirstOrDefault(pl => pl.Equals(player)) != null) != null)
             {
                 return PartyStatus.ClientDuplicated;
             }
 
-            var state = new PartyState {Status = PartyStatus.PartyRegistred, GameTypeId = gameId};
-            state.Players = new[] {player};
+            var state = new PartyState
+                            {
+                                Status = PartyStatus.PartyRegistred,
+                                GameTypeId = gameId,
+                                Players = new[] {player},
+                                Parameters = parameters
+                            };
 
-            this._partyStates.Add(state);
+            _partyStates.Add(state);
             return PartyStatus.PartyRegistred;
         }
 
@@ -97,10 +112,10 @@ namespace Valker.PlayOnLan.Server
         }
 
 
-        public void AcceptPartyRequest(string RequesterName, string GameType, string AccepterName)
+        public void AcceptPartyRequest(string RequesterName, string gameType, string AccepterName)
         {
             if (RequesterName == null) throw new ArgumentNullException();
-            if (GameType == null) throw new ArgumentNullException();
+            if (gameType == null) throw new ArgumentNullException();
             if (AccepterName == null) throw new ArgumentNullException();
             var party = _partyStates.FirstOrDefault(g => g.Players.FirstOrDefault(p => p.PlayerName == RequesterName) != null);
             if (party == null) throw new ArgumentException();
@@ -109,7 +124,7 @@ namespace Valker.PlayOnLan.Server
             if (player == null) throw new ArgumentException();
             players.Add(player);
             party.Status = PartyStatus.Running;
-            IGameServer server = new TicTacToeGame().CreateServer();
+            IGameServer server = _gameDict[gameType].CreateServer();
             party.Server = server;
             UpdatePartyStates(null);
         }
@@ -128,7 +143,7 @@ namespace Valker.PlayOnLan.Server
         {
             if (connector == null) throw new ArgumentNullException();
 
-            connector.MessageArrived += this.ConnectorOnMessageArrived;
+            connector.MessageArrived += ConnectorOnMessageArrived;
             connector.Closed += ConnectorOnClosed;
             _connectors.Add(connector);
         }
