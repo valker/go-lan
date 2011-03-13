@@ -17,6 +17,14 @@ namespace Valker.PlayOnLan.Server.Messages.Client
             Status = status;
         }
 
+        public AcknowledgeRegistrationMessage(bool status, string parameters)
+        {
+            Status = status;
+            Parameters = parameters;
+        }
+
+        public string Parameters { get; set; }
+
         public bool Status { get; set; }
 
         #region Overrides of ClientMessage
@@ -24,7 +32,7 @@ namespace Valker.PlayOnLan.Server.Messages.Client
         public override void Execute(IClientMessageExecuter client, object sender)
         {
             if (client == null) throw new ArgumentNullException();
-            client.AcknowledgeRegistration(Status);
+            client.AcknowledgeRegistration(Status, Parameters);
         }
 
         #endregion
