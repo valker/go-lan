@@ -30,7 +30,7 @@ namespace Valker.TicTacToePlugin
         
         public IGameServer CreateServer()
         {
-            return new TicTacToeServer(this);
+            return new TicTacToeServer();
         }
         
         public IGameClient CreateClient(Form parent)

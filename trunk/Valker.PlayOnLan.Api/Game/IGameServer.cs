@@ -12,7 +12,5 @@ namespace Valker.PlayOnLan.Api.Game
         /// </summary>
         /// <remarks>TODO: parameters should be defined</remarks>
         void RegisterNewParty(string playerName, IGameParameters parameters);
-        string Name { get; }
-        string ID { get; }
     }
 }

@@ -42,6 +42,8 @@ namespace Valker.PlayOnLan.Api.Game
 
         public string GameTypeId { get; set; }
 
+        public string Parameters { get; set; }
+
         public void Dispose()
         {
             // todo : implement notification of players
