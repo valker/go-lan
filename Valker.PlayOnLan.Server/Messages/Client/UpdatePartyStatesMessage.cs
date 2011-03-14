@@ -6,9 +6,9 @@ using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
-    public class UpdatePartyStatesMessage : ClientMessage
+    public sealed class UpdatePartyStatesMessage : ClientMessage
     {
-        private static XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new[]{typeof(UpdatePartyStatesMessage)});
+        private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new[]{typeof(UpdatePartyStatesMessage)});
 
         public UpdatePartyStatesMessage()
         {
@@ -17,7 +17,7 @@ namespace Valker.PlayOnLan.Server.Messages.Client
         public UpdatePartyStatesMessage(List<PartyState> requests)
         {
             if (requests == null) throw new ArgumentNullException();
-            this.Info = requests.ToArray();
+            Info = requests.ToArray();
         }
 
         public PartyState[] Info { get; set; }

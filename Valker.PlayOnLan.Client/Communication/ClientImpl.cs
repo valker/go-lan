@@ -116,7 +116,7 @@ namespace Valker.PlayOnLan.Client.Communication
 
         internal void AcceptParty(PartyInfo partyInfo)
         {
-            SendMessage(new AcceptNewPartyMessage(partyInfo.Name, partyInfo.GameType, Name));
+            SendMessage(new AcceptNewPartyMessage(partyInfo.PartyId, Name));
         }
 
         internal void RegisterNewPlayer()

@@ -98,7 +98,8 @@ namespace Valker.PlayOnLan.Client
                                 Connector = connector,
                                 GameType = state.GameTypeId,
                                 Name = state.Names[0],
-                                Status = state.Status
+                                Status = state.Status,
+                                PartyId = state.PartyId
                             };
             return value;
         }
@@ -124,7 +125,7 @@ namespace Valker.PlayOnLan.Client
             _client.RetrieveSupportedGames();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Register(object sender, EventArgs e)
         {
             _client.RegisterNewParty((GameInfo) listBox1.SelectedItem, this);
         }
@@ -134,7 +135,7 @@ namespace Valker.PlayOnLan.Client
             _client.Dispose();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Accept(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count < 1) return;
             _client.AcceptParty((PartyInfo) listView1.SelectedItems[0].Tag);

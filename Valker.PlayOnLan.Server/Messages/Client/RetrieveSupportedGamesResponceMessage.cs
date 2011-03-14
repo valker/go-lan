@@ -4,9 +4,9 @@ using System;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
-    public class RetrieveSupportedGamesResponceMessage : ClientMessage
+    public sealed class RetrieveSupportedGamesResponceMessage : ClientMessage
     {
-        private static XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new[]{ typeof(RetrieveSupportedGamesResponceMessage)});
+        private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new[]{ typeof(RetrieveSupportedGamesResponceMessage)});
 
         #region Overrides of Message
 

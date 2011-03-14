@@ -12,6 +12,8 @@ namespace Valker.PlayOnLan.Api.Game
             
         }
 
+        public int PartyId { get; set; }
+
         public PartyStatus Status { get; set; }
 
         private IPlayer[] _players;

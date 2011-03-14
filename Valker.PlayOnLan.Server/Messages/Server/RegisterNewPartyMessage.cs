@@ -5,7 +5,7 @@ using Valker.PlayOnLan.Server.Messages.Client;
 
 namespace Valker.PlayOnLan.Server.Messages.Server
 {
-    public class RegisterNewPartyMessage : SingleServerMessage
+    public sealed class RegisterNewPartyMessage : ServerMessage
     {
         private static XmlSerializer Serializer = new XmlSerializer(typeof(ServerMessage), new[] {typeof(RegisterNewPartyMessage)});
 
@@ -19,8 +19,8 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 
         public RegisterNewPartyMessage(string gameId, string parameters)
         {
-            this.GameId = gameId;
-            this.Parameters = parameters;
+            GameId = gameId;
+            Parameters = parameters;
         }
 
         #region Overrides of ServerMessage

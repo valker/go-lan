@@ -8,46 +8,27 @@ namespace Valker.PlayOnLan.Server.Messages.Server
     {
         private static XmlSerializer Serializer = new XmlSerializer(typeof(ServerMessage), new[]{typeof(AcceptNewPartyMessage)});
 
-        private string _requesterName;
+        public string AccepterName { get; set; }
 
-        public string RequesterName
-        {
-            get { return _requesterName; }
-            set { _requesterName = value; }
-        }
-        private string _gameType;
-
-        public string GameType
-        {
-            get { return _gameType; }
-            set { _gameType = value; }
-        }
-        private string _accepterName;
-
-        public string AccepterName
-        {
-            get { return _accepterName; }
-            set { _accepterName = value; }
-        }
+        public int PartyId { get; set; }
 
         public AcceptNewPartyMessage()
         {
 
         }
 
-        public AcceptNewPartyMessage(string requesterName, string gameType, string accepterName)
+        public AcceptNewPartyMessage(int partyId, string accepterName)
         {
-            // TODO: Complete member initialization
-            this._requesterName = requesterName;
-            this._gameType = gameType;
-            this._accepterName = accepterName;
+            PartyId = partyId;
+            AccepterName = accepterName;
         }
+
         #region Overrides of ServerMessage
 
         public override void Execute(IServerMessageExecuter server, IClientInfo sender)
         {
             if (server == null) throw new ArgumentNullException();
-            server.AcceptPartyRequest(RequesterName, GameType, AccepterName);
+            server.AcceptPartyRequest(PartyId, AccepterName);
         }
 
         #endregion
