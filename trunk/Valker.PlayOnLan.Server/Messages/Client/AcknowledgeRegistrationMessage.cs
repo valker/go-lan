@@ -7,17 +7,12 @@ using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
-    public class AcknowledgeRegistrationMessage : ClientMessage
+    public sealed class AcknowledgeRegistrationMessage : ClientMessage
     {
-        private static XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new[]{typeof(AcknowledgeRegistrationMessage)});
+        private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new[]{typeof(AcknowledgeRegistrationMessage)});
 
         public AcknowledgeRegistrationMessage()
         {
-        }
-
-        public AcknowledgeRegistrationMessage(bool status)
-        {
-            Status = status;
         }
 
         public AcknowledgeRegistrationMessage(bool status, string parameters)

@@ -62,5 +62,7 @@ namespace Valker.PlayOnLan.Client
         }
 
         public IMessageConnector Connector { get; set; }
+
+        public int PartyId { get; set; }
     }
 }

@@ -20,17 +20,11 @@ namespace Valker.PlayOnLan.Server
 
         private IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
 
-
-//        // Games that are supported by this server
-//        private static readonly IGameServer[] _games = new IGameType[] 
-//        { 
-//            /*new MyGoban.GoRules(),*/ 
-//            new TicTacToePlugin.TicTacToeGame() 
-//        }.Select(plugin => plugin.CreateServer()).ToArray();
-
         // Added when new party registred
         // Removed when party is removed, OR client that register the party is removed
         private List<PartyState> _partyStates = new List<PartyState>();
+
+        private int _partyStateId = 0;
 
         // Added when new transport is attached to the server
         private List<IMessageConnector> _connectors = new List<IMessageConnector>();
@@ -99,7 +93,8 @@ namespace Valker.PlayOnLan.Server
                                 Status = PartyStatus.PartyRegistred,
                                 GameTypeId = gameId,
                                 Players = new[] {player},
-                                Parameters = parameters
+                                Parameters = parameters,
+                                PartyId = _partyStateId++,
                             };
 
             _partyStates.Add(state);
@@ -112,19 +107,17 @@ namespace Valker.PlayOnLan.Server
         }
 
 
-        public void AcceptPartyRequest(string RequesterName, string gameType, string AccepterName)
+        public void AcceptPartyRequest(int partyId, string accepterName)
         {
-            if (RequesterName == null) throw new ArgumentNullException();
-            if (gameType == null) throw new ArgumentNullException();
-            if (AccepterName == null) throw new ArgumentNullException();
-            var party = _partyStates.FirstOrDefault(g => g.Players.FirstOrDefault(p => p.PlayerName == RequesterName) != null);
+            if (accepterName == null) throw new ArgumentNullException();
+            var party = _partyStates.FirstOrDefault(p => p.PartyId == partyId);
             if (party == null) throw new ArgumentException();
             var players = new List<IPlayer>(party.Players);
-            var player = _players.FirstOrDefault(p => p.PlayerName == AccepterName);
+            var player = _players.FirstOrDefault(p => p.PlayerName == accepterName);
             if (player == null) throw new ArgumentException();
             players.Add(player);
             party.Status = PartyStatus.Running;
-            IGameServer server = _gameDict[gameType].CreateServer();
+            IGameServer server = _gameDict[party.GameTypeId].CreateServer();
             party.Server = server;
             UpdatePartyStates(null);
         }

@@ -4,9 +4,9 @@ using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
-    public class AcknowledgeDropMessage : ClientMessage
+    public sealed class AcknowledgeDropMessage : ClientMessage
     {
-        private static XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new []{typeof(AcknowledgeDropMessage)});
+        private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new []{typeof(AcknowledgeDropMessage)});
 
         #region Overrides of ClientMessage
 
