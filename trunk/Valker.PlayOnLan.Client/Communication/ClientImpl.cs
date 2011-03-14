@@ -73,9 +73,11 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void RegisterNewParty(GameInfo gameInfo, Form parent)
         {
-            _client = _gameDict[gameInfo.GameId].CreateClient();
-            var parameters = _client.AskParams(parent);
-            SendMessage(new RegisterNewPartyMessage(gameInfo.GameId, parameters.ToString()));
+            // ask user to set up parameters of the game
+            var parameters = _gameDict[gameInfo.GameTypeId].AskParam(parent);
+
+            // send registration message to the server
+            SendMessage(new RegisterNewPartyMessage(gameInfo.GameTypeId, parameters));
         }
 
         #region Overrides of IClientMessageExecuter
@@ -133,16 +135,14 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void AcknowledgeRegistration(bool status, string parameters)
         {
-            if (!status) return;
-            var form = _client.CreatePlayingForm(parameters);
-            form.Show(Parent);
         }
 
         public void PartyBeginNotification(int partyId, string gameTypeId, string parameters)
         {
             if (_client == null)
             {
-                _client = _gameDict[gameTypeId].CreateClient();
+                _client = _gameDict[gameTypeId].CreateClient(Parent);
+                _client.Parameters = parameters;
                 var form = _client.CreatePlayingForm(parameters);
                 form.Show(Parent);
             }

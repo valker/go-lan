@@ -98,7 +98,7 @@ namespace Valker.PlayOnLan.Client
                     args.Games.Select(s => new GameInfo(s, (IMessageConnector) args.Sender)).ToArray();
                 foreach (GameInfo info in gameInfos)
                 {
-                    _gameNames.Add(info.GameId, info.ToString());
+                    _gameNames.Add(info.GameTypeId, info.ToString());
                 }
                 listBox1.DataSource = gameInfos;
             }

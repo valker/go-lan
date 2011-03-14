@@ -12,7 +12,7 @@ namespace Valker.PlayOnLan.Server
             var gameId = gameName.Split(',');
             if (gameId.Length < 2) throw new ArgumentException();
             this.GameName = gameId[0];
-            this.GameId = gameId[1];
+            this.GameTypeId = gameId[1];
             this.Connector = connector;
         }
 
@@ -20,7 +20,7 @@ namespace Valker.PlayOnLan.Server
 
         private string GameName { get; set; }
 
-        public string GameId { get; set; }
+        public string GameTypeId { get; set; }
 
         public override string ToString()
         {

@@ -36,6 +36,13 @@ namespace Valker.PlayOnLan.Api.Game
         /// Creates client component of the game
         /// </summary>
         /// <returns></returns>
-        IGameClient CreateClient();
+        IGameClient CreateClient(Form parent);
+
+        /// <summary>
+        /// Ask user about parameters of the game
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        string AskParam(Form parent);
     }
 }
