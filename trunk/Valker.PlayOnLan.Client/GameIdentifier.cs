@@ -6,7 +6,7 @@ namespace Valker.PlayOnLan.Client
     class PartyInfo : IEquatable<PartyInfo>
     {
         public string Name { get; set; }
-        public string GameType { get; set; }
+        public string GameTypeId { get; set; }
         public PartyStatus Status { get; set; }
 
         public bool Equals(PartyInfo other)
@@ -19,7 +19,7 @@ namespace Valker.PlayOnLan.Client
             {
                 return true;
             }
-            return Equals(other.Name, this.Name) && Equals(other.GameType, this.GameType) && Equals(other.Connector, this.Connector) && Equals(other.Status, Status);
+            return Equals(other.Name, this.Name) && Equals(other.GameTypeId, this.GameTypeId) && Equals(other.Connector, this.Connector) && Equals(other.Status, Status);
         }
 
         public override bool Equals(object obj)
@@ -44,7 +44,7 @@ namespace Valker.PlayOnLan.Client
             unchecked
             {
                 int result = this.Name.GetHashCode();
-                result = (result * 397) ^ this.GameType.GetHashCode();
+                result = (result * 397) ^ this.GameTypeId.GetHashCode();
                 result = (result * 397) ^ this.Connector.GetHashCode();
                 result = (result * 397) ^ this.Status.GetHashCode();
                 return result;

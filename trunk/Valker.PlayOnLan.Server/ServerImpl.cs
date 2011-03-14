@@ -16,7 +16,7 @@ namespace Valker.PlayOnLan.Server
 {
     public class ServerImpl : IServerMessageExecuter, IDisposable
     {
-        private IEnumerable<IGameType> _games = new List<IGameType>(new IGameType[] { new TicTacToeGame() });
+        private readonly IEnumerable<IGameType> _games = new List<IGameType>(new IGameType[] { new TicTacToeGame() });
 
         private IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
 
@@ -68,7 +68,7 @@ namespace Valker.PlayOnLan.Server
 
         public void UpdatePartyStates(IClientInfo clientInfo)
         {
-            var msg = new UpdatePartyStatesMessage(this._partyStates);
+            var msg = new UpdatePartyStatesMessage(_partyStates);
 
             Send(clientInfo, msg.ToString());
         }
@@ -109,17 +109,52 @@ namespace Valker.PlayOnLan.Server
 
         public void AcceptPartyRequest(int partyId, string accepterName)
         {
+            var party = FindParty(partyId);
+
+            AddPlayerToParty(party, FindPlayer(accepterName));
+
+            // create the server component
+            party.Server = _gameDict[party.GameTypeId].CreateServer();
+
+            // change the status
+            party.Status = PartyStatus.Running;
+
+            // notify observers
+            UpdatePartyStates(null);
+
+            //notify players
+            var message = CreatePartyBeginMessage(party);
+            foreach (var clientInfo in party.Players.Select(p=>p.Client))
+            {
+                Send(clientInfo, message);
+            }
+        }
+
+        private static string CreatePartyBeginMessage(PartyState party)
+        {
+            return new PartyBeginNotificationMessage(party.PartyId, party.GameTypeId, party.Parameters).ToString();
+        }
+
+        private static void AddPlayerToParty(PartyState party, IPlayer player)
+        {
+            party.Players = party.Players.Concat(Enumerable.Repeat(player, 1)).ToArray();
+        }
+
+        private IPlayer FindPlayer(string accepterName)
+        {            
             if (accepterName == null) throw new ArgumentNullException();
-            var party = _partyStates.FirstOrDefault(p => p.PartyId == partyId);
-            if (party == null) throw new ArgumentException();
-            var players = new List<IPlayer>(party.Players);
+
             var player = _players.FirstOrDefault(p => p.PlayerName == accepterName);
             if (player == null) throw new ArgumentException();
-            players.Add(player);
-            party.Status = PartyStatus.Running;
-            IGameServer server = _gameDict[party.GameTypeId].CreateServer();
-            party.Server = server;
-            UpdatePartyStates(null);
+
+            return player;
+        }
+
+        private PartyState FindParty(int partyId)
+        {
+            var party = _partyStates.FirstOrDefault(p => p.PartyId == partyId);
+            if (party == null) throw new ArgumentException();
+            return party;
         }
 
         #endregion

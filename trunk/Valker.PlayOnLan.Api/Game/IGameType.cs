@@ -36,6 +36,6 @@ namespace Valker.PlayOnLan.Api.Game
         /// Creates client component of the game
         /// </summary>
         /// <returns></returns>
-        IGameClient CreateClient(Form parent);
+        IGameClient CreateClient();
     }
 }

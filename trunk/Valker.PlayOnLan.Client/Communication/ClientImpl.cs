@@ -47,7 +47,7 @@ namespace Valker.PlayOnLan.Client.Communication
             }
         }
 
-        protected Form Parent { get; set; }
+        private Form Parent { get; set; }
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
         {
@@ -59,13 +59,13 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void RetrieveSupportedGames()
         {
-            this.SendMessage(new RetrieveSupportedGamesMessage());
+            SendMessage(new RetrieveSupportedGamesMessage());
         }
 
-        private void SendMessage(Valker.PlayOnLan.Server.Messages.Message message)
+        private void SendMessage(Server.Messages.Message message)
         {
-            string messageText = message.ToString();
-            foreach (IMessageConnector connector in this._connectors)
+            var messageText = message.ToString();
+            foreach (var connector in _connectors)
             {
                 connector.Send("_server", Name, messageText);
             }
@@ -73,32 +73,31 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void RegisterNewParty(GameInfo gameInfo, Form parent)
         {
-            IGameType game = _gameDict[gameInfo.GameId];
-            _client = game.CreateClient(parent);
-            SendMessage(new RegisterNewPartyMessage(gameInfo.GameId, _client.Parameters.ToString()));
+            _client = _gameDict[gameInfo.GameId].CreateClient();
+            var parameters = _client.AskParams(parent);
+            SendMessage(new RegisterNewPartyMessage(gameInfo.GameId, parameters.ToString()));
         }
 
         #region Overrides of IClientMessageExecuter
 
         public void UpdateSupportedGames(object sender, string[] games)
         {
-            this.SupportedGamesChanged(this, new SupportedGamesChangedEventArgs(games, sender));
+            SupportedGamesChanged(this, new SupportedGamesChangedEventArgs(games, sender));
         }
 
         public void UpdatePartyStates(PartyState[] partyStates, IMessageConnector sender)
         {
-            this.PartyStatesChanged(this, new PartyStatesArgs(partyStates, sender));
+            PartyStatesChanged(this, new PartyStatesArgs(partyStates, sender));
         }
 
         public event EventHandler<SupportedGamesChangedEventArgs> SupportedGamesChanged = delegate { };
 
         public event EventHandler<PartyStatesArgs> PartyStatesChanged = delegate { };
 
+        /// <summary>
+        /// Raised when new player has accepted by server
+        /// </summary>
         public event EventHandler<AcceptedPlayerEventArgs> AcceptedPlayer = delegate { };
-
-        public event EventHandler<AcceptedRegistrationEventArgs> AcceptedRegistration = delegate { };
-
-        public event EventHandler<AcknowledgedRegistrationEventArgs> AcknowledgedRegistration = delegate { };
 
         #endregion
 
@@ -132,16 +131,21 @@ namespace Valker.PlayOnLan.Client.Communication
             AcceptedPlayer(this, new AcceptedPlayerEventArgs() { Status = status });
         }
 
-        #endregion
-
-        #region IClientMessageExecuter Members
-
-
         public void AcknowledgeRegistration(bool status, string parameters)
         {
             if (!status) return;
             var form = _client.CreatePlayingForm(parameters);
-            form.Show();
+            form.Show(Parent);
+        }
+
+        public void PartyBeginNotification(int partyId, string gameTypeId, string parameters)
+        {
+            if (_client == null)
+            {
+                _client = _gameDict[gameTypeId].CreateClient();
+                var form = _client.CreatePlayingForm(parameters);
+                form.Show(Parent);
+            }
         }
 
         #endregion
