@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Valker.TicTacToePlugin")]
-[assembly: AssemblyCopyright("Copyright 2011")]
+[assembly: AssemblyCopyright("Copyright Valentin Pimenov 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
