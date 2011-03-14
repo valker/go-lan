@@ -9,9 +9,9 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("Valker.PlayOnLan.Server")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Kelman Ltd")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Valker.PlayOnLan.Server")]
-[assembly: AssemblyCopyright("Copyright © Kelman Ltd 2011")]
+[assembly: AssemblyCopyright("Copyright © Valentin Pimenov 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
