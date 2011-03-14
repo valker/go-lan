@@ -6,6 +6,9 @@ using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
+    /// <summary>
+    /// Defines a message that contains information about parties states
+    /// </summary>
     public sealed class UpdatePartyStatesMessage : ClientMessage
     {
         private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new[]{typeof(UpdatePartyStatesMessage)});

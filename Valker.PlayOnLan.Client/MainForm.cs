@@ -21,27 +21,12 @@ namespace Valker.PlayOnLan.Client
             _client = client;
             _client.SupportedGamesChanged += ClientOnSupportedGamesChanged;
             _client.PartyStatesChanged += ClientOnPartyStatesChanged;
-            _client.AcceptedRegistration += AcceptedRegistration;
-            _client.AcknowledgedRegistration += AcknowledgedRegistation;
             InitializeComponent();
-        }
-
-        private void AcknowledgedRegistation(object sender, AcknowledgedRegistrationEventArgs e)
-        {
-//            Form form = new TicTacToeGame().CreateClient(this).CreatePlayingForm();
-//            form.Show(this);
-        }
-
-        private void AcceptedRegistration(object sender, AcceptedRegistrationEventArgs e)
-        {
-            //todo: add code
-            
         }
 
         private void ClientOnPartyStatesChanged(object sender, PartyStatesArgs args)
         {
             UpdatePartyStatesData(args);
-
             UpdatePartyStatesView();
         }
 
@@ -55,7 +40,7 @@ namespace Valker.PlayOnLan.Client
                                                     var item =
                                                         new ListViewItem(new string[]
                                                                              {
-                                                                                 info.Name, _gameNames[info.GameType],
+                                                                                 info.Name, _gameNames[info.GameTypeId],
                                                                                  info.Status.ToString()
                                                                              });
                                                     item.Tag = info;
@@ -96,7 +81,7 @@ namespace Valker.PlayOnLan.Client
             var value = new PartyInfo()
                             {
                                 Connector = connector,
-                                GameType = state.GameTypeId,
+                                GameTypeId = state.GameTypeId,
                                 Name = state.Names[0],
                                 Status = state.Status,
                                 PartyId = state.PartyId

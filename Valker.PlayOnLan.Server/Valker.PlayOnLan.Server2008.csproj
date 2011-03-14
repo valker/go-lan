@@ -49,7 +49,6 @@
     <Compile Include="GameInfo.cs" />
     <Compile Include="Messages\Client\AcceptNewPlayerMessage.cs" />
     <Compile Include="Messages\Client\AcknowledgeDropMessage.cs" />
-    <Compile Include="Messages\Client\AcknowledgePartyBeginMessage.cs" />
     <Compile Include="Messages\Client\AcknowledgeRegistrationMessage.cs" />
     <Compile Include="Messages\Client\ClientMessage.cs" />
     <Compile Include="Messages\Client\ClientMessageTypes.cs" />

@@ -4,6 +4,9 @@ using System;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
+    /// <summary>
+    /// Defines a message that contains information about games supported by server
+    /// </summary>
     public sealed class RetrieveSupportedGamesResponceMessage : ClientMessage
     {
         private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new[]{ typeof(RetrieveSupportedGamesResponceMessage)});

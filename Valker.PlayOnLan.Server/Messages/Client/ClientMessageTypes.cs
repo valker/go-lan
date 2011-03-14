@@ -9,7 +9,6 @@ namespace Valker.PlayOnLan.Server.Messages.Client
                                                     typeof (RetrieveSupportedGamesResponceMessage),
                                                     typeof (AcknowledgeRegistrationMessage),
                                                     typeof (AcknowledgeDropMessage), 
-                                                    typeof (AcknowledgePartyBeginMessage),
                                                     typeof (PartyBeginNotificationMessage),
                                                     typeof (UpdatePartyStatesMessage), 
                                                     typeof(AcceptNewPlayerMessage),
