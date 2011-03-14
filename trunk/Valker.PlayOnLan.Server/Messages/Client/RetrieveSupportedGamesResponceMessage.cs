@@ -1,3 +1,4 @@
+using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Communication;
 using System;
 
@@ -5,6 +6,8 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 {
     public class RetrieveSupportedGamesResponceMessage : ClientMessage
     {
+        private static XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new[]{ typeof(RetrieveSupportedGamesResponceMessage)});
+
         #region Overrides of Message
 
         public override void Execute(IClientMessageExecuter client, object sender)
@@ -16,5 +19,9 @@ namespace Valker.PlayOnLan.Server.Messages.Client
         #endregion
 
         public string[] Responce { get; set; }
+        protected override XmlSerializer GetSerializer()
+        {
+            return Serializer;
+        }
     }
 }

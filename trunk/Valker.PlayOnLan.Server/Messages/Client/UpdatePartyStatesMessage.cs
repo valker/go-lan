@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
 
@@ -8,6 +8,8 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 {
     public class UpdatePartyStatesMessage : ClientMessage
     {
+        private static XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new[]{typeof(UpdatePartyStatesMessage)});
+
         public UpdatePartyStatesMessage()
         {
         }
@@ -31,5 +33,10 @@ namespace Valker.PlayOnLan.Server.Messages.Client
         }
 
         #endregion
+
+        protected override XmlSerializer GetSerializer()
+        {
+            return Serializer;
+        }
     }
 }

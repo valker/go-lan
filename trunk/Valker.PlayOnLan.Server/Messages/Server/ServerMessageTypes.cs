@@ -7,8 +7,11 @@ namespace Valker.PlayOnLan.Server.Messages.Server
         private static readonly Type[] _types = new[]
                                                 {
                                                     typeof (RetrieveSupportedGamesMessage),
-                                                    typeof (RegisterNewPartyMessage), typeof (AcceptNewPartyMessage),
-                                                    typeof (DropNewPartyMessage), typeof (RetrieveRegistredPartiesMessage), typeof(RegisterNewPlayerMessage), 
+                                                    typeof (RegisterNewPartyMessage), 
+                                                    typeof (AcceptNewPartyMessage),
+                                                    typeof (DropNewPartyMessage), 
+                                                    typeof (RetrieveRegistredPartiesMessage), 
+                                                    typeof (RegisterNewPlayerMessage), 
                                                 };
 
         public static Type[] Types
