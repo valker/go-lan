@@ -6,6 +6,13 @@ namespace Valker.TicTacToePlugin
 {
     class TicTacToeClient : IGameClient
     {
+        public TicTacToeClient(Form parent)
+        {
+            Parent = parent;
+        }
+
+        protected Form Parent { get; set; }
+
         public Form CreatePlayingForm(string parameterString)
         {
             var serializer = TicTacToeParameters.GetSerializer();
@@ -13,13 +20,7 @@ namespace Valker.TicTacToePlugin
             return new PlayingForm(parameters.Width);
         }
 
-        public IGameParameters AskParams(Form parent)
-        {
-            var form = new ParametersForm();
-            return form.ShowDialog(parent) == DialogResult.OK ? form.Parameters : null;
-        }
-
-        public IGameParameters Parameters
+        public string Parameters
         {
             get; set;
         }

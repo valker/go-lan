@@ -33,11 +33,18 @@ namespace Valker.TicTacToePlugin
             return new TicTacToeServer();
         }
         
-        public IGameClient CreateClient()
+        public IGameClient CreateClient(Form parent)
         {
-            return new TicTacToeClient();
+            return new TicTacToeClient(parent);
         }
-        
+
+        public string AskParam(Form parent)
+        {
+            var f = new ParametersForm();
+            var r = f.ShowDialog(parent);
+            return r == DialogResult.OK ? f.Parameters.ToString() : "";
+        }
+
         public string ID {
             get {
                 return "161DB3D0-94C3-44b7-AA60-ED0061706D74";
