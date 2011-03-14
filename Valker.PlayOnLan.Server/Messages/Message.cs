@@ -15,21 +15,19 @@ namespace Valker.PlayOnLan.Server.Messages
         /// <returns></returns>
         public override string ToString()
         {
-            return XmlSerializerImpl.Perform(this.GetBaseClass(), this.GetType(), this);
+            return XmlSerializerImpl.Perform(GetSerializer(), this);   
         }
 
-        protected abstract Type GetBaseClass();
+        protected abstract XmlSerializer GetSerializer();
     }
 
     public static class XmlSerializerImpl
     {
-        public static string Perform(Type baseClass, Type thisType, object objectToSerialize)
+        public static string Perform(XmlSerializer serializer, object objectToSerialize)
         {
-            if (baseClass == null) throw new ArgumentNullException();
-            if (thisType == null) throw new ArgumentNullException();
-            if (objectToSerialize == null) throw new ArgumentNullException();
+            if (serializer == null) throw new ArgumentNullException("serializer");
+            if (objectToSerialize == null) throw new ArgumentNullException("objectToSerialize");
 
-            var serializer = new XmlSerializer(baseClass, new[] {thisType});
             var writer = new StringWriter();
             serializer.Serialize(writer, objectToSerialize);
             return writer.GetStringBuilder().ToString();

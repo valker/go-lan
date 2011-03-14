@@ -1,13 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Server.Messages.Server
 {
     public class AcceptNewPartyMessage : ServerMessage
     {
+        private static XmlSerializer Serializer = new XmlSerializer(typeof(ServerMessage), new[]{typeof(AcceptNewPartyMessage)});
+
         private string _requesterName;
 
         public string RequesterName
@@ -51,5 +51,10 @@ namespace Valker.PlayOnLan.Server.Messages.Server
         }
 
         #endregion
+
+        protected override XmlSerializer GetSerializer()
+        {
+            return Serializer;
+        }
     }
 }

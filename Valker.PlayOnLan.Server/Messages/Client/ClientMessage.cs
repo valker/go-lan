@@ -6,10 +6,5 @@ namespace Valker.PlayOnLan.Server.Messages.Client
     public abstract class ClientMessage : Message
     {
         public abstract void Execute(IClientMessageExecuter client, object sender);
-
-        protected override Type GetBaseClass()
-        {
-            return typeof (ClientMessage);
-        }
     }
 }
