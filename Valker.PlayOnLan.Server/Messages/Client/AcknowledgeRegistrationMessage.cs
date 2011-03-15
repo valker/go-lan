@@ -27,10 +27,8 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 
         #region Overrides of ClientMessage
 
-        public override void Execute(IClientMessageExecuter client, object sender)
+        public override void Execute(IClientMessageExecuter client, IMessageConnector sender)
         {
-            if (client == null) throw new ArgumentNullException();
-            client.AcknowledgeRegistration(Status, Parameters);
         }
 
         #endregion

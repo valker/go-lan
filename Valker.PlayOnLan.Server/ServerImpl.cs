@@ -88,17 +88,22 @@ namespace Valker.PlayOnLan.Server
                 return PartyStatus.ClientDuplicated;
             }
 
-            var state = new PartyState
-                            {
-                                Status = PartyStatus.PartyRegistred,
-                                GameTypeId = gameId,
-                                Players = new[] {player},
-                                Parameters = parameters,
-                                PartyId = _partyStateId++,
-                            };
+            PartyState state = CreatePartyState(player, gameId, parameters);
 
             _partyStates.Add(state);
             return PartyStatus.PartyRegistred;
+        }
+
+        private PartyState CreatePartyState(IPlayer player, string gameId, string parameters)
+        {
+            return new PartyState
+                       {
+                           Status = PartyStatus.PartyRegistred,
+                           GameTypeId = gameId,
+                           Players = new[] {player},
+                           Parameters = parameters,
+                           PartyId = _partyStateId++,
+                       };
         }
 
         public string[] RetrieveSupportedGames()

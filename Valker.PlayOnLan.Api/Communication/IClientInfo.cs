@@ -11,7 +11,14 @@ namespace Valker.PlayOnLan.Api.Communication
     /// </summary>
     public interface IClientInfo : IEquatable<IClientInfo>
     {
+        /// <summary>
+        /// Connector which is used by client (at server side)
+        /// </summary>
         IMessageConnector ClientConnector { get; }
+
+        /// <summary>
+        /// Identifier of client (depends on the transport)
+        /// </summary>
         object ClientIdentifier { get; }
     }
 }
