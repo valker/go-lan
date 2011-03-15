@@ -23,7 +23,7 @@ namespace Valker.PlayOnLan.Server2008.Messages.Client
 
         public string Message { get; set; }
 
-        protected override XmlSerializer GetSerializer()
+        public override XmlSerializer GetSerializer()
         {
             return _serializer;
         }

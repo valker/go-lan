@@ -1,4 +1,5 @@
 using System;
+using Valker.PlayOnLan.Server2008.Messages.Server;
 
 namespace Valker.PlayOnLan.Server.Messages.Server
 {
@@ -12,6 +13,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
                                                     typeof (DropNewPartyMessage), 
                                                     typeof (RetrieveRegistredPartiesMessage), 
                                                     typeof (RegisterNewPlayerMessage), 
+                                                    typeof (ServerGameMessage),
                                                 };
 
         public static Type[] Types

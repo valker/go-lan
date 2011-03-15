@@ -30,7 +30,7 @@ namespace Valker.PlayOnLan.Api.Game
         /// Creates server component of the game
         /// </summary>
         /// <returns></returns>
-        IGameServer CreateServer();
+        IGameServer CreateServer(IPlayer[] players);
 
         /// <summary>
         /// Creates client component of the game
