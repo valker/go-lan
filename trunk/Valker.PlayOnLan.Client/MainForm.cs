@@ -6,7 +6,6 @@ using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Client.Communication;
 using Valker.PlayOnLan.Server;
-using Valker.TicTacToePlugin;
 
 namespace Valker.PlayOnLan.Client
 {

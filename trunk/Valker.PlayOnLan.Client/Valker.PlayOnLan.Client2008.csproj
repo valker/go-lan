@@ -90,13 +90,13 @@
       <Project>{A6CD4BA3-A312-46F8-9978-A49ED132B0F6}</Project>
       <Name>Valker.PlayOnLan.Api2008</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Valker.PlayOnLan.PluginLoader\Valker.PlayOnLan.PluginLoader.csproj">
+      <Project>{56EF6572-031E-405E-B260-1865FD798E09}</Project>
+      <Name>Valker.PlayOnLan.PluginLoader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Valker.PlayOnLan.Server\Valker.PlayOnLan.Server2008.csproj">
       <Project>{C2F403D0-E775-43CE-B1B1-B8A46593E6D4}</Project>
       <Name>Valker.PlayOnLan.Server2008</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Valker.TicTacToePlugin\Valker.PlayOnLan.TicTacToePlugin2008.csproj">
-      <Project>{9013D731-1C6E-4AAC-8E20-F4EBC49AB853}</Project>
-      <Name>Valker.PlayOnLan.TicTacToePlugin2008</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

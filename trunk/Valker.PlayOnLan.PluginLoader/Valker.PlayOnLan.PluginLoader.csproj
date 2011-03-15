@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C2F403D0-E775-43CE-B1B1-B8A46593E6D4}</ProjectGuid>
+    <ProjectGuid>{56EF6572-031E-405E-B260-1865FD798E09}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Valker.PlayOnLan.Server2008</RootNamespace>
-    <AssemblyName>Valker.PlayOnLan.Server2008</AssemblyName>
+    <RootNamespace>Valker.PlayOnLan.PluginLoader</RootNamespace>
+    <AssemblyName>Valker.PlayOnLan.PluginLoader</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,40 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientInfo.cs" />
-    <Compile Include="GameInfo.cs" />
-    <Compile Include="Messages\Client\AcceptNewPlayerMessage.cs" />
-    <Compile Include="Messages\Client\AcknowledgeDropMessage.cs" />
-    <Compile Include="Messages\Client\AcknowledgeRegistrationMessage.cs" />
-    <Compile Include="Messages\Client\ClientMessage.cs" />
-    <Compile Include="Messages\Client\ClientMessageTypes.cs" />
-    <Compile Include="Messages\Client\PartyBeginNotificationMessage.cs" />
-    <Compile Include="Messages\Client\RetrieveSupportedGamesResponceMessage.cs" />
-    <Compile Include="Messages\Client\UpdatePartyStatesMessage.cs" />
-    <Compile Include="Messages\Message.cs" />
-    <Compile Include="Messages\Server\AcceptNewPartyMessage.cs" />
-    <Compile Include="Messages\Server\DropNewPartyMessage.cs" />
-    <Compile Include="Messages\Server\RegisterNewPartyMessage.cs" />
-    <Compile Include="Messages\Server\RegisterNewPlayerMessage.cs" />
-    <Compile Include="Messages\Server\RetrieveRegistredPartiesMessage.cs" />
-    <Compile Include="Messages\Server\RetrieveSupportedGamesMessage.cs" />
-    <Compile Include="Messages\Server\ServerMessage.cs" />
-    <Compile Include="Messages\Server\ServerMessageTypes.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Loader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerImpl.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api2008.csproj">
       <Project>{A6CD4BA3-A312-46F8-9978-A49ED132B0F6}</Project>
       <Name>Valker.PlayOnLan.Api2008</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Valker.PlayOnLan.PluginLoader\Valker.PlayOnLan.PluginLoader.csproj">
-      <Project>{56EF6572-031E-405E-B260-1865FD798E09}</Project>
-      <Name>Valker.PlayOnLan.PluginLoader</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
