@@ -8,11 +8,12 @@ namespace Valker.TicTacToePlugin
         public TicTacToeServer()
         {
         }
-        public void RegisterNewParty(string playerName, IGameParameters parameters)
+
+        public void ProcessMessage(IPlayer sender, string message)
         {
             throw new NotImplementedException();
         }
 
-
+        public event EventHandler<OnMessageEventArgs> OnMessage = delegate { };
     }
 }

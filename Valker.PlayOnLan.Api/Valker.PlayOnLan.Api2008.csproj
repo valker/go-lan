@@ -56,6 +56,7 @@
     <Compile Include="Game\IGameServer.cs" />
     <Compile Include="Game\IGameType.cs" />
     <Compile Include="Game\IPlayer.cs" />
+    <Compile Include="Game\OnMessageEventArgs.cs" />
     <Compile Include="Game\PartyState.cs" />
     <Compile Include="Game\PartyStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -11,6 +11,7 @@ using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.PluginLoader;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
+using Valker.PlayOnLan.Server2008.Messages.Client;
 
 namespace Valker.PlayOnLan.Server
 {
@@ -121,6 +122,8 @@ namespace Valker.PlayOnLan.Server
             // create the server component
             party.Server = _gameDict[party.GameTypeId].CreateServer();
 
+            party.Server.OnMessage += OnServerOnOnMessage;
+
             // change the status
             party.Status = PartyStatus.Running;
 
@@ -132,6 +135,17 @@ namespace Valker.PlayOnLan.Server
             foreach (var clientInfo in party.Players.Select(p=>p.Client))
             {
                 Send(clientInfo, message);
+            }
+        }
+
+        private void OnServerOnOnMessage(object sender, OnMessageEventArgs args)
+        {
+            // need to send message to receipients
+            var rec = args.Receipients;
+            var msg = new ClientGameMessage(args.Message).ToString();
+            foreach (var clientInfo in rec.Select(player => player.Client))
+            {
+                Send(clientInfo, msg);
             }
         }
 
