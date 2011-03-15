@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Server;
 using Valker.PlayOnLan.Server.Messages.Client;
@@ -51,10 +50,10 @@ namespace Valker.PlayOnLan.Client.Communication
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
         {
-            var serializer = new XmlSerializer(typeof (ClientMessage), ClientMessageTypes.Types);
+            var serializer = ClientMessageTypes.Serializer;
             var stringReader = new StringReader(args.Message);
             var msg = (ClientMessage) serializer.Deserialize(stringReader);
-            msg.Execute(this, sender);
+            msg.Execute(this, (IMessageConnector) sender);
         }
 
         public void RetrieveSupportedGames()
@@ -82,12 +81,12 @@ namespace Valker.PlayOnLan.Client.Communication
 
         #region Overrides of IClientMessageExecuter
 
-        public void UpdateSupportedGames(object sender, string[] games)
+        public void UpdateSupportedGames(IMessageConnector sender, string[] games)
         {
             SupportedGamesChanged(this, new SupportedGamesChangedEventArgs(games, sender));
         }
 
-        public void UpdatePartyStates(PartyState[] partyStates, IMessageConnector sender)
+        public void UpdatePartyStates(IMessageConnector sender, PartyState[] partyStates)
         {
             PartyStatesChanged(this, new PartyStatesArgs(partyStates, sender));
         }
@@ -133,11 +132,7 @@ namespace Valker.PlayOnLan.Client.Communication
             AcceptedPlayer(this, new AcceptedPlayerEventArgs() { Status = status });
         }
 
-        public void AcknowledgeRegistration(bool status, string parameters)
-        {
-        }
-
-        public void PartyBeginNotification(int partyId, string gameTypeId, string parameters)
+        public void PartyBeginNotification(IMessageConnector sender, int partyId, string gameTypeId, string parameters)
         {
             if (_client == null)
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
@@ -10,7 +11,7 @@ namespace Valker.PlayOnLan.Server.Messages.Client
     {
         private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new[]{ typeof(AcceptNewPlayerMessage)});
 
-        public override void Execute(Api.Communication.IClientMessageExecuter client, object sender)
+        public override void Execute(IClientMessageExecuter client, IMessageConnector sender)
         {
             if (client == null) throw new ArgumentNullException();
             client.AcceptNewPlayer(Status);

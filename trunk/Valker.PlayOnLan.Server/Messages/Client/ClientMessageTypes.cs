@@ -1,10 +1,11 @@
 using System;
+using System.Xml.Serialization;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
     public static class ClientMessageTypes
     {
-        private static readonly Type[] _types = new[]
+        private static readonly Type[] Types = new[]
                                                 {
                                                     typeof (RetrieveSupportedGamesResponceMessage),
                                                     typeof (AcknowledgeRegistrationMessage),
@@ -14,9 +15,8 @@ namespace Valker.PlayOnLan.Server.Messages.Client
                                                     typeof(AcceptNewPlayerMessage),
                                                 };
 
-        public static Type[] Types
-        {
-            get { return _types; }
-        }
+        private static readonly XmlSerializer _serializer = new XmlSerializer(typeof (ClientMessage), Types);
+
+        public static XmlSerializer Serializer { get { return _serializer; } }
     }
 }

@@ -24,9 +24,9 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 
         #region Overrides of ClientMessage
 
-        public override void Execute(IClientMessageExecuter client, object sender)
+        public override void Execute(IClientMessageExecuter client, IMessageConnector sender)
         {
-            client.PartyBeginNotification(PartyId, GameTypeId, Parameters);
+            client.PartyBeginNotification(null, PartyId, GameTypeId, Parameters);
         }
 
         public string Parameters { get; set; }

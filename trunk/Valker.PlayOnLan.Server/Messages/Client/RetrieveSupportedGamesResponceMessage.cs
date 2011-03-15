@@ -13,10 +13,10 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 
         #region Overrides of Message
 
-        public override void Execute(IClientMessageExecuter client, object sender)
+        public override void Execute(IClientMessageExecuter client, IMessageConnector sender)
         {
             if (client == null) throw new ArgumentNullException();
-            client.UpdateSupportedGames(sender, this.Responce);
+            client.UpdateSupportedGames(sender, Responce);
         }
 
         #endregion
