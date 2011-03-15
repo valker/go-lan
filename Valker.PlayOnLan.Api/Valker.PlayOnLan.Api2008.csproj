@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Communication\IClientInfo.cs" />
     <Compile Include="Communication\IClientMessageExecuter.cs" />
+    <Compile Include="Communication\IMessage.cs" />
     <Compile Include="Communication\IMessageConnector.cs" />
     <Compile Include="Communication\IServerMessageExecuter.cs" />
     <Compile Include="Communication\MessageEventArgs.cs" />

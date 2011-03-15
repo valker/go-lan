@@ -9,7 +9,7 @@ namespace Valker.PlayOnLan.Server2008.Messages.Server
     {
         private static readonly XmlSerializer _serializer = new XmlSerializer(typeof(ServerMessage), new []{typeof(ServerGameMessage)});
 
-        protected override XmlSerializer GetSerializer()
+        public override XmlSerializer GetSerializer()
         {
             return _serializer;
         }

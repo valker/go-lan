@@ -33,7 +33,7 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 
         #endregion
 
-        protected override XmlSerializer GetSerializer()
+        public override XmlSerializer GetSerializer()
         {
             return Serializer;
         }

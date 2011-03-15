@@ -120,7 +120,7 @@ namespace Valker.PlayOnLan.Server
             AddPlayerToParty(party, FindPlayer(accepterName));
 
             // create the server component
-            party.Server = _gameDict[party.GameTypeId].CreateServer();
+            party.Server = _gameDict[party.GameTypeId].CreateServer(party.Players);
 
             party.Server.OnMessage += OnServerOnOnMessage;
 
@@ -136,6 +136,8 @@ namespace Valker.PlayOnLan.Server
             {
                 Send(clientInfo, message);
             }
+
+            party.Server.Start(msg => new ClientGameMessage(msg));
         }
 
         private void OnServerOnOnMessage(object sender, OnMessageEventArgs args)

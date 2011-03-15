@@ -18,7 +18,8 @@ namespace Valker.PlayOnLan.Server.Messages.Client
         }
 
         public bool Status { get; set; }
-        protected override XmlSerializer GetSerializer()
+
+        public override XmlSerializer GetSerializer()
         {
             return Serializer;
         }

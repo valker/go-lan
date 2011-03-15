@@ -22,7 +22,8 @@ namespace Valker.PlayOnLan.Server.Messages.Client
         #endregion
 
         public string[] Responce { get; set; }
-        protected override XmlSerializer GetSerializer()
+
+        public override XmlSerializer GetSerializer()
         {
             return Serializer;
         }

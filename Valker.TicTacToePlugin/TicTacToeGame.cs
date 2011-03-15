@@ -28,9 +28,9 @@ namespace Valker.TicTacToePlugin
             }
         }
         
-        public IGameServer CreateServer()
+        public IGameServer CreateServer(IPlayer[] players)
         {
-            return new TicTacToeServer();
+            return new TicTacToeServer(players);
         }
         
         public IGameClient CreateClient(Form parent)
