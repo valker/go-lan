@@ -8,15 +8,15 @@ using System.Xml.Serialization;
 
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.PluginLoader;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
-using Valker.TicTacToePlugin;
 
 namespace Valker.PlayOnLan.Server
 {
     public class ServerImpl : IServerMessageExecuter, IDisposable
     {
-        private readonly IEnumerable<IGameType> _games = new List<IGameType>(new IGameType[] { new TicTacToeGame() });
+        private readonly IEnumerable<IGameType> _games = new List<IGameType>(Loader.Load(Environment.CurrentDirectory));
 
         private IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
 

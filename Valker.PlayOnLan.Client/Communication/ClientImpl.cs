@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using Valker.PlayOnLan.Api.Communication;
+using Valker.PlayOnLan.PluginLoader;
 using Valker.PlayOnLan.Server;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
 using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Game;
-using Valker.TicTacToePlugin;
 
 namespace Valker.PlayOnLan.Client.Communication
 {
@@ -20,7 +20,7 @@ namespace Valker.PlayOnLan.Client.Communication
 
         private IGameClient _client;
 
-        private IEnumerable<IGameType> _games = new List<IGameType>(new IGameType[] {new TicTacToeGame()});
+        private IEnumerable<IGameType> _games = new List<IGameType>(Loader.Load(Environment.CurrentDirectory));
 
         private IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
 
