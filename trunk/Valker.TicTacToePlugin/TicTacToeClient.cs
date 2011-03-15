@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Valker.PlayOnLan.Api.Game;
 using System.Windows.Forms;
 
@@ -13,16 +14,23 @@ namespace Valker.TicTacToePlugin
 
         protected Form Parent { get; set; }
 
-        public Form CreatePlayingForm(string parameterString)
+        public Form CreatePlayingForm(string parameterString, string playerName)
         {
             var serializer = TicTacToeParameters.GetSerializer();
             var parameters = (TicTacToeParameters) serializer.Deserialize(new StringReader(parameterString));
-            return new PlayingForm(parameters.Width);
+            var form = new PlayingForm(parameters.Width);
+            form.Text = playerName;
+            return form;
         }
 
         public string Parameters
         {
             get; set;
+        }
+
+        public void ExecuteMessage(string message)
+        {
+            throw new NotImplementedException();
         }
     }
 }

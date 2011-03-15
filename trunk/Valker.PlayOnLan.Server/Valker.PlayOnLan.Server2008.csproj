@@ -52,6 +52,7 @@
     <Compile Include="Messages\Client\AcknowledgeRegistrationMessage.cs" />
     <Compile Include="Messages\Client\ClientMessage.cs" />
     <Compile Include="Messages\Client\ClientMessageTypes.cs" />
+    <Compile Include="Messages\Client\ClientGameMessage.cs" />
     <Compile Include="Messages\Client\PartyBeginNotificationMessage.cs" />
     <Compile Include="Messages\Client\RetrieveSupportedGamesResponceMessage.cs" />
     <Compile Include="Messages\Client\UpdatePartyStatesMessage.cs" />
@@ -62,8 +63,10 @@
     <Compile Include="Messages\Server\RegisterNewPlayerMessage.cs" />
     <Compile Include="Messages\Server\RetrieveRegistredPartiesMessage.cs" />
     <Compile Include="Messages\Server\RetrieveSupportedGamesMessage.cs" />
+    <Compile Include="Messages\Server\ServerGameMessage.cs" />
     <Compile Include="Messages\Server\ServerMessage.cs" />
     <Compile Include="Messages\Server\ServerMessageTypes.cs" />
+    <Compile Include="Messages\XmlSerializerImpl.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerImpl.cs" />

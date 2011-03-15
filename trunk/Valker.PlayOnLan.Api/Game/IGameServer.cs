@@ -7,10 +7,7 @@ namespace Valker.PlayOnLan.Api.Game
 {
     public interface IGameServer
     {
-        /// <summary>
-        /// Register new party
-        /// </summary>
-        /// <remarks>TODO: parameters should be defined</remarks>
-        void RegisterNewParty(string playerName, IGameParameters parameters);
+        void ProcessMessage(IPlayer sender, string message);
+        event EventHandler<OnMessageEventArgs> OnMessage;
     }
 }

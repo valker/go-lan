@@ -138,9 +138,14 @@ namespace Valker.PlayOnLan.Client.Communication
             {
                 _client = _gameDict[gameTypeId].CreateClient(Parent);
                 _client.Parameters = parameters;
-                var form = _client.CreatePlayingForm(parameters);
+                var form = _client.CreatePlayingForm(parameters, Name);
                 form.Show(Parent);
             }
+        }
+
+        public void ExecuteGameMessage(IMessageConnector sender, string message)
+        {
+            _client.ExecuteMessage(message);
         }
 
         #endregion
