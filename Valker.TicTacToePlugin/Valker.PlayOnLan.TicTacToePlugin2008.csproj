@@ -93,4 +93,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetDir)*.dll $(ProjectDir)..\Valker.PlayOnLan.Client\bin\Debug\
+copy $(TargetDir)*.dll $(ProjectDir)..\Valker.PlayOnLan.Server\bin\Debug\</PostBuildEvent>
+  </PropertyGroup>
 </Project>
