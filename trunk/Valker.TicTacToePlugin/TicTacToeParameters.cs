@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Game;
@@ -34,6 +35,11 @@ namespace Valker.TicTacToePlugin
         public static XmlSerializer GetSerializer()
         {
             return Serializer;
+        }
+
+        public static TicTacToeParameters Parse(string parameters)
+        {
+            return (TicTacToeParameters) Serializer.Deserialize(new StringReader(parameters));
         }
     }
 }

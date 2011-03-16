@@ -76,7 +76,15 @@ namespace Valker.PlayOnLan.Server
 
         #region IServerMessageExecuter Members
 
-        public PartyStatus RegisterNewParty(IClientInfo client, string gameId, string parameters)
+        public void RegisterNewParty(IClientInfo client, string gameId, string parameters)
+        {
+            var status = RegisterNewPartyImpl(client, gameId, parameters);
+            var message = new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred, parameters).ToString();
+            Send(client, message);
+            UpdatePartyStates(null);
+        }
+
+        private PartyStatus RegisterNewPartyImpl(IClientInfo client, string gameId, string parameters)
         {
             var player = _players.FirstOrDefault(pl => pl.Client.Equals(client));
             if (player == null)
@@ -92,6 +100,7 @@ namespace Valker.PlayOnLan.Server
             PartyState state = CreatePartyState(player, gameId, parameters);
 
             _partyStates.Add(state);
+
             return PartyStatus.PartyRegistred;
         }
 
@@ -107,9 +116,11 @@ namespace Valker.PlayOnLan.Server
                        };
         }
 
-        public string[] RetrieveSupportedGames()
+        public void RetrieveSupportedGames(IClientInfo sender)
         {
-            return _games.Select(info => info.Name + ',' + info.ID).ToArray();
+            var array = _games.Select(info => info.Name + ',' + info.ID).ToArray();
+            var message = new RetrieveSupportedGamesResponceMessage {Responce = array};
+            Send(sender, message.ToString());
         }
 
 
@@ -120,7 +131,7 @@ namespace Valker.PlayOnLan.Server
             AddPlayerToParty(party, FindPlayer(accepterName));
 
             // create the server component
-            party.Server = _gameDict[party.GameTypeId].CreateServer(party.Players);
+            party.Server = _gameDict[party.GameTypeId].CreateServer(party.Players, msg => new ClientGameMessage(msg), party.Parameters);
 
             party.Server.OnMessage += OnServerOnOnMessage;
 
@@ -137,7 +148,7 @@ namespace Valker.PlayOnLan.Server
                 Send(clientInfo, message);
             }
 
-            party.Server.Start(msg => new ClientGameMessage(msg));
+            party.Server.Start();
         }
 
         private void OnServerOnOnMessage(object sender, OnMessageEventArgs args)
@@ -185,7 +196,7 @@ namespace Valker.PlayOnLan.Server
             string message = args.Message;
             var serializer = new XmlSerializer(typeof (ServerMessage), ServerMessageTypes.Types);
             var msgObject = (ServerMessage) serializer.Deserialize(new StringReader(message));
-            msgObject.Execute(this, new ClientInfo() { ClientConnector = (IMessageConnector)sender, ClientIdentifier = args.ToIdentifier});
+            msgObject.Execute(this, new ClientInfo() { ClientConnector = (IMessageConnector)sender, ClientIdentifier = args.ToIdentifier}, args.FromIdentifier);
         }
 
         public void AddConnector(IMessageConnector connector)
@@ -253,6 +264,13 @@ namespace Valker.PlayOnLan.Server
             {
                 UpdatePartyStates(client);
             }
+        }
+
+        public void ExecuteServerGameMessage(IClientInfo sender, string text, object fromIdentifier, int id)
+        {
+            var server = _partyStates.First(state => state.PartyId == id).Server;
+            var player1 = _players.First(player => player.PlayerName.Equals(fromIdentifier));
+            server.ProcessMessage(player1, text);
         }
 
         #endregion

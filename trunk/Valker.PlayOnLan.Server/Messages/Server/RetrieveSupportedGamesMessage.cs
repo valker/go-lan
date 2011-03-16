@@ -1,6 +1,5 @@
 using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Communication;
-using Valker.PlayOnLan.Server.Messages.Client;
 using System;
 
 namespace Valker.PlayOnLan.Server.Messages.Server
@@ -11,13 +10,11 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 
         #region Overrides of Message
 
-        public override void Execute(IServerMessageExecuter server, IClientInfo sender)
+        public override void Execute(IServerMessageExecuter server, IClientInfo sender, object identifier)
         {
-            if (server == null) throw new ArgumentNullException();
-            string[] array = server.RetrieveSupportedGames();
-            var message = new RetrieveSupportedGamesResponceMessage();
-            message.Responce = array;
-            server.Send(sender, message.ToString());
+            if (server == null) throw new ArgumentNullException("server");
+            if (sender == null) throw new ArgumentNullException("sender");
+            server.RetrieveSupportedGames(sender);
         }
 
         #endregion

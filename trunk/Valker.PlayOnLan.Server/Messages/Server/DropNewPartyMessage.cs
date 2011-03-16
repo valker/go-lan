@@ -10,7 +10,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 
         #region Overrides of ServerMessage
 
-        public override void Execute(IServerMessageExecuter server, IClientInfo sender)
+        public override void Execute(IServerMessageExecuter server, IClientInfo sender, object identifier)
         {
             throw new NotImplementedException();
         }
