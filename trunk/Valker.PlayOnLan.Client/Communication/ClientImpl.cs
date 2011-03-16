@@ -137,7 +137,7 @@ namespace Valker.PlayOnLan.Client.Communication
         {
             if (_client == null)
             {
-                _client = _gameDict[gameTypeId].CreateClient(Parent, sender, msg => new ServerGameMessage(msg));
+                _client = _gameDict[gameTypeId].CreateClient(Parent, sender, msg => new ServerGameMessage(msg){PartyId = partyId});
                 _client.Name = Name;
                 _client.Parameters = parameters;
                 var form = _client.CreatePlayingForm(parameters, Name);

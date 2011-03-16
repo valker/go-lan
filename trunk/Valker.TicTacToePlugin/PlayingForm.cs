@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Valker.PlayOnLan.Goban;
 
 namespace Valker.TicTacToePlugin
 {
@@ -12,6 +13,23 @@ namespace Valker.TicTacToePlugin
             Client = client;
             Client.AllowMove += Client_AllowMove;
             Client.Wait += ClientOnWait;
+            Client.FieldChanged += FieldChanged;
+        }
+
+        void FieldChanged(object sender, FieldChangedEventArgs e)
+        {
+            goban.SetStone(e.X, e.Y, Convert2(e.StoneState), true);
+        }
+
+        private Stone Convert2(PlayOnLan.Api.Stone stone)
+        {
+            switch (stone)
+            {
+                    case PlayOnLan.Api.Stone.Black: return Stone.Black;
+                    case PlayOnLan.Api.Stone.None: return Stone.None;
+                    case PlayOnLan.Api.Stone.White:return Stone.White;
+            }
+            throw new ArgumentOutOfRangeException();
         }
 
         private void ClientOnWait(object sender, EventArgs args)

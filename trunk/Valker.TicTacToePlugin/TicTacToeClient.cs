@@ -38,16 +38,20 @@ namespace Valker.TicTacToePlugin
 
         public event EventHandler AllowMove = delegate { };
         public event EventHandler Wait = delegate { };
-        
+        public event EventHandler<FieldChangedEventArgs> FieldChanged = delegate { };
+
         public void ExecuteMessage(string message)
         {
-            switch (message)
+            switch (MessageUtils.ExtractCommand(message))
             {
                 case "AM":
                     AllowMove(this, EventArgs.Empty);
                     break;
                 case "WA":
                     Wait(this, EventArgs.Empty);
+                    break;
+                case "FC":
+                    FieldChanged(this, new FieldChangedEventArgs(MessageUtils.ExtractParams(message)));
                     break;
                 default:
                     Debug.WriteLine("Unknown message: <" + message + ">");
