@@ -9,19 +9,12 @@ namespace Valker.TicTacToePlugin
 {
     public class TicTacToeClient : IGameClient
     {
-        public TicTacToeClient(Form parent, IMessageConnector connector, Func<string, IMessage> func)
+        public TicTacToeClient(Form parent)
         {
             Parent = parent;
-            Connector = connector;
-            CreateMessageDelegate = func;
         }
 
-        protected Func<string, IMessage> CreateMessageDelegate { get; set; }
-
-        protected IMessageConnector Connector { get; set; }
-
         protected Form Parent { get; set; }
-        public string Name { get; set; }
 
         public Form CreatePlayingForm(string parameterString, string playerName)
         {
@@ -31,38 +24,41 @@ namespace Valker.TicTacToePlugin
             return form;
         }
 
-        public string Parameters
-        {
-            get; set;
-        }
+        public event EventHandler<MessageEventArgs> OnMessageReady = delegate { };
 
         public event EventHandler AllowMove = delegate { };
         public event EventHandler Wait = delegate { };
         public event EventHandler<FieldChangedEventArgs> FieldChanged = delegate { };
+        public event EventHandler<ShowMessageEventArgs> ShowMessage = delegate { };
 
         public void ExecuteMessage(string message)
         {
             switch (MessageUtils.ExtractCommand(message))
             {
-                case "AM":
+                case "AM": // Allow move
                     AllowMove(this, EventArgs.Empty);
                     break;
-                case "WA":
+                case "WA":  // Wait
                     Wait(this, EventArgs.Empty);
                     break;
-                case "FC":
+                case "FC":  // Field Changed
                     FieldChanged(this, new FieldChangedEventArgs(MessageUtils.ExtractParams(message)));
                     break;
+                case "MSG": // Message
+                    ShowMessage(this, new ShowMessageEventArgs(MessageUtils.ExtractParams(message)));
+                    break;
                 default:
-                    Debug.WriteLine("Unknown message: <" + message + ">");
+                    Debug.WriteLine("Unknown message: {" + message + "}");
                     break;
             }
         }
 
+        public event EventHandler Closed;
+
         public void ClickedOnBoard(MouseEventArgs args)
         {
             var text = string.Format("M<{0},{1}>", args.X, args.Y);
-            Connector.Send(Name, "_server", CreateMessageDelegate(text).ToString());
+            OnMessageReady(this, new MessageEventArgs("", "_server", text));
         }
     }
 }

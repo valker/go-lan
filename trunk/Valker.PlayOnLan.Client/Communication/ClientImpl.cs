@@ -135,14 +135,19 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void PartyBeginNotification(IMessageConnector sender, int partyId, string gameTypeId, string parameters)
         {
-            if (_client == null)
-            {
-                _client = _gameDict[gameTypeId].CreateClient(Parent, sender, msg => new ServerGameMessage(msg){PartyId = partyId});
-                _client.Name = Name;
-                _client.Parameters = parameters;
-                var form = _client.CreatePlayingForm(parameters, Name);
-                form.Show(Parent);
-            }
+            if (_client != null) return;
+
+            _client = _gameDict[gameTypeId].CreateClient(Parent);
+
+            _client.OnMessageReady +=
+                (delegate(object o, MessageEventArgs args)
+                     {
+                         var message = new ServerGameMessage(args.Message).ToString();
+                         sender.Send(Name, args.ToIdentifier, message);
+                     });
+
+            var form = _client.CreatePlayingForm(parameters, Name);
+            form.Show(Parent);
         }
 
         public void ExecuteGameMessage(IMessageConnector sender, string message)

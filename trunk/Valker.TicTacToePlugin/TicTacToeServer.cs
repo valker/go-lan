@@ -41,17 +41,60 @@ namespace Valker.TicTacToePlugin
                         }
                     }
 
-                    _field[param[0], param[1]] = _stones[_currentPlayer];
+                    int x = param[0];
+                    int y = param[1];
+                    _field[x, y] = _stones[_currentPlayer];
 
-                    var msg = string.Format("FC<{0},{1},{2}>", param[0], param[1], _stones[_currentPlayer]);
+                    var msg = string.Format("FC<{0},{1},{2}>", x, y, _stones[_currentPlayer]);
                     SendMessageToPlayer(0, msg);
                     SendMessageToPlayer(1, msg);
 
-                    _currentPlayer = 1 - _currentPlayer;
-                    AllowMove();
+                    if (Win(x,y)==Stone.None)
+                    {
+
+                        _currentPlayer = 1 - _currentPlayer;
+                        AllowMove();
+                    }
                     break;
 
             }
+        }
+
+        private Stone Win(int x, int y)
+        {
+            int yy;
+            for(yy = 0; yy < Parameters.Width; ++yy)
+            {
+                var b = CheckHorizont(yy);
+                if (b != Stone.None)
+                {
+                    return b;
+                }
+            }
+            return Stone.None;
+        }
+
+        /// <summary>
+        /// Check that so
+        /// </summary>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        private Stone CheckHorizont(int y)
+        {
+            Stone last = Stone.None;
+            int count = 0;
+            for(int x = 0; x < Parameters.Width; ++x)
+            {
+                if (_field[x, y] == last && last != Stone.None)
+                {
+                    ++count;
+                }
+                else if (count >= Parameters.Stones)
+                {
+                    return last;
+                }
+            }
+            return Stone.None;
         }
 
         public event EventHandler<OnMessageEventArgs> OnMessage = delegate { };
