@@ -19,6 +19,8 @@ namespace Valker.PlayOnLan.Api.Game
         /// </summary>
         string Parameters { get; set; }
 
+        string Name { get; set; }
+
         void ExecuteMessage(string message);
     }
 }

@@ -9,14 +9,27 @@ namespace Valker.PlayOnLan.Server2008.Messages.Server
     {
         private static readonly XmlSerializer _serializer = new XmlSerializer(typeof(ServerMessage), new []{typeof(ServerGameMessage)});
 
+        public ServerGameMessage(string s)
+        {
+            Text = s;
+        }
+
+        public ServerGameMessage()
+        {
+        }
+
+        public string Text { get; set; }
+
+        public int PartyId { get; set; }
+
         public override XmlSerializer GetSerializer()
         {
             return _serializer;
         }
 
-        public override void Execute(IServerMessageExecuter server, IClientInfo sender)
+        public override void Execute(IServerMessageExecuter server, IClientInfo sender, object identifier)
         {
-            throw new NotImplementedException();
+            server.ExecuteServerGameMessage(sender, Text, identifier, PartyId);
         }
     }
 }

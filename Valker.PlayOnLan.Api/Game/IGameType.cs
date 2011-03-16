@@ -8,6 +8,7 @@
  */
 using System;
 using System.Windows.Forms;
+using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Api.Game
 {
@@ -27,22 +28,22 @@ namespace Valker.PlayOnLan.Api.Game
         string ID {get;}
 
         /// <summary>
-        /// Creates server component of the game
-        /// </summary>
-        /// <returns></returns>
-        IGameServer CreateServer(IPlayer[] players);
-
-        /// <summary>
-        /// Creates client component of the game
-        /// </summary>
-        /// <returns></returns>
-        IGameClient CreateClient(Form parent);
-
-        /// <summary>
         /// Ask user about parameters of the game
         /// </summary>
         /// <param name="parent"></param>
         /// <returns></returns>
         string AskParam(Form parent);
+
+        /// <summary>
+        /// Creates client component of the game
+        /// </summary>
+        /// <returns></returns>
+        IGameClient CreateClient(Form parent, IMessageConnector connector, Func<string, IMessage> func);
+
+        /// <summary>
+        /// Creates server component of the game
+        /// </summary>
+        /// <returns></returns>
+        IGameServer CreateServer(IPlayer[] players, Func<string, IMessage> func, string parameters);
     }
 }

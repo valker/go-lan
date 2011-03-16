@@ -8,6 +8,7 @@
  */
 using System;
 using System.Windows.Forms;
+using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.TicTacToePlugin
@@ -28,18 +29,19 @@ namespace Valker.TicTacToePlugin
             }
         }
         
-        public IGameServer CreateServer(IPlayer[] players)
+        public IGameClient CreateClient(Form parent, IMessageConnector connector, Func<string, IMessage> func)
         {
-            return new TicTacToeServer(players);
+            return new TicTacToeClient(parent, connector, func);
         }
-        
-        public IGameClient CreateClient(Form parent)
+
+        public IGameServer CreateServer(IPlayer[] players, Func<string, IMessage> func, string parameters)
         {
-            return new TicTacToeClient(parent);
+            return new TicTacToeServer(players, func, parameters);
         }
 
         public string AskParam(Form parent)
         {
+            return new TicTacToeParameters(3, 3).ToString();
             var f = new ParametersForm();
             var r = f.ShowDialog(parent);
             return r == DialogResult.OK ? f.Parameters.ToString() : "";

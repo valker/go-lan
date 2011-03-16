@@ -26,7 +26,7 @@ namespace Valker.PlayOnLan.Server.Messages.Client
 
         public override void Execute(IClientMessageExecuter client, IMessageConnector sender)
         {
-            client.PartyBeginNotification(null, PartyId, GameTypeId, Parameters);
+            client.PartyBeginNotification(sender, PartyId, GameTypeId, Parameters);
         }
 
         public string Parameters { get; set; }

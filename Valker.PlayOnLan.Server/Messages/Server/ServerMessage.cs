@@ -8,6 +8,6 @@ namespace Valker.PlayOnLan.Server.Messages.Server
     /// </summary>
     public abstract class ServerMessage : Message
     {
-        public abstract void Execute(IServerMessageExecuter server, IClientInfo sender);
+        public abstract void Execute(IServerMessageExecuter server, IClientInfo sender, object identifier);
     }
 }

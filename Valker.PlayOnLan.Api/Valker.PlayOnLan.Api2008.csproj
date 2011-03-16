@@ -61,6 +61,7 @@
     <Compile Include="Game\PartyState.cs" />
     <Compile Include="Game\PartyStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stone.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />
