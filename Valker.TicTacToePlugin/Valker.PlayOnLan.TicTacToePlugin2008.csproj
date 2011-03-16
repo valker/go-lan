@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FieldChangedEventArgs.cs" />
+    <Compile Include="MessageUtils.cs" />
     <Compile Include="ParametersForm.cs">
       <SubType>Form</SubType>
     </Compile>
