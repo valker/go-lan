@@ -27,10 +27,6 @@ namespace Valker.TicTacToePlugin
         public void Start(Func<string, IMessage> createGameMessage)
         {
             _createGameMessage = createGameMessage;
-        }
-
-        public void Start()
-        {
             AllowMove();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using Valker.PlayOnLan.Api.Game;
 using System.Windows.Forms;
@@ -30,6 +31,14 @@ namespace Valker.TicTacToePlugin
 
         public void ExecuteMessage(string message)
         {
+            switch (message)
+            {
+                case "AM":
+                    break;
+                default:
+                    Debug.WriteLine("Unknown message: <" + message + ">");
+                    break;
+            }
             throw new NotImplementedException();
         }
     }
