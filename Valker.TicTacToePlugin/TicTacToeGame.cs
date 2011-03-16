@@ -29,9 +29,9 @@ namespace Valker.TicTacToePlugin
             }
         }
         
-        public IGameClient CreateClient(Form parent, IMessageConnector connector, Func<string, IMessage> func)
+        public IGameClient CreateClient(Form parent)
         {
-            return new TicTacToeClient(parent, connector, func);
+            return new TicTacToeClient(parent);
         }
 
         public IGameServer CreateServer(IPlayer[] players, Func<string, IMessage> func, string parameters)

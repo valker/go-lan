@@ -14,6 +14,12 @@ namespace Valker.TicTacToePlugin
             Client.AllowMove += Client_AllowMove;
             Client.Wait += ClientOnWait;
             Client.FieldChanged += FieldChanged;
+            Client.ShowMessage += ClientOnShowMessage;
+        }
+
+        private void ClientOnShowMessage(object sender, ShowMessageEventArgs args)
+        {
+            MessageBox.Show(this, args.Text, Text);
         }
 
         void FieldChanged(object sender, FieldChangedEventArgs e)

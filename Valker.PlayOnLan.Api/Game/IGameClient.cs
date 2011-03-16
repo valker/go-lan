@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Api.Game
 {
@@ -15,12 +17,16 @@ namespace Valker.PlayOnLan.Api.Game
         Form CreatePlayingForm(string parameters, string playerName);
 
         /// <summary>
-        /// Gets or sets the parameters assosiated with the client
+        /// New message for this client appeared
         /// </summary>
-        string Parameters { get; set; }
-
-        string Name { get; set; }
-
+        /// <param name="message"></param>
         void ExecuteMessage(string message);
+
+        /// <summary>
+        /// Raised when the client wants to be closed
+        /// </summary>
+        event EventHandler Closed;
+
+        event EventHandler<MessageEventArgs> OnMessageReady;
     }
 }
