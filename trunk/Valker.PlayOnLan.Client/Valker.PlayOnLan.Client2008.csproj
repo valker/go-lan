@@ -98,6 +98,10 @@
       <Project>{C2F403D0-E775-43CE-B1B1-B8A46593E6D4}</Project>
       <Name>Valker.PlayOnLan.Server2008</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Valker.PlayOnLan.XmppTransport\Valker.PlayOnLan.XmppTransport.csproj">
+      <Project>{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}</Project>
+      <Name>Valker.PlayOnLan.XmppTransport</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
