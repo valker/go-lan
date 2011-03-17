@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.Goban", "V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.PluginLoader", "Valker.PlayOnLan.PluginLoader\Valker.PlayOnLan.PluginLoader.csproj", "{56EF6572-031E-405E-B260-1865FD798E09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTicTacToePlugin", "TestTicTacToePlugin\TestTicTacToePlugin.csproj", "{771856E5-F496-454C-9CC6-39EC39317E87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{56EF6572-031E-405E-B260-1865FD798E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56EF6572-031E-405E-B260-1865FD798E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56EF6572-031E-405E-B260-1865FD798E09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{771856E5-F496-454C-9CC6-39EC39317E87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{771856E5-F496-454C-9CC6-39EC39317E87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{771856E5-F496-454C-9CC6-39EC39317E87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{771856E5-F496-454C-9CC6-39EC39317E87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

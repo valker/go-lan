@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9013D731-1C6E-4AAC-8E20-F4EBC49AB853}</ProjectGuid>
+    <ProjectGuid>{771856E5-F496-454C-9CC6-39EC39317E87}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Valker.TicTacToePlugin</RootNamespace>
-    <AssemblyName>Valker.TicTacToePlugin</AssemblyName>
+    <RootNamespace>TestTicTacToePlugin</RootNamespace>
+    <AssemblyName>TestTicTacToePlugin</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,12 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.5.9.10348, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\nunit\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -47,46 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Field.cs" />
-    <Compile Include="FieldChangedEventArgs.cs" />
-    <Compile Include="MessageUtils.cs" />
-    <Compile Include="ParametersForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ParametersForm.Designer.cs">
-      <DependentUpon>ParametersForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PlayingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PlayingForm.Designer.cs">
-      <DependentUpon>PlayingForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="TestField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShowMessageEventArgs.cs" />
-    <Compile Include="TicTacToeClient.cs" />
-    <Compile Include="TicTacToeGame.cs" />
-    <Compile Include="TicTacToeParameters.cs" />
-    <Compile Include="TicTacToeServer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ParametersForm.resx">
-      <DependentUpon>ParametersForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PlayingForm.resx">
-      <DependentUpon>PlayingForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api2008.csproj">
       <Project>{A6CD4BA3-A312-46F8-9978-A49ED132B0F6}</Project>
       <Name>Valker.PlayOnLan.Api2008</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Valker.PlayOnLan.Goban\Valker.PlayOnLan.Goban.csproj">
-      <Project>{22A2F56D-5A29-468B-90C1-622B98E9E2FF}</Project>
-      <Name>Valker.PlayOnLan.Goban</Name>
+    <ProjectReference Include="..\Valker.TicTacToePlugin\Valker.PlayOnLan.TicTacToePlugin2008.csproj">
+      <Project>{9013D731-1C6E-4AAC-8E20-F4EBC49AB853}</Project>
+      <Name>Valker.PlayOnLan.TicTacToePlugin2008</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -97,8 +70,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetDir)*.dll" "$(ProjectDir)..\Valker.PlayOnLan.Client\bin\Debug\"
-copy "$(TargetDir)*.dll" "$(ProjectDir)..\Valker.PlayOnLan.Server\bin\Debug\"</PostBuildEvent>
-  </PropertyGroup>
 </Project>
