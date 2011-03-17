@@ -304,5 +304,7 @@ namespace Valker.PlayOnLan.Server
             _worker.CancelAsync();
             _worker.Dispose();
         }
+
+        public event EventHandler Closed;
     }
 }
