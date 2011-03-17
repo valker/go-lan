@@ -1,15 +1,13 @@
 using System;
-using System.Diagnostics;
 using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.XmppTransport
 {
-#if false
     public class XmppTransportImpl : IMessageConnector
     {
         public XmppTransportImpl(string name)
         {
-            this.Name = name;
+            Name = name;
         }
 
         #region IMessageConnector Members
@@ -23,6 +21,22 @@ namespace Valker.PlayOnLan.XmppTransport
         public void Send(string message)
         {
             // TODO: implement send message
+        }
+
+        public string ConnectorName
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public void Send(object fromIdentifier, object toIdentifier, string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] Clients
+        {
+            get { throw new NotImplementedException(); }
         }
 
         public event EventHandler<MessageEventArgs> MessageArrived;
@@ -40,5 +54,4 @@ namespace Valker.PlayOnLan.XmppTransport
 
         #endregion
     }
-#endif
 }

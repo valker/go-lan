@@ -1,21 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{A9125D9B-3E0A-45EB-8CB4-0F65257D17E7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Valker.PlayOnLan.XmppTransport</RootNamespace>
-    <AssemblyName>Valker.PlayOnLan.XmppTransport</AssemblyName>
+    <RootNamespace>ServerRunner</RootNamespace>
+    <AssemblyName>ServerRunner</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,10 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="agsXMPP, Version=1.1.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\agsxmpp\Debug\agsXMPP.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -53,16 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XmppTransportImpl.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api2008.csproj">
       <Project>{A6CD4BA3-A312-46F8-9978-A49ED132B0F6}</Project>
       <Name>Valker.PlayOnLan.Api2008</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Valker.PlayOnLan.Server\Valker.PlayOnLan.Server2008.csproj">
+      <Project>{C2F403D0-E775-43CE-B1B1-B8A46593E6D4}</Project>
+      <Name>Valker.PlayOnLan.Server2008</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Valker.PlayOnLan.XmppTransport\Valker.PlayOnLan.XmppTransport.csproj">
+      <Project>{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}</Project>
+      <Name>Valker.PlayOnLan.XmppTransport</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
