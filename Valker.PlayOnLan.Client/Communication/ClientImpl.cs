@@ -53,8 +53,8 @@ namespace Valker.PlayOnLan.Client.Communication
         {
             var serializer = ClientMessageTypes.Serializer;
             var stringReader = new StringReader(args.Message);
-            var msg = (ClientMessage) serializer.Deserialize(stringReader);
-            msg.Execute(this, (IMessageConnector) sender);
+            var msg = (ClientMessage)serializer.Deserialize(stringReader);
+            msg.Execute(this, (IMessageConnector)sender);
         }
 
         public void RetrieveSupportedGames()
@@ -67,7 +67,7 @@ namespace Valker.PlayOnLan.Client.Communication
             var messageText = message.ToString();
             foreach (var connector in _connectors)
             {
-                connector.Send("_server", Name, messageText);
+                connector.Send("server@mosdb9vf4j", Name, messageText);
             }
         }
 
@@ -141,10 +141,10 @@ namespace Valker.PlayOnLan.Client.Communication
 
             _client.OnMessageReady +=
                 (delegate(object o, MessageEventArgs args)
-                     {
-                         var message = new ServerGameMessage(args.Message).ToString();
-                         sender.Send(Name, args.ToIdentifier, message);
-                     });
+                {
+                    var message = new ServerGameMessage(args.Message).ToString();
+                    sender.Send(Name, args.ToIdentifier, message);
+                });
 
             var form = _client.CreatePlayingForm(parameters, Name);
             form.Show(Parent);

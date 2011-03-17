@@ -1,14 +1,40 @@
 using System;
+using System.Diagnostics;
+using System.Threading;
+using agsXMPP;
+using agsXMPP.protocol.client;
 using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.XmppTransport
 {
     public class XmppTransportImpl : IMessageConnector
     {
+        Jid _my;
+        private XmppClientConnection _connection;
+
         public XmppTransportImpl(string name)
         {
+            _my = new Jid(name);
+            _connection = new XmppClientConnection(_my.Server);
+            var ev = new AutoResetEvent(false);
+            _connection.OnLogin += (sender => ev.Set());
+            _connection.OnMessage += ConnectionOnOnMessage;
+            const string password = "1";
+            _connection.AutoAgents = false;
+            _connection.AutoPresence = true;
+            _connection.AutoRoster = true;
+            _connection.AutoResolveConnectServer = true;
+            _connection.Open(_my.User, password);
+            ev.WaitOne();
             Name = name;
         }
+
+        private void ConnectionOnOnMessage(object sender, Message message)
+        {
+            Trace.WriteLine("Message arrived");
+            MessageArrived(this, new MessageEventArgs(message.From.Bare, _my.Bare, message.Body));
+        }
+
 
         #region IMessageConnector Members
 
@@ -31,7 +57,7 @@ namespace Valker.PlayOnLan.XmppTransport
 
         public void Send(object fromIdentifier, object toIdentifier, string message)
         {
-            throw new NotImplementedException();
+            _connection.Send(new Message((string)toIdentifier, message));
         }
 
         public string[] Clients
