@@ -10,7 +10,7 @@ namespace Valker.TicTacToePlugin
     {
         private int _currentPlayer;
         private readonly Func<string, IMessage> _createGameMessage;
-        private Stone[,] _field;
+        private Field _field;
 
         public TicTacToeServer(IPlayer[] players, Func<string, IMessage> func, string parameters)
         {
@@ -43,7 +43,7 @@ namespace Valker.TicTacToePlugin
 
                     int x = param[0];
                     int y = param[1];
-                    _field[x, y] = _stones[_currentPlayer];
+                    _field.Set(x, y, _stones[_currentPlayer]);
 
                     var msg = string.Format("FC<{0},{1},{2}>", x, y, _stones[_currentPlayer]);
                     SendMessageToPlayer(0, msg);
@@ -85,7 +85,7 @@ namespace Valker.TicTacToePlugin
             int count = 0;
             for(int x = 0; x < Parameters.Width; ++x)
             {
-                if (_field[x, y] == last && last != Stone.None)
+                if (_field.Get(x, y) == last && last != Stone.None)
                 {
                     ++count;
                 }
@@ -100,7 +100,7 @@ namespace Valker.TicTacToePlugin
         public event EventHandler<OnMessageEventArgs> OnMessage = delegate { };
         public void Start()
         {
-            _field = new Stone[Parameters.Width,Parameters.Width];
+            _field = new Field(Parameters.Width);
             AllowMove();
         }
 
