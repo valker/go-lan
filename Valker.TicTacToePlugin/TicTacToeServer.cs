@@ -25,7 +25,7 @@ namespace Valker.TicTacToePlugin
 
         protected IPlayer[] Players { get; set; }
 
-        Stone[] _stones = new Stone[] {Stone.Black, Stone.White, };
+        readonly Stone[] _stones = new[] {Stone.Black, Stone.White, };
 
         public void ProcessMessage(IPlayer sender, string message)
         {
@@ -49,52 +49,29 @@ namespace Valker.TicTacToePlugin
                     SendMessageToPlayer(0, msg);
                     SendMessageToPlayer(1, msg);
 
-                    if (Win(x,y)==Stone.None)
+                    var winner = _field.Win(Parameters.Stones);
+                    if (winner==Stone.None)
                     {
-
-                        _currentPlayer = 1 - _currentPlayer;
+                        SwitchPlayers();
                         AllowMove();
+                    } else
+                    {
+                        msg = "WA";
+                        SendMessageToPlayer(0, msg);
+                        SendMessageToPlayer(1, msg);
+                        msg = string.Format("MSG<{0} has won>", winner == Stone.Black ? "Black" : "White");
+                        SendMessageToPlayer(0, msg);
+                        SendMessageToPlayer(1, msg);
                     }
+
                     break;
 
             }
         }
 
-        private Stone Win(int x, int y)
+        private void SwitchPlayers()
         {
-            int yy;
-            for(yy = 0; yy < Parameters.Width; ++yy)
-            {
-                var b = CheckHorizont(yy);
-                if (b != Stone.None)
-                {
-                    return b;
-                }
-            }
-            return Stone.None;
-        }
-
-        /// <summary>
-        /// Check that so
-        /// </summary>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        private Stone CheckHorizont(int y)
-        {
-            Stone last = Stone.None;
-            int count = 0;
-            for(int x = 0; x < Parameters.Width; ++x)
-            {
-                if (_field.Get(x, y) == last && last != Stone.None)
-                {
-                    ++count;
-                }
-                else if (count >= Parameters.Stones)
-                {
-                    return last;
-                }
-            }
-            return Stone.None;
+            _currentPlayer = 1 - _currentPlayer;
         }
 
         public event EventHandler<OnMessageEventArgs> OnMessage = delegate { };

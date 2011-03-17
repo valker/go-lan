@@ -3,17 +3,26 @@ using Valker.PlayOnLan.Api;
 
 namespace Valker.TicTacToePlugin
 {
+     /// <summary>
+    /// Provide the service of game-field
+    /// </summary>
     public class Field
     {
         private Stone[,] _field;
 
         public Field(int width)
         {
+            Width = width;
             _field = new Stone[width,width];
         }
 
-        public void Set(int x, int y, Stone stone)
+         protected int Width { get; set; }
+
+         public void Set(int x, int y, Stone stone)
         {
+            if (stone == Stone.None && _field[x, y] != Stone.None)
+                throw new InvalidOperationException("cannot place stone to non-empty place");
+
             _field[x, y] = stone;
         }
 
@@ -26,10 +35,10 @@ namespace Valker.TicTacToePlugin
         {
             Stone result = TestWinHorizontal(stones);
             if (result != Stone.None) return result;
-            result = TestWinVertical(stones);
-            if(result != Stone.None) return result;
-            result = TestWinDiag(stones);
-            if (result != Stone.None) return result;
+//            result = TestWinVertical(stones);
+//            if(result != Stone.None) return result;
+//            result = TestWinDiag(stones);
+//            if (result != Stone.None) return result;
             return Stone.None;
         }
 
@@ -43,9 +52,37 @@ namespace Valker.TicTacToePlugin
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Check that horizontals contains at least one segment of required length
+        /// </summary>
+        /// <param name="stones">required length of segment</param>
+        /// <returns>Which is the color of the stones, or None otherwise</returns>
         private Stone TestWinHorizontal(int stones)
         {
-            throw new NotImplementedException();
+            for (int y = 0; y < Width; ++y)
+            {
+                Stone previous = Stone.None;
+                int count = 0;
+                for(int x = 0; x < Width; ++x)
+                {
+                    Stone current = _field[x, y];
+                    if (current == Stone.None) continue;
+                    if (current == previous)
+                    {
+                        ++count;
+                        if (count == stones) 
+                        {
+                            return current; 
+                        }
+                    } 
+                    else
+                    {
+                        count = 1;
+                    }
+                    previous = current;
+                }
+            }
+            return Stone.None;
         }
     }
 }
