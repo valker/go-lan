@@ -67,7 +67,7 @@ namespace Valker.PlayOnLan.Client.Communication
             var messageText = message.ToString();
             foreach (var connector in _connectors)
             {
-                connector.Send("server@mosdb9vf4j", Name, messageText);
+                connector.Send(Name, "server@mosdb9vf4j", messageText);
             }
         }
 

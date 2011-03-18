@@ -124,5 +124,10 @@ namespace Valker.PlayOnLan.Client
             if (listView1.SelectedItems.Count < 1) return;
             _client.AcceptParty((PartyInfo) listView1.SelectedItems[0].Tag);
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            _client.RetrieveSupportedGames();
+        }
     }
 }

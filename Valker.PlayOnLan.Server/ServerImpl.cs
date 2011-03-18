@@ -37,7 +37,7 @@ namespace Valker.PlayOnLan.Server
 
         public ServerImpl(IEnumerable<IMessageConnector> connectors)
         {
-            if (connectors == null) throw new ArgumentNullException();
+            if (connectors == null) throw new ArgumentNullException("connectors");
 
             foreach (var game in _games)
             {
@@ -116,11 +116,12 @@ namespace Valker.PlayOnLan.Server
                        };
         }
 
-        public void RetrieveSupportedGames(IClientInfo sender)
+        public void RetrieveSupportedGames(IClientInfo sender, object identifier)
         {
             var array = _games.Select(info => info.Name + ',' + info.ID).ToArray();
             var message = new RetrieveSupportedGamesResponceMessage {Responce = array};
-            Send(sender, message.ToString());
+            var receiver = new ClientInfo() {ClientConnector = sender.ClientConnector, ClientIdentifier = identifier};
+            Send(receiver, message.ToString());
         }
 
 

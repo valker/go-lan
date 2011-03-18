@@ -32,7 +32,11 @@ namespace Valker.PlayOnLan.XmppTransport
         private void ConnectionOnOnMessage(object sender, Message message)
         {
             Trace.WriteLine("Message arrived");
-            MessageArrived(this, new MessageEventArgs(message.From.Bare, _my.Bare, message.Body));
+            var fromIdentifier = message.From.Bare;
+            var toIdentifier = _my.Bare;
+            var body = message.Body;
+            var args = new MessageEventArgs(fromIdentifier, toIdentifier, body);
+            MessageArrived(this, args);
         }
 
 
@@ -43,11 +47,6 @@ namespace Valker.PlayOnLan.XmppTransport
         #endregion
 
         #region Implementation of IMessageConnector
-
-        public void Send(string message)
-        {
-            // TODO: implement send message
-        }
 
         public string ConnectorName
         {

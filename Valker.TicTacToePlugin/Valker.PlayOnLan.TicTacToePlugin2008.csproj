@@ -99,6 +99,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetDir)*.dll" "$(ProjectDir)..\Valker.PlayOnLan.Client\bin\Debug\"
-copy "$(TargetDir)*.dll" "$(ProjectDir)..\Valker.PlayOnLan.Server\bin\Debug\"</PostBuildEvent>
+copy "$(TargetDir)*.dll" "$(ProjectDir)..\Valker.PlayOnLan.Server\bin\Debug\"
+copy "$(TargetDir)*.dll" "$(ProjectDir)..\ServerRunner\bin\Debug\"</PostBuildEvent>
   </PropertyGroup>
 </Project>
