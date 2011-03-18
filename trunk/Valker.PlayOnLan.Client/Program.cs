@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Threading;
+using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Client.Communication;
 using Valker.PlayOnLan.XmppTransport;
@@ -11,7 +12,6 @@ namespace Valker.PlayOnLan.Client
         {
             // local server
             //var server = new Server.ServerImpl(new IMessageConnector[0]);
-
             var server = new XmppTransportImpl("client@mosdb9vf4j");
             Form form = new MainForm(new ClientImpl("client@mosdb9vf4j", null, new[] { server }));
             // test form for local servers

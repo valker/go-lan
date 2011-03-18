@@ -14,7 +14,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
         {
             if (server == null) throw new ArgumentNullException("server");
             if (sender == null) throw new ArgumentNullException("sender");
-            server.RetrieveSupportedGames(sender);
+            server.RetrieveSupportedGames(sender, identifier);
         }
 
         #endregion
