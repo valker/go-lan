@@ -21,7 +21,7 @@ namespace Valker.PlayOnLan.Api.Communication
         void Send(object fromIdentifier, object toIdentifier, string message);
 
         /// <summary>
-        /// Client identifiers connected to this connector
+        /// Agent identifiers connected to this connector
         /// <remark>used in server part</remark>
         /// </summary>
         string[] Clients { get; }

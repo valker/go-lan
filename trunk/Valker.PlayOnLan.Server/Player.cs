@@ -7,7 +7,7 @@ namespace Valker.PlayOnLan.Server
     {
         #region Implementation of IPlayer
 
-        public IClientInfo Client
+        public IAgentInfo Agent
         {
             get; set;
         }

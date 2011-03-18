@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using agsXMPP;
 using agsXMPP.protocol.client;
@@ -35,7 +38,11 @@ namespace Valker.PlayOnLan.XmppTransport
             var fromIdentifier = message.From.Bare;
             var toIdentifier = _my.Bare;
             var body = message.Body;
-            var args = new MessageEventArgs(fromIdentifier, toIdentifier, body);
+            byte[] bytes = Encoding.ASCII.GetBytes(body);
+            List<byte> bytes2 = new List<byte>(bytes);
+            bytes2.RemoveAll(b => b < 0x20 || b > 0x7f);
+            string newMsg = Encoding.ASCII.GetString(bytes2.ToArray());
+            var args = new MessageEventArgs(fromIdentifier, toIdentifier, newMsg);
             MessageArrived(this, args);
         }
 
@@ -50,8 +57,7 @@ namespace Valker.PlayOnLan.XmppTransport
 
         public string ConnectorName
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get; set;
         }
 
         public void Send(object fromIdentifier, object toIdentifier, string message)
@@ -64,7 +70,7 @@ namespace Valker.PlayOnLan.XmppTransport
             get { throw new NotImplementedException(); }
         }
 
-        public event EventHandler<MessageEventArgs> MessageArrived;
+        public event EventHandler<MessageEventArgs> MessageArrived = delegate { };
         public event EventHandler Closed;
 
         #endregion

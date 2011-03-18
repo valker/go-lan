@@ -19,7 +19,7 @@ namespace Valker.TicTacToePlugin
 
         private void ClientOnShowMessage(object sender, ShowMessageEventArgs args)
         {
-            MessageBox.Show(this, args.Text, Text);
+            Parent.BeginInvoke(new Action(delegate { MessageBox.Show(this, args.Text, Text);  }));
         }
 
         void FieldChanged(object sender, FieldChangedEventArgs e)

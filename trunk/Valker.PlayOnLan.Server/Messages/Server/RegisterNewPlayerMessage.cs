@@ -8,7 +8,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
     {
         private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ServerMessage), new[]{typeof(RegisterNewPlayerMessage)});
 
-        public override void Execute(IServerMessageExecuter server, IClientInfo sender)
+        public override void Execute(IServerMessageExecuter server, IAgentInfo sender)
         {
             if (server == null) throw new ArgumentNullException();
             server.RegisterNewPlayer(sender, Name);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.PluginLoader;
 using Valker.PlayOnLan.Server;
@@ -17,7 +18,9 @@ namespace Valker.PlayOnLan.Client.Communication
         /// <summary>
         /// Available connections (local, xmpp)
         /// </summary>
-        private List<IMessageConnector> _connectors = new List<IMessageConnector>();
+//        private List<IMessageConnector> _connectors = new List<IMessageConnector>();
+
+        private List<IAgentInfo> _servers = new List<IAgentInfo>();
 
         private IGameClient _client;
 
@@ -30,7 +33,7 @@ namespace Valker.PlayOnLan.Client.Communication
         /// </summary>
         public string Name { get; set; }
 
-        public ClientImpl(string name, Form parent, IEnumerable<IMessageConnector> connectors)
+        public ClientImpl(string name, Form parent, IEnumerable<IAgentInfo> servers)
         {
             Name = name;
             Parent = parent;
@@ -40,14 +43,15 @@ namespace Valker.PlayOnLan.Client.Communication
                 _gameDict.Add(game.ID, game);
             }
 
-            _connectors.AddRange(connectors);
-            foreach (var connector in _connectors)
+            _servers.AddRange(servers);
+
+            foreach (var connector in _servers.Select(info => info.ClientConnector))
             {
                 connector.MessageArrived += ConnectorOnMessageArrived;
             }
         }
 
-        private Form Parent { get; set; }
+        public Form Parent { get; set; }
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
         {
@@ -65,9 +69,9 @@ namespace Valker.PlayOnLan.Client.Communication
         private void SendMessage(Server.Messages.Message message)
         {
             var messageText = message.ToString();
-            foreach (var connector in _connectors)
+            foreach (var agentInfo in _servers)
             {
-                connector.Send(Name, "server@mosdb9vf4j", messageText);
+                agentInfo.ClientConnector.Send(Name, agentInfo.ClientIdentifier, messageText);
             }
         }
 
@@ -107,9 +111,9 @@ namespace Valker.PlayOnLan.Client.Communication
 
         public void Dispose()
         {
-            foreach (IMessageConnector connector in _connectors)
+            foreach (var agentInfo in _servers)
             {
-                connector.Dispose();
+                agentInfo.ClientConnector.Dispose();
             }
         }
 
@@ -143,11 +147,15 @@ namespace Valker.PlayOnLan.Client.Communication
                 (delegate(object o, MessageEventArgs args)
                 {
                     var message = new ServerGameMessage(args.Message).ToString();
-                    sender.Send(Name, args.ToIdentifier, message);
+
+                    sender.Send(Name, sender.ConnectorName, message);
                 });
 
-            var form = _client.CreatePlayingForm(parameters, Name);
-            form.Show(Parent);
+            Parent.BeginInvoke(new Action(delegate
+                                         {
+                                             var form = _client.CreatePlayingForm(parameters, Name);
+                                             form.Show(Parent);
+                                         }));
         }
 
         public void ExecuteGameMessage(IMessageConnector sender, string message)

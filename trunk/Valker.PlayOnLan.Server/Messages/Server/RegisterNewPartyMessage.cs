@@ -25,11 +25,11 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 
         #region Overrides of ServerMessage
 
-        public override void Execute(IServerMessageExecuter server, IClientInfo client)
+        public override void Execute(IServerMessageExecuter server, IAgentInfo agent)
         {
             if (server == null) throw new ArgumentNullException("server");
-            if (client == null) throw new ArgumentNullException("client");
-            server.RegisterNewParty(client, GameId, Parameters);
+            if (agent == null) throw new ArgumentNullException("client");
+            server.RegisterNewParty(agent, GameId, Parameters);
         }
 
         #endregion
