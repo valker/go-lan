@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System.Windows.Forms;
 using Valker.PlayOnLan.Client.Communication;
+using Valker.PlayOnLan.Client2008;
+using Valker.PlayOnLan.Server;
 using Valker.PlayOnLan.XmppTransport;
 
 namespace Valker.PlayOnLan.Client
@@ -12,18 +14,30 @@ namespace Valker.PlayOnLan.Client
             // local server
             //var server = new Server.ServerImpl(new IMessageConnector[0]);
             //Thread.Sleep(10000);
-            var server = new XmppTransportImpl("client@mosdb9vf4j");
-            var client = new ClientImpl("client@mosdb9vf4j", null, new[] { server });
 
-            var ev = new AutoResetEvent(false);
-            client.AcceptedPlayer += delegate { ev.Set(); };
+            var form = new LoginForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                var clientName = form.txtClientName.Text;
+                var serverName = form.txtServerName.Text;
+                var server = new XmppTransportImpl(clientName) {ConnectorName = serverName};
+                var client = new ClientImpl(clientName, null,
+                                            new[]
+                                                {
+                                                    new AgentInfo {ClientConnector = server, ClientIdentifier = serverName}
+                                                });
 
-            client.RegisterNewPlayer();
-            ev.WaitOne();
-            Form form = new MainForm(client);
-            // test form for local servers
-            //Form form = new ServerForm(server);
-            Application.Run(form);
+                var ev = new AutoResetEvent(false);
+                client.AcceptedPlayer += delegate { ev.Set(); };
+
+                client.RegisterNewPlayer();
+                ev.WaitOne();
+                Form form2 = new MainForm(client);
+                client.Parent = form2;
+                // test form for local servers
+                //Form form = new ServerForm(server);
+                Application.Run(form2);
+            }
         }
     }
 }

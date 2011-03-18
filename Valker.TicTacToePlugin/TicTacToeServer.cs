@@ -45,7 +45,7 @@ namespace Valker.TicTacToePlugin
                     int y = param[1];
                     _field.Set(x, y, _stones[_currentPlayer]);
 
-                    var msg = string.Format("FC<{0},{1},{2}>", x, y, _stones[_currentPlayer]);
+                    var msg = string.Format("FC[{0},{1},{2}]", x, y, _stones[_currentPlayer]);
                     SendMessageToPlayer(0, msg);
                     SendMessageToPlayer(1, msg);
 
@@ -59,7 +59,7 @@ namespace Valker.TicTacToePlugin
                         msg = "WA";
                         SendMessageToPlayer(0, msg);
                         SendMessageToPlayer(1, msg);
-                        msg = string.Format("MSG<{0} has won>", winner == Stone.Black ? "Black" : "White");
+                        msg = string.Format("MSG[{0} has won]", winner == Stone.Black ? "Black" : "White");
                         SendMessageToPlayer(0, msg);
                         SendMessageToPlayer(1, msg);
                     }
@@ -89,7 +89,7 @@ namespace Valker.TicTacToePlugin
 
         private void SendMessageToPlayer(int player, string message)
         {
-            var client = Players[player].Client;
+            var client = Players[player].Agent;
             client.ClientConnector.Send("", client.ClientIdentifier, _createGameMessage(message).ToString());
         }
     }

@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Communication\IClientInfo.cs" />
+    <Compile Include="Communication\IAgentInfo.cs" />
     <Compile Include="Communication\IClientMessageExecuter.cs" />
     <Compile Include="Communication\IMessage.cs" />
     <Compile Include="Communication\IMessageConnector.cs" />

@@ -34,39 +34,19 @@ namespace Valker.PlayOnLan.Client
             listView1.Invoke(new Action(delegate { listView1.Items.Clear(); }));
             foreach (PartyInfo info in _partyStates)
             {
-                listView1.Invoke(new Action(delegate
-                                                {
-                                                    var item =
-                                                        new ListViewItem(new string[]
-                                                                             {
-                                                                                 info.Name, _gameNames[info.GameTypeId],
-                                                                                 info.Status.ToString()
-                                                                             });
-                                                    item.Tag = info;
-                                                    listView1.Items.Add(item);
-                                                }));
-            }
-        }
+                var item =
+                    new ListViewItem(new[]
+                                         {
+                                             info.Name, _gameNames[info.GameTypeId],
+                                             info.Status.ToString()
+                                         }) {Tag = info};
 
-        private string GetGameName(string type)
-        {
-            return _gameNames[type];
+                listView1.Invoke(new Action(() => listView1.Items.Add(item)));
+            }
         }
 
         private void UpdatePartyStatesData(PartyStatesArgs args)
         {
-            //var toRemove = new List<PartyInfo>();
-            //foreach (var info in this._partyStates.Where(inf => inf.Connector.Equals(args.Connector)))
-            //{
-            //    // this state is not actual
-            //    toRemove.Add(info);
-            //}
-
-            //foreach (var gameIdentifier in toRemove)
-            //{
-            //    this._partyStates.Remove(gameIdentifier);
-            //}
-
             _partyStates.Clear();
 
             foreach (PartyState partyState in args.States)

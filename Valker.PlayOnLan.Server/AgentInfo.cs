@@ -2,9 +2,9 @@
 
 namespace Valker.PlayOnLan.Server
 {
-    class ClientInfo : IClientInfo
+    public class AgentInfo : IAgentInfo
     {
-        #region IClientInfo Members
+        #region IAgentInfo Members
 
         public IMessageConnector ClientConnector
         {
@@ -18,9 +18,9 @@ namespace Valker.PlayOnLan.Server
 
         #endregion
 
-        #region IEquatable<IClientInfo> Members
+        #region IEquatable<IAgentInfo> Members
 
-        public bool Equals(IClientInfo other)
+        public bool Equals(IAgentInfo other)
         {
             return this.ClientConnector.Equals(other.ClientConnector) 
                 && this.ClientIdentifier.Equals(other.ClientIdentifier);

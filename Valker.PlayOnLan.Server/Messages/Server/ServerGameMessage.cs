@@ -27,7 +27,7 @@ namespace Valker.PlayOnLan.Server2008.Messages.Server
             return _serializer;
         }
 
-        public override void Execute(IServerMessageExecuter server, IClientInfo sender)
+        public override void Execute(IServerMessageExecuter server, IAgentInfo sender)
         {
             server.ExecuteServerGameMessage(sender, Text, PartyId);
         }

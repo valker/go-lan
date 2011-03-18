@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientInfo.cs" />
+    <Compile Include="AgentInfo.cs" />
     <Compile Include="GameInfo.cs" />
     <Compile Include="Messages\Client\AcceptNewPlayerMessage.cs" />
     <Compile Include="Messages\Client\AcknowledgeDropMessage.cs" />

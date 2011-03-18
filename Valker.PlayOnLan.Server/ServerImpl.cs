@@ -67,29 +67,30 @@ namespace Valker.PlayOnLan.Server
             }
         }
 
-        public void UpdatePartyStates(IClientInfo clientInfo)
+        public void UpdatePartyStates(IAgentInfo agentInfo)
         {
+            Console.WriteLine("UpdatePartyStates");
             var msg = new UpdatePartyStatesMessage(_partyStates);
 
-            Send(clientInfo, msg.ToString());
+            Send(agentInfo, msg.ToString());
         }
 
         #region IServerMessageExecuter Members
 
-        public void RegisterNewParty(IClientInfo client, string gameId, string parameters)
+        public void RegisterNewParty(IAgentInfo agent, string gameId, string parameters)
         {
-            var status = RegisterNewPartyImpl(client, gameId, parameters);
+            var status = RegisterNewPartyImpl(agent, gameId, parameters);
             var message = new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred, parameters).ToString();
-            Send(client, message);
+            Send(agent, message);
             UpdatePartyStates(null);
         }
 
-        private PartyStatus RegisterNewPartyImpl(IClientInfo client, string gameId, string parameters)
+        private PartyStatus RegisterNewPartyImpl(IAgentInfo agent, string gameId, string parameters)
         {
-            var player = _players.FirstOrDefault(pl => pl.Client.Equals(client));
+            var player = _players.FirstOrDefault(pl => pl.Agent.Equals(agent));
             if (player == null)
             {
-                throw new ArgumentException("Cannot find player of this client");
+                throw new ArgumentException("Cannot find player of this agent");
             }
 
             if (_partyStates.FirstOrDefault(partyState => partyState.Players.FirstOrDefault(pl => pl.Equals(player)) != null) != null)
@@ -116,7 +117,7 @@ namespace Valker.PlayOnLan.Server
                        };
         }
 
-        public void RetrieveSupportedGames(IClientInfo sender)
+        public void RetrieveSupportedGames(IAgentInfo sender)
         {
             var array = _games.Select(info => info.Name + ',' + info.ID).ToArray();
             var message = new RetrieveSupportedGamesResponceMessage {Responce = array};
@@ -143,7 +144,7 @@ namespace Valker.PlayOnLan.Server
 
             //notify players
             var message = CreatePartyBeginMessage(party);
-            foreach (var clientInfo in party.Players.Select(p=>p.Client))
+            foreach (var clientInfo in party.Players.Select(p=>p.Agent))
             {
                 Send(clientInfo, message);
             }
@@ -156,7 +157,7 @@ namespace Valker.PlayOnLan.Server
             // need to send message to receipients
             var rec = args.Receipients;
             var msg = new ClientGameMessage(args.Message).ToString();
-            foreach (var clientInfo in rec.Select(player => player.Client))
+            foreach (var clientInfo in rec.Select(player => player.Agent))
             {
                 Send(clientInfo, msg);
             }
@@ -193,10 +194,11 @@ namespace Valker.PlayOnLan.Server
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
         {
+            Console.WriteLine("ConnectorOnMessageArrived");
             string message = args.Message;
             var serializer = new XmlSerializer(typeof (ServerMessage), ServerMessageTypes.Types);
             var msgObject = (ServerMessage) serializer.Deserialize(new StringReader(message));
-            msgObject.Execute(this, new ClientInfo() { ClientConnector = (IMessageConnector)sender, ClientIdentifier = args.FromIdentifier });
+            msgObject.Execute(this, new AgentInfo() { ClientConnector = (IMessageConnector)sender, ClientIdentifier = args.FromIdentifier });
         }
 
         public void AddConnector(IMessageConnector connector)
@@ -211,7 +213,8 @@ namespace Valker.PlayOnLan.Server
 
         private void ConnectorOnClosed(object sender, EventArgs args)
         {
-            var connector = (IMessageConnector) sender;
+            Console.WriteLine("ConnectorOnClosed");
+            var connector = (IMessageConnector)sender;
 
             foreach (var player in GetPlayersByConnection(connector))
             {
@@ -223,7 +226,7 @@ namespace Valker.PlayOnLan.Server
 
         private IPlayer[] GetPlayersByConnection(IMessageConnector connector)
         {
-            var players = _players.Where(pl => pl.Client.ClientConnector.Equals(connector)).ToArray();
+            var players = _players.Where(pl => pl.Agent.ClientConnector.Equals(connector)).ToArray();
             return players;
         }
 
@@ -244,9 +247,9 @@ namespace Valker.PlayOnLan.Server
         #region IServerMessageExecuter Members
 
 
-        public void RegisterNewPlayer(IClientInfo client, string Name)
+        public void RegisterNewPlayer(IAgentInfo agent, string Name)
         {
-            if (client == null)
+            if (agent == null)
             {
                 throw new ArgumentNullException("client");
             }
@@ -254,19 +257,19 @@ namespace Valker.PlayOnLan.Server
             bool status = false;
             if (_players.FirstOrDefault(pl => pl.PlayerName == Name) == null)
             {
-                var player = new Player() { PlayerName = Name, Client = client };
+                var player = new Player() { PlayerName = Name, Agent = agent };
                 _players.Add(player);
                 status = true;
             }
             
-            Send(client, new AcceptNewPlayerMessage() { Status = status }.ToString());
+            Send(agent, new AcceptNewPlayerMessage() { Status = status }.ToString());
             if (status)
             {
-                UpdatePartyStates(client);
+                UpdatePartyStates(agent);
             }
         }
 
-        public void ExecuteServerGameMessage(IClientInfo sender, string text, int id)
+        public void ExecuteServerGameMessage(IAgentInfo sender, string text, int id)
         {
             var server = _partyStates.First(state => state.PartyId == id).Server;
             var player1 = _players.First(player => player.PlayerName.Equals(sender.ClientIdentifier));
@@ -282,7 +285,7 @@ namespace Valker.PlayOnLan.Server
         /// </summary>
         /// <param name="recepient">if null, then to all recepient</param>
         /// <param name="message"></param>
-        public void Send(IClientInfo recepient, string message)
+        public void Send(IAgentInfo recepient, string message)
         {
             if (recepient != null)
             {
@@ -290,7 +293,7 @@ namespace Valker.PlayOnLan.Server
             }
             else
             {
-                foreach (var client in _players.Select(p => p.Client))
+                foreach (var client in _players.Select(p => p.Agent))
                 {
                     Send(client, message);
                 }

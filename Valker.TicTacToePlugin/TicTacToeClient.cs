@@ -57,7 +57,7 @@ namespace Valker.TicTacToePlugin
 
         public void ClickedOnBoard(MouseEventArgs args)
         {
-            var text = string.Format("M<{0},{1}>", args.X, args.Y);
+            var text = string.Format("M[{0},{1}]", args.X, args.Y);
             OnMessageReady(this, new MessageEventArgs("", "_server", text));
         }
     }

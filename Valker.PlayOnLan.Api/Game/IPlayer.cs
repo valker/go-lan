@@ -8,7 +8,7 @@ namespace Valker.PlayOnLan.Api.Game
 {
     public interface IPlayer
     {
-        IClientInfo Client { get; set; }
+        IAgentInfo Agent { get; set; }
         string PlayerName { get; set; }
     }
 }
