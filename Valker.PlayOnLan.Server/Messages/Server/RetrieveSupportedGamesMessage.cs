@@ -10,11 +10,11 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 
         #region Overrides of Message
 
-        public override void Execute(IServerMessageExecuter server, IClientInfo sender, object identifier)
+        public override void Execute(IServerMessageExecuter server, IClientInfo sender)
         {
             if (server == null) throw new ArgumentNullException("server");
             if (sender == null) throw new ArgumentNullException("sender");
-            server.RetrieveSupportedGames(sender, identifier);
+            server.RetrieveSupportedGames(sender);
         }
 
         #endregion
