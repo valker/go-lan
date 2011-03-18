@@ -116,12 +116,11 @@ namespace Valker.PlayOnLan.Server
                        };
         }
 
-        public void RetrieveSupportedGames(IClientInfo sender, object identifier)
+        public void RetrieveSupportedGames(IClientInfo sender)
         {
             var array = _games.Select(info => info.Name + ',' + info.ID).ToArray();
             var message = new RetrieveSupportedGamesResponceMessage {Responce = array};
-            var receiver = new ClientInfo() {ClientConnector = sender.ClientConnector, ClientIdentifier = identifier};
-            Send(receiver, message.ToString());
+            Send(sender, message.ToString());
         }
 
 
@@ -197,7 +196,7 @@ namespace Valker.PlayOnLan.Server
             string message = args.Message;
             var serializer = new XmlSerializer(typeof (ServerMessage), ServerMessageTypes.Types);
             var msgObject = (ServerMessage) serializer.Deserialize(new StringReader(message));
-            msgObject.Execute(this, new ClientInfo() { ClientConnector = (IMessageConnector)sender, ClientIdentifier = args.ToIdentifier}, args.FromIdentifier);
+            msgObject.Execute(this, new ClientInfo() { ClientConnector = (IMessageConnector)sender, ClientIdentifier = args.FromIdentifier });
         }
 
         public void AddConnector(IMessageConnector connector)
@@ -267,10 +266,10 @@ namespace Valker.PlayOnLan.Server
             }
         }
 
-        public void ExecuteServerGameMessage(IClientInfo sender, string text, object fromIdentifier, int id)
+        public void ExecuteServerGameMessage(IClientInfo sender, string text, int id)
         {
             var server = _partyStates.First(state => state.PartyId == id).Server;
-            var player1 = _players.First(player => player.PlayerName.Equals(fromIdentifier));
+            var player1 = _players.First(player => player.PlayerName.Equals(sender.ClientIdentifier));
             server.ProcessMessage(player1, text);
         }
 

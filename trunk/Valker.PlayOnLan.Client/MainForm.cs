@@ -99,7 +99,7 @@ namespace Valker.PlayOnLan.Client
                 {
                     _gameNames.Add(info.GameTypeId, info.ToString());
                 }
-                listBox1.DataSource = gameInfos;
+                listBox1.Invoke(new Action(delegate { listBox1.DataSource = gameInfos; }));
             }
         }
 
