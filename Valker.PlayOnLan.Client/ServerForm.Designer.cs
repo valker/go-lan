@@ -1,6 +1,6 @@
 ﻿namespace Valker.PlayOnLan.Client
 {
-    partial class ServerForm
+    sealed partial class ServerForm
     {
         /// <summary>
         /// Required designer variable.

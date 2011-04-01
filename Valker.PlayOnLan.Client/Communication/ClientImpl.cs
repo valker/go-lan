@@ -33,7 +33,7 @@ namespace Valker.PlayOnLan.Client.Communication
         /// </summary>
         public string Name { get; set; }
 
-        public ClientImpl(string name, Form parent, IEnumerable<IAgentInfo> servers)
+        public ClientImpl(string name, Form parent, IEnumerable<IAgentInfo> serverConnectors)
         {
             Name = name;
             Parent = parent;
@@ -43,7 +43,7 @@ namespace Valker.PlayOnLan.Client.Communication
                 _gameDict.Add(game.ID, game);
             }
 
-            _servers.AddRange(servers);
+            _servers.AddRange(serverConnectors);
 
             foreach (var connector in _servers.Select(info => info.ClientConnector))
             {
@@ -151,7 +151,7 @@ namespace Valker.PlayOnLan.Client.Communication
                     sender.Send(Name, sender.ConnectorName, message);
                 });
 
-            Parent.BeginInvoke(new Action(delegate
+            Parent.Invoke(new Action(delegate
                                          {
                                              var form = _client.CreatePlayingForm(parameters, Name);
                                              form.Show(Parent);
