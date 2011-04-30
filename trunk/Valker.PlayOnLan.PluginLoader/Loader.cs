@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Valker.PlayOnLan.Api.Game;
+using System.Diagnostics;
 
 namespace Valker.PlayOnLan.PluginLoader
 {
@@ -18,9 +19,11 @@ namespace Valker.PlayOnLan.PluginLoader
 
         private static IEnumerable<IGameType> GetTypes(IEnumerable<FileInfo> files)
         {
-            foreach (var fileInfo in files)
+            foreach (var fileInfo in new string[]{"Valker.TicTacToePlugin.dll"} /*files.Select(fi=>fi.FullName*/)
             {
-                var assembly = Assembly.LoadFile(fileInfo.FullName);
+                string fileName = fileInfo;
+				Trace.WriteLine(fileName);
+                var assembly = Assembly.LoadFile(fileName);
                 if(assembly == null) continue;
 
                 var types = assembly.GetTypes();
