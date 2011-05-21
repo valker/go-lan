@@ -9,14 +9,14 @@ namespace Valker.TicTacToePlugin
 {
     public class TicTacToeClient : IGameClient
     {
-        public TicTacToeClient(Form parent)
+        public TicTacToeClient(IForm parent)
         {
             Parent = parent;
         }
 
-        protected Form Parent { get; set; }
+        protected IForm Parent { get; set; }
 
-        public Form CreatePlayingForm(string parameterString, string playerName)
+        public IPlayingForm CreatePlayingForm(string parameterString, string playerName)
         {
             var serializer = TicTacToeParameters.GetSerializer();
             var parameters = (TicTacToeParameters) serializer.Deserialize(new StringReader(parameterString));

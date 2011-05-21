@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
+using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Goban;
 
 namespace Valker.TicTacToePlugin
 {
-    public partial class PlayingForm : Form
+    public partial class PlayingForm : Form, IPlayingForm
     {
         public PlayingForm(int n, TicTacToeClient client)
         {
@@ -56,5 +57,14 @@ namespace Valker.TicTacToePlugin
         }
 
         public TicTacToeClient Client { get; set; }
+        public void Show(IForm form)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RunInUiThread(Action action)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

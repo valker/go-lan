@@ -1,20 +1,27 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
-using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Communication;
+using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.Client;
 using Valker.PlayOnLan.Client.Communication;
-using Valker.PlayOnLan.Client2008;
+using Valker.PlayOnLan.Client2008.Communication;
 using Valker.PlayOnLan.Server;
 using Valker.PlayOnLan.XmppTransport;
 
-namespace Valker.PlayOnLan.Client
+namespace Valker.PlayOnLan.Client2008
 {
-    internal class Program
+    /// <summary>
+    /// Base class for each clients application
+    /// </summary>
+    public abstract class Program
     {
-        private static ServerForm _serverForm;
+        private IServerForm _serverForm;
 
-        private static void Main(string[] args)
+        public void MainImpl(string[] args)
         {
+            if (args == null) throw new ArgumentNullException("args");
+
             if (args.FirstOrDefault(s => s == "local") != null)
             {
                 Local();
@@ -23,24 +30,32 @@ namespace Valker.PlayOnLan.Client
             {
                 Xmpp();
             }
+            else
+            {
+                Local();
+            }
         }
 
-        private static void Local()
+        private void Local()
         {
             var server = new ServerImpl(new LocalMessageConnector[0]);
-            _serverForm = new ServerForm();
+            _serverForm = CreateServerForm();
             _serverForm.NewAgentCreating += delegate(object sender, NewAgentCreatingEventArgs args)
                                                 {
                                                     var transport = new LocalTransport();
                                                     server.AddConnector(transport.ServerConnector);
-                                                    ClientImpl client = CreateClientClient(transport, args.Name);
+                                                    var client = CreateClientClient(transport, args.Name);
                                                     client.AcceptedPlayer += AcceptedPlayer;
                                                     client.RegisterNewPlayer();
                                                 };
-            Application.Run(_serverForm);
+            Run(_serverForm);
         }
 
-        private static ClientImpl CreateClientClient(LocalTransport transport, string name)
+        protected abstract void Run(IForm form);
+
+        protected abstract IServerForm CreateServerForm();
+
+        private ClientImpl CreateClientClient(LocalTransport transport, string name)
         {
             return new ClientImpl(name, _serverForm,
                                   new[]
@@ -50,13 +65,13 @@ namespace Valker.PlayOnLan.Client
                                       });
         }
 
-        private static void AcceptedPlayer(object sender, AcceptedPlayerEventArgs e)
+        private void AcceptedPlayer(object sender, AcceptedPlayerEventArgs e)
         {
             var client = (ClientImpl) sender;
 
             if (e.Status)
             {
-                var form = new MainForm(client);
+                IMainForm form = CreateMainForm(client);
                 form.Show(_serverForm);
             }
             else
@@ -65,13 +80,23 @@ namespace Valker.PlayOnLan.Client
             }
         }
 
-        private static void Xmpp()
+        protected abstract IPlayingForm CreatePlayingForm(ClientImpl client);
+
+        protected class AuthentificationParams
         {
-            var form = new LoginForm();
-            if (form.ShowDialog() == DialogResult.OK)
+            public string Name { get; set; }
+            string Password { get; set; }
+
+            public string ServerName { get; set; }
+        }
+
+        private void Xmpp()
+        {
+            AuthentificationParams param = GetAuthParams();
+            if (param != null)
             {
-                string clientName = form.txtClientName.Text;
-                string serverName = form.txtServerName.Text;
+                string clientName = param.Name;
+                string serverName = param.ServerName;
                 IMessageConnector server = new XmppTransportImpl(clientName) {ConnectorName = serverName};
                 var client = new ClientImpl(clientName, null,
                                             new[]
@@ -84,10 +109,14 @@ namespace Valker.PlayOnLan.Client
                 client.AcceptedPlayer += delegate { ev.Set(); };
                 client.RegisterNewPlayer();
                 ev.WaitOne();
-                Form form2 = new MainForm(client);
+                IMainForm form2 = CreateMainForm(client);
                 client.Parent = form2;
-                Application.Run(form2);
+                Run(form2);
             }
         }
+
+        protected abstract IMainForm CreateMainForm(ClientImpl client);
+
+        protected abstract AuthentificationParams GetAuthParams();
     }
 }

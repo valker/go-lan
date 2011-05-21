@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Valker.PlayOnLan.Api.Communication;
+using Valker.PlayOnLan.Client;
+using Valker.PlayOnLan.Client.Communication;
 using Valker.PlayOnLan.PluginLoader;
 using Valker.PlayOnLan.Server;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
-using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Server2008.Messages.Server;
 
-namespace Valker.PlayOnLan.Client.Communication
+namespace Valker.PlayOnLan.Client2008.Communication
 {
+    /// <summary>
+    /// Implements client functionality common to all UI, all transports and all games
+    /// </summary>
     public class ClientImpl : IClientMessageExecuter, IDisposable
     {
         /// <summary>
@@ -33,7 +37,7 @@ namespace Valker.PlayOnLan.Client.Communication
         /// </summary>
         public string Name { get; set; }
 
-        public ClientImpl(string name, Form parent, IEnumerable<IAgentInfo> serverConnectors)
+        public ClientImpl(string name, IServerForm parent, IEnumerable<IAgentInfo> serverConnectors)
         {
             Name = name;
             Parent = parent;
@@ -51,7 +55,7 @@ namespace Valker.PlayOnLan.Client.Communication
             }
         }
 
-        public Form Parent { get; set; }
+        public IForm Parent { get; set; }
 
         private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
         {
@@ -75,7 +79,7 @@ namespace Valker.PlayOnLan.Client.Communication
             }
         }
 
-        public void RegisterNewParty(GameInfo gameInfo, Form parent)
+        public void RegisterNewParty(GameInfo gameInfo, IMainForm parent)
         {
             // ask user to set up parameters of the game
             var parameters = _gameDict[gameInfo.GameTypeId].AskParam(parent);
@@ -145,13 +149,13 @@ namespace Valker.PlayOnLan.Client.Communication
 
             _client.OnMessageReady +=
                 (delegate(object o, MessageEventArgs args)
-                {
-                    var message = new ServerGameMessage(args.Message).ToString();
+                     {
+                         var message = new ServerGameMessage(args.Message).ToString();
 
-                    sender.Send(Name, sender.ConnectorName, message);
-                });
+                         sender.Send(Name, sender.ConnectorName, message);
+                     });
 
-            Parent.Invoke(new Action(delegate
+            Parent.RunInUiThread(new Action(delegate
                                          {
                                              var form = _client.CreatePlayingForm(parameters, Name);
                                              form.Show(Parent);

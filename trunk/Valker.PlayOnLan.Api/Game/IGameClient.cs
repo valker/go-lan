@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Api.Game
@@ -14,7 +13,7 @@ namespace Valker.PlayOnLan.Api.Game
         /// </summary>
         /// <param playerName="parameters">parameters of the party</param>
         /// <returns>Form to be shown</returns>
-        Form CreatePlayingForm(string parameters, string playerName);
+        IPlayingForm CreatePlayingForm(string parameters, string playerName);
 
         /// <summary>
         /// New message for this client appeared
@@ -28,5 +27,19 @@ namespace Valker.PlayOnLan.Api.Game
         event EventHandler Closed;
 
         event EventHandler<MessageEventArgs> OnMessageReady;
+    }
+
+    public interface IPlayingForm : IForm
+    {
+    }
+
+    public interface IMainForm : IForm
+    {
+    }
+
+    public interface IForm
+    {
+        void Show(IForm parent);
+        void RunInUiThread(Action action);
     }
 }
