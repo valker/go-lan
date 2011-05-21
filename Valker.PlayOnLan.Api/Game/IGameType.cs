@@ -7,7 +7,6 @@
  * Для изменения этого шаблона используйте Сервис | Настройка | Кодирование | Правка стандартных заголовков.
  */
 using System;
-using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Api.Game
@@ -32,18 +31,29 @@ namespace Valker.PlayOnLan.Api.Game
         /// </summary>
         /// <param name="parent"></param>
         /// <returns></returns>
-        string AskParam(Form parent);
+        string AskParam(IForm parent);
 
         /// <summary>
         /// Creates client component of the game
         /// </summary>
         /// <returns></returns>
-        IGameClient CreateClient(Form parent);
+        IGameClient CreateClient(IForm parent);
 
         /// <summary>
         /// Creates server component of the game
         /// </summary>
         /// <returns></returns>
         IGameServer CreateServer(IPlayer[] players, Func<string, IMessage> func, string parameters);
+    }
+
+    public class NewAgentCreatingEventArgs : EventArgs
+    {
+        public string Name { get; set; }
+    }
+
+    public interface IServerForm : IForm
+    {
+        event EventHandler<NewAgentCreatingEventArgs> NewAgentCreating;
+
     }
 }

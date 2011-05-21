@@ -19,7 +19,8 @@ namespace Valker.PlayOnLan.PluginLoader
 
         private static IEnumerable<IGameType> GetTypes(IEnumerable<FileInfo> files)
         {
-            foreach (var fileInfo in new string[]{"Valker.TicTacToePlugin.dll"} /*files.Select(fi=>fi.FullName*/)
+//            foreach (var fileInfo in new string[] { "Valker.TicTacToePlugin.dll" } /*files.Select(fi=>fi.FullName*/)
+            foreach (var fileInfo in files.Select(fi=>fi.FullName))
             {
                 string fileName = fileInfo;
 				Trace.WriteLine(fileName);

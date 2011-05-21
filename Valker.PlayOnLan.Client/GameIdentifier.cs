@@ -3,8 +3,13 @@ using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Client
 {
-    class PartyInfo : IEquatable<PartyInfo>
+    public class PartyInfo : IEquatable<PartyInfo>
     {
+        public override string ToString()
+        {
+            return "PartyInfo";
+        }
+
         public string Name { get; set; }
         public string GameTypeId { get; set; }
         public PartyStatus Status { get; set; }

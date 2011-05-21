@@ -29,7 +29,7 @@ namespace Valker.TicTacToePlugin
             }
         }
         
-        public IGameClient CreateClient(Form parent)
+        public IGameClient CreateClient(IForm parent)
         {
             return new TicTacToeClient(parent);
         }
@@ -39,12 +39,12 @@ namespace Valker.TicTacToePlugin
             return new TicTacToeServer(players, func, parameters);
         }
 
-        public string AskParam(Form parent)
+        public string AskParam(IForm parent)
         {
             return new TicTacToeParameters(3, 3).ToString();
-            var f = new ParametersForm();
-            var r = f.ShowDialog(parent);
-            return r == DialogResult.OK ? f.Parameters.ToString() : "";
+//            var f = new ParametersForm();
+//            var r = f.ShowDialog(parent);
+//            return r == DialogResult.OK ? f.Parameters.ToString() : "";
         }
 
         public string ID {
