@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Valker.PlayOnLan.Api.Communication;
-using Valker.PlayOnLan.Client;
 using Valker.PlayOnLan.Client.Communication;
 using Valker.PlayOnLan.PluginLoader;
 using Valker.PlayOnLan.Server;

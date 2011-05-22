@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
-using Valker.PlayOnLan.Client;
 using Valker.PlayOnLan.Client.Communication;
 using Valker.PlayOnLan.Client2008.Communication;
 using Valker.PlayOnLan.Server;
@@ -150,16 +149,7 @@ namespace Valker.PlayOnLan.Client2008
             if (handler != null) handler(this, e);
         }
 
-        //protected abstract PartyInfo GetSelectedPartyInfo();
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            _client.RetrieveSupportedGames();
-        }
-
-        //public abstract void Show(IForm form);
-        //public abstract void RunInUiThread(Action action);
-        public object GetPartyStates()
+        public IEnumerable<PartyInfo> GetPartyStates()
         {
             return _partyStates;
         }
