@@ -1,13 +1,13 @@
 using System;
 using Valker.PlayOnLan.Api.Communication;
 
-namespace Valker.PlayOnLan.Client
+namespace Valker.PlayOnLan.Client2008
 {
     public class PartyInfo : IEquatable<PartyInfo>
     {
         public override string ToString()
         {
-            return "PartyInfo";
+            return Name ;
         }
 
         public string Name { get; set; }
