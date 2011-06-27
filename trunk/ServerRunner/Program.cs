@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using Valker.PlayOnLan.Server;
+using Valker.PlayOnLan.Server2008;
 using Valker.PlayOnLan.XmppTransport;
 
 namespace ServerRunner

@@ -3,10 +3,19 @@ using System.Collections.Generic;
 
 namespace Valker.PlayOnLan.Api.Game
 {
+    /// <summary>
+    /// Contains information about message to be sent
+    /// </summary>
     public sealed class OnMessageEventArgs : EventArgs
     {
-        public IEnumerable<IPlayer> Receipients { get; set; }
+        /// <summary>
+        /// Gets/sets receipients of the message
+        /// </summary>
+        public IEnumerable<IPlayerBase> Receipients { get; set; }
 
-        public string Message { get; private set; }
+        /// <summary>
+        /// Gets/sets the message body
+        /// </summary>
+        public string Message { get; set; }
     }
 }

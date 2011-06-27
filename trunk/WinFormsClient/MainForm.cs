@@ -21,26 +21,21 @@ namespace WinFormsClient
             Invoke(new Action(delegate
                                   {
                                       listBox2.Items.Clear();
-                                      foreach (var partyState in _mf.GetPartyStates())
+                                      foreach (var partyInfo in _mf.GetPartyStates())
                                       {
-                                          listBox2.Items.Add(partyState);
+                                          listBox2.Items.Add(partyInfo);
                                       }
                                   }));
-            
-            //listBox2.DataSource = _mf.GetPartyStates();
-            // TODO: should be implemented
-            //throw new NotImplementedException();
         }
 
         private void OnUpdateGameInfo(object sender, UpdateGameInfoEventArgs args)
         {
             listBox1.DataSource = args.GameInfos;
-            //throw new NotImplementedException();
         }
 
         private void OnGetSelectedPartyInfo(object sender, GetSelectedPartyInfoEventArgs args)
         {
-            throw new NotImplementedException();
+            args.PartyInfo = (PartyInfo) listBox2.SelectedItem;
         }
 
         private void OnGetSelectedGameInfo(object sender, GetSelectedGameInfoEventArgs args)
@@ -61,6 +56,11 @@ namespace WinFormsClient
         public void RunInUiThread(Action action)
         {
             throw new NotImplementedException();
+        }
+
+        public string Gui
+        {
+            get { return "winforms"; }
         }
 
         private void OnLoad(object sender, EventArgs e)
@@ -88,6 +88,11 @@ namespace WinFormsClient
             _mf.OnUpdateGameInfo -= OnUpdateGameInfo;
             _mf.OnUpdatePartyStatesView -= OnUpdatePartyStatesView;
 
+        }
+
+        private void btnAccept_Click(object sender, EventArgs e)
+        {
+            _mf.Accept();
         }
     }
 }

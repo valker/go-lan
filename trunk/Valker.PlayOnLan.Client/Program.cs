@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Client;
 using Valker.PlayOnLan.Client.Communication;
 using Valker.PlayOnLan.Client2008.Communication;
 using Valker.PlayOnLan.Server;
+using Valker.PlayOnLan.Server2008;
 using Valker.PlayOnLan.XmppTransport;
 
 namespace Valker.PlayOnLan.Client2008
@@ -80,16 +80,6 @@ namespace Valker.PlayOnLan.Client2008
             }
         }
 
-        protected abstract IPlayingForm CreatePlayingForm(ClientImpl client);
-
-        protected class AuthentificationParams
-        {
-            public string Name { get; set; }
-            string Password { get; set; }
-
-            public string ServerName { get; set; }
-        }
-
         private void Xmpp()
         {
             AuthentificationParams param = GetAuthParams();
@@ -97,7 +87,7 @@ namespace Valker.PlayOnLan.Client2008
             {
                 string clientName = param.Name;
                 string serverName = param.ServerName;
-                IMessageConnector server = new XmppTransportImpl(clientName) {ConnectorName = serverName};
+                var server = new XmppTransportImpl(clientName) {ConnectorName = serverName};
                 var client = new ClientImpl(clientName, null,
                                             new[]
                                                 {

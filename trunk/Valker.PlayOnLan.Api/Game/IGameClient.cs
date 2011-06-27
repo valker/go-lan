@@ -13,7 +13,7 @@ namespace Valker.PlayOnLan.Api.Game
         /// </summary>
         /// <param playerName="parameters">parameters of the party</param>
         /// <returns>Form to be shown</returns>
-        IPlayingForm CreatePlayingForm(string parameters, string playerName);
+        IPlayingForm CreatePlayingForm(string parameters, string playerName, string gui);
 
         /// <summary>
         /// New message for this client appeared
@@ -41,5 +41,6 @@ namespace Valker.PlayOnLan.Api.Game
     {
         void Show(IForm parent);
         void RunInUiThread(Action action);
+        string Gui { get; }
     }
 }

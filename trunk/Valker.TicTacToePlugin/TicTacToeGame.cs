@@ -6,9 +6,6 @@
  * 
  * Для изменения этого шаблона используйте Сервис | Настройка | Кодирование | Правка стандартных заголовков.
  */
-using System;
-using System.Windows.Forms;
-using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.TicTacToePlugin
@@ -20,7 +17,7 @@ namespace Valker.TicTacToePlugin
     {
         
         public override string ToString() {
-            return Name + ',' + ID;
+            return Name + ',' + Id;
         }
 
         public string Name {
@@ -34,9 +31,9 @@ namespace Valker.TicTacToePlugin
             return new TicTacToeClient(parent);
         }
 
-        public IGameServer CreateServer(IPlayer[] players, Func<string, IMessage> func, string parameters)
+        public IGameServer CreateServer(IPlayer[] players, string parameters)
         {
-            return new TicTacToeServer(players, func, parameters);
+            return new TicTacToeServer(players, parameters);
         }
 
         public string AskParam(IForm parent)
@@ -47,7 +44,7 @@ namespace Valker.TicTacToePlugin
 //            return r == DialogResult.OK ? f.Parameters.ToString() : "";
         }
 
-        public string ID {
+        public string Id {
             get {
                 return "161DB3D0-94C3-44b7-AA60-ED0061706D74";
             }

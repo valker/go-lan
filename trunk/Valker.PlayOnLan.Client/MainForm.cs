@@ -51,12 +51,13 @@ namespace Valker.PlayOnLan.Client2008
             }
         }
 
-        private static PartyInfo CreatePartyInfo(PartyState state, IMessageConnector connector)
+        private PartyInfo CreatePartyInfo(PartyState state, IMessageConnector connector)
         {
             var value = new PartyInfo()
                             {
                                 Connector = connector,
                                 GameTypeId = state.GameTypeId,
+                                GameName = _gameNames[state.GameTypeId],
                                 Name = state.Names[0],
                                 Status = state.Status,
                                 PartyId = state.PartyId
@@ -133,11 +134,13 @@ namespace Valker.PlayOnLan.Client2008
             _client.Dispose();
         }
 
-        private void Accept(object sender, EventArgs e)
+        public void Accept()
         {
             var args = new GetSelectedPartyInfoEventArgs();
+            
             InvokeOnGetSelectedPartyInfo(args);
             PartyInfo partyInfo = args.PartyInfo;
+            if (partyInfo == null) return;
             _client.AcceptParty(partyInfo);
         }
 

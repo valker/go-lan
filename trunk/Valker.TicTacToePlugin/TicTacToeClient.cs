@@ -16,11 +16,21 @@ namespace Valker.TicTacToePlugin
 
         protected IForm Parent { get; set; }
 
-        public IPlayingForm CreatePlayingForm(string parameterString, string playerName)
+        /// <summary>
+        /// Create the form for playing
+        /// </summary>
+        /// <param playerName="parameters">parameters of the party</param>
+        /// <returns>Form to be shown</returns>
+        public IPlayingForm CreatePlayingForm(string parameterString, string playerName, string gui)
         {
             var serializer = TicTacToeParameters.GetSerializer();
             var parameters = (TicTacToeParameters) serializer.Deserialize(new StringReader(parameterString));
-            var form = new PlayingForm(parameters.Width, this) { Text = playerName };
+
+            IPlayingForm form = null;
+            if (gui == "winforms")
+            {
+                form = new PlayingForm(parameters.Width, this) { Text = playerName };
+            }
             return form;
         }
 

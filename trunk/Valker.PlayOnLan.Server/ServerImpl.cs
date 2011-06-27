@@ -9,31 +9,32 @@ using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.PluginLoader;
+using Valker.PlayOnLan.Server;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
 using Valker.PlayOnLan.Server2008.Messages.Client;
 
-namespace Valker.PlayOnLan.Server
+namespace Valker.PlayOnLan.Server2008
 {
     public class ServerImpl : IServerMessageExecuter, IDisposable
     {
         private readonly IEnumerable<IGameType> _games = new List<IGameType>(Loader.Load(Environment.CurrentDirectory));
 
-        private IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
+        private readonly IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
 
         // Added when new party registred
         // Removed when party is removed, OR client that register the party is removed
-        private List<PartyState> _partyStates = new List<PartyState>();
+        private readonly List<PartyState> _partyStates = new List<PartyState>();
 
-        private int _partyStateId = 0;
+        private int _partyStateId;
 
         // Added when new transport is attached to the server
-        private List<IMessageConnector> _connectors = new List<IMessageConnector>();
+        private readonly List<IMessageConnector> _connectors = new List<IMessageConnector>();
 
         // Added when new player is registred
-        private List<IPlayer> _players = new List<IPlayer>();
+        private readonly List<IPlayer> _players = new List<IPlayer>();
         
-        private BackgroundWorker _worker = new BackgroundWorker();
+        private readonly BackgroundWorker _worker = new BackgroundWorker();
 
         public ServerImpl(IEnumerable<IMessageConnector> connectors)
         {
@@ -41,7 +42,7 @@ namespace Valker.PlayOnLan.Server
 
             foreach (var game in _games)
             {
-                _gameDict.Add(game.ID, game);
+                _gameDict.Add(game.Id, game);
             }
 
             foreach (var connector in connectors)
@@ -119,7 +120,7 @@ namespace Valker.PlayOnLan.Server
 
         public void RetrieveSupportedGames(IAgentInfo sender)
         {
-            var array = _games.Select(info => info.Name + ',' + info.ID).ToArray();
+            var array = _games.Select(info => info.Name + ',' + info.Id).ToArray();
             var message = new RetrieveSupportedGamesResponceMessage {Responce = array};
             Send(sender, message.ToString());
         }
@@ -132,7 +133,7 @@ namespace Valker.PlayOnLan.Server
             AddPlayerToParty(party, FindPlayer(accepterName));
 
             // create the server component
-            party.Server = _gameDict[party.GameTypeId].CreateServer(party.Players, msg => new ClientGameMessage(msg), party.Parameters);
+            party.Server = _gameDict[party.GameTypeId].CreateServer(party.Players, party.Parameters);
 
             party.Server.OnMessage += OnServerOnOnMessage;
 
@@ -155,9 +156,8 @@ namespace Valker.PlayOnLan.Server
         private void OnServerOnOnMessage(object sender, OnMessageEventArgs args)
         {
             // need to send message to receipients
-            var rec = args.Receipients;
             var msg = new ClientGameMessage(args.Message).ToString();
-            foreach (var clientInfo in rec.Select(player => player.Agent))
+            foreach (var clientInfo in args.Receipients.OfType<IPlayer>().Select(player => player.Agent))
             {
                 Send(clientInfo, msg);
             }
@@ -198,7 +198,7 @@ namespace Valker.PlayOnLan.Server
             string message = args.Message;
             var serializer = new XmlSerializer(typeof (ServerMessage), ServerMessageTypes.Types);
             var msgObject = (ServerMessage) serializer.Deserialize(new StringReader(message));
-            msgObject.Execute(this, new AgentInfo() { ClientConnector = (IMessageConnector)sender, ClientIdentifier = args.FromIdentifier });
+            msgObject.Execute(this, new AgentInfo { ClientConnector = (IMessageConnector)sender, ClientIdentifier = args.FromIdentifier });
         }
 
         public void AddConnector(IMessageConnector connector)
@@ -247,22 +247,22 @@ namespace Valker.PlayOnLan.Server
         #region IServerMessageExecuter Members
 
 
-        public void RegisterNewPlayer(IAgentInfo agent, string Name)
+        public void RegisterNewPlayer(IAgentInfo agent, string name)
         {
             if (agent == null)
             {
-                throw new ArgumentNullException("client");
+                throw new ArgumentNullException("agent");
             }
 
             bool status = false;
-            if (_players.FirstOrDefault(pl => pl.PlayerName == Name) == null)
+            if (_players.FirstOrDefault(pl => pl.PlayerName == name) == null)
             {
-                var player = new Player() { PlayerName = Name, Agent = agent };
+                var player = new Player { PlayerName = name, Agent = agent };
                 _players.Add(player);
                 status = true;
             }
             
-            Send(agent, new AcceptNewPlayerMessage() { Status = status }.ToString());
+            Send(agent, new AcceptNewPlayerMessage { Status = status }.ToString());
             if (status)
             {
                 UpdatePartyStates(agent);
@@ -285,7 +285,7 @@ namespace Valker.PlayOnLan.Server
         /// </summary>
         /// <param name="recepient">if null, then to all recepient</param>
         /// <param name="message"></param>
-        public void Send(IAgentInfo recepient, string message)
+        private void Send(IAgentInfo recepient, string message)
         {
             if (recepient != null)
             {
@@ -293,7 +293,7 @@ namespace Valker.PlayOnLan.Server
             }
             else
             {
-                foreach (var client in _players.Select(p => p.Agent))
+                foreach (var client in _players.Select(p => p.Agent).ToArray())
                 {
                     Send(client, message);
                 }
@@ -306,8 +306,15 @@ namespace Valker.PlayOnLan.Server
         {
             _worker.CancelAsync();
             _worker.Dispose();
+            InvokeClosed(EventArgs.Empty);
         }
 
         public event EventHandler Closed;
+
+        private void InvokeClosed(EventArgs e)
+        {
+            EventHandler handler = Closed;
+            if (handler != null) handler(this, e);
+        }
     }
 }

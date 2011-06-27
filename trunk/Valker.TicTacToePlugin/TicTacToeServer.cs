@@ -6,24 +6,25 @@ using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.TicTacToePlugin
 {
+    /// <summary>
+    /// Implements server part of Tic-Tac-Toe
+    /// </summary>
     class TicTacToeServer : IGameServer
     {
         private int _currentPlayer;
-        private readonly Func<string, IMessage> _createGameMessage;
         private Field _field;
 
-        public TicTacToeServer(IPlayer[] players, Func<string, IMessage> func, string parameters)
+        public TicTacToeServer(IPlayerBase[] players, string parameters)
         {
             if (players.Length != 2) throw new ArgumentException("Wrong number of players");
             Players = players;
             _currentPlayer = 0;
-            _createGameMessage = func;
             Parameters = TicTacToeParameters.Parse(parameters);
         }
 
         protected TicTacToeParameters Parameters { get; set; }
 
-        protected IPlayer[] Players { get; set; }
+        protected IPlayerBase[] Players { get; set; }
 
         readonly Stone[] _stones = new[] {Stone.Black, Stone.White, };
 
@@ -75,6 +76,13 @@ namespace Valker.TicTacToePlugin
         }
 
         public event EventHandler<OnMessageEventArgs> OnMessage = delegate { };
+
+        private void InvokeOnMessage(OnMessageEventArgs e)
+        {
+            EventHandler<OnMessageEventArgs> handler = OnMessage;
+            if (handler != null) handler(this, e);
+        }
+
         public void Start()
         {
             _field = new Field(Parameters.Width);
@@ -89,8 +97,9 @@ namespace Valker.TicTacToePlugin
 
         private void SendMessageToPlayer(int player, string message)
         {
-            var client = Players[player].Agent;
-            client.ClientConnector.Send("", client.ClientIdentifier, _createGameMessage(message).ToString());
+//            var client = Players[player].Agent;
+//            client.ClientConnector.Send("", client.ClientIdentifier, _createGameMessage(message).ToString());
+            InvokeOnMessage(new OnMessageEventArgs(){Receipients = new []{Players[player]}, Message = message});
         }
     }
 }
