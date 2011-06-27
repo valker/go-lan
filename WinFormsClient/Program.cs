@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.Client2008;
 using Valker.PlayOnLan.Client2008.Communication;
 
 namespace WinFormsClient
@@ -18,7 +17,6 @@ namespace WinFormsClient
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             new Program().MainImpl(args);
-            //Application.Run(new Form1());
         }
 
         protected override void Run(IForm form)
@@ -29,11 +27,6 @@ namespace WinFormsClient
         protected override IServerForm CreateServerForm()
         {
             return new ServerForm();
-        }
-
-        protected override IPlayingForm CreatePlayingForm(ClientImpl client)
-        {
-            throw new NotImplementedException();
         }
 
         protected override IMainForm CreateMainForm(ClientImpl client)

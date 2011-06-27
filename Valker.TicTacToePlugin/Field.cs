@@ -3,7 +3,7 @@ using Valker.PlayOnLan.Api;
 
 namespace Valker.TicTacToePlugin
 {
-     /// <summary>
+    /// <summary>
     /// Provide the service of game-field
     /// </summary>
     public class Field
@@ -35,21 +35,44 @@ namespace Valker.TicTacToePlugin
         {
             Stone result = TestWinHorizontal(stones);
             if (result != Stone.None) return result;
-//            result = TestWinVertical(stones);
-//            if(result != Stone.None) return result;
-//            result = TestWinDiag(stones);
-//            if (result != Stone.None) return result;
+            result = TestWinVertical(stones);
+            if(result != Stone.None) return result;
+            result = TestWinDiag(stones);
+            if (result != Stone.None) return result;
             return Stone.None;
         }
 
         private Stone TestWinDiag(int stones)
         {
-            throw new NotImplementedException();
+            return Stone.None;
         }
 
         private Stone TestWinVertical(int stones)
         {
-            throw new NotImplementedException();
+            for (int x = 0; x < Width; ++x)
+            {
+                Stone previous = Stone.None;
+                int count = 0;
+                for (int y = 0; y < Width; y++)
+                {
+                    Stone current = _field[x, y];
+                    if (current == Stone.None) continue;
+
+                    if (current == previous)
+                    {
+                        ++count;
+                        if (count == stones) return current;
+                    }
+                    else 
+                    {
+                        count = 1;
+                    }
+
+                    previous = current;
+                }
+            }
+
+            return Stone.None;
         }
 
         /// <summary>
@@ -79,9 +102,11 @@ namespace Valker.TicTacToePlugin
                     {
                         count = 1;
                     }
+
                     previous = current;
                 }
             }
+
             return Stone.None;
         }
     }

@@ -43,7 +43,7 @@ namespace Valker.PlayOnLan.Client2008.Communication
 
             foreach (var game in _games)
             {
-                _gameDict.Add(game.ID, game);
+                _gameDict.Add(game.Id, game);
             }
 
             _servers.AddRange(serverConnectors);
@@ -156,8 +156,13 @@ namespace Valker.PlayOnLan.Client2008.Communication
 
             Parent.RunInUiThread(new Action(delegate
                                          {
-                                             var form = _client.CreatePlayingForm(parameters, Name);
-                                             form.Show(Parent);
+                                             var form = _client.CreatePlayingForm(parameters, Name, Parent.Gui);
+                                             if (form != null)
+                                             {
+                                                 form.Show(Parent);
+                                             } else
+                                             {
+                                             }
                                          }));
         }
 

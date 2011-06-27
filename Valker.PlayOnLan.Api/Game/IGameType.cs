@@ -7,7 +7,6 @@
  * Для изменения этого шаблона используйте Сервис | Настройка | Кодирование | Правка стандартных заголовков.
  */
 using System;
-using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Api.Game
 {
@@ -24,10 +23,10 @@ namespace Valker.PlayOnLan.Api.Game
         /// <summary>
         /// Defines the unique identifier of the game type
         /// </summary>
-        string ID {get;}
+        string Id {get;}
 
         /// <summary>
-        /// Ask user about parameters of the game
+        /// Ask user about parameters of the game. It depends on the game type
         /// </summary>
         /// <param name="parent"></param>
         /// <returns></returns>
@@ -42,8 +41,10 @@ namespace Valker.PlayOnLan.Api.Game
         /// <summary>
         /// Creates server component of the game
         /// </summary>
-        /// <returns></returns>
-        IGameServer CreateServer(IPlayer[] players, Func<string, IMessage> func, string parameters);
+        /// <param name="players">array of player, which will participate</param>
+        /// <param name="parameters">parameters of the game depended on the game type</param>
+        /// <returns>the server componend of the game</returns>
+        IGameServer CreateServer(IPlayer[] players, string parameters);
     }
 
     public class NewAgentCreatingEventArgs : EventArgs

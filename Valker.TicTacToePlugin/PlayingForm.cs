@@ -5,6 +5,7 @@ using Valker.PlayOnLan.Goban;
 
 namespace Valker.TicTacToePlugin
 {
+
     public partial class PlayingForm : Form, IPlayingForm
     {
         public PlayingForm(int n, TicTacToeClient client)
@@ -20,7 +21,7 @@ namespace Valker.TicTacToePlugin
 
         private void ClientOnShowMessage(object sender, ShowMessageEventArgs args)
         {
-            Parent.BeginInvoke(new Action(delegate { MessageBox.Show(this, args.Text, Text);  }));
+            RunInUiThread(delegate() { MessageBox.Show(this, args.Text, Text); });
         }
 
         void FieldChanged(object sender, FieldChangedEventArgs e)
@@ -57,14 +58,19 @@ namespace Valker.TicTacToePlugin
         }
 
         public TicTacToeClient Client { get; set; }
-        public void Show(IForm form)
+        public void Show(IForm parent)
         {
-            throw new NotImplementedException();
+            Show((IWin32Window)parent);         
         }
 
         public void RunInUiThread(Action action)
         {
-            throw new NotImplementedException();
+            Invoke(action);
+        }
+
+        public string Gui
+        {
+            get { return "winforms"; }
         }
     }
 }

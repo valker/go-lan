@@ -7,11 +7,12 @@ namespace Valker.PlayOnLan.Client2008
     {
         public override string ToString()
         {
-            return Name ;
+            return Name + ' ' + GameName;
         }
 
         public string Name { get; set; }
         public string GameTypeId { get; set; }
+        public string GameName { get; set; }
         public PartyStatus Status { get; set; }
 
         public bool Equals(PartyInfo other)
@@ -24,7 +25,7 @@ namespace Valker.PlayOnLan.Client2008
             {
                 return true;
             }
-            return Equals(other.Name, this.Name) && Equals(other.GameTypeId, this.GameTypeId) && Equals(other.Connector, this.Connector) && Equals(other.Status, Status);
+            return Equals(other.Name, Name) && Equals(other.GameTypeId, GameTypeId) && Equals(other.Connector, Connector) && Equals(other.Status, Status);
         }
 
         public override bool Equals(object obj)
@@ -41,17 +42,17 @@ namespace Valker.PlayOnLan.Client2008
             {
                 return false;
             }
-            return this.Equals((PartyInfo) obj);
+            return Equals((PartyInfo) obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                int result = this.Name.GetHashCode();
-                result = (result * 397) ^ this.GameTypeId.GetHashCode();
-                result = (result * 397) ^ this.Connector.GetHashCode();
-                result = (result * 397) ^ this.Status.GetHashCode();
+                int result = Name.GetHashCode();
+                result = (result * 397) ^ GameTypeId.GetHashCode();
+                result = (result * 397) ^ Connector.GetHashCode();
+                result = (result * 397) ^ Status.GetHashCode();
                 return result;
             }
         }
