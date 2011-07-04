@@ -1,0 +1,8 @@
+﻿Valker.PlayOnLan.GoPlugin
+TODO List:
+
+1. Develop protocol between server and client
+	- protocol is defined (v 0.1) and should be implemented
+	
+2. Tests for Go-engine should be prepared
+	

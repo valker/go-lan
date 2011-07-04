@@ -1,0 +1,57 @@
+﻿Valker.PlayOnLan.GoPlugin
+Protocol (v 0.1)
+
+Legend:
+The command is shown in the form:
+<prefix>/<suffix><parameters>
+
+the issuer of the command should send full command in form prefix suffix without any delimiters between.
+the receipient of the command can recognize the command by the prefix (all the command should have unique prefixes). In most cases prefix is one of two characters
+
+command can have additional parameters. in such cases they are enclosed in bracket '[', ']' and split by comma ',';
+
+From server to client:
+1. A/LLOW - allow move
+2. W/AIT - don't move (wait)
+3. MS/G[message text] - message to be shown
+4. F/IELD[x,y,stone,territory,sign] - field change (coordinates,stone value,territory sign,symbol sign)
+5. MA/RK - mark dead stones (for Japaneese rules)
+6. PARAMS[params] - parameters of the game
+7. EATED[b,w] - eated stones info
+
+coordinates - pair of integer
+stone value - Black,White,None
+territory sign - Black,White,None
+symbol sign - Triangle,Square,Question,Romb,A,B,C,D,...
+
+
+
+
+
+From client to server:
+1. M/OVE[x,y] - make move
+2. P/ASS - pass
+3. R/ESIGN - resign the party
+4. S/END[receipient,text]
+5. DE/AD[x,y] - mark dead stone
+6. L/IVE[x,y] - mark live stone
+7. AG/REEMENT - agreement (for Japaneese rules)
+8. DI/SAGREEMENT - disagreement (for Japaneese rules)
+9. AS/K[reason] - ask opponent (take back, delay)
+
+Wrong command (i.e. that are not correspond to the context) will be answered by the message containing explanation why this command is not acknowledged.
+
+
+
+
+---------------------------------
+события в партии:
+1. выбор правил игры
+2. розыгрыш цвета
+3. установка форы
+4. установка камня
+5. снятие съеденных камней
+6. пас
+7. определение мёртвых групп
+8. подсчёт очков
+9. определение победителя
