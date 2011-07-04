@@ -98,7 +98,13 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private IPosition GetParentPosition(IPosition position)
         {
-            return _relationship.Where(info => ReferenceEquals(info.Child, position)).ElementAt(0).Parent;
+            var relationInfo = _relationship.Where(info => ReferenceEquals(info.Child, position)).FirstOrDefault();
+            if (relationInfo == null)
+            {
+                return null;
+            }
+
+            return relationInfo.Parent;
         }
 
         public IPosition Edit(IPosition initial, Point point, Stone stone)
