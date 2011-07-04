@@ -4,6 +4,7 @@ using System.IO;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
 using System.Windows.Forms;
+using Valker.PlayOnLan.Utilities;
 
 namespace Valker.TicTacToePlugin
 {
@@ -43,7 +44,7 @@ namespace Valker.TicTacToePlugin
 
         public void ExecuteMessage(string message)
         {
-            switch (MessageUtils.ExtractCommand(message))
+            switch (Util.ExtractCommand(message))
             {
                 case "AM": // Allow move
                     AllowMove(this, EventArgs.Empty);
@@ -52,10 +53,10 @@ namespace Valker.TicTacToePlugin
                     Wait(this, EventArgs.Empty);
                     break;
                 case "FC":  // Field Changed
-                    FieldChanged(this, new FieldChangedEventArgs(MessageUtils.ExtractParams(message)));
+                    FieldChanged(this, new FieldChangedEventArgs(Util.ExtractParams(message)));
                     break;
                 case "MSG": // Message
-                    ShowMessage(this, new ShowMessageEventArgs(MessageUtils.ExtractParams(message)));
+                    ShowMessage(this, new ShowMessageEventArgs(Util.ExtractParams(message)));
                     break;
                 default:
                     Debug.WriteLine("Unknown message: {" + message + "}");

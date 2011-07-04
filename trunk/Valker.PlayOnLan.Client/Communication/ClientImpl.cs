@@ -156,10 +156,10 @@ namespace Valker.PlayOnLan.Client2008.Communication
 
             Parent.RunInUiThread(new Action(delegate
                                          {
-                                             var form = _client.CreatePlayingForm(parameters, Name, Parent.Gui);
-                                             if (form != null)
+                                             var playingForm = _client.CreatePlayingForm(parameters, Name, Parent.Gui);
+                                             if (playingForm != null)
                                              {
-                                                 form.Show(Parent);
+                                                 playingForm.Show(Parent);
                                              } else
                                              {
                                              }
