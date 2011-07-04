@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.5.9.10348, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -47,19 +48,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Field.cs" />
+    <Compile Include="EatedEventArgs.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="ExceptionReason.cs" />
+    <Compile Include="FieldChangedEventArgs.cs" />
     <Compile Include="GoClient.cs" />
+    <Compile Include="GoException.cs" />
     <Compile Include="GoGame.cs" />
     <Compile Include="GoServer.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="GroupField.cs" />
     <Compile Include="IInfo.cs" />
+    <Compile Include="IMove.cs" />
+    <Compile Include="IPosition.cs" />
+    <Compile Include="KoRule.cs" />
+    <Compile Include="Move.cs" />
+    <Compile Include="Pair.cs" />
     <Compile Include="Parameters.cs" />
+    <Compile Include="ParamsEventArgs.cs" />
+    <Compile Include="Pass.cs" />
+    <Compile Include="Position.cs" />
+    <Compile Include="PositionStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelationInfo.cs" />
+    <Compile Include="Rules.cs" />
+    <Compile Include="ScoreRule.cs" />
+    <Compile Include="ShowMessageEventArgs.cs" />
+    <Compile Include="StoneField.cs" />
+    <Compile Include="Test\GameManagerTest.cs" />
+    <Compile Include="Test\GroupTest.cs" />
+    <Compile Include="Test\KoTest.cs" />
+    <Compile Include="Test\PositionStorageTest.cs" />
+    <Compile Include="Test\PositionTest.cs" />
+    <Compile Include="Test\StoneFieldTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api2008.csproj">
       <Project>{A6CD4BA3-A312-46F8-9978-A49ED132B0F6}</Project>
       <Name>Valker.PlayOnLan.Api2008</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Valker.PlayOnLan.Utilities\Valker.PlayOnLan.Utilities.csproj">
+      <Project>{13835B3F-8360-44AA-A314-89A05920D8D2}</Project>
+      <Name>Valker.PlayOnLan.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="protocol.txt" />
+    <Content Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,6 +4,9 @@ using Valker.PlayOnLan.Api.Game;
 
 namespace WinFormsClient
 {
+    /// <summary>
+    /// Allows connecting to local server
+    /// </summary>
     public partial class ServerForm : Form, IServerForm
     {
         public ServerForm()

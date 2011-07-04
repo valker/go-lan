@@ -9,6 +9,6 @@ namespace Valker.PlayOnLan.GoPlugin
     public interface IInfo
     {
         string Gui { get; }
-        IPlayingForm CreatePlayingForm(string parameters, string playerName);
+        IPlayingForm CreatePlayingForm(string parameters, string playerName, GoClient client);
     }
 }

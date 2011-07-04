@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Field.cs" />
     <Compile Include="FieldChangedEventArgs.cs" />
-    <Compile Include="MessageUtils.cs" />
     <Compile Include="ParametersForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +86,10 @@
     <ProjectReference Include="..\Valker.PlayOnLan.Goban\Valker.PlayOnLan.Goban.csproj">
       <Project>{22A2F56D-5A29-468B-90C1-622B98E9E2FF}</Project>
       <Name>Valker.PlayOnLan.Goban</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Valker.PlayOnLan.Utilities\Valker.PlayOnLan.Utilities.csproj">
+      <Project>{13835B3F-8360-44AA-A314-89A05920D8D2}</Project>
+      <Name>Valker.PlayOnLan.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -13,9 +13,9 @@ namespace Valker.PlayOnLan.GoPlugin.WinForms
             get { return "winforms"; }
         }
 
-        public IPlayingForm CreatePlayingForm(string parameters, string playerName)
+        public IPlayingForm CreatePlayingForm(string parameters, string playerName, GoClient client)
         {
-            return new PlayingForm();
+            return new PlayingForm(client);
         }
     }
 }
