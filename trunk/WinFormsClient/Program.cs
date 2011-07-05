@@ -36,7 +36,10 @@ namespace WinFormsClient
 
         protected override AuthentificationParams GetAuthParams()
         {
-            throw new NotImplementedException();
+            var param = new AuthentificationParams();
+            param.Name = "player@acer";
+            param.ServerName = "server@acer";
+            return param;
         }
     }
 }
