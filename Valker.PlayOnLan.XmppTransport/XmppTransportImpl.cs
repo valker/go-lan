@@ -40,7 +40,7 @@ namespace Valker.PlayOnLan.XmppTransport
             var body = message.Body;
             byte[] bytes = Encoding.ASCII.GetBytes(body);
             List<byte> bytes2 = new List<byte>(bytes);
-            bytes2.RemoveAll(b => b < 0x20 || b > 0x7f);
+            bytes2.RemoveAll(b => b < 0x20/* || b > 0x7f*/);
             string newMsg = Encoding.ASCII.GetString(bytes2.ToArray());
             var args = new MessageEventArgs(fromIdentifier, toIdentifier, newMsg);
             MessageArrived(this, args);
