@@ -36,10 +36,14 @@ namespace WinFormsClient
 
         protected override AuthentificationParams GetAuthParams()
         {
-            var param = new AuthentificationParams();
-            param.Name = "player@acer";
-            param.ServerName = "server@acer";
-            return param;
+            var form = new XmppParamForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                var param = new AuthentificationParams {Name = form.UserAccount, ServerName = form.ServerAccount};
+                return param;
+            }
+
+            return null;
         }
     }
 }

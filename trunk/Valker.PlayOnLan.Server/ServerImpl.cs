@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -42,6 +43,7 @@ namespace Valker.PlayOnLan.Server2008
 
             foreach (var game in _games)
             {
+                Trace.WriteLine(game.Name);
                 _gameDict.Add(game.Id, game);
             }
 
@@ -289,7 +291,7 @@ namespace Valker.PlayOnLan.Server2008
         {
             if (recepient != null)
             {
-                recepient.ClientConnector.Send("_server", recepient.ClientIdentifier, message);
+                recepient.ClientConnector.Send(recepient.ClientConnector.ConnectorName, recepient.ClientIdentifier, message);
             }
             else
             {

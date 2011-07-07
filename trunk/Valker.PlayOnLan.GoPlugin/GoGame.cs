@@ -17,7 +17,7 @@ namespace Valker.PlayOnLan.GoPlugin
         /// </summary>
         public string Name
         {
-            get { return "Го"; }
+            get { return "Go"; }
         }
 
         /// <summary>
