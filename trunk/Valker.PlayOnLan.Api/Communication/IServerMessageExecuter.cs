@@ -7,6 +7,7 @@ namespace Valker.PlayOnLan.Api.Communication
         void UpdatePartyStates(IAgentInfo agent);
         void AcceptPartyRequest(int partyId, string accepterName);
         void RegisterNewPlayer(IAgentInfo agent, string name);
+        void UnregisterPlayer(IAgentInfo agent);
         void ExecuteServerGameMessage(IAgentInfo sender, string text, int id);
     }
 }

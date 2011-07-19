@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.ServerRunn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.XmppTransport", "Valker.PlayOnLan.XmppTransport\Valker.PlayOnLan.XmppTransport.csproj", "{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationPrototype", "ApplicationPrototype\ApplicationPrototype.csproj", "{369010A7-0422-4589-A637-D577DE13008B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GtkClient", "GtkClient\GtkClient.csproj", "{D06D23EE-BC44-492E-AD3B-264FD493BA11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsClient", "WinFormsClient\WinFormsClient.csproj", "{EDEDB019-E7FC-432D-8B34-1E5B42873690}"
@@ -32,6 +30,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.GoPlugin.WinForms", "Valker.PlayOnLan.GoPlugin.WinForms\Valker.PlayOnLan.GoPlugin.WinForms.csproj", "{25589F10-2ABD-44FD-8E89-F8B916E9F1D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.Utilities", "Valker.PlayOnLan.Utilities\Valker.PlayOnLan.Utilities.csproj", "{13835B3F-8360-44AA-A314-89A05920D8D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmppTransportTest", "XmppTransportTest\XmppTransportTest.csproj", "{2C516B5F-1AE5-4D8A-B19D-55D5D727694B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EF7ED730-DC5E-4DE6-A419-4E4571AAF166}"
+	ProjectSection(SolutionItems) = preProject
+		todo.txt = todo.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerTest", "ServerTest\ServerTest.csproj", "{D3E0B528-B618-40DA-B06B-926FCE708310}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +106,14 @@ Global
 		{13835B3F-8360-44AA-A314-89A05920D8D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13835B3F-8360-44AA-A314-89A05920D8D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13835B3F-8360-44AA-A314-89A05920D8D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C516B5F-1AE5-4D8A-B19D-55D5D727694B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C516B5F-1AE5-4D8A-B19D-55D5D727694B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C516B5F-1AE5-4D8A-B19D-55D5D727694B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C516B5F-1AE5-4D8A-B19D-55D5D727694B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3E0B528-B618-40DA-B06B-926FCE708310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3E0B528-B618-40DA-B06B-926FCE708310}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3E0B528-B618-40DA-B06B-926FCE708310}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3E0B528-B618-40DA-B06B-926FCE708310}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

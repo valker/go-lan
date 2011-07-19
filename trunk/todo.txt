@@ -1,0 +1,3 @@
+PlayOnLan TODO
+
+- Xmpp server should detect that clients are disconnected

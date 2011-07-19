@@ -30,7 +30,15 @@ namespace WinFormsClient
 
         private void OnUpdateGameInfo(object sender, UpdateGameInfoEventArgs args)
         {
-            listBox1.DataSource = args.GameInfos;
+            if (InvokeRequired)
+            {
+                Invoke(new Action<object, UpdateGameInfoEventArgs>(OnUpdateGameInfo)
+                    , new[]{sender,args});
+            }
+            else
+            {
+                listBox1.DataSource = args.GameInfos;
+            }
         }
 
         private void OnGetSelectedPartyInfo(object sender, GetSelectedPartyInfoEventArgs args)

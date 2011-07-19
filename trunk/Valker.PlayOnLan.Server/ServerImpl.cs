@@ -123,6 +123,7 @@ namespace Valker.PlayOnLan.Server2008
         public void RetrieveSupportedGames(IAgentInfo sender)
         {
             var array = _games.Select(info => info.Name + ',' + info.Id).ToArray();
+            Console.WriteLine("number of games supported:" + array.Length);
             var message = new RetrieveSupportedGamesResponceMessage {Responce = array};
             Send(sender, message.ToString());
         }
@@ -200,6 +201,7 @@ namespace Valker.PlayOnLan.Server2008
             string message = args.Message;
             var serializer = new XmlSerializer(typeof (ServerMessage), ServerMessageTypes.Types);
             var msgObject = (ServerMessage) serializer.Deserialize(new StringReader(message));
+            Console.WriteLine(msgObject.GetType().ToString());
             msgObject.Execute(this, new AgentInfo { ClientConnector = (IMessageConnector)sender, ClientIdentifier = args.FromIdentifier });
         }
 
@@ -263,12 +265,20 @@ namespace Valker.PlayOnLan.Server2008
                 _players.Add(player);
                 status = true;
             }
+
+            var identifier = (string) agent.ClientIdentifier;
+            agent.ClientConnector.FollowClient(identifier);
             
             Send(agent, new AcceptNewPlayerMessage { Status = status }.ToString());
             if (status)
             {
                 UpdatePartyStates(agent);
             }
+        }
+
+        public void UnregisterPlayer(IAgentInfo agent)
+        {
+            _players.RemoveAll(player => player.Agent.ClientIdentifier == agent.ClientIdentifier);
         }
 
         public void ExecuteServerGameMessage(IAgentInfo sender, string text, int id)

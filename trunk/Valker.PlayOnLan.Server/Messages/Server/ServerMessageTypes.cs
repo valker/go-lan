@@ -14,6 +14,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
                                                     typeof (RetrieveRegistredPartiesMessage), 
                                                     typeof (RegisterNewPlayerMessage), 
                                                     typeof (ServerGameMessage),
+                                                    typeof (UnregisterPlayerMessage),
                                                 };
 
         public static Type[] Types

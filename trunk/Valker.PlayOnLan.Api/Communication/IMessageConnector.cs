@@ -20,11 +20,8 @@ namespace Valker.PlayOnLan.Api.Communication
         /// <param name="toIdentifier">to who this message</param>
         void Send(object fromIdentifier, object toIdentifier, string message);
 
-        /// <summary>
-        /// Agent identifiers connected to this connector
-        /// <remark>used in server part</remark>
-        /// </summary>
-        string[] Clients { get; }
+        void FollowClient(string identifier);
+        event EventHandler<DisconnectedClientEventArgs> DisconnectedClient;
 
         /// <summary>
         /// Message from one of the client arrived (contains message and sender id)
@@ -35,5 +32,10 @@ namespace Valker.PlayOnLan.Api.Communication
         /// Raised when connection is destroyed
         /// </summary>
         event EventHandler Closed;
+    }
+
+    public class DisconnectedClientEventArgs : EventArgs
+    {
+        public string Identifier { get; set; }
     }
 }

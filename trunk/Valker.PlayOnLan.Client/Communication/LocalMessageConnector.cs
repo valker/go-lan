@@ -45,12 +45,6 @@ namespace Valker.PlayOnLan.Client
 
         #region IMessageConnector Members
 
-
-        public string[] Clients
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         #endregion
 
         #region IMessageConnector Members
@@ -60,6 +54,13 @@ namespace Valker.PlayOnLan.Client
         {
             _parent.SendMessage(this, fromIdentifier, toIdentifier, message);
         }
+
+        public void FollowClient(string identifier)
+        {
+            throw new NotImplementedException();
+        }
+
+        public event EventHandler<DisconnectedClientEventArgs> DisconnectedClient;
 
         #endregion
     }
