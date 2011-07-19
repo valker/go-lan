@@ -85,10 +85,10 @@ namespace Valker.PlayOnLan.Client2008
             AuthentificationParams param = GetAuthParams();
             if (param != null)
             {
-                string clientName = param.Name;
+                string clientName = param.ClientName;
                 string serverName = param.ServerName;
                 var server = new XmppTransportImpl(clientName) {ConnectorName = serverName};
-                var client = new ClientImpl(clientName, null,
+                var client = new ClientImpl(param.PlayerName, null,
                                             new[]
                                                 {
                                                     new AgentInfo

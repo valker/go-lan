@@ -32,7 +32,7 @@ namespace Valker.PlayOnLan.Client2008.Communication
         private IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
 
         /// <summary>
-        /// Name of the player
+        /// ClientName of the player
         /// </summary>
         public string Name { get; set; }
 

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
+using System.Xml.Serialization;
+using Valker.PlayOnLan.Server.Messages.Server;
 using Valker.PlayOnLan.Server2008;
 using Valker.PlayOnLan.XmppTransport;
 
@@ -9,6 +12,7 @@ namespace ServerRunner
     {
         static void Main(string[] args)
         {
+
             if (args.Length == 0)
             {
                 Console.WriteLine("parameter missed.");

@@ -39,7 +39,7 @@ namespace WinFormsClient
             var form = new XmppParamForm();
             if (form.ShowDialog() == DialogResult.OK)
             {
-                var param = new AuthentificationParams {Name = form.UserAccount, ServerName = form.ServerAccount};
+                var param = new AuthentificationParams {ClientName = form.UserAccount, ServerName = form.ServerAccount, PlayerName = form.PlayerName };
                 return param;
             }
 
