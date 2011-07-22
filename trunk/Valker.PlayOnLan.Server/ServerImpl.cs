@@ -211,7 +211,17 @@ namespace Valker.PlayOnLan.Server2008
 
             connector.MessageArrived += ConnectorOnMessageArrived;
             connector.Closed += ConnectorOnClosed;
+            connector.DisconnectedClient += ConnectorOnDisconnectedClient;
             _connectors.Add(connector);
+        }
+
+        private void ConnectorOnDisconnectedClient(object sender, DisconnectedClientEventArgs args)
+        {
+            var playersToRemove = _players.Where(player => player.Agent.ClientIdentifier.Equals(args.Identifier)).ToArray();
+            foreach (var player in playersToRemove)
+            {
+                RemovePlayer(player);
+            }
         }
 
 

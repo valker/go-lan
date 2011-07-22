@@ -31,8 +31,11 @@ namespace Valker.PlayOnLan.GoPlugin.WinForms
 
         private void ClientOnEated(object sender, EatedEventArgs args)
         {
-            lblBlack.Text = args.Eated[0].ToString();
-            lblWhite.Text = args.Eated[1].ToString();
+            RunInUiThread(delegate
+                              {
+                                  lblBlack.Text = args.Eated[0].ToString();
+                                  lblWhite.Text = args.Eated[1].ToString();
+                              });
         }
 
         private void ClientOnParams(object sender, ParamsEventArgs args)
@@ -42,7 +45,10 @@ namespace Valker.PlayOnLan.GoPlugin.WinForms
             }
 
             int width = System.Convert.ToInt32(args["width"], CultureInfo.InvariantCulture);
-            gobanControl1.N = width;
+            RunInUiThread(delegate
+                              {
+                                  gobanControl1.N = width;
+                              });
         }
 
         private void ClientOnMark(object sender, EventArgs e)
@@ -57,7 +63,10 @@ namespace Valker.PlayOnLan.GoPlugin.WinForms
 
         private void FieldChanged(object sender, FieldChangedEventArgs e)
         {
-            gobanControl1.SetStone(e.X, e.Y, Convert(e.Stone), true);
+            RunInUiThread(delegate
+                              {
+                                  gobanControl1.SetStone(e.X, e.Y, Convert(e.Stone), true);
+                              });
         }
 
         private Valker.PlayOnLan.Goban.Stone Convert(Valker.PlayOnLan.Api.Stone stone)
@@ -77,14 +86,20 @@ namespace Valker.PlayOnLan.GoPlugin.WinForms
 
         private void ClientOnWait(object sender, EventArgs e)
         {
-            gobanControl1.ClickedOnBoard -= GobanControl1OnClickedOnBoard;
-            btnPass.Enabled = false;
+            RunInUiThread(delegate
+                              {
+                                  gobanControl1.ClickedOnBoard -= GobanControl1OnClickedOnBoard;
+                                  btnPass.Enabled = false;
+                              });
         }
 
         private void Client_AllowMove(object sender, EventArgs e)
         {
-            gobanControl1.ClickedOnBoard += GobanControl1OnClickedOnBoard;
-            btnPass.Enabled = true;
+            RunInUiThread(delegate
+                              {
+                                  gobanControl1.ClickedOnBoard += GobanControl1OnClickedOnBoard;
+                                  btnPass.Enabled = true;
+                              });
         }
 
         private void GobanControl1OnClickedOnBoard(object sender, MouseEventArgs args)
@@ -101,7 +116,13 @@ namespace Valker.PlayOnLan.GoPlugin.WinForms
 
         public void RunInUiThread(Action action)
         {
-            throw new NotImplementedException();
+            if (InvokeRequired)
+            {
+                Invoke(action);
+            }
+            else {
+                action();
+            }
         }
 
         public string Gui

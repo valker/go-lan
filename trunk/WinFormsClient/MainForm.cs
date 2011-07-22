@@ -63,7 +63,7 @@ namespace WinFormsClient
 
         public void RunInUiThread(Action action)
         {
-            throw new NotImplementedException();
+            BeginInvoke(action);
         }
 
         public string Gui

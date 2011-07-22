@@ -88,6 +88,7 @@ namespace Valker.PlayOnLan.Client2008
                 string clientName = param.ClientName;
                 string serverName = param.ServerName;
                 var server = new XmppTransportImpl(clientName) {ConnectorName = serverName};
+                server.AllowSubscibtionFrom(serverName);
                 var client = new ClientImpl(param.PlayerName, null,
                                             new[]
                                                 {
