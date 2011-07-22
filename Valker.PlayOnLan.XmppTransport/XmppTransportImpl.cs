@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using agsXMPP;
@@ -16,6 +17,7 @@ namespace Valker.PlayOnLan.XmppTransport
         private XmppClientConnection _connection;
         private static readonly Encoding MyEncoding;
         List<string> _followers = new List<string>();
+        private List<string> _allowSubscribtionFrom = new List<string>();
 
         public XmppTransportImpl(string name)
         {
@@ -25,8 +27,12 @@ namespace Valker.PlayOnLan.XmppTransport
             _connection.OnLogin += (sender => ev.Set());
             _connection.OnMessage += ConnectionOnOnMessage;
             _connection.OnPresence += ConnectionOnOnPresence;
+            _connection.OnRosterStart += ConnectionOnOnRosterStart;
+            _connection.OnRosterEnd +=ConnectionOnOnRosterEnd;
             _connection.OnRosterItem += ConnectionOnOnRosterItem;
+
             const string password = "1";
+
             _connection.AutoAgents = false;
             _connection.AutoPresence = true;
             _connection.AutoRoster = true;
@@ -36,14 +42,56 @@ namespace Valker.PlayOnLan.XmppTransport
             Name = name;
         }
 
+        private void ConnectionOnOnRosterEnd(object sender)
+        {
+            Trace.WriteLine("ConnectionOnOnRosterEnd");
+        }
+
+        private void ConnectionOnOnRosterStart(object sender)
+        {
+            Trace.WriteLine("ConnectionOnOnRosterStart");
+        }
+
         private void ConnectionOnOnRosterItem(object sender, RosterItem item)
         {
-            Console.WriteLine(item.ToString());
+            Trace.WriteLine("ConnectionOnOnRosterItem:" + item.ToString());
         }
 
         private void ConnectionOnOnPresence(object sender, Presence presence)
         {
-            Console.WriteLine(presence.ToString());
+            switch (presence.Type)
+            {
+                case PresenceType.subscribe:
+                    ProcessSubscribing(presence);
+                    break;
+                case PresenceType.unavailable:
+                    ProcessUnavailable(presence);
+                    break;
+                default:
+                    Trace.WriteLine(presence.ToString());
+                    break;
+            }
+        }
+
+        private void ProcessUnavailable(Presence presence)
+        {
+            var identifier = _followers.Find(s => s == presence.From.Bare);
+            if (identifier != null)
+            {
+                InvokeDisconnectedClient(new DisconnectedClientEventArgs(){Identifier = identifier});
+            }
+        }
+
+        private void ProcessSubscribing(Presence presence)
+        {
+            if (_allowSubscribtionFrom.Contains(presence.From.Bare))
+            {
+                _connection.PresenceManager.ApproveSubscriptionRequest(presence.From);
+            } 
+            else
+            {
+                _connection.PresenceManager.RefuseSubscriptionRequest(presence.From);
+            }
         }
 
         static XmppTransportImpl()
@@ -87,8 +135,6 @@ namespace Valker.PlayOnLan.XmppTransport
         {
             Console.WriteLine("Follower added: " + identifier);
             _followers.Add(identifier);
-            //_connection.RosterManager.AddRosterItem(new Jid(identifier));
-            // TODO: implement subscribing to notification of client disconnected
             var jid = new Jid(identifier);
             _connection.PresenceManager.Subscribe(jid);
         }
@@ -115,5 +161,10 @@ namespace Valker.PlayOnLan.XmppTransport
         }
 
         #endregion
+
+        public void AllowSubscibtionFrom(string jid)
+        {
+            _allowSubscribtionFrom.Add(jid);
+        }
     }
 }
