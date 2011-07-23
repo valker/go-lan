@@ -9,6 +9,7 @@ namespace Valker.PlayOnLan.Api
     {
         None = 0,
         Black = 1,
-        White = 2
+        White = 2,
+        Both = 3
     }
 }

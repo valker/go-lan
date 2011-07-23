@@ -276,8 +276,7 @@ namespace Valker.PlayOnLan.Server2008
                 status = true;
             }
 
-            var identifier = (string) agent.ClientIdentifier;
-            agent.ClientConnector.FollowClient(identifier);
+            agent.ClientConnector.FollowClient(agent.ClientIdentifier);
             
             Send(agent, new AcceptNewPlayerMessage { Status = status }.ToString());
             if (status)
@@ -294,7 +293,7 @@ namespace Valker.PlayOnLan.Server2008
         public void ExecuteServerGameMessage(IAgentInfo sender, string text, int id)
         {
             var server = _partyStates.First(state => state.PartyId == id).Server;
-            var player1 = _players.First(player => player.PlayerName.Equals(sender.ClientIdentifier));
+            var player1 = _players.First(player => player.Agent.ClientIdentifier.Equals(sender.ClientIdentifier));
             server.ProcessMessage(player1, text);
         }
 

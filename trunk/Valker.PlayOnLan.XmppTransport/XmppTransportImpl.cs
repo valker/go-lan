@@ -16,8 +16,9 @@ namespace Valker.PlayOnLan.XmppTransport
         Jid _my;
         private XmppClientConnection _connection;
         private static readonly Encoding MyEncoding;
-        List<string> _followers = new List<string>();
+        List<object> _followers = new List<object>();
         private List<string> _allowSubscribtionFrom = new List<string>();
+        private Exception _exception;
 
         public XmppTransportImpl(string name)
         {
@@ -38,7 +39,17 @@ namespace Valker.PlayOnLan.XmppTransport
             _connection.AutoRoster = true;
             _connection.AutoResolveConnectServer = true;
             _connection.Open(_my.User, password);
+            _connection.OnSocketError+=delegate(object sender, Exception exception)
+                                           {
+                                               _exception = exception;
+                                               ev.Set();
+                                           };
             ev.WaitOne();
+            if (_exception != null)
+            {
+                throw new XmppTransportException("XMPP Connection problem", _exception);
+            }
+
             Name = name;
         }
 
@@ -131,11 +142,10 @@ namespace Valker.PlayOnLan.XmppTransport
             _connection.Send(new Message((string)toIdentifier, str));
         }
 
-        public void FollowClient(string identifier)
+        public void FollowClient(object identifier)
         {
-            Console.WriteLine("Follower added: " + identifier);
             _followers.Add(identifier);
-            var jid = new Jid(identifier);
+            var jid = new Jid(identifier.ToString());
             _connection.PresenceManager.Subscribe(jid);
         }
 
@@ -165,6 +175,13 @@ namespace Valker.PlayOnLan.XmppTransport
         public void AllowSubscibtionFrom(string jid)
         {
             _allowSubscribtionFrom.Add(jid);
+        }
+    }
+
+    class XmppTransportException : Exception
+    {
+        public XmppTransportException(string message, Exception innerException) : base(message, innerException)
+        {
         }
     }
 }

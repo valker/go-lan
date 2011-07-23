@@ -5,4 +5,7 @@ TODO List:
 	- protocol is defined (v 0.1) and should be implemented
 	
 2. Tests for Go-engine should be prepared
-	
+
+3. Implement pass-pass - select dead and calculate territory
+
+4. Look-and-feel optimization: changing of field could be sent as one message

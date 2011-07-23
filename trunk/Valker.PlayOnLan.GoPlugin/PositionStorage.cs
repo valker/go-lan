@@ -61,15 +61,17 @@ namespace Valker.PlayOnLan.GoPlugin
             if (!x)
             {
                 // добавляем этот ход 
-                AddRelationship(position, newPosition.First);
+                const bool notPass = false;
+                AddRelationship(position, newPosition.First, notPass);
             }
 
             return newPosition;
         }
 
-        private void AddRelationship(IPosition parent, IPosition child)
+        private void AddRelationship(IPosition parent, IPosition child, bool isPass)
         {
-            var relation = new RelationInfo {Parent = parent, Child = child};
+            IMove move = isPass ? (IMove) new Pass() : new Move();
+            var relation = new RelationInfo {Parent = parent, Child = child, Move = move};
             _relationship.Add(relation);
         }
 
