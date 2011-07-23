@@ -20,7 +20,12 @@ namespace Valker.PlayOnLan.Api.Communication
         /// <param name="toIdentifier">to who this message</param>
         void Send(object fromIdentifier, object toIdentifier, string message);
 
-        void FollowClient(string identifier);
+        /// <summary>
+        /// Turn on checking that the client identified by given identifier become disconnected
+        /// </summary>
+        /// <param name="identifier">identifier of the client</param>
+        void FollowClient(object identifier);
+
         event EventHandler<DisconnectedClientEventArgs> DisconnectedClient;
 
         /// <summary>
@@ -36,6 +41,6 @@ namespace Valker.PlayOnLan.Api.Communication
 
     public class DisconnectedClientEventArgs : EventArgs
     {
-        public string Identifier { get; set; }
+        public object Identifier { get; set; }
     }
 }

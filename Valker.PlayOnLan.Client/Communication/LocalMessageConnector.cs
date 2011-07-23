@@ -55,9 +55,9 @@ namespace Valker.PlayOnLan.Client
             _parent.SendMessage(this, fromIdentifier, toIdentifier, message);
         }
 
-        public void FollowClient(string identifier)
+        public void FollowClient(object identifier)
         {
-            throw new NotImplementedException();
+            // todo: to be implemented
         }
 
         public event EventHandler<DisconnectedClientEventArgs> DisconnectedClient;

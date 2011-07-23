@@ -12,14 +12,17 @@ namespace Valker.PlayOnLan.GoPlugin
     /// </summary>
     class GoServer : IGameServer
     {
-        private int _currentPlayer;
-
         public GoServer(IPlayer[] players, string parameters)
         {
             if (players.Length != 2) throw new ArgumentException("Wrong number of players");
             Players = players;
-            _currentPlayer = 0;
+
             Parameters = Parameters.Parse(parameters);
+
+            Engine = new Engine(Parameters.Width);
+            Engine.FieldChanged += EngineOnFieldChanged;
+            Engine.EatedChanged += EngineOnEatedChanged;
+
             _colors = new Stone[2];
             _colors[0] = Stone.Black;
             _colors[1] = Stone.White;
@@ -38,7 +41,7 @@ namespace Valker.PlayOnLan.GoPlugin
             switch (Util.ExtractCommand(message))
             {
                 case "MOVE":
-                    Move(Util.ExtractParams(message), _colors[_currentPlayer]);
+                    Move(Util.ExtractParams(message));
                     break;
                 case "PASS":
                     Pass();
@@ -107,21 +110,14 @@ namespace Valker.PlayOnLan.GoPlugin
         private void Pass()
         {
             Engine.Pass();
-            SwitchPlayer();
             AllowMove();
         }
 
-        private void Move(string[] strings, Stone stone)
+        private void Move(IEnumerable<string> strings)
         {
             var coordinates = strings.Take(2).Select(s=>int.Parse(s)).ToArray();
             Engine.Move(new Point(coordinates[0], coordinates[1]));
-            SwitchPlayer();
             AllowMove();
-        }
-
-        private void SwitchPlayer()
-        {
-            _currentPlayer = 1 - _currentPlayer;
         }
 
         /// <summary>
@@ -140,10 +136,6 @@ namespace Valker.PlayOnLan.GoPlugin
         /// </summary>
         public void Start()
         {
-            Engine = new Engine(Parameters.Width);
-            Engine.FieldChanged += EngineOnFieldChanged;
-            Engine.EatedChanged += EngineOnEatedChanged;
-
             SendInitialState();
             EngineOnEatedChanged(null, null);
             AllowMove();
@@ -178,8 +170,13 @@ namespace Valker.PlayOnLan.GoPlugin
         /// </summary>
         private void AllowMove()
         {
-            SendMessageToPlayer(_currentPlayer, "ALLOW");
-            SendMessageToPlayer(1 - _currentPlayer, "WAIT");
+            var current = Engine.CurrentPlayer;
+
+            var currentPlayer =
+                _colors.Select((stone, i) => new Pair<Stone, int>(stone, i)).Where(pair => pair.First == current).First().Second;
+
+            SendMessageToPlayer(currentPlayer, "ALLOW");
+            SendMessageToPlayer(1 - currentPlayer, "WAIT");
         }
 
         private void SendMessageToPlayer(int player, string message)

@@ -19,11 +19,19 @@ namespace ServerRunner
                 return;
             }
 
-            var transport = new XmppTransportImpl(args[0]) { ConnectorName = args[0] };
-            var server = new ServerImpl(new []{transport});
-            var ev = new AutoResetEvent(false);
-            server.Closed += delegate { ev.Set(); };
-            ev.WaitOne();
+            try
+            {
+                var transport = new XmppTransportImpl(args[0]) { ConnectorName = args[0] };
+                var server = new ServerImpl(new[] { transport });
+                var ev = new AutoResetEvent(false);
+                server.Closed += delegate { ev.Set(); };
+                ev.WaitOne();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unexpected exception occurred: {0}", ex);
+            }
         }
     }
 }

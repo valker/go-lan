@@ -6,20 +6,36 @@ using Valker.PlayOnLan.Api;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
+    /// <summary>
+    /// Implements Go rules
+    /// </summary>
     internal class Engine
     {
+        /// <summary>
+        /// Storage of positions with relations between them
+        /// </summary>
         private PositionStorage _positionStorage;
+
+        /// <summary>
+        /// Information about eated stones
+        /// </summary>
         private Dictionary<Stone, int> _eated;
+
+        /// <summary>
+        /// Komi (added to white result at the scoring stage)
+        /// </summary>
+        private readonly double _komi;
 
         public Engine(int size)
         {
             _eated = new Dictionary<Stone, int> {{Stone.Black, 0}, {Stone.White, 0}};
 
+            _komi = 6.5;
+
             _positionStorage = new PositionStorage(size);
             RootPosition = _positionStorage.Initial;
             CurrentPosition = RootPosition;
             CurrentPlayer = Stone.Black;
-
         }
 
         public IPosition CurrentPosition
