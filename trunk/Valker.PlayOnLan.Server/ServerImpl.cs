@@ -138,7 +138,7 @@ namespace Valker.PlayOnLan.Server2008
             // create the server component
             party.Server = _gameDict[party.GameTypeId].CreateServer(party.Players, party.Parameters);
 
-            party.Server.OnMessage += OnServerOnOnMessage;
+            party.Server.OnMessageReady += OnServerOnOnMessage;
 
             // change the status
             party.Status = PartyStatus.Running;
@@ -211,7 +211,7 @@ namespace Valker.PlayOnLan.Server2008
 
             connector.MessageArrived += ConnectorOnMessageArrived;
             connector.Closed += ConnectorOnClosed;
-            connector.DisconnectedClient += ConnectorOnDisconnectedClient;
+            connector.DisconnectedOther += ConnectorOnDisconnectedClient;
             _connectors.Add(connector);
         }
 
@@ -276,7 +276,7 @@ namespace Valker.PlayOnLan.Server2008
                 status = true;
             }
 
-            agent.ClientConnector.FollowClient(agent.ClientIdentifier);
+            agent.ClientConnector.WatchOther(agent.ClientIdentifier);
             
             Send(agent, new AcceptNewPlayerMessage { Status = status }.ToString());
             if (status)

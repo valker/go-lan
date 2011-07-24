@@ -24,9 +24,12 @@ namespace Valker.PlayOnLan.Api.Communication
         /// Turn on checking that the client identified by given identifier become disconnected
         /// </summary>
         /// <param name="identifier">identifier of the client</param>
-        void FollowClient(object identifier);
+        void WatchOther(object identifier);
 
-        event EventHandler<DisconnectedClientEventArgs> DisconnectedClient;
+        /// <summary>
+        /// Raised when other (watched subject) has been disconnected
+        /// </summary>
+        event EventHandler<DisconnectedClientEventArgs> DisconnectedOther;
 
         /// <summary>
         /// Message from one of the client arrived (contains message and sender id)
@@ -37,10 +40,5 @@ namespace Valker.PlayOnLan.Api.Communication
         /// Raised when connection is destroyed
         /// </summary>
         event EventHandler Closed;
-    }
-
-    public class DisconnectedClientEventArgs : EventArgs
-    {
-        public object Identifier { get; set; }
     }
 }

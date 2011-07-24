@@ -6,7 +6,7 @@ using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.TicTacToePlugin
 {
-    public class TicTacToeParameters : IGameParameters
+    public class TicTacToeParameters
     {
         private static readonly XmlSerializer Serializer = new XmlSerializer(typeof (TicTacToeParameters));
 

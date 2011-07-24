@@ -86,11 +86,11 @@ namespace Valker.TicTacToePlugin
             _currentPlayer = 1 - _currentPlayer;
         }
 
-        public event EventHandler<OnMessageEventArgs> OnMessage = delegate { };
+        public event EventHandler<OnMessageEventArgs> OnMessageReady = delegate { };
 
         private void InvokeOnMessage(OnMessageEventArgs e)
         {
-            EventHandler<OnMessageEventArgs> handler = OnMessage;
+            EventHandler<OnMessageEventArgs> handler = OnMessageReady;
             if (handler != null) handler(this, e);
         }
 

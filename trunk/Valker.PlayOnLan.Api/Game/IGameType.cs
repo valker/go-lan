@@ -6,8 +6,6 @@
  * 
  * Для изменения этого шаблона используйте Сервис | Настройка | Кодирование | Правка стандартных заголовков.
  */
-using System;
-
 namespace Valker.PlayOnLan.Api.Game
 {
     /// <summary>
@@ -45,16 +43,5 @@ namespace Valker.PlayOnLan.Api.Game
         /// <param name="parameters">parameters of the game depended on the game type</param>
         /// <returns>the server componend of the game</returns>
         IGameServer CreateServer(IPlayer[] players, string parameters);
-    }
-
-    public class NewAgentCreatingEventArgs : EventArgs
-    {
-        public string Name { get; set; }
-    }
-
-    public interface IServerForm : IForm
-    {
-        event EventHandler<NewAgentCreatingEventArgs> NewAgentCreating;
-
     }
 }
