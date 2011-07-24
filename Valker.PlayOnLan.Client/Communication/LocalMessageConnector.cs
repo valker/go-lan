@@ -55,12 +55,12 @@ namespace Valker.PlayOnLan.Client
             _parent.SendMessage(this, fromIdentifier, toIdentifier, message);
         }
 
-        public void FollowClient(object identifier)
+        public void WatchOther(object identifier)
         {
             // todo: to be implemented
         }
 
-        public event EventHandler<DisconnectedClientEventArgs> DisconnectedClient;
+        public event EventHandler<DisconnectedClientEventArgs> DisconnectedOther;
 
         #endregion
     }

@@ -142,18 +142,18 @@ namespace Valker.PlayOnLan.XmppTransport
             _connection.Send(new Message((string)toIdentifier, str));
         }
 
-        public void FollowClient(object identifier)
+        public void WatchOther(object identifier)
         {
             _followers.Add(identifier);
             var jid = new Jid(identifier.ToString());
             _connection.PresenceManager.Subscribe(jid);
         }
 
-        public event EventHandler<DisconnectedClientEventArgs> DisconnectedClient;
+        public event EventHandler<DisconnectedClientEventArgs> DisconnectedOther;
 
         private void InvokeDisconnectedClient(DisconnectedClientEventArgs e)
         {
-            EventHandler<DisconnectedClientEventArgs> handler = DisconnectedClient;
+            EventHandler<DisconnectedClientEventArgs> handler = DisconnectedOther;
             if (handler != null) handler(this, e);
         }
 

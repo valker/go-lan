@@ -12,7 +12,7 @@ namespace Valker.TicTacToePlugin
 {
     public partial class ParametersForm : Form
     {
-        public IGameParameters Parameters
+        public TicTacToeParameters Parameters
         {
             get { return new TicTacToeParameters(Convert.ToInt32(txtStones.Text), Convert.ToInt32(txtWidth.Text)); }
         }

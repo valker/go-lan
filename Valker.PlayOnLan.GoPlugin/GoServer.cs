@@ -123,11 +123,11 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <summary>
         /// Raised when server part wants to send a message to client(s)
         /// </summary>
-        public event EventHandler<OnMessageEventArgs> OnMessage;
+        public event EventHandler<OnMessageEventArgs> OnMessageReady;
 
         private void InvokeOnMessage(OnMessageEventArgs e)
         {
-            EventHandler<OnMessageEventArgs> handler = OnMessage;
+            EventHandler<OnMessageEventArgs> handler = OnMessageReady;
             if (handler != null) handler(this, e);
         }
 

@@ -25,8 +25,8 @@ namespace Valker.PlayOnLan.GoPlugin.Test
             position = position.Move(new Point(3, 3), Stone.White).First;
             var rules = new Rules {Ko = KoRule.Simple, Score = ScoreRule.EmptyTerritory};
             var storage = new PositionStorage(position, rules);
-            var result = storage.Move(position, new Point(2, 2), Stone.White);
-            result = storage.Move(result.First, new Point(3, 2), Stone.Black);
+            position = storage.Move(position, new Point(2, 2), Stone.White).First;
+            position = storage.Move(position, new Point(3, 2), Stone.Black).First;
         }
 
         [Test]
@@ -65,6 +65,7 @@ namespace Valker.PlayOnLan.GoPlugin.Test
         {
             // сделать ситуацию, воспроизводящую ситуационное супер КО и удостовериться, что ход не проходит
         }
+
         [Test]
         public void SuperKoSituationedNotDetected()
         {

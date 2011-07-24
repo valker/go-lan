@@ -28,19 +28,4 @@ namespace Valker.PlayOnLan.Api.Game
 
         event EventHandler<MessageEventArgs> OnMessageReady;
     }
-
-    public interface IPlayingForm : IForm
-    {
-    }
-
-    public interface IMainForm : IForm
-    {
-    }
-
-    public interface IForm
-    {
-        void Show(IForm parent);
-        void RunInUiThread(Action action);
-        string Gui { get; }
-    }
 }

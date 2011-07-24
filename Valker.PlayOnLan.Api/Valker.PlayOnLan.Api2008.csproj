@@ -45,17 +45,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communication\DisconnectedClientEventArgs.cs" />
     <Compile Include="Communication\IAgentInfo.cs" />
     <Compile Include="Communication\IClientMessageExecuter.cs" />
     <Compile Include="Communication\IMessage.cs" />
     <Compile Include="Communication\IMessageConnector.cs" />
     <Compile Include="Communication\IServerMessageExecuter.cs" />
     <Compile Include="Communication\MessageEventArgs.cs" />
+    <Compile Include="Game\IForm.cs" />
     <Compile Include="Game\IGameClient.cs" />
-    <Compile Include="Game\IGameParameters.cs" />
     <Compile Include="Game\IGameServer.cs" />
     <Compile Include="Game\IGameType.cs" />
+    <Compile Include="Game\IMainForm.cs" />
     <Compile Include="Game\IPlayer.cs" />
+    <Compile Include="Game\IPlayingForm.cs" />
+    <Compile Include="Game\IServerForm.cs" />
+    <Compile Include="Game\NewAgentCreatingEventArgs.cs" />
     <Compile Include="Game\OnMessageEventArgs.cs" />
     <Compile Include="Game\PartyState.cs" />
     <Compile Include="Game\PartyStatus.cs" />
