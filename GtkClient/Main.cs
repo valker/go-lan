@@ -50,7 +50,7 @@ namespace GtkClient
 		
 		protected override Valker.PlayOnLan.Api.Game.IServerForm CreateServerForm ()
 		{
-			throw new System.NotImplementedException();
+			return new ServerWindow();
 		}
 		
 		

@@ -70,6 +70,8 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="gtk-gui\GtkClient.MainForm.cs" />
+    <Compile Include="ServerWindow.cs" />
+    <Compile Include="gtk-gui\GtkClient.ServerWindow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
