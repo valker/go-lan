@@ -5,8 +5,7 @@ using Valker.PlayOnLan.Api;
 using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
-{
-    public class ScoreCalculator
+{    public class ScoreCalculator
     {
         public Pair<Stone, int>[] Calculate(IPosition position)
         {

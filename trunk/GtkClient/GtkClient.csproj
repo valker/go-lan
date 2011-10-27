@@ -70,14 +70,20 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="gtk-gui\GtkClient.MainForm.cs" />
-    <Compile Include="ServerForm.cs" />
-    <Compile Include="gtk-gui\GtkClient.ServerForm.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\Valker.PlayOnLan.Server\Valker.PlayOnLan.Server2008.csproj">
       <Project>{C2F403D0-E775-43CE-B1B1-B8A46593E6D4}</Project>
       <Name>Valker.PlayOnLan.Server2008</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Valker.PlayOnLan.Client\Valker.PlayOnLan.Client2008.csproj">
+      <Project>{42760C3A-171D-42CE-8E40-B4D185781C8D}</Project>
+      <Name>Valker.PlayOnLan.Client2008</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api2008.csproj">
+      <Project>{A6CD4BA3-A312-46F8-9978-A49ED132B0F6}</Project>
+      <Name>Valker.PlayOnLan.Api2008</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
