@@ -1,14 +1,22 @@
 using System;
 using Valker.PlayOnLan.Api.Game;
+using Gtk;
+
 namespace GtkClient
 {
 	public partial class ServerWindow : Gtk.Window, IServerForm
 	{
 		public ServerWindow () : base(Gtk.WindowType.Toplevel)
 		{
-			this.Build ();
+			Build ();
 		}
-	
+		
+		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
+		{
+			Application.Quit ();
+			a.RetVal = true;
+		}
+
 
 		#region IServerForm implementation
 		public event EventHandler<NewAgentCreatingEventArgs> NewAgentCreating;
@@ -17,10 +25,11 @@ namespace GtkClient
 		#region IForm implementation
 		public void Show (IForm parent)
 		{
-			throw new NotImplementedException ();
+			this.ShowAll();
+			Application.Run();
 		}
 
-		public void RunInUiThread (Action action)
+		public void RunInUiThread (System.Action action)
 		{
 			throw new NotImplementedException ();
 		}
