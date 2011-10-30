@@ -25,7 +25,7 @@
         <property name="MemberName" />
         <property name="HasWindow">False</property>
         <child>
-          <widget class="Gtk.Button" id="button2">
+          <widget class="Gtk.Button" id="button1">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
             <property name="Type">TextOnly</property>
@@ -33,19 +33,11 @@
             <property name="UseUnderline">True</property>
           </widget>
           <packing>
-            <property name="X">78</property>
-            <property name="Y">107</property>
+            <property name="X">212</property>
+            <property name="Y">48</property>
           </packing>
         </child>
       </widget>
-    </child>
-  </widget>
-  <widget class="Gtk.Window" id="GtkClient.ServerWindow" design-size="400 300">
-    <property name="MemberName" />
-    <property name="Title" translatable="yes">ServerWindow</property>
-    <property name="WindowPosition">CenterOnParent</property>
-    <child>
-      <placeholder />
     </child>
   </widget>
 </stetic-interface>

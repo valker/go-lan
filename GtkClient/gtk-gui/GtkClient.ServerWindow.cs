@@ -4,6 +4,10 @@ namespace GtkClient
 {
 	public partial class ServerWindow
 	{
+		private global::Gtk.Fixed fixed1;
+
+		private global::Gtk.Button button2;
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -11,12 +15,27 @@ namespace GtkClient
 			this.Name = "GtkClient.ServerWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString ("ServerWindow");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			// Container child GtkClient.ServerWindow.Gtk.Container+ContainerChild
+			this.fixed1 = new global::Gtk.Fixed ();
+			this.fixed1.Name = "fixed1";
+			this.fixed1.HasWindow = false;
+			// Container child fixed1.Gtk.Fixed+FixedChild
+			this.button2 = new global::Gtk.Button ();
+			this.button2.CanFocus = true;
+			this.button2.Name = "button2";
+			this.button2.UseUnderline = true;
+			this.button2.Label = global::Mono.Unix.Catalog.GetString ("GtkButton");
+			this.fixed1.Add (this.button2);
+			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.button2]));
+			w1.X = 78;
+			w1.Y = 107;
+			this.Add (this.fixed1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 400;
 			this.DefaultHeight = 300;
-			this.Show ();
+			this.Hide ();
 		}
 	}
 }
