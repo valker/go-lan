@@ -6,7 +6,9 @@ namespace GtkClient
 	{
 		private global::Gtk.Fixed fixed1;
 
-		private global::Gtk.Button button2;
+		private global::Gtk.Entry txtName;
+
+		private global::Gtk.Button btnCreate;
 
 		protected virtual void Build ()
 		{
@@ -20,22 +22,33 @@ namespace GtkClient
 			this.fixed1.Name = "fixed1";
 			this.fixed1.HasWindow = false;
 			// Container child fixed1.Gtk.Fixed+FixedChild
-			this.button2 = new global::Gtk.Button ();
-			this.button2.CanFocus = true;
-			this.button2.Name = "button2";
-			this.button2.UseUnderline = true;
-			this.button2.Label = global::Mono.Unix.Catalog.GetString ("GtkButton");
-			this.fixed1.Add (this.button2);
-			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.button2]));
-			w1.X = 78;
-			w1.Y = 107;
+			this.txtName = new global::Gtk.Entry ();
+			this.txtName.CanFocus = true;
+			this.txtName.Name = "txtName";
+			this.txtName.IsEditable = true;
+			this.txtName.InvisibleChar = '●';
+			this.fixed1.Add (this.txtName);
+			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.txtName]));
+			w1.X = 8;
+			w1.Y = 10;
+			// Container child fixed1.Gtk.Fixed+FixedChild
+			this.btnCreate = new global::Gtk.Button ();
+			this.btnCreate.CanFocus = true;
+			this.btnCreate.Name = "btnCreate";
+			this.btnCreate.UseUnderline = true;
+			this.btnCreate.Label = global::Mono.Unix.Catalog.GetString ("GtkButton");
+			this.fixed1.Add (this.btnCreate);
+			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.btnCreate]));
+			w2.X = 173;
+			w2.Y = 9;
 			this.Add (this.fixed1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 400;
 			this.DefaultHeight = 300;
-			this.Hide ();
+			this.Show ();
+			this.btnCreate.Clicked += new global::System.EventHandler (this.OnButton1Clicked);
 		}
 	}
 }

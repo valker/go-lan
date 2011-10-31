@@ -40,6 +40,16 @@ namespace GtkClient
 			}
 		}
 		#endregion
+		protected virtual void OnButton1Clicked (object sender, System.EventArgs e)
+		{
+			var nac = NewAgentCreating;
+			if(nac!=null) {
+				var args = new NewAgentCreatingEventArgs(){Name=txtName.Text};
+				nac(this, args);
+			}
+		}
+		
+		
 }
 }
 
