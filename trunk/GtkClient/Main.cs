@@ -28,7 +28,7 @@ namespace GtkClient
 		
 		protected override Valker.PlayOnLan.Api.Game.IMainForm CreateMainForm (Valker.PlayOnLan.Client2008.Communication.ClientImpl client)
 		{
-			throw new System.NotImplementedException();
+			return new MainForm(client);
 		}
 		
 		

@@ -25,16 +25,29 @@
         <property name="MemberName" />
         <property name="HasWindow">False</property>
         <child>
-          <widget class="Gtk.Button" id="button1">
+          <widget class="Gtk.Entry" id="txtName">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">●</property>
+          </widget>
+          <packing>
+            <property name="X">8</property>
+            <property name="Y">10</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="btnCreate">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
             <property name="Type">TextOnly</property>
             <property name="Label" translatable="yes">GtkButton</property>
             <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnButton1Clicked" />
           </widget>
           <packing>
-            <property name="X">212</property>
-            <property name="Y">48</property>
+            <property name="X">173</property>
+            <property name="Y">9</property>
           </packing>
         </child>
       </widget>
