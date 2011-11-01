@@ -6,8 +6,11 @@ namespace GtkClient
 {
 	public partial class MainForm : Gtk.Window, IMainForm
 	{
+		private readonly Valker.PlayOnLan.Client2008.MainForm _mf;
+ 
 		public MainForm (ClientImpl client) : base(Gtk.WindowType.Toplevel)
 		{
+			_mf = new Valker.PlayOnLan.Client2008.MainForm(client, this);
 			this.Build ();
 		}
 	
