@@ -2,6 +2,7 @@ using System;
 using Gtk;
 using System.Linq;
 using Valker.PlayOnLan.Server;
+using Valker.PlayOnLan.Client2008;
 
 namespace GtkClient
 {
@@ -34,7 +35,9 @@ namespace GtkClient
 		
 		protected override Valker.PlayOnLan.Client2008.AuthentificationParams GetAuthParams ()
 		{
-			throw new System.NotImplementedException();
+			var ap = new AuthentificationParams();
+			// todo: create a modal dialog and fill fields of 'ap'
+			return ap;
 		}
 		
 		#endregion

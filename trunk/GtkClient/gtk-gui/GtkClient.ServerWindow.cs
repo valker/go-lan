@@ -33,6 +33,7 @@ namespace GtkClient
 			w1.Y = 10;
 			// Container child fixed1.Gtk.Fixed+FixedChild
 			this.btnCreate = new global::Gtk.Button ();
+			this.btnCreate.CanDefault = true;
 			this.btnCreate.CanFocus = true;
 			this.btnCreate.Name = "btnCreate";
 			this.btnCreate.UseUnderline = true;
@@ -47,6 +48,7 @@ namespace GtkClient
 			}
 			this.DefaultWidth = 400;
 			this.DefaultHeight = 300;
+			this.btnCreate.HasDefault = true;
 			this.Show ();
 			this.btnCreate.Clicked += new global::System.EventHandler (this.OnButton1Clicked);
 		}
