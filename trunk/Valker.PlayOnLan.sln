@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.GoPlugin",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.GoPlugin.WinForms", "Valker.PlayOnLan.GoPlugin.WinForms\Valker.PlayOnLan.GoPlugin.WinForms.csproj", "{25589F10-2ABD-44FD-8E89-F8B916E9F1D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.GoPlugin.Gtk", "Valker.PlayOnLan.GoPlugin.Gtk\Valker.PlayOnLan.GoPlugin.Gtk.csproj", "{97B21811-1657-4579-A8AA-CCB94C427F28}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.Utilities", "Valker.PlayOnLan.Utilities\Valker.PlayOnLan.Utilities.csproj", "{13835B3F-8360-44AA-A314-89A05920D8D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmppTransportTest", "XmppTransportTest\XmppTransportTest.csproj", "{2C516B5F-1AE5-4D8A-B19D-55D5D727694B}"
@@ -86,6 +88,10 @@ Global
 		{9013D731-1C6E-4AAC-8E20-F4EBC49AB853}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9013D731-1C6E-4AAC-8E20-F4EBC49AB853}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9013D731-1C6E-4AAC-8E20-F4EBC49AB853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97B21811-1657-4579-A8AA-CCB94C427F28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97B21811-1657-4579-A8AA-CCB94C427F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97B21811-1657-4579-A8AA-CCB94C427F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97B21811-1657-4579-A8AA-CCB94C427F28}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6CD4BA3-A312-46F8-9978-A49ED132B0F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A6CD4BA3-A312-46F8-9978-A49ED132B0F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6CD4BA3-A312-46F8-9978-A49ED132B0F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -118,6 +124,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7CBEA4FE-9513-46A2-ADB0-F548D3853CE0} = {E973A778-9FAB-4D9B-8F9A-85372FE9ADC2}
 		{25589F10-2ABD-44FD-8E89-F8B916E9F1D1} = {E973A778-9FAB-4D9B-8F9A-85372FE9ADC2}
+		{97B21811-1657-4579-A8AA-CCB94C427F28} = {E973A778-9FAB-4D9B-8F9A-85372FE9ADC2}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = GtkClient\GtkClient.csproj
