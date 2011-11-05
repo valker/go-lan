@@ -3,6 +3,7 @@ using Valker.PlayOnLan.Client2008.Communication;
 using Valker.PlayOnLan.Api.Game;
 using Gtk;
 using Valker.PlayOnLan.Client2008;
+using System.Diagnostics;
 namespace GtkClient
 {
 	public partial class MainForm : Gtk.Window, IMainForm
@@ -11,7 +12,7 @@ namespace GtkClient
  
 		public void OnSetPlayerName(object sender, SetPlayerNameEventArgs e)
 		{
-			throw new NotImplementedException();
+			this.Title = "PlayOnLan - " + e.Name;
 		}
 		
 		public void OnGetSelectedGameInfo(object sender, GetSelectedGameInfoEventArgs e)
@@ -25,11 +26,12 @@ namespace GtkClient
 		}
 		public void OnUpdateGameInfo(object sender, UpdateGameInfoEventArgs e)
 		{
-			throw new NotImplementedException();
+			// TODO: should be implemented
+			Debug.WriteLine(e.GameInfos.Length.ToString());
 		}
 		public void OnUpdatePartyStatesView(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			//todo: should be implemented
 		}
 		public MainForm (ClientImpl client) : base(Gtk.WindowType.Toplevel)
 		{

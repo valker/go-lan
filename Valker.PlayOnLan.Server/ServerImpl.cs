@@ -19,29 +19,41 @@ namespace Valker.PlayOnLan.Server2008
 {
     public class ServerImpl : IServerMessageExecuter, IDisposable
     {
-        private readonly IEnumerable<IGameType> _games = new List<IGameType>(Loader.Load(Environment.CurrentDirectory));
+        private readonly IEnumerable<IGameType> _games;
 
-        private readonly IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
+        private readonly IDictionary<string, IGameType> _gameDict;
 
         // Added when new party registred
         // Removed when party is removed, OR client that register the party is removed
-        private readonly List<PartyState> _partyStates = new List<PartyState>();
+        private readonly List<PartyState> _partyStates;
 
         private int _partyStateId;
 
         // Added when new transport is attached to the server
-        private readonly List<IMessageConnector> _connectors = new List<IMessageConnector>();
+        private readonly List<IMessageConnector> _connectors;
 
         // Added when new player is registred
-        private readonly List<IPlayer> _players = new List<IPlayer>();
+        private readonly List<IPlayer> _players;
         
-        private readonly BackgroundWorker _worker = new BackgroundWorker();
+        private readonly BackgroundWorker _worker;
 
         public ServerImpl(IEnumerable<IMessageConnector> connectors)
         {
             if (connectors == null) throw new ArgumentNullException("connectors");
 
-            foreach (var game in _games)
+        	_games = new List<IGameType>(Loader.Load(Environment.CurrentDirectory));
+
+        	_gameDict = new Dictionary<string, IGameType>();
+			
+        	_partyStates = new List<PartyState>();
+			
+	        _connectors = new List<IMessageConnector>();
+
+			_players = new List<IPlayer>();
+        
+        	_worker = new BackgroundWorker();
+			
+			foreach (var game in _games)
             {
                 Trace.WriteLine(game.Name);
                 _gameDict.Add(game.Id, game);
