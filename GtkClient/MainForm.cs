@@ -2,16 +2,48 @@ using System;
 using Valker.PlayOnLan.Client2008.Communication;
 using Valker.PlayOnLan.Api.Game;
 using Gtk;
+using Valker.PlayOnLan.Client2008;
 namespace GtkClient
 {
 	public partial class MainForm : Gtk.Window, IMainForm
 	{
 		private readonly Valker.PlayOnLan.Client2008.MainForm _mf;
  
+		public void OnSetPlayerName(object sender, SetPlayerNameEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void OnGetSelectedGameInfo(object sender, GetSelectedGameInfoEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+		
+		public void OnGetSelectedPartyInfo(object sender, GetSelectedPartyInfoEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+		public void OnUpdateGameInfo(object sender, UpdateGameInfoEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+		public void OnUpdatePartyStatesView(object sender, EventArgs e)
+		{
+			throw new NotImplementedException();
+		}
 		public MainForm (ClientImpl client) : base(Gtk.WindowType.Toplevel)
 		{
 			_mf = new Valker.PlayOnLan.Client2008.MainForm(client, this);
 			this.Build ();
+			
+			            _mf.OnSetPlayerName += OnSetPlayerName;
+            _mf.OnGetSelectedGameInfo += OnGetSelectedGameInfo;
+            _mf.OnGetSelectedPartyInfo += OnGetSelectedPartyInfo;
+            _mf.OnUpdateGameInfo += OnUpdateGameInfo;
+            _mf.OnUpdatePartyStatesView += OnUpdatePartyStatesView;
+
+            
+            _mf.OnLoad();
 		}
 	
 
