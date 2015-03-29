@@ -3,7 +3,7 @@ using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    internal class StoneField
+    public class StoneField
     {
         private readonly Stone[,] _field;
 

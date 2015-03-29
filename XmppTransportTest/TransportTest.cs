@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using NUnit.Framework;
 using Valker.PlayOnLan.Api.Communication;
@@ -14,7 +10,7 @@ namespace XmppTransportTest
     [TestFixture]
     public class TransportTest
     {
-        [Test]
+//        [Test]
         public void TestSimpleMessage()
         {
             try

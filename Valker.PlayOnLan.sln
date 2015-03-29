@@ -22,13 +22,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.Goban", "V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.PluginLoader", "Valker.PlayOnLan.PluginLoader\Valker.PlayOnLan.PluginLoader.csproj", "{56EF6572-031E-405E-B260-1865FD798E09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTicTacToePlugin", "TestTicTacToePlugin\TestTicTacToePlugin.csproj", "{771856E5-F496-454C-9CC6-39EC39317E87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToePluginTest", "TestTicTacToePlugin\TicTacToePluginTest.csproj", "{771856E5-F496-454C-9CC6-39EC39317E87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.ServerRunner", "ServerRunner\Valker.PlayOnLan.ServerRunner.csproj", "{A9125D9B-3E0A-45EB-8CB4-0F65257D17E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.XmppTransport", "Valker.PlayOnLan.XmppTransport\Valker.PlayOnLan.XmppTransport.csproj", "{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GtkClient", "GtkClient\GtkClient.csproj", "{D06D23EE-BC44-492E-AD3B-264FD493BA11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsClient", "WinFormsClient\WinFormsClient.csproj", "{EDEDB019-E7FC-432D-8B34-1E5B42873690}"
 EndProject
@@ -36,13 +34,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.GoPlugin",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.GoPlugin.WinForms", "Valker.PlayOnLan.GoPlugin.WinForms\Valker.PlayOnLan.GoPlugin.WinForms.csproj", "{25589F10-2ABD-44FD-8E89-F8B916E9F1D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.GoPlugin.Gtk", "Valker.PlayOnLan.GoPlugin.Gtk\Valker.PlayOnLan.GoPlugin.Gtk.csproj", "{97B21811-1657-4579-A8AA-CCB94C427F28}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.Utilities", "Valker.PlayOnLan.Utilities\Valker.PlayOnLan.Utilities.csproj", "{13835B3F-8360-44AA-A314-89A05920D8D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmppTransportTest", "XmppTransportTest\XmppTransportTest.csproj", "{2C516B5F-1AE5-4D8A-B19D-55D5D727694B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerTest", "ServerTest\ServerTest.csproj", "{D3E0B528-B618-40DA-B06B-926FCE708310}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.GoPluginTests", "Valker.PlayOnLan.GoPluginTests\Valker.PlayOnLan.GoPluginTests.csproj", "{AA44BFE5-F62E-4077-BA27-9611F33C5DA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,10 +84,6 @@ Global
 		{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D06D23EE-BC44-492E-AD3B-264FD493BA11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D06D23EE-BC44-492E-AD3B-264FD493BA11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D06D23EE-BC44-492E-AD3B-264FD493BA11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D06D23EE-BC44-492E-AD3B-264FD493BA11}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EDEDB019-E7FC-432D-8B34-1E5B42873690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EDEDB019-E7FC-432D-8B34-1E5B42873690}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDEDB019-E7FC-432D-8B34-1E5B42873690}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -102,10 +96,6 @@ Global
 		{25589F10-2ABD-44FD-8E89-F8B916E9F1D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25589F10-2ABD-44FD-8E89-F8B916E9F1D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25589F10-2ABD-44FD-8E89-F8B916E9F1D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97B21811-1657-4579-A8AA-CCB94C427F28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97B21811-1657-4579-A8AA-CCB94C427F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97B21811-1657-4579-A8AA-CCB94C427F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97B21811-1657-4579-A8AA-CCB94C427F28}.Release|Any CPU.Build.0 = Release|Any CPU
 		{13835B3F-8360-44AA-A314-89A05920D8D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{13835B3F-8360-44AA-A314-89A05920D8D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13835B3F-8360-44AA-A314-89A05920D8D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -118,6 +108,10 @@ Global
 		{D3E0B528-B618-40DA-B06B-926FCE708310}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3E0B528-B618-40DA-B06B-926FCE708310}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3E0B528-B618-40DA-B06B-926FCE708310}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA44BFE5-F62E-4077-BA27-9611F33C5DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA44BFE5-F62E-4077-BA27-9611F33C5DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA44BFE5-F62E-4077-BA27-9611F33C5DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA44BFE5-F62E-4077-BA27-9611F33C5DA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,7 +119,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7CBEA4FE-9513-46A2-ADB0-F548D3853CE0} = {E973A778-9FAB-4D9B-8F9A-85372FE9ADC2}
 		{25589F10-2ABD-44FD-8E89-F8B916E9F1D1} = {E973A778-9FAB-4D9B-8F9A-85372FE9ADC2}
-		{97B21811-1657-4579-A8AA-CCB94C427F28} = {E973A778-9FAB-4D9B-8F9A-85372FE9ADC2}
+		{AA44BFE5-F62E-4077-BA27-9611F33C5DA5} = {E973A778-9FAB-4D9B-8F9A-85372FE9ADC2}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = GtkClient\GtkClient.csproj

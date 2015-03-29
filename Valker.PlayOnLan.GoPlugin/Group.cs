@@ -7,7 +7,7 @@ using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    internal class Group : ICollection<Point>
+    public class Group : ICollection<Point>
     {
         private List<Point> _points = new List<Point>();
         public Stone Player { get; private set; }

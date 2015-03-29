@@ -50,9 +50,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="nunit.framework, Version=2.4.7.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <Package>nunit</Package>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EatedEventArgs.cs" />
@@ -83,12 +80,6 @@
     <Compile Include="ScoreRule.cs" />
     <Compile Include="ShowMessageEventArgs.cs" />
     <Compile Include="StoneField.cs" />
-    <Compile Include="Test\GameManagerTest.cs" />
-    <Compile Include="Test\GroupTest.cs" />
-    <Compile Include="Test\KoTest.cs" />
-    <Compile Include="Test\PositionStorageTest.cs" />
-    <Compile Include="Test\PositionTest.cs" />
-    <Compile Include="Test\StoneFieldTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api2008.csproj">

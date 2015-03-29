@@ -1,6 +1,6 @@
 namespace Valker.PlayOnLan.GoPlugin
 {
-    internal enum ExceptionReason
+    public enum ExceptionReason
     {
         Occuped,
         SelfDead,

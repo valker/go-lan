@@ -6,7 +6,7 @@ using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    class PositionStorage
+    public class PositionStorage
     {
         /// <summary>
         /// First - parent, second - child

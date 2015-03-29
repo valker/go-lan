@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Valker.PlayOnLan.Api;
 using Valker.TicTacToePlugin;
 
@@ -99,7 +95,7 @@ namespace TestTicTacToePlugin
             f.Set(1, 1, Stone.Black);
             Assert.IsTrue(f.Win(3) == Stone.None);
             f.Set(2, 0, Stone.Black);
-            Assert.IsTrue(f.Win(3) == Stone.Black);
+            Assert.That(f.Win(3), Is.EqualTo(Stone.Black));
         }
     
     }

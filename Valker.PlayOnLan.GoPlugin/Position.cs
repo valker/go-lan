@@ -7,7 +7,7 @@ using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    class Position : IPosition
+    public class Position : IPosition
     {
         public bool Equals(Position other)
         {

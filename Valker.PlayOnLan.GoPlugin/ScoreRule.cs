@@ -1,4 +1,4 @@
 namespace Valker.PlayOnLan.GoPlugin
 {
-    enum ScoreRule { None, EmptyTerritory, LiveStones, LivePlusEmpty }
+    public enum ScoreRule { None, EmptyTerritory, LiveStones, LivePlusEmpty }
 }

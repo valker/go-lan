@@ -9,7 +9,7 @@ namespace Valker.PlayOnLan.GoPlugin
     /// <summary>
     /// Implements Go rules
     /// </summary>
-    internal class Engine
+    public class Engine
     {
         /// <summary>
         /// Storage of positions with relations between them
