@@ -86,7 +86,7 @@ namespace Valker.PlayOnLan.XmppTransport
 
         private void ProcessUnavailable(Presence presence)
         {
-            var identifier = _followers.Find(s => s == presence.From.Bare);
+            var identifier = _followers.Find(s => (string) s == presence.From.Bare);
             if (identifier != null)
             {
                 InvokeDisconnectedClient(new DisconnectedClientEventArgs(){Identifier = identifier});
