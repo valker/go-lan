@@ -62,6 +62,7 @@
     <Compile Include="GoServer.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupField.cs" />
+    <Compile Include="IEngine.cs" />
     <Compile Include="IInfo.cs" />
     <Compile Include="IMove.cs" />
     <Compile Include="IPosition.cs" />

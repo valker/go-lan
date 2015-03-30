@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Valker.PlayOnLan.Api;
 using Valker.PlayOnLan.Utilities;
 
@@ -84,8 +85,7 @@ namespace Valker.PlayOnLan.GoPlugin
             EatedChanged?.Invoke(this, e);
         }
 
-
-        public ICollection<KeyValuePair<Stone, int>> Eated => _eated;
+        public ICollection<KeyValuePair<Stone, int>> Eated => _eated.ToArray();
 
         private IPosition _currentPosition;
 
