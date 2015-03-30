@@ -1,3 +1,6 @@
 Backup/
 obj
 bin
+packages/NUnit.2.6.4/
+packages/NUnitTestAdapter.1.2/
+packages/agsXMPP.1.1.1.0/

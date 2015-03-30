@@ -32,7 +32,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         protected IPlayer[] Players { get; set; }
 
-        protected Engine Engine { get; set; }
+        protected IEngine Engine { get; set; }
 
         private Stone[] _colors; 
 

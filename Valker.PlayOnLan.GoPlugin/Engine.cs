@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Valker.PlayOnLan.Api;
+using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
     /// <summary>
     /// Implements Go rules
     /// </summary>
-    public class Engine
+    public class Engine : IEngine
     {
         /// <summary>
         /// Storage of positions with relations between them
         /// </summary>
-        private PositionStorage _positionStorage;
+        private readonly PositionStorage _positionStorage;
 
         /// <summary>
         /// Information about eated stones
         /// </summary>
-        private Dictionary<Stone, int> _eated;
+        private readonly Dictionary<Stone, int> _eated;
 
         /// <summary>
         /// Komi (added to white result at the scoring stage)
@@ -68,31 +67,25 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private void InvokeCurrentPositionChanged(EventArgs e)
         {
-            EventHandler handler = CurrentPositionChanged;
-            if (handler != null) handler(this, e);
+            CurrentPositionChanged?.Invoke(this, e);
         }
 
         public event EventHandler CurrentPlayerChanged;
 
         private void InvokeCurrentPlayerChanged(EventArgs e)
         {
-            EventHandler handler = CurrentPlayerChanged;
-            if (handler != null) handler(this, e);
+            CurrentPlayerChanged?.Invoke(this, e);
         }
 
         public event EventHandler EatedChanged;
 
         private void InvokeEatedChanged(EventArgs e)
         {
-            EventHandler handler = EatedChanged;
-            if (handler != null) handler(this, e);
+            EatedChanged?.Invoke(this, e);
         }
 
 
-        public IEnumerable<KeyValuePair<Stone, int>> Eated
-        {
-            get { return _eated; }
-        }
+        public ICollection<KeyValuePair<Stone, int>> Eated => _eated;
 
         private IPosition _currentPosition;
 
@@ -114,7 +107,7 @@ namespace Valker.PlayOnLan.GoPlugin
         /// Сделать ход текущим игроком
         /// </summary>
         /// <param name="point"></param>
-        public void Move(Utilities.Point point)
+        public void Move(Point point)
         {
             var reply = _positionStorage.Move(CurrentPosition, point, CurrentPlayer);
 
@@ -126,15 +119,14 @@ namespace Valker.PlayOnLan.GoPlugin
                 _eated[CurrentPlayer] += reply.Second;
                 InvokeEatedChanged(EventArgs.Empty);
             }
-            CurrentPlayer = Utilities.Util.Opposite(CurrentPlayer);
+            CurrentPlayer = Util.Opposite(CurrentPlayer);
         }
 
         public event EventHandler<FieldChangedEventArgs> FieldChanged = delegate {};
 
         private void InvokeFieldChanged(FieldChangedEventArgs e)
         {
-            EventHandler<FieldChangedEventArgs> handler = FieldChanged;
-            if (handler != null) handler(this, e);
+            FieldChanged?.Invoke(this, e);
         }
 
         private void CheckStoneField(IPosition old, IPosition next)
