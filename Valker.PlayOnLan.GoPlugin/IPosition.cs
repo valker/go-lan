@@ -6,7 +6,7 @@ namespace Valker.PlayOnLan.GoPlugin
 {
     public interface IPosition
     {
-        Pair<IPosition, int> Move(Point point, Stone player);
+        Pair<IPosition, IMoveInfo> Move(Point point, Stone player);
         IEnumerable<Pair<Point, Stone>> CompareStoneField(IPosition next);
         Stone GetStoneAt(Point point);
         int Size { get; }

@@ -70,7 +70,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public bool IsEditable { get; private set; }
 
-        public Pair<IPosition, int> Move(Point point, Stone player)
+        public Pair<IPosition, IMoveInfo> Move(Point point, Stone player)
         {
             var state = Field.GetAt(point);
             if (state != Stone.None)
@@ -95,7 +95,7 @@ namespace Valker.PlayOnLan.GoPlugin
                 throw new GoException(ExceptionReason.SelfDead);
             }
 
-            return new Pair<IPosition, int>(position, stoneCount);
+            return System.Tuple.Create(position, );
         }
 
         public IEnumerable<Pair<Point, Stone>> CompareStoneField(IPosition next)
@@ -381,5 +381,9 @@ namespace Valker.PlayOnLan.GoPlugin
             return points;
         }
 
+    }
+
+    public interface IMoveInfo
+    {
     }
 }

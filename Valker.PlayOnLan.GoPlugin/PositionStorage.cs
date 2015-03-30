@@ -6,20 +6,20 @@ using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    public class PositionStorage
+    public class PositionStorage : IPositionStorage
     {
         /// <summary>
         /// First - parent, second - child
         /// </summary>
-        List<RelationInfo> _relationship = new List<RelationInfo>();
+        readonly List<RelationInfo> _relationship = new List<RelationInfo>();
 
-        public PositionStorage(int size, Rules rules)
+        public PositionStorage(int size, IRules rules)
         {
             Initial = Position.CreateInitial(size);
             Rules = rules;
         }
 
-        public PositionStorage(IPosition initial, Rules rules)
+        public PositionStorage(IPosition initial, IRules rules)
         {
             Initial = initial;
             Rules = rules;
@@ -29,7 +29,7 @@ namespace Valker.PlayOnLan.GoPlugin
         {
         }
 
-        protected Rules Rules { get; set; }
+        protected IRules Rules { get; set; }
 
         /// <summary>
         /// Возвращает исходную позицию в дереве игры
@@ -48,10 +48,11 @@ namespace Valker.PlayOnLan.GoPlugin
 
             // todo: check that this situation is not repeated and follow the rules
             // проверяем, что этот ход не повторялся до этого
-            var distance = GetPositionDistanceImpl(newPosition.First, position);
+            Pair<int, IPosition> distance = GetPositionDistanceImpl(newPosition.First, position);
             //
             //
             //Rules.Check(newPosition, distance);
+            bool isAcceptable = Rules.IsAcceptable(newPosition, distance);
 
             // проверяем, что такого хода ещё не делалось из этой позиции
             var children = GetChildPositions(position);
@@ -61,16 +62,15 @@ namespace Valker.PlayOnLan.GoPlugin
             if (!x)
             {
                 // добавляем этот ход 
-                const bool notPass = false;
-                AddRelationship(position, newPosition.First, notPass);
+                AddRelationship(position, newPosition.First);
             }
 
             return newPosition;
         }
 
-        private void AddRelationship(IPosition parent, IPosition child, bool isPass)
+        private void AddRelationship(IPosition parent, IPosition child)
         {
-            IMove move = isPass ? (IMove) new Pass() : new Move();
+            IMove move = new Move();
             var relation = new RelationInfo {Parent = parent, Child = child, Move = move};
             _relationship.Add(relation);
         }
@@ -100,18 +100,18 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private IPosition GetParentPosition(IPosition position)
         {
-            var relationInfo = _relationship.Where(info => ReferenceEquals(info.Child, position)).FirstOrDefault();
-            if (relationInfo == null)
-            {
-                return null;
-            }
+            var relationInfo = _relationship.FirstOrDefault(info => ReferenceEquals(info.Child, position));
 
-            return relationInfo.Parent;
+            return relationInfo?.Parent;
         }
 
         public IPosition Edit(IPosition initial, Point point, Stone stone)
         {
             throw new NotImplementedException();
         }
+    }
+
+    public interface IPositionStorage
+    {
     }
 }
