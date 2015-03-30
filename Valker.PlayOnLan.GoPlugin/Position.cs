@@ -70,7 +70,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public bool IsEditable { get; private set; }
 
-        public Pair<IPosition, IMoveInfo> Move(Point point, Stone player)
+        public Tuple<IPosition, IMoveInfo> Move(Point point, Stone player)
         {
             var state = Field.GetAt(point);
             if (state != Stone.None)
@@ -95,10 +95,10 @@ namespace Valker.PlayOnLan.GoPlugin
                 throw new GoException(ExceptionReason.SelfDead);
             }
 
-            return System.Tuple.Create(position, );
+            return Tuple.Create<IPosition, IMoveInfo>(position, new MoveInfo());
         }
 
-        public IEnumerable<Pair<Point, Stone>> CompareStoneField(IPosition next)
+        public IEnumerable<Tuple<Point, Stone>> CompareStoneField(IPosition next)
         {
             var size = Field.Size;
             for (int x = 0; x < size; x++)
@@ -109,7 +109,7 @@ namespace Valker.PlayOnLan.GoPlugin
                     Stone stone = next.GetStoneAt(point);
                     if (GetStoneAt(point) != stone)
                     {
-                        yield return new Pair<Point, Stone>(point, stone);
+                        yield return Tuple.Create(point, stone);
                     }
                 }
             }
@@ -322,7 +322,7 @@ namespace Valker.PlayOnLan.GoPlugin
         private static Group ExtractGroup(List<Pair<Point, Stone>> points, StoneField field)
         {
             var point = points[0];
-            var group = new Group(point.First, point.Second);
+            var group = new Group(point.Item1, point.Item2);
             RecourseExtractGroup(group, point, points);
             return group;
         }
@@ -331,18 +331,18 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             var selectedNeighbour = points.Where(pair =>
             {
-                if (point.Second != pair.Second)
+                if (point.Item2 != pair.Item2)
                 {
                     return false;
                 }
-                return point.First.Distance(pair.First) <= 1;
+                return point.Item1.Distance(pair.Item1) <= 1;
             }).ToArray();
 
             foreach (var pair in selectedNeighbour)
             {
-                if (!grp.Contains(pair.First))
+                if (!grp.Contains(pair.Item1))
                 {
-                    grp.Add(pair.First);
+                    grp.Add(pair.Item1);
                 }
                 points.Remove(pair);
             }
@@ -383,7 +383,19 @@ namespace Valker.PlayOnLan.GoPlugin
 
     }
 
+    public class MoveInfo : IMoveInfo
+    {
+        public int Eated
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+    }
+
     public interface IMoveInfo
     {
+        int Eated { get; }
     }
 }

@@ -41,14 +41,14 @@ namespace Valker.PlayOnLan.GoPlugin
             return _relationship.Where(info => info.Parent.Equals(position)).Select(pair => pair.Child);
         }
 
-        public Pair<IPosition, int> Move(IPosition position, Point point, Stone player)
+        public Tuple<IPosition, IMoveInfo> Move(IPosition position, Point point, Stone player)
         {
             // выполняем ход по правилам го и создаём новую позицию
-            Pair<IPosition, int> newPosition = position.Move(point, player);
+            Tuple<IPosition, IMoveInfo> newPosition = position.Move(point, player);
 
             // todo: check that this situation is not repeated and follow the rules
             // проверяем, что этот ход не повторялся до этого
-            Pair<int, IPosition> distance = GetPositionDistanceImpl(newPosition.First, position);
+            Pair<int, IPosition> distance = GetPositionDistanceImpl(newPosition.Item1, position);
             //
             //
             //Rules.Check(newPosition, distance);
@@ -57,12 +57,12 @@ namespace Valker.PlayOnLan.GoPlugin
             // проверяем, что такого хода ещё не делалось из этой позиции
             var children = GetChildPositions(position);
 
-            bool x = children.Contains(newPosition.First);
+            bool x = children.Contains(newPosition.Item1);
 
             if (!x)
             {
                 // добавляем этот ход 
-                AddRelationship(position, newPosition.First);
+                AddRelationship(position, newPosition.Item1);
             }
 
             return newPosition;
@@ -92,7 +92,7 @@ namespace Valker.PlayOnLan.GoPlugin
                 // иначе расчитать расстояние от родительской до равной заданной
                 var distance = GetPositionDistanceImpl(mostYoungestChild, parent);
                 // если достижимо, вернуть (расстояние + 1), если нет, вернуть константу (-1)
-                return distance.First == -1 ? distance : new Pair<int, IPosition>(distance.First + 1, distance.Second);
+                return distance.Item1 == -1 ? distance : new Pair<int, IPosition>(distance.Item1 + 1, distance.Item2);
             }
             // недостижимо равенство. возвращаем константу (-1)
             return new Pair<int, IPosition>(-1, null);

@@ -16,17 +16,17 @@ namespace Valker.PlayOnLan.GoPlugin.Test
         public void SimpleKoDetected()
         {
             var position = Position.CreateInitial(9);
-            position = position.Move(new Point(2, 1), Stone.Black).First;
-            position = position.Move(new Point(2, 3), Stone.Black).First;
-            position = position.Move(new Point(1, 2), Stone.Black).First;
-            position = position.Move(new Point(3, 2), Stone.Black).First;
-            position = position.Move(new Point(3, 1), Stone.White).First;
-            position = position.Move(new Point(4, 2), Stone.White).First;
-            position = position.Move(new Point(3, 3), Stone.White).First;
+            position = position.Move(new Point(2, 1), Stone.Black).Item1;
+            position = position.Move(new Point(2, 3), Stone.Black).Item1;
+            position = position.Move(new Point(1, 2), Stone.Black).Item1;
+            position = position.Move(new Point(3, 2), Stone.Black).Item1;
+            position = position.Move(new Point(3, 1), Stone.White).Item1;
+            position = position.Move(new Point(4, 2), Stone.White).Item1;
+            position = position.Move(new Point(3, 3), Stone.White).Item1;
             var rules = new Rules {Ko = KoRule.Simple, Score = ScoreRule.EmptyTerritory};
             var storage = new PositionStorage(position, rules);
-            position = storage.Move(position, new Point(2, 2), Stone.White).First;
-            position = storage.Move(position, new Point(3, 2), Stone.Black).First;
+            position = storage.Move(position, new Point(2, 2), Stone.White).Item1;
+            position = storage.Move(position, new Point(3, 2), Stone.Black).Item1;
         }
 
         [Test]
@@ -40,16 +40,16 @@ namespace Valker.PlayOnLan.GoPlugin.Test
         {
             var position = Position.CreateInitial(9);
 
-            position = position.Move(new Point(1, 0), Stone.Black).First;
-            position = position.Move(new Point(0, 1), Stone.Black).First;
-            position = position.Move(new Point(3, 0), Stone.White).First;
-            position = position.Move(new Point(2, 1), Stone.White).First;
-            position = position.Move(new Point(1, 1), Stone.White).First;
+            position = position.Move(new Point(1, 0), Stone.Black).Item1;
+            position = position.Move(new Point(0, 1), Stone.Black).Item1;
+            position = position.Move(new Point(3, 0), Stone.White).Item1;
+            position = position.Move(new Point(2, 1), Stone.White).Item1;
+            position = position.Move(new Point(1, 1), Stone.White).Item1;
             var rules = new Rules { Ko = koRule, Score = ScoreRule.EmptyTerritory };
             var storage = new PositionStorage(position, rules);
             var result = storage.Move(position, new Point(2, 0), Stone.Black);
-            result = storage.Move(result.First, new Point(0, 0), Stone.White);
-            result = storage.Move(result.First, new Point(1, 0), Stone.Black);
+            result = storage.Move(result.Item1, new Point(0, 0), Stone.White);
+            result = storage.Move(result.Item1, new Point(1, 0), Stone.Black);
         }
 
         [Test]

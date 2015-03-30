@@ -18,8 +18,8 @@ namespace Valker.PlayOnLan.GoPlugin
 
             foreach (var pair in ownedClusters)
             {
-                int i = ((int) pair.Second) - 1;
-                result[i] = new Pair<Stone, int>(result[i].First, result[i].Second + pair.First.Count);
+                int i = ((int) pair.Item2) - 1;
+                result[i] = new Pair<Stone, int>(result[i].Item1, result[i].Item2 + pair.Item1.Count);
             }
 
             return result;

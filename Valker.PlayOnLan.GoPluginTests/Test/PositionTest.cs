@@ -24,9 +24,9 @@ namespace Valker.PlayOnLan.GoPlugin.Test
         {
             IPosition position = Position.CreateInitial(9);
             var status = position.Move(new Point(1, 1), Stone.Black);
-            Assert.IsFalse(status.First.IsEditable);
-            Assert.IsTrue(status.Second == 0);
-            Assert.AreNotSame(status.First, position);
+            Assert.IsFalse(status.Item1.IsEditable);
+            Assert.IsTrue(status.Item2.Eated == 0);
+            Assert.AreNotSame(status.Item1, position);
         }
 
         [Test]

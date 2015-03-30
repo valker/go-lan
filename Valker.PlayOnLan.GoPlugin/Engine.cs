@@ -111,12 +111,12 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             var reply = _positionStorage.Move(CurrentPosition, point, CurrentPlayer);
 
-            CheckStoneField(CurrentPosition, reply.First);
+            CheckStoneField(CurrentPosition, reply.Item1);
 
-            CurrentPosition = reply.First;
-            if (reply.Second != 0)
+            CurrentPosition = reply.Item1;
+            if (reply.Item2 != null && reply.Item2.Eated != 0)
             {
-                _eated[CurrentPlayer] += reply.Second;
+                _eated[CurrentPlayer] += reply.Item2.Eated;
                 InvokeEatedChanged(EventArgs.Empty);
             }
             CurrentPlayer = Util.Opposite(CurrentPlayer);

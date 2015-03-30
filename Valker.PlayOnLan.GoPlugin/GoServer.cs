@@ -173,7 +173,7 @@ namespace Valker.PlayOnLan.GoPlugin
             var current = Engine.CurrentPlayer;
 
             var currentPlayer =
-                _colors.Select((stone, i) => new Pair<Stone, int>(stone, i)).Where(pair => pair.First == current).First().Second;
+                _colors.Select((stone, i) => Tuple.Create(stone, i)).First(pair => pair.Item1 == current).Item2;
 
             SendMessageToPlayer(currentPlayer, "ALLOW");
             SendMessageToPlayer(1 - currentPlayer, "WAIT");

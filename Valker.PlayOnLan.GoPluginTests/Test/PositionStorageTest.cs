@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
@@ -38,11 +39,11 @@ namespace Valker.PlayOnLan.GoPlugin.Test
             var storage = new PositionStorage(Size);
             var initial = storage.Initial;
             var firstMove = storage.Move(initial, new Point(1, 1), Stone.Black);
-            Assert.AreNotEqual(initial, firstMove.First);
-            Assert.IsTrue(firstMove.Second == 0);
-            var secondMove = storage.Move(firstMove.First, new Point(2, 2), Stone.White);
-            Assert.AreNotEqual(firstMove.First, secondMove.First);
-            Assert.IsTrue(secondMove.Second == 0);
+            Assert.AreNotEqual(initial, firstMove.Item1);
+            Assert.IsTrue(firstMove.Item2.Eated == 0);
+            var secondMove = storage.Move(firstMove.Item1, new Point(2, 2), Stone.White);
+            Assert.AreNotEqual(firstMove.Item1, secondMove.Item1);
+            Assert.IsTrue(secondMove.Item2.Eated == 0);
         }
 
         [Test]
@@ -58,11 +59,11 @@ namespace Valker.PlayOnLan.GoPlugin.Test
         {
             var storage = new PositionStorage(Size);
             var st1 = storage.Move(storage.Initial, new Point(0, 0), Stone.Black);
-            var st2 = storage.Move(st1.First, new Point(1, 0), Stone.White);
-            var st3 = storage.Move(st2.First, new Point(3, 3), Stone.Black);
-            var st4 = storage.Move(st3.First, new Point(0, 1), Stone.White);
-            Assert.IsTrue(st4.Second == 1);
-            Assert.IsTrue(st4.First.GetStoneAt(new Point(0,0))==Stone.None);
+            var st2 = storage.Move(st1.Item1, new Point(1, 0), Stone.White);
+            var st3 = storage.Move(st2.Item1, new Point(3, 3), Stone.Black);
+            var st4 = storage.Move(st3.Item1, new Point(0, 1), Stone.White);
+            Assert.IsTrue(st4.Item2.Eated == 1);
+            Assert.IsTrue(st4.Item1.GetStoneAt(new Point(0,0))==Stone.None);
         }
 
         [Test]
@@ -70,13 +71,13 @@ namespace Valker.PlayOnLan.GoPlugin.Test
         {
             var storage = new PositionStorage(Size);
             var s1 = storage.Move(storage.Initial, new Point(1, 0), Stone.Black);
-            var s2 = storage.Move(s1.First, new Point(2, 0), Stone.White);
-            var s3 = storage.Move(s2.First, new Point(0, 1), Stone.Black);
-            var s4 = storage.Move(s3.First, new Point(0, 2), Stone.White);
-            var s5 = storage.Move(s4.First, new Point(0, 0), Stone.Black);
-            var s6 = storage.Move(s5.First, new Point(1, 1), Stone.White);
-            Assert.IsTrue(s6.Second == 3);
-            Assert.IsTrue(s6.First.GetStoneAt(new Point(0,0)) == Stone.None);
+            var s2 = storage.Move(s1.Item1, new Point(2, 0), Stone.White);
+            var s3 = storage.Move(s2.Item1, new Point(0, 1), Stone.Black);
+            var s4 = storage.Move(s3.Item1, new Point(0, 2), Stone.White);
+            var s5 = storage.Move(s4.Item1, new Point(0, 0), Stone.Black);
+            var s6 = storage.Move(s5.Item1, new Point(1, 1), Stone.White);
+            Assert.IsTrue(s6.Item2.Eated == 3);
+            Assert.IsTrue(s6.Item1.GetStoneAt(new Point(0,0)) == Stone.None);
         }
 
         [Test]
@@ -87,10 +88,10 @@ namespace Valker.PlayOnLan.GoPlugin.Test
                                new Point(1, 0), new Point(1, 1), new Point(2, 0), new Point(2, 1), new Point(0, 1),
                                new Point(3, 0), new Point(3, 1), new Point(0, 0),
                            };
-            Pair<IPosition, int> result = PerformMoves(pnts);
-            Assert.IsTrue(result.Second == 2);
-            Assert.IsTrue(result.First.GetStoneAt(new Point(1, 0)) == Stone.None);
-            Assert.IsTrue(result.First.GetStoneAt(new Point(2, 0)) == Stone.None);
+            var result = PerformMoves(pnts);
+            Assert.IsTrue(result.Item2.Eated == 2);
+            Assert.IsTrue(result.Item1.GetStoneAt(new Point(1, 0)) == Stone.None);
+            Assert.IsTrue(result.Item1.GetStoneAt(new Point(2, 0)) == Stone.None);
         }
 
         [Test]
@@ -124,18 +125,18 @@ namespace Valker.PlayOnLan.GoPlugin.Test
                              });
         }
 
-        public static Pair<IPosition, int> PerformMoves(IEnumerable<Point> pnts)
+        public static Tuple<IPosition, IMoveInfo> PerformMoves(IEnumerable<Point> pnts)
         {
             var storage = new PositionStorage(Size);
             var player = Stone.Black;
             var pos = storage.Initial;
             int i = 0;
-            var result = new Pair<IPosition, int>();
+            var result = new Tuple<IPosition, IMoveInfo>(null, null);
             foreach (var pnt in pnts)
             {
                 result = storage.Move(pos, pnt, player);
                 player = Util.Opposite(player);
-                pos = result.First;
+                pos = result.Item1;
                 ++i;
             }
             return result;

@@ -12,10 +12,10 @@ namespace Valker.PlayOnLan.GoPlugin
         public int X { get { return _coordinates[0]; } }
         public int Y { get { return _coordinates[1]; } }
 
-        public FieldChangedEventArgs(Pair<Point,Stone> pair)
+        public FieldChangedEventArgs(Tuple<Point,Stone> pair)
         {
-            _coordinates = new int[]{pair.First.X, pair.First.Y};
-            Stone = pair.Second;
+            _coordinates = new int[]{pair.Item1.X, pair.Item1.Y};
+            Stone = pair.Item2;
         }
 
         public FieldChangedEventArgs(string[] strings)
