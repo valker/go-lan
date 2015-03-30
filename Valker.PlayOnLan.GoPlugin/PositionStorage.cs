@@ -34,7 +34,7 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <summary>
         /// Возвращает исходную позицию в дереве игры
         /// </summary>
-        public IPosition Initial { get; private set; }
+        public IPosition Initial { get; }
 
         public IEnumerable<IPosition> GetChildPositions(IPosition position)
         {
@@ -109,9 +109,5 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             throw new NotImplementedException();
         }
-    }
-
-    public interface IPositionStorage
-    {
     }
 }

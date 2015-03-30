@@ -95,7 +95,7 @@ namespace Valker.PlayOnLan.GoPlugin
                 throw new GoException(ExceptionReason.SelfDead);
             }
 
-            return Tuple.Create<IPosition, IMoveInfo>(position, new MoveInfo());
+            return Tuple.Create<IPosition, IMoveInfo>(position, new MoveInfo(stoneCount));
         }
 
         public IEnumerable<Tuple<Point, Stone>> CompareStoneField(IPosition next)
@@ -385,12 +385,14 @@ namespace Valker.PlayOnLan.GoPlugin
 
     public class MoveInfo : IMoveInfo
     {
+        public MoveInfo(int eated)
+        {
+            Eated = eated;
+        }
+
         public int Eated
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get;set;
         }
     }
 

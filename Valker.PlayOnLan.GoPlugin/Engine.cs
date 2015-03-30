@@ -14,7 +14,7 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <summary>
         /// Storage of positions with relations between them
         /// </summary>
-        private readonly PositionStorage _positionStorage;
+        private readonly IPositionStorage _positionStorage;
 
         /// <summary>
         /// Information about eated stones

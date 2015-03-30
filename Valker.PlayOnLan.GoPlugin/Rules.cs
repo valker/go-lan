@@ -8,7 +8,8 @@ namespace Valker.PlayOnLan.GoPlugin
         public ScoreRule Score { get; set; }
         public bool IsAcceptable(Tuple<IPosition, IMoveInfo> newPosition, Pair<int, IPosition> distance)
         {
-            throw new NotImplementedException();
+            //TODO: implement logic here
+            return true;
         }
     }
 }
