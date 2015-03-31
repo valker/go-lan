@@ -50,7 +50,7 @@ namespace Valker.PlayOnLan.GoPlugin
                     ShowMessage(this, new ShowMessageEventArgs(Util.ExtractParams(message)));
                     break;
                 case "FIELD":
-                    FieldChanged(this, new FieldChangedEventArgs(Util.ExtractParams(message)));
+                    FieldChanged(this, new CellChangedEventArgs(Util.ExtractParams(message)));
                     break;
                 case "MARK":
                     Mark(this, EventArgs.Empty);
@@ -83,7 +83,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public event EventHandler<EatedEventArgs> Eated = delegate { };
 
-        public event EventHandler<FieldChangedEventArgs> FieldChanged = delegate { };
+        public event EventHandler<CellChangedEventArgs> FieldChanged = delegate { };
 
         public event EventHandler<ShowMessageEventArgs> ShowMessage = delegate { };
 

@@ -19,9 +19,9 @@ namespace Valker.PlayOnLan.GoPlugin
 
             Parameters = Parameters.Parse(parameters);
 
-            Engine = new Engine(Parameters.Width);
-            Engine.FieldChanged += EngineOnFieldChanged;
-            Engine.EatedChanged += EngineOnEatedChanged;
+            Engine = new Engine(new PositionStorage(Parameters.Width),new PlayerProvider(), new Rules());
+            Engine.CellChanged += EngineOnCellChanged;
+            Engine.ScoreChanged += EngineOnEatedChanged;
 
             _colors = new Stone[2];
             _colors[0] = Stone.Black;
@@ -109,14 +109,14 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private void Pass()
         {
-            Engine.Pass();
+            Engine.Move(new Pass());
             AllowMove();
         }
 
         private void Move(IEnumerable<string> strings)
         {
-            var coordinates = strings.Take(2).Select(s=>int.Parse(s)).ToArray();
-            Engine.Move(new Point(coordinates[0], coordinates[1]));
+            int[] coordinates = strings.Take(2).Select(int.Parse).ToArray();
+            Engine.Move(new Move(coordinates[0], coordinates[1]));
             AllowMove();
         }
 
@@ -143,26 +143,32 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private void EngineOnEatedChanged(object sender, EventArgs args)
         {
-            var eated = Engine.Eated;
-            var black = eated.Where(pair => pair.Key == Stone.Black).ElementAt(0).Value;
-            var white = eated.Where(pair => pair.Key == Stone.White).ElementAt(0).Value;
-            var message = string.Format("EATED[{0},{1}]", black, white);
-            SendMessageToPlayer(0, message);
-            SendMessageToPlayer(1, message);
+            var score = Engine.PlayerProvider.GetPlayers()
+                .OrderBy(player => player.PlayerName)
+                .Select(player => Engine.GetScore(player).ToString());
+            var joined = string.Join(",", score);
+            var message = string.Format("EATED[{0}]", joined);
+            SendMessageToAllPlayers(message);
         }
 
-        private void EngineOnFieldChanged(object sender, FieldChangedEventArgs args)
+        private void EngineOnCellChanged(object sender, CellChangedEventArgs args)
         {
-            string message = string.Format("FIELD[{0},{1},{2}]", args.X, args.Y, args.Stone);
-            SendMessageToPlayer(0, message);
-            SendMessageToPlayer(1, message);
+            string message = string.Format("FIELD[{0},{1}]", args.Coordinates.ToString(), args.CellState.ToString());
+            SendMessageToAllPlayers(message);
+        }
+
+        private void SendMessageToAllPlayers(string message)
+        {
+            foreach (var player in Players)
+            {
+                SendMessageToPlayer(player, message);
+            }
         }
 
         private void SendInitialState()
         {
             string message = "PARAMS[width=" + Parameters.Width + "]";
-            SendMessageToPlayer(0, message);
-            SendMessageToPlayer(1, message);
+            SendMessageToAllPlayers(message);
         }
 
         /// <summary>
@@ -170,18 +176,22 @@ namespace Valker.PlayOnLan.GoPlugin
         /// </summary>
         private void AllowMove()
         {
-            var current = Engine.CurrentPlayer;
+            IPlayer currentPlayer = Engine.CurrentPlayer;
 
-            var currentPlayer =
-                _colors.Select((stone, i) => Tuple.Create(stone, i)).First(pair => pair.Item1 == current).Item2;
+            foreach (var player in Engine.PlayerProvider.GetPlayers())
+            {
+                if (!player.Equals(currentPlayer))
+                {
+                    SendMessageToPlayer(player, "WAIT");
+                }
+            }
 
             SendMessageToPlayer(currentPlayer, "ALLOW");
-            SendMessageToPlayer(1 - currentPlayer, "WAIT");
         }
 
-        private void SendMessageToPlayer(int player, string message)
+        private void SendMessageToPlayer(IPlayer player, string message)
         {
-            InvokeOnMessage(new OnMessageEventArgs() { Receipients = new[] { Players[player] }, Message = message });
+            InvokeOnMessage(new OnMessageEventArgs() { Receipients = new[] { player }, Message = message });
         }
     }
 }

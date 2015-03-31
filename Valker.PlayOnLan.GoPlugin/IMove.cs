@@ -1,7 +1,9 @@
+using System;
+
 namespace Valker.PlayOnLan.GoPlugin
 {
-    internal interface IMove
+    public interface IMove
     {
-        bool IsPass();
+        Tuple<IPosition, IMoveInfo> Perform(IPosition position);
     }
 }

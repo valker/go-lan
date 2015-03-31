@@ -1,21 +1,88 @@
 using System;
-using System.Collections.Generic;
-using Valker.PlayOnLan.Api;
+using System.ComponentModel;
+using System.Diagnostics.Contracts;
+using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    public interface IEngine
+    [ContractClass(typeof(EngineContract))]
+    public interface IEngine : INotifyPropertyChanged
     {
-        event EventHandler EatedChanged;
-        event EventHandler<FieldChangedEventArgs> FieldChanged;
-        ICollection<KeyValuePair<Stone, int>> Eated { get; }
-        Stone CurrentPlayer { get; }
-        void Pass();
+        /// <summary>
+        /// Сообщение об изменении состояния ячейки поля
+        /// </summary>
+        event EventHandler<CellChangedEventArgs> CellChanged;
+        /// <summary>
+        /// Счёт изменился
+        /// </summary>
+        event EventHandler ScoreChanged;
+        /// <summary>
+        /// Получить очки игрока
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        double GetScore(IPlayer player);
+        /// <summary>
+        /// Текущий игрок
+        /// </summary>
+        IPlayer CurrentPlayer { get; }
+
+        IPosition CurrentPosition { get; }
+        IPlayerProvider PlayerProvider { get; }
 
         /// <summary>
-        /// Сделать ход текущим игроком
+        /// Игрок делает ход, в результате либо меняется состояние (cells, score, current player)
+        /// либо выдаётся исключение, если ход недопустимый
         /// </summary>
-        /// <param name="point"></param>
-        void Move(Utilities.Point point);
+        /// <param name="move"></param>
+        void Move(IMove move);
+
+        // Вопросы:
+        // нужно ли включать в этот интерфейс описатель правил
+    }
+
+    [ContractClassFor(typeof(IEngine))]
+    public abstract class EngineContract : IEngine
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<CellChangedEventArgs> CellChanged;
+        public event EventHandler ScoreChanged;
+        public double GetScore(IPlayer player)
+        {
+            Contract.Requires(player != null);
+            return default(double);
+        }
+
+        public IPlayer CurrentPlayer
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<IPlayer>() != null);
+                return default(IPlayer);
+            }
+        }
+
+        public IPosition CurrentPosition
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<IPosition>() != null);
+                return default(IPosition);
+            }
+        }
+
+        public IPlayerProvider PlayerProvider
+        {
+            get {
+                Contract.Ensures(Contract.Result<IPlayerProvider>() != null);
+                return default(IPlayerProvider);
+            }
+        }
+
+        public void Move(IMove move)
+        {
+            Contract.Requires(move != null);
+            throw new NotImplementedException();
+        }
     }
 }

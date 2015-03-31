@@ -1,10 +1,22 @@
+using System;
+
 namespace Valker.PlayOnLan.GoPlugin
 {
-    class Move : IMove
+    public class Move : IMove
     {
-        public bool IsPass()
+        public Move(int x, int y)
         {
-            return false;
+            X = x;
+            Y = y;
+        }
+
+        public int Y { get; set; }
+
+        public int X { get; set; }
+
+        public Tuple<IPosition, IMoveInfo> Perform(IPosition position)
+        {
+            throw new NotImplementedException();
         }
     }
 }

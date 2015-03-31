@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Valker.PlayOnLan.Api;
+using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
@@ -12,5 +13,6 @@ namespace Valker.PlayOnLan.GoPlugin
         Stone GetStoneAt(Point point);
         int Size { get; }
         bool IsEditable { get; }
+        IPlayer CurrentPlayer { get; }
     }
 }

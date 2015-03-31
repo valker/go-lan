@@ -1,4 +1,5 @@
 using System;
+using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
@@ -10,6 +11,21 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             //TODO: implement logic here
             return true;
+        }
+
+        public Tuple<bool, ExceptionReason> IsMoveAcceptableInPosition(IMove move, IPosition position)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Tuple<bool, ExceptionReason> IsPositionAcceptableInGameLine(IPosition position, IPositionStorage gameLine)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetInitialScore(IPlayer player)
+        {
+            throw new NotImplementedException();
         }
     }
 }

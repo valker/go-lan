@@ -61,11 +61,14 @@ namespace Valker.PlayOnLan.GoPlugin.WinForms
             throw new NotImplementedException();
         }
 
-        private void FieldChanged(object sender, FieldChangedEventArgs e)
+        private void FieldChanged(object sender, CellChangedEventArgs e)
         {
+            var x = e.Coordinates.GetX();
+            var y = e.Coordinates.GetY();
+            Stone stone = e.CellState.GetStone();
             RunInUiThread(delegate
                               {
-                                  gobanControl1.SetStone(e.X, e.Y, Convert(e.Stone), true);
+                                  gobanControl1.SetStone(x, y, Convert(stone), true);
                               });
         }
 

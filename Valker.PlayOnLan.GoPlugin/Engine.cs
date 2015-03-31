@@ -1,146 +1,142 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Valker.PlayOnLan.Api;
-using Valker.PlayOnLan.Utilities;
+using System.Runtime.CompilerServices;
+using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin.Annotations;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
     /// <summary>
-    /// Implements Go rules
+    ///     Implements Go rules
     /// </summary>
     public class Engine : IEngine
     {
         /// <summary>
-        /// Storage of positions with relations between them
+        ///     Создать объект "движка"
         /// </summary>
-        private readonly IPositionStorage _positionStorage;
-
-        /// <summary>
-        /// Information about eated stones
-        /// </summary>
-        private readonly Dictionary<Stone, int> _eated;
-
-        /// <summary>
-        /// Komi (added to white result at the scoring stage)
-        /// </summary>
-        private readonly double _komi;
-
-        public Engine(int size)
+        /// <param name="positionStorage"></param>
+        /// <param name="playerProvider"></param>
+        /// <param name="rules"></param>
+        public Engine(
+            IPositionStorage positionStorage,
+            IPlayerProvider playerProvider,
+            IRules rules)
         {
-            _eated = new Dictionary<Stone, int> {{Stone.Black, 0}, {Stone.White, 0}};
-
-            _komi = 6.5;
-
-            _positionStorage = new PositionStorage(size);
-            RootPosition = _positionStorage.Initial;
-            CurrentPosition = RootPosition;
-            CurrentPlayer = Stone.Black;
+            PlayerProvider = playerProvider;
+            _score = playerProvider.GetPlayers().ToDictionary(player => player.PlayerName, rules.GetInitialScore);
+            _rules = rules;
+            _positionStorage = positionStorage;
+            CurrentPosition = _positionStorage.Initial;
+            CurrentPlayer = playerProvider.GetFirstPlayer();
         }
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #region properties
 
         public IPosition CurrentPosition
         {
             get { return _currentPosition; }
             private set
             {
+                if (Equals(_currentPosition, value)) return;
                 _currentPosition = value;
-                InvokeCurrentPositionChanged(EventArgs.Empty);
+                OnPropertyChanged();
+                CurrentPlayer = CurrentPosition.CurrentPlayer;
             }
         }
 
-        public IPosition RootPosition { get; private set; }
-
-        private Stone _currentPlayer = Stone.None;
-
-        public Stone CurrentPlayer
+        public IPlayer CurrentPlayer
         {
             get { return _currentPlayer; }
-            private set
+            set
             {
-                if (_currentPlayer == value) return;
+                if (Equals(_currentPlayer, value)) return;
                 _currentPlayer = value;
-                InvokeCurrentPlayerChanged(EventArgs.Empty);
+                OnPropertyChanged();
             }
         }
 
+        #endregion
 
-        public event EventHandler CurrentPositionChanged;
+        #region events
 
-        private void InvokeCurrentPositionChanged(EventArgs e)
+        public event EventHandler<CellChangedEventArgs> CellChanged;
+
+        public event EventHandler ScoreChanged;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region methods
+
+        public double GetScore(IPlayer player)
         {
-            CurrentPositionChanged?.Invoke(this, e);
+            return _score[player.PlayerName];
         }
 
-        public event EventHandler CurrentPlayerChanged;
-
-        private void InvokeCurrentPlayerChanged(EventArgs e)
+        public void Move(IMove move)
         {
-            CurrentPlayerChanged?.Invoke(this, e);
+            var isAcceptable = _rules.IsMoveAcceptableInPosition(move, CurrentPosition);
+            if (!isAcceptable.Item1)
+            {
+                throw new GoException(isAcceptable.Item2);
+            }
+            Tuple<IPosition, IMoveInfo> newPosition = move.Perform(CurrentPosition);
+            isAcceptable = _rules.IsPositionAcceptableInGameLine(newPosition.Item1, _positionStorage);
+            if (!isAcceptable.Item1)
+            {
+                throw new GoException(isAcceptable.Item2);
+            }
+            _score[CurrentPlayer.PlayerName] += newPosition.Item2.Eated;
+            CurrentPosition = newPosition.Item1;
         }
 
-        public event EventHandler EatedChanged;
+        #endregion
 
-        private void InvokeEatedChanged(EventArgs e)
-        {
-            EatedChanged?.Invoke(this, e);
-        }
+//        /// <summary>
+//        ///     Сделать ход текущим игроком
+//        /// </summary>
+//        /// <param name="point"></param>
+//        public void Move(Point point)
+//        {
+//            var reply = _positionStorage.Move(CurrentPosition, point, CurrentPlayer);
+//
+//            CheckStoneField(CurrentPosition, reply.Item1);
+//
+//            CurrentPosition = reply.Item1;
+//            if (reply.Item2 != null && reply.Item2.Eated != 0)
+//            {
+//                _eated[CurrentPlayer] += reply.Item2.Eated;
+//                InvokeEatedChanged(EventArgs.Empty);
+//            }
+//            CurrentPlayer = Util.Opposite(CurrentPlayer);
+//        }
 
-        public ICollection<KeyValuePair<Stone, int>> Eated => _eated.ToArray();
+        #region private fields
 
+        /// <summary>
+        ///     Storage of positions with relations between them
+        /// </summary>
+        private readonly IPositionStorage _positionStorage;
+
+        /// <summary>
+        ///     Information about eated stones
+        /// </summary>
+        private readonly Dictionary<string, double> _score;
+
+        private IPlayer _currentPlayer;
+        private readonly IRules _rules;
         private IPosition _currentPosition;
+        public IPlayerProvider PlayerProvider { get; }
 
-        public IEnumerable<IPosition> GetChildren(IPosition position)
-        {
-            return _positionStorage.GetChildPositions(position);
-        }
-
-        /// <summary>
-        /// Переместиться по дереву позиций
-        /// </summary>
-        /// <param name="position"></param>
-        public void ChangeCurrentPosition(IPosition position)
-        {
-            CurrentPosition = position;
-        }
-
-        /// <summary>
-        /// Сделать ход текущим игроком
-        /// </summary>
-        /// <param name="point"></param>
-        public void Move(Point point)
-        {
-            var reply = _positionStorage.Move(CurrentPosition, point, CurrentPlayer);
-
-            CheckStoneField(CurrentPosition, reply.Item1);
-
-            CurrentPosition = reply.Item1;
-            if (reply.Item2 != null && reply.Item2.Eated != 0)
-            {
-                _eated[CurrentPlayer] += reply.Item2.Eated;
-                InvokeEatedChanged(EventArgs.Empty);
-            }
-            CurrentPlayer = Util.Opposite(CurrentPlayer);
-        }
-
-        public event EventHandler<FieldChangedEventArgs> FieldChanged = delegate {};
-
-        private void InvokeFieldChanged(FieldChangedEventArgs e)
-        {
-            FieldChanged?.Invoke(this, e);
-        }
-
-        private void CheckStoneField(IPosition old, IPosition next)
-        {
-            var diff = old.CompareStoneField(next);
-            foreach (var pair in diff)
-            {
-               InvokeFieldChanged(new FieldChangedEventArgs(pair)); 
-            }
-        }
-
-        public void Pass()
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }

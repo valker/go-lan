@@ -28,6 +28,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -58,17 +59,22 @@
     <Compile Include="EatedEventArgs.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="ExceptionReason.cs" />
-    <Compile Include="FieldChangedEventArgs.cs" />
+    <Compile Include="CellChangedEventArgs.cs" />
     <Compile Include="GoClient.cs" />
     <Compile Include="GoException.cs" />
     <Compile Include="GoGame.cs" />
     <Compile Include="GoServer.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupField.cs" />
+    <Compile Include="ICellState.cs" />
+    <Compile Include="ICoordinates.cs" />
     <Compile Include="IEngine.cs" />
+    <Compile Include="IGameLine.cs" />
     <Compile Include="IInfo.cs" />
     <Compile Include="IMove.cs" />
+    <Compile Include="IPlayerProvider.cs" />
     <Compile Include="IPosition.cs" />
+    <Compile Include="IPositionStorage.cs" />
     <Compile Include="IRules.cs" />
     <Compile Include="KoRule.cs" />
     <Compile Include="Move.cs" />
@@ -76,8 +82,10 @@
     <Compile Include="Parameters.cs" />
     <Compile Include="ParamsEventArgs.cs" />
     <Compile Include="Pass.cs" />
+    <Compile Include="PlayerProvider.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="PositionStorage.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelationInfo.cs" />
     <Compile Include="Rules.cs" />
@@ -98,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="protocol.txt" />
+    <Content Include="readme.txt" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
