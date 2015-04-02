@@ -19,15 +19,15 @@ namespace Valker.PlayOnLan.Utilities
             return indexOf == -1 ? message : message.Substring(0, indexOf);
         }
 
-        public static Stone Opposite(Stone stone)
+        public static Stone[] Opposite(Stone stone)
         {
             if (stone==Stone.Black)
             {
-                return Stone.White;
+                return new []{ Stone.White };
             }
             else if (stone==Stone.White)
             {
-                return Stone.Black;
+                return new[] { Stone.Black };
             }else
             {
                 throw new InvalidOperationException();

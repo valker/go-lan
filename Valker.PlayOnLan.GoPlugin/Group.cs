@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Valker.PlayOnLan.Api;
+using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    public class Group : ICollection<Point>
+    public class Group : ICollection<ICoordinates>
     {
-        private List<Point> _points = new List<Point>();
+        private List<ICoordinates> _points = new List<ICoordinates>();
         public Stone Player { get; private set; }
 
-        public Group(Point point, Stone player)
+        public Group(ICoordinates point, Stone player)
         {
             Player = player;
             _points.Add(point);
@@ -61,14 +62,19 @@ namespace Valker.PlayOnLan.GoPlugin
         {
         }
 
-        public bool Remove(Point item)
+        public Group(ICoordinates coordinates, IPlayer currentPlayer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(ICoordinates item)
         {
             throw new InvalidOperationException();
         }
-        public Group RemovePoint(Point item)
+        public Group RemovePoint(ICoordinates item)
         {
             Group grp = new Group();
-            grp._points = new List<Point>(_points);
+            grp._points = new List<ICoordinates>(_points);
             if (!grp._points.Remove(item))
             {
                 throw new ArgumentException("This point is not in this group.");
@@ -82,12 +88,12 @@ namespace Valker.PlayOnLan.GoPlugin
             get { return true; }
         }
 
-        public void Add(Point point)
+        public void Add(ICoordinates point)
         {
             throw new InvalidOperationException();
         }
 
-        public Group AddPoint(Point point)
+        public Group AddPoint(ICoordinates point)
         {
             if (_points.Contains(point))
             {
@@ -103,19 +109,19 @@ namespace Valker.PlayOnLan.GoPlugin
             throw new InvalidOperationException();
         }
 
-        public bool Contains(Point item)
+        public bool Contains(ICoordinates item)
         {
             return _points.Contains(item);
         }
 
-        public void CopyTo(Point[] array, int arrayIndex)
+        public void CopyTo(ICoordinates[] array, int arrayIndex)
         {
             _points.CopyTo(array, arrayIndex);
         }
 
         #region Implementation of IEnumerable
 
-        public IEnumerator<Point> GetEnumerator()
+        public IEnumerator<ICoordinates> GetEnumerator()
         {
             return _points.GetEnumerator();
         }
@@ -126,6 +132,5 @@ namespace Valker.PlayOnLan.GoPlugin
         }
 
         #endregion
-
     }
 }

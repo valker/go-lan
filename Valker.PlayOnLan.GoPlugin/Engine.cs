@@ -84,7 +84,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public void Move(IMove move)
         {
-            var isAcceptable = _rules.IsMoveAcceptableInPosition(move, CurrentPosition);
+            Tuple<bool, ExceptionReason> isAcceptable = _rules.IsMoveAcceptableInPosition(move, CurrentPosition);
             if (!isAcceptable.Item1)
             {
                 throw new GoException(isAcceptable.Item2);

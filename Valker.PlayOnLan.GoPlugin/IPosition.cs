@@ -2,17 +2,26 @@
 using System.Collections.Generic;
 using Valker.PlayOnLan.Api;
 using Valker.PlayOnLan.Api.Game;
-using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    public interface IPosition
+    /// <summary>
+    /// Интерфейс описывает конкретную позицию в партии.
+    /// Другими словами - состояние игры, когда должен ходить игрок
+    /// </summary>
+    public interface IPosition : ICloneable
     {
-        Tuple<IPosition, IMoveInfo> Move(Point point, Stone player);
-        IEnumerable<Tuple<Point, Stone>> CompareStoneField(IPosition next);
-        Stone GetStoneAt(Point point);
-        int Size { get; }
-        bool IsEditable { get; }
+        ICellState GetStoneAt(ICoordinates coordinates);
+        /// <summary>
+        /// Игрок, который должен делать ход
+        /// </summary>
         IPlayer CurrentPlayer { get; }
+
+        void ChangeCellState(ICoordinates coordinates, ICellState currentPlayer);
+        List<Group> GetNearestGroups(ICoordinates coordinates, IPlayer currentPlayer);
+        void AddGroup(Group grp);
+        void SetGroupAt(ICoordinates coordinates, Group grp);
+        void RemoveGroup(Group grp);
+        void ExcludeGroups(List<Group> groups);
     }
 }

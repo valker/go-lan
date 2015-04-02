@@ -36,6 +36,11 @@ namespace Valker.PlayOnLan.GoPlugin
             }
         }
 
+        public object Clone()
+        {
+            return new Position(this);
+        }
+
         private GroupField _groupField;
         private List<Group> _groups = new List<Group>();
 
@@ -57,8 +62,11 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public Position(Position parent)
         {
-            Field = new StoneField(parent.Field);
-            _groupField = new GroupField(parent._groupField);
+            Position p = parent as Position;
+            if(p == null) throw new ArgumentException("parameter should be instance of Position class");
+            Field = new StoneField(p.Field);
+            _groupField = new GroupField(p._groupField);
+            _groups = new List<Group>(p._groups);
         }
 
         protected StoneField Field { get; set; }
@@ -71,9 +79,19 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public bool IsEditable { get; private set; }
 
+        public ICellState GetStoneAt(ICoordinates coordinates)
+        {
+            throw new NotImplementedException();
+        }
+
         public IPlayer CurrentPlayer
         {
             get { throw new NotImplementedException(); }
+        }
+
+        public void ChangeCellState(ICoordinates coordinates, IPlayer currentPlayer)
+        {
+            throw new NotImplementedException();
         }
 
         public Tuple<IPosition, IMoveInfo> Move(Point point, Stone player)
@@ -104,7 +122,7 @@ namespace Valker.PlayOnLan.GoPlugin
             return Tuple.Create<IPosition, IMoveInfo>(position, new MoveInfo(stoneCount));
         }
 
-        public IEnumerable<Tuple<Point, Stone>> CompareStoneField(IPosition next)
+        public IEnumerable<Tuple<Point, Stone>> CompareStoneField(IPosition other)
         {
             var size = Field.Size;
             for (int x = 0; x < size; x++)
@@ -112,7 +130,7 @@ namespace Valker.PlayOnLan.GoPlugin
                 for (int y = 0; y < size; y++)
                 {
                     var point = new Point(x,y);
-                    Stone stone = next.GetStoneAt(point);
+                    Stone stone = other.GetStoneAt(point);
                     if (GetStoneAt(point) != stone)
                     {
                         yield return Tuple.Create(point, stone);
