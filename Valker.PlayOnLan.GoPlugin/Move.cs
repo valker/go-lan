@@ -15,15 +15,15 @@ namespace Valker.PlayOnLan.GoPlugin
             Y = y;
         }
 
-        public int Y { get; set; }
-        public int X { get; set; }
+        private int Y { get; }
+        private int X { get; }
 
-        public Tuple<IPosition, IMoveInfo> Perform(IPosition currentPosition)
+        public Tuple<IPosition, IMoveInfo> Perform(IPosition currentPosition, IPlayerProvider playerProvider)
         {
             var coordinates = CreateCoordinates(X, Y);
-            var state = currentPosition.GetStoneAt(coordinates);
+            var state = currentPosition.GetCellAt(coordinates);
 
-            if (state is EmptyCell)
+            if (!(state is EmptyCell))
             {
                 throw new GoException(ExceptionReason.Occuped);
             }
@@ -31,13 +31,13 @@ namespace Valker.PlayOnLan.GoPlugin
             var position = (IPosition) (currentPosition.Clone());
 
             // поставить точку на поле
-            position.ChangeCellState(coordinates, currentPosition.CurrentPlayer);
+            position.ChangeCellState(coordinates, new PlayerCell(currentPosition.CurrentPlayer));
 
             // обновить группы для новой позиции
             var group = UpdateGroups(position, coordinates, currentPosition.CurrentPlayer);
 
             // удалить соседние группы, которые остались без дыханий
-            var stoneCount = RemoveDeathOppositeGroups(position, group);
+            var stoneCount = RemoveDeathOppositeGroups(position, @group, playerProvider);
 
             // проверить живость новой группы
             if (!CheckIsLive(group, position))
@@ -53,10 +53,10 @@ namespace Valker.PlayOnLan.GoPlugin
             throw new NotImplementedException();
         }
 
-        private int RemoveDeathOppositeGroups(IPosition position, Group grp)
+        private int RemoveDeathOppositeGroups(IPosition position, Group grp, IPlayerProvider playerProvider)
         {
             // находим соседние группы противника
-            IEnumerable<Group> oppositeGroups = FindOppositeGroup(position, grp);
+            IEnumerable<Group> oppositeGroups = FindOppositeGroup(position, grp, playerProvider);
 
             var toKill = oppositeGroups.Where(g => !CheckIsLive(g, position)).ToArray();
 
@@ -80,17 +80,23 @@ namespace Valker.PlayOnLan.GoPlugin
             return count;
         }
 
-        private IEnumerable<Group> FindOppositeGroup(IPosition position, Group grp)
+        private static IPlayer[] Opposite(IPlayer player, IPlayerProvider playerProvider)
         {
-            Stone[] players = Util.Opposite(grp.Player);
+            return playerProvider.GetPlayers().Except(new[] {player}).ToArray();
+        }
+
+
+        private IEnumerable<Group> FindOppositeGroup(IPosition position, Group grp, IPlayerProvider playerProvider)
+        {
+            var players = Opposite(grp.Player, playerProvider);
             List<Group> allGroups = new List<Group>();
             foreach (var player in players)
             {
                 // координаты соседних точек, в которых находятся камни противника
-                IEnumerable<ICoordinates> oppositePoints = grp.SelectMany(point => point.Neighbours(position)).Where(point => position.Field.GetAt(point) == player);
+                IEnumerable<ICoordinates> oppositePoints = grp.SelectMany(point => point.Neighbours(position)).Where(point => position.GetCellAt(point).Equals(new PlayerCell(player)));
                 oppositePoints = oppositePoints.ToArray();
                 // группы противника, примыкающие к указанной точке
-                var opposGroups = position._groups.Where(g => g.Intersect(oppositePoints).Count() > 0);
+                IEnumerable<Group> opposGroups = position.Groups.Where(g => g.Intersect(oppositePoints).Any());
                 allGroups.AddRange(opposGroups);
             }
             return allGroups;
@@ -144,5 +150,15 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             return new TwoDimensionsCoordinates(x, y);
         }
+    }
+
+    public class PlayerCell : ICell
+    {
+        public PlayerCell(IPlayer player)
+        {
+            Player = player;
+        }
+
+        public IPlayer Player { get; set; }
     }
 }

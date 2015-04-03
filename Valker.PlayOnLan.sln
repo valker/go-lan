@@ -29,6 +29,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.XmppTransport", "Valker.PlayOnLan.XmppTransport\Valker.PlayOnLan.XmppTransport.csproj", "{6A722E80-2D08-4CBB-BEDA-3F9BEFD16FFB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsClient", "WinFormsClient\WinFormsClient.csproj", "{EDEDB019-E7FC-432D-8B34-1E5B42873690}"
+	ProjectSection(ProjectDependencies) = postProject
+		{25589F10-2ABD-44FD-8E89-F8B916E9F1D1} = {25589F10-2ABD-44FD-8E89-F8B916E9F1D1}
+		{7CBEA4FE-9513-46A2-ADB0-F548D3853CE0} = {7CBEA4FE-9513-46A2-ADB0-F548D3853CE0}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Valker.PlayOnLan.GoPlugin", "Valker.PlayOnLan.GoPlugin\Valker.PlayOnLan.GoPlugin.csproj", "{7CBEA4FE-9513-46A2-ADB0-F548D3853CE0}"
 EndProject

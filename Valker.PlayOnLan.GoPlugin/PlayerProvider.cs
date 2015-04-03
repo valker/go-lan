@@ -3,16 +3,34 @@ using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    internal class PlayerProvider : IPlayerProvider
+    public class PlayerProvider : IPlayerProvider
     {
+        private readonly IPlayer[] _players;
+
+        public PlayerProvider(IPlayer[] players)
+        {
+            _players = players;
+        }
+
         public IPlayer[] GetPlayers()
         {
-            throw new NotImplementedException();
+            return _players;
         }
 
         public IPlayer GetFirstPlayer()
         {
-            throw new NotImplementedException();
+            return _players[0];
+        }
+
+        public IPlayer GetNextPlayer(IPlayer player)
+        {
+            var index = Array.FindIndex(_players, player1 => player1.Equals(player));
+            ++index;
+            if (index >= _players.Length)
+            {
+                index -= _players.Length;
+            }
+            return _players[index];
         }
     }
 }

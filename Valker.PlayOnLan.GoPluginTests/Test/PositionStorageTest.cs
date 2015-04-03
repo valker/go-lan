@@ -63,7 +63,7 @@ namespace Valker.PlayOnLan.GoPlugin.Test
 //            var st3 = storage.Move(st2.Item1, new Point(3, 3), Stone.Black);
 //            var st4 = storage.Move(st3.Item1, new Point(0, 1), Stone.White);
 //            Assert.IsTrue(st4.Item2.Eated == 1);
-//            Assert.IsTrue(st4.Item1.GetStoneAt(new Point(0,0))==Stone.None);
+//            Assert.IsTrue(st4.Item1.GetCellAt(new Point(0,0))==Stone.None);
 //        }
 
 //        [Test]
@@ -77,7 +77,7 @@ namespace Valker.PlayOnLan.GoPlugin.Test
 //            var s5 = storage.Move(s4.Item1, new Point(0, 0), Stone.Black);
 //            var s6 = storage.Move(s5.Item1, new Point(1, 1), Stone.White);
 //            Assert.IsTrue(s6.Item2.Eated == 3);
-//            Assert.IsTrue(s6.Item1.GetStoneAt(new Point(0,0)) == Stone.None);
+//            Assert.IsTrue(s6.Item1.GetCellAt(new Point(0,0)) == Stone.None);
 //        }
 
 //        [Test]
@@ -90,8 +90,8 @@ namespace Valker.PlayOnLan.GoPlugin.Test
 //                           };
 //            var result = PerformMoves(pnts);
 //            Assert.IsTrue(result.Item2.Eated == 2);
-//            Assert.IsTrue(result.Item1.GetStoneAt(new Point(1, 0)) == Stone.None);
-//            Assert.IsTrue(result.Item1.GetStoneAt(new Point(2, 0)) == Stone.None);
+//            Assert.IsTrue(result.Item1.GetCellAt(new Point(1, 0)) == Stone.None);
+//            Assert.IsTrue(result.Item1.GetCellAt(new Point(2, 0)) == Stone.None);
 //        }
 
 //        [Test]

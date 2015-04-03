@@ -29,7 +29,6 @@ namespace Valker.PlayOnLan.GoPlugin
             _rules = rules;
             _positionStorage = positionStorage;
             CurrentPosition = _positionStorage.Initial;
-            CurrentPlayer = playerProvider.GetFirstPlayer();
         }
 
         [NotifyPropertyChangedInvocator]
@@ -48,20 +47,11 @@ namespace Valker.PlayOnLan.GoPlugin
                 if (Equals(_currentPosition, value)) return;
                 _currentPosition = value;
                 OnPropertyChanged();
-                CurrentPlayer = CurrentPosition.CurrentPlayer;
+                OnPropertyChanged("CurrentPlayer");
             }
         }
 
-        public IPlayer CurrentPlayer
-        {
-            get { return _currentPlayer; }
-            set
-            {
-                if (Equals(_currentPlayer, value)) return;
-                _currentPlayer = value;
-                OnPropertyChanged();
-            }
-        }
+        public IPlayer CurrentPlayer => _currentPosition.CurrentPlayer;
 
         #endregion
 
@@ -89,7 +79,7 @@ namespace Valker.PlayOnLan.GoPlugin
             {
                 throw new GoException(isAcceptable.Item2);
             }
-            Tuple<IPosition, IMoveInfo> newPosition = move.Perform(CurrentPosition);
+            Tuple<IPosition, IMoveInfo> newPosition = move.Perform(CurrentPosition, PlayerProvider);
             isAcceptable = _rules.IsPositionAcceptableInGameLine(newPosition.Item1, _positionStorage);
             if (!isAcceptable.Item1)
             {

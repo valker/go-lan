@@ -11,13 +11,15 @@ namespace Valker.PlayOnLan.GoPlugin
     /// </summary>
     public interface IPosition : ICloneable
     {
-        ICellState GetStoneAt(ICoordinates coordinates);
+        ICell GetCellAt(ICoordinates coordinates);
         /// <summary>
         /// Игрок, который должен делать ход
         /// </summary>
         IPlayer CurrentPlayer { get; }
 
-        void ChangeCellState(ICoordinates coordinates, ICellState currentPlayer);
+        List<Group> Groups { get; }
+
+        void ChangeCellState(ICoordinates coordinates, ICell currentPlayer);
         List<Group> GetNearestGroups(ICoordinates coordinates, IPlayer currentPlayer);
         void AddGroup(Group grp);
         void SetGroupAt(ICoordinates coordinates, Group grp);

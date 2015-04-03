@@ -67,7 +67,7 @@
     <Compile Include="GoServer.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupField.cs" />
-    <Compile Include="ICellState.cs" />
+    <Compile Include="ICell.cs" />
     <Compile Include="ICoordinates.cs" />
     <Compile Include="IEngine.cs" />
     <Compile Include="IGameLine.cs" />
@@ -94,7 +94,7 @@
     <Compile Include="ScoreCalculator.cs" />
     <Compile Include="ScoreRule.cs" />
     <Compile Include="ShowMessageEventArgs.cs" />
-    <Compile Include="StoneField.cs" />
+    <Compile Include="CellField.cs" />
     <Compile Include="TwoDimensionsCoordinates.cs" />
   </ItemGroup>
   <ItemGroup>

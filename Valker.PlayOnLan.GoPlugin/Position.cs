@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Valker.PlayOnLan.Api;
 using Valker.PlayOnLan.Api.Game;
-using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
@@ -14,7 +11,7 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            var b = Equals(other._groups.Count, _groups.Count);
+            var b = Equals(other.Groups.Count, Groups.Count);
             var b1 = b && Equals(other.Field, Field);
             return b1;
         }
@@ -32,7 +29,7 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             unchecked
             {
-                return (_groups.GetHashCode()*397) ^ Field.GetHashCode();
+                return (Groups.GetHashCode()*397) ^ Field.GetHashCode();
             }
         }
 
@@ -41,87 +38,129 @@ namespace Valker.PlayOnLan.GoPlugin
             return new Position(this);
         }
 
-        private GroupField _groupField;
-        private List<Group> _groups = new List<Group>();
+        private readonly GroupField _groupField;
+        public List<Group> Groups { get; } = new List<Group>();
 
-        private Position(int size)
+        private Position(int size, IPlayerProvider playerProvider)
         {
             // создаём новое поле для камней и инициализируем его
-            Field = new StoneField(size);
+            Field = new CellField(size);
+            var emptyCell = new EmptyCell();
             for (int x = 0; x < size; x++)
             {
                 for (int y = 0; y < size; y++)
                 {
-                    Field.SetAt(new Point(x, y), Stone.None);
+                    Field.SetAt(new TwoDimensionsCoordinates(x,y), emptyCell);
                 }
             }
 
             // создаём новое поле для ссылок на группы (инициализируется нулями)
             _groupField = new GroupField(size);
+
+            CurrentPlayer = playerProvider.GetFirstPlayer();
+            PlayerProvider = playerProvider;
         }
+
+        private IPlayerProvider PlayerProvider { get; set; }
 
         public Position(Position parent)
         {
             Position p = parent as Position;
             if(p == null) throw new ArgumentException("parameter should be instance of Position class");
-            Field = new StoneField(p.Field);
+            Field = new CellField(p.Field);
             _groupField = new GroupField(p._groupField);
-            _groups = new List<Group>(p._groups);
+            Groups = new List<Group>(p.Groups);
+            PlayerProvider = p.PlayerProvider;
+            CurrentPlayer = PlayerProvider.GetNextPlayer(p.CurrentPlayer);
         }
 
-        protected StoneField Field { get; set; }
+        protected CellField Field { get; set; }
 
-        public static IPosition CreateInitial(int size)
+        public static IPosition CreateInitial(int size, IPlayerProvider playerProvider)
         {
-            var position = new Position(size) {IsEditable = true};
+            var position = new Position(size, playerProvider);
             return position;
         }
 
-        public bool IsEditable { get; private set; }
-
-        public ICellState GetStoneAt(ICoordinates coordinates)
+        public ICell GetCellAt(ICoordinates coordinates)
         {
-            throw new NotImplementedException();
+            return Field.GetAt(coordinates);
         }
 
         public IPlayer CurrentPlayer
         {
-            get { throw new NotImplementedException(); }
+            get; }
+
+        public void ChangeCellState(ICoordinates coordinates, ICell cell)
+        {
+            Field.SetAt(coordinates, cell);
         }
 
-        public void ChangeCellState(ICoordinates coordinates, IPlayer currentPlayer)
+        public List<Group> GetNearestGroups(ICoordinates coordinates, IPlayer player)
+        {
+            ICoordinates[] neighbours = coordinates.Neighbours(this).ToArray();
+            var enumerable = neighbours.Select(point1 => _groupField.GetAt(point1)).ToArray();
+            var enumerable1 = enumerable.Where(grp => grp != null && grp.Player == player).ToArray();
+            List<Group> groups = enumerable1.Distinct().ToList();
+            return groups;
+        }
+
+        public void AddGroup(Group grp)
         {
             throw new NotImplementedException();
         }
 
-        public Tuple<IPosition, IMoveInfo> Move(Point point, Stone player)
+        public void SetGroupAt(ICoordinates coordinates, Group grp)
         {
-            var state = Field.GetAt(point);
-            if (state != Stone.None)
-            {
-                throw new GoException(ExceptionReason.Occuped);
-            }
-            // создать новую позицию, как копию исходной
-            var position = new Position(this);
-
-            // поставить точку на поле
-            position.Field.SetAt(point, player);
-
-            // обновить группы для новой позиции
-            var group = UpdateGroups(position, point, player, IsEditable);
-
-            // удалить соседние группы, которые остались без дыханий
-            int stoneCount = RemoveDeathOppositeGroups(position, group);
-
-            // проверить живость новой группы
-            if (!CheckIsLive(group, position))
-            {
-                throw new GoException(ExceptionReason.SelfDead);
-            }
-
-            return Tuple.Create<IPosition, IMoveInfo>(position, new MoveInfo(stoneCount));
+            throw new NotImplementedException();
         }
 
+        public void RemoveGroup(Group grp)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ExcludeGroups(List<Group> groups)
+        {
+            throw new NotImplementedException();
+        }
+
+/*
+        public void ChangeCellState(ICoordinates coordinates, IPlayer currentPlayer)
+        {
+            throw new NotImplementedException();
+        }
+*/
+
+//        public Tuple<IPosition, IMoveInfo> Move(Point point, IPlayer player)
+//        {
+//            var state = Field.GetAt(point);
+//            if (!(state is EmptyCell))
+//            {
+//                throw new GoException(ExceptionReason.Occuped);
+//            }
+//            // создать новую позицию, как копию исходной
+//            var position = new Position(this);
+//
+//            // поставить точку на поле
+//            position.Field.SetAt(point, new PlayerCell(player));
+//
+//            // обновить группы для новой позиции
+//            var group = UpdateGroups(position, point, player, IsEditable);
+//
+//            // удалить соседние группы, которые остались без дыханий
+//            int stoneCount = RemoveDeathOppositeGroups(position, group);
+//
+//            // проверить живость новой группы
+//            if (!CheckIsLive(group, position))
+//            {
+//                throw new GoException(ExceptionReason.SelfDead);
+//            }
+//
+//            return Tuple.Create<IPosition, IMoveInfo>(position, new MoveInfo(stoneCount));
+//        }
+
+/*
         public IEnumerable<Tuple<Point, Stone>> CompareStoneField(IPosition other)
         {
             var size = Field.Size;
@@ -130,25 +169,29 @@ namespace Valker.PlayOnLan.GoPlugin
                 for (int y = 0; y < size; y++)
                 {
                     var point = new Point(x,y);
-                    Stone stone = other.GetStoneAt(point);
-                    if (GetStoneAt(point) != stone)
+                    var stone = other.GetCellAt(point);
+                    if (GetCellAt(point) != stone)
                     {
                         yield return Tuple.Create(point, stone);
                     }
                 }
             }
         }
+*/
 
-        public Stone GetStoneAt(Point point)
-        {
-            return Field.GetAt(point);
-        }
+//        public IPlayer GetCellAt(Point point)
+//        {
+//            return Field.GetAt(point);
+//        }
 
+/*
         public int Size
         {
             get { return Field.Size; }
         }
+*/
 
+/*
         /// <summary>
         /// Проверяем, что группа жива
         /// </summary>
@@ -160,17 +203,23 @@ namespace Valker.PlayOnLan.GoPlugin
             var dame = GetDame(grp, position);
             return dame.Take(1).Count() > 0;
         }
+*/
 
-        private static IEnumerable<Point> GetDame(Group grp, Position position)
+/*
+        private static IEnumerable<ICoordinates> GetDame(Group grp, IPosition position)
         {
             return grp.SelectMany(point => GetDame(point, position));
         }
+*/
 
-        private static IEnumerable<Point> GetDame(Point point, Position position)
+/*
+        private static IEnumerable<ICoordinates> GetDame(ICoordinates point, IPosition position)
         {
-            return point.Neighbours(position.Field.Size).Where(pnt => position.Field.GetAt(pnt) == Stone.None);
+            return point.Neighbours(position).Where(pnt => position.GetCellAt(pnt) is EmptyCell);
         }
+*/
 
+/*
         /// <summary>
         /// Удалить мёртвые группы противника
         /// </summary>
@@ -203,7 +252,9 @@ namespace Valker.PlayOnLan.GoPlugin
             // возвращаем количество снятых камней
             return count;
         }
+*/
 
+/*
         /// <summary>
         /// Найти группы противника, соседствующие с данной группой
         /// </summary>
@@ -219,9 +270,11 @@ namespace Valker.PlayOnLan.GoPlugin
             opposGroups = opposGroups.ToArray();
             return opposGroups;
         }
+*/
 
 
 
+/*
         /// <summary>
         /// Обновить данные по группам для нового состояния поля
         /// </summary>
@@ -301,6 +354,8 @@ namespace Valker.PlayOnLan.GoPlugin
                 }
             }
         }
+*/
+/*
         private List<Group> GetNearestGroups(Point point, Stone player)
         {
             IEnumerable<Point> neighbours = point.Neighbours(Field.Size).ToArray();
@@ -309,12 +364,16 @@ namespace Valker.PlayOnLan.GoPlugin
             List<Group> groups = enumerable1.Distinct().ToList();
             return groups;
         }
+*/
 
+/*
         private List<Group> CopyGroups()
         {
             return new List<Group>(_groups);
         }
+*/
 
+/*
         private List<Group> MakeGroupsFromField(Position position)
         {
             // создать коллекцию групп
@@ -336,21 +395,25 @@ namespace Valker.PlayOnLan.GoPlugin
             // вернуть коллекцию
             return collection;
         }
+*/
 
+/*
         /// <summary>
         /// Выделить группу камней и удалить точки из списка
         /// </summary>
         /// <param name="points">точки, указывающие на камни</param>
         /// <param name="field">поле</param>
         /// <returns></returns>
-        private static Group ExtractGroup(List<Pair<Point, Stone>> points, StoneField field)
+        private static Group ExtractGroup(List<Pair<Point, Stone>> points, CellField field)
         {
             var point = points[0];
             var group = new Group(point.Item1, point.Item2);
             RecourseExtractGroup(group, point, points);
             return group;
         }
+*/
 
+/*
         private static void RecourseExtractGroup(Group grp, Pair<Point, Stone> point, List<Pair<Point, Stone>> points)
         {
             var selectedNeighbour = points.Where(pair =>
@@ -376,14 +439,16 @@ namespace Valker.PlayOnLan.GoPlugin
                 RecourseExtractGroup(grp, pair, points);
             }
         }
+*/
 
 
+/*
         /// <summary>
         /// Создать список точек, которые указывают на камни
         /// </summary>
         /// <param name="field"></param>
         /// <returns>Список точек, которые указывают на камни</returns>
-        private static List<Pair<Point, Stone>> GeneratePoints(StoneField field)
+        private static List<Pair<Point, Stone>> GeneratePoints(CellField field)
         {
             var points = new List<Pair<Point, Stone>>();
             for (int x = 0; x < field.Size; x++)
@@ -404,6 +469,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
             return points;
         }
+*/
 
     }
 
@@ -414,10 +480,7 @@ namespace Valker.PlayOnLan.GoPlugin
             Eated = eated;
         }
 
-        public int Eated
-        {
-            get;set;
-        }
+        public int Eated { get; }
     }
 
     public interface IMoveInfo

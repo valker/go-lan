@@ -14,13 +14,17 @@ namespace Valker.PlayOnLan.GoPlugin.Test
         public void TestSwitchingPlayer()
         {
             IPositionStorage positionStorage = new Mock<IPositionStorage>().Object;
-            IPlayerProvider playerProvider = new Mock<IPlayerProvider>().Object;
+            var playerProvider = Mock.Of<IPlayerProvider>(provider => provider.GetPlayers() == new IPlayer[]
+            {
+                Mock.Of<IPlayer>(player => player.PlayerName == "aaa"),
+                Mock.Of<IPlayer>(player => player.PlayerName == "bbb"),
+            });
             IRules rules = new Mock<IRules>().Object;
             IEngine engine = new Engine(positionStorage, playerProvider, rules);
-            var current = engine.CurrentPlayer;
-            Assert.That(current, Is.EqualTo(Stone.Black).Or.EqualTo(Stone.White));
+            IPlayer current = engine.CurrentPlayer;
+            Assert.That(current.PlayerName, Is.EqualTo("aaa").Or.EqualTo("bbb"));
             engine.Move(new Move(0,0));
-            Assert.That(engine.CurrentPlayer, Is.EqualTo(Stone.Black).Or.EqualTo(Stone.White));
+            Assert.That(engine.CurrentPlayer, Is.EqualTo("aaa").Or.EqualTo("bbb"));
             Assert.That(engine.CurrentPlayer, Is.Not.EqualTo(current));
         }
 

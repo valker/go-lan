@@ -14,12 +14,12 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <summary>
         /// Возвращает состояние клетки
         /// </summary>
-        public ICellState CellState { get; private set; }
+        public ICell Cell { get; private set; }
 
-        public CellChangedEventArgs(ICoordinates coordinates, ICellState cellState)
+        public CellChangedEventArgs(ICoordinates coordinates, ICell cell)
         {
             Coordinates = coordinates;
-            CellState = cellState;
+            Cell = cell;
         }
 
         public CellChangedEventArgs(string[] extractParams)

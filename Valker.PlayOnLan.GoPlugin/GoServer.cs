@@ -19,13 +19,14 @@ namespace Valker.PlayOnLan.GoPlugin
 
             Parameters = Parameters.Parse(parameters);
 
-            Engine = new Engine(new PositionStorage(Parameters.Width),new PlayerProvider(), new Rules());
+            IPlayerProvider playerProvider = new PlayerProvider(players);
+            Engine = new Engine(new PositionStorage(Parameters.Width, playerProvider), playerProvider, new Rules());
             Engine.CellChanged += EngineOnCellChanged;
             Engine.ScoreChanged += EngineOnEatedChanged;
 
-            _colors = new Stone[2];
-            _colors[0] = Stone.Black;
-            _colors[1] = Stone.White;
+//            _colors = new Stone[2];
+//            _colors[0] = Stone.Black;
+//            _colors[1] = Stone.White;
         }
 
         protected Parameters Parameters { get; set; }
@@ -34,7 +35,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         protected IEngine Engine { get; set; }
 
-        private Stone[] _colors; 
+        //private Stone[] _colors; 
 
         public void ProcessMessage(IPlayer sender, string message)
         {
@@ -153,7 +154,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private void EngineOnCellChanged(object sender, CellChangedEventArgs args)
         {
-            string message = string.Format("FIELD[{0},{1}]", args.Coordinates.ToString(), args.CellState.ToString());
+            string message = string.Format("FIELD[{0},{1}]", args.Coordinates.ToString(), args.Cell.ToString());
             SendMessageToAllPlayers(message);
         }
 

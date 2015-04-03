@@ -63,15 +63,16 @@ namespace Valker.PlayOnLan.GoPlugin.WinForms
 
         private void FieldChanged(object sender, CellChangedEventArgs e)
         {
-            var x = e.Coordinates.GetX();
-            var y = e.Coordinates.GetY();
-            Stone stone = e.CellState.GetStone();
-            RunInUiThread(delegate
-                              {
-                                  gobanControl1.SetStone(x, y, Convert(stone), true);
-                              });
+//            var x = e.Coordinates.GetX();
+//            var y = e.Coordinates.GetY();
+//            Stone stone = e.Cell.GetStone();
+//            RunInUiThread(delegate
+//                              {
+//                                  gobanControl1.SetStone(x, y, Convert(stone), true);
+//                              });
         }
 
+/*
         private Valker.PlayOnLan.Goban.Stone Convert(Valker.PlayOnLan.Api.Stone stone)
         {
             switch (stone)
@@ -86,6 +87,7 @@ namespace Valker.PlayOnLan.GoPlugin.WinForms
                     throw new InvalidOperationException();
             }
         }
+*/
 
         private void ClientOnWait(object sender, EventArgs e)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using Valker.PlayOnLan.Api;
+using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.PlayOnLan.Utilities
 {
@@ -19,19 +20,19 @@ namespace Valker.PlayOnLan.Utilities
             return indexOf == -1 ? message : message.Substring(0, indexOf);
         }
 
-        public static Stone[] Opposite(Stone stone)
-        {
-            if (stone==Stone.Black)
-            {
-                return new []{ Stone.White };
-            }
-            else if (stone==Stone.White)
-            {
-                return new[] { Stone.Black };
-            }else
-            {
-                throw new InvalidOperationException();
-            }
-        }
+//        public static IPlayer[] Opposite(IPlayer stone, IPlayerProvider playerProvider)
+//        {
+//            if (stone==Stone.Black)
+//            {
+//                return new []{ Stone.White };
+//            }
+//            else if (stone==Stone.White)
+//            {
+//                return new[] { Stone.Black };
+//            }else
+//            {
+//                throw new InvalidOperationException();
+//            }
+//        }
     }
 }

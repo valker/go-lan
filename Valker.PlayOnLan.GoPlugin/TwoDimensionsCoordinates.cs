@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
@@ -20,6 +21,11 @@ namespace Valker.PlayOnLan.GoPlugin
             if (dimension == 0) return _x;
             if (dimension == 1) return _y;
             throw new ArgumentOutOfRangeException("dimension");
+        }
+
+        public IEnumerable<ICoordinates> Neighbours(IPosition position)
+        {
+            throw new NotImplementedException();
         }
     }
 }

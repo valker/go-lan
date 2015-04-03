@@ -2,8 +2,7 @@ using Valker.PlayOnLan.Api;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    public interface ICellState
+    public interface ICell
     {
-        Stone GetStone();
     }
 }

@@ -1,30 +1,31 @@
 using System;
+using System.Collections.Generic;
 using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
     internal class GroupField
     {
-        private readonly Group[,] _field;
+        private readonly Dictionary<ICoordinates, Group> _field; 
 
         public GroupField(GroupField parent)
         {
-            _field = (Group[,]) parent._field.Clone();
+            _field = new Dictionary<ICoordinates, Group>(parent._field);
         }
 
         public GroupField(int size)
         {
-            _field = new Group[size,size];
+            _field = new Dictionary<ICoordinates, Group>();
         }
 
-        public void SetAt(Point point, Group grp)
+        public void SetAt(ICoordinates point, Group grp)
         {
-            _field[point.X, point.Y] = grp;
+            _field[point] = grp;
         }
 
-        public Group GetAt(Point point)
+        public Group GetAt(ICoordinates point)
         {
-            return _field[point.X, point.Y];
+            return _field[point];
         }
     }
 }

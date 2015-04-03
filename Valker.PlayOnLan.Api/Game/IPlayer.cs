@@ -10,5 +10,6 @@ namespace Valker.PlayOnLan.Api.Game
     public interface IPlayer : IPlayerBase
     {
         IAgentInfo Agent { get; set; }
+        int Order { get; }
     }
 }

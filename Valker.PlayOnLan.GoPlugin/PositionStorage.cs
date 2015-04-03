@@ -13,10 +13,9 @@ namespace Valker.PlayOnLan.GoPlugin
         /// </summary>
         readonly List<RelationInfo> _relationship = new List<RelationInfo>();
 
-        public PositionStorage(int size)
+        public PositionStorage(int size, IPlayerProvider playerProvider)
         {
-            Initial = Position.CreateInitial(size);
-//            Rules = rules;
+            Initial = Position.CreateInitial(size, playerProvider);
         }
 
         public PositionStorage(IPosition initial)
@@ -111,9 +110,11 @@ namespace Valker.PlayOnLan.GoPlugin
         }
 */
 
+/*
         public IPosition Edit(IPosition initial, Point point, Stone stone)
         {
             throw new NotImplementedException();
         }
+*/
     }
 }

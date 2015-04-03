@@ -6,5 +6,6 @@ namespace Valker.PlayOnLan.GoPlugin
     {
         IPlayer[] GetPlayers();
         IPlayer GetFirstPlayer();
+        IPlayer GetNextPlayer(IPlayer player);
     }
 }

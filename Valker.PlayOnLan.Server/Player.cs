@@ -12,6 +12,8 @@ namespace Valker.PlayOnLan.Server
             get; set;
         }
 
+        public int Order { get; set; }
+
         public string PlayerName
         {
             get; set;

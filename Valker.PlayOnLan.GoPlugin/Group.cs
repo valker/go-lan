@@ -2,18 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Valker.PlayOnLan.Api;
 using Valker.PlayOnLan.Api.Game;
-using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
     public class Group : ICollection<ICoordinates>
     {
         private List<ICoordinates> _points = new List<ICoordinates>();
-        public Stone Player { get; private set; }
+        public IPlayer Player { get; private set; }
 
-        public Group(ICoordinates point, Stone player)
+        public Group(ICoordinates point, IPlayer player)
         {
             Player = player;
             _points.Add(point);
@@ -60,11 +58,6 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private Group()
         {
-        }
-
-        public Group(ICoordinates coordinates, IPlayer currentPlayer)
-        {
-            throw new NotImplementedException();
         }
 
         public bool Remove(ICoordinates item)

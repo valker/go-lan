@@ -283,7 +283,7 @@ namespace Valker.PlayOnLan.Server2008
             bool status = false;
             if (_players.FirstOrDefault(pl => pl.PlayerName == name) == null)
             {
-                var player = new Player { PlayerName = name, Agent = agent };
+                var player = new Player {PlayerName = name, Agent = agent, Order = _players.Count};
                 _players.Add(player);
                 status = true;
             }

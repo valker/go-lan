@@ -15,17 +15,18 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public Tuple<bool, ExceptionReason> IsMoveAcceptableInPosition(IMove move, IPosition position)
         {
-            throw new NotImplementedException();
+            return Tuple.Create(true, ExceptionReason.None);
         }
 
         public Tuple<bool, ExceptionReason> IsPositionAcceptableInGameLine(IPosition position, IPositionStorage gameLine)
         {
-            throw new NotImplementedException();
+            return Tuple.Create(true, ExceptionReason.None);
         }
 
         public double GetInitialScore(IPlayer player)
         {
-            throw new NotImplementedException();
+            if (player.Order == 0) return 0.0;
+            return 6.5;
         }
     }
 }
