@@ -47,19 +47,19 @@ namespace Valker.PlayOnLan.GoPlugin.Test
         [Test]
         public void TestEatedChangedEvent()
         {
-            var positionStorageMock = new Mock<IPositionStorage>();
-            positionStorageMock.Setup(storage => storage.Initial).Returns((IPosition)null);
-            var playerProviderMock = new Mock<IPlayerProvider>();
-            var player1Mock = new Mock<IPlayer>(); player1Mock.SetupGet(player => player.PlayerName).Returns("a");
-            var player2Mock = new Mock<IPlayer>(); player2Mock.SetupGet(player => player.PlayerName).Returns("b");
-            playerProviderMock.Setup(provider => provider.GetPlayers())
-                .Returns(new IPlayer[] {player1Mock.Object, player2Mock.Object });
+            var positionStorage = CreatePositionStorage();
+            var playerProvider = Mock.Of<IPlayerProvider>(provider => provider.GetPlayers() == new IPlayer[]
+            {
+                Mock.Of<IPlayer>(player => player.PlayerName == "vvv"),
+                Mock.Of<IPlayer>(player => player.PlayerName == "aaa"),
+            });
 
-            var rulesMock = new Mock<IRules>();
-            rulesMock
-                .Setup(rules => rules.IsMoveAcceptableInPosition(It.IsAny<IMove>(), It.IsAny<IPosition>()))
-                .Returns((IMove move, IPosition position) => Tuple.Create(true, ExceptionReason.None));
-            IEngine engine = new Engine(positionStorageMock.Object, playerProviderMock.Object, rulesMock.Object);
+            var rules =
+                Mock.Of<IRules>(
+                    rules1 =>
+                        rules1.IsMoveAcceptableInPosition(It.IsAny<IMove>(), It.IsAny<IPosition>()) ==
+                        Tuple.Create(true, ExceptionReason.None));
+            IEngine engine = new Engine(positionStorage, playerProvider, rules);
             bool eventFired = false;
             engine.ScoreChanged += (sender, args) => eventFired = true;
             engine.Move(new Move(0, 1));
@@ -68,6 +68,16 @@ namespace Valker.PlayOnLan.GoPlugin.Test
             Assert.That(eventFired, Is.EqualTo(false));
             engine.Move(new Move(1, 0));
             Assert.That(eventFired, Is.EqualTo(true));
+        }
+
+        private static IPositionStorage CreatePositionStorage()
+        {
+            return Mock.Of<IPositionStorage>(storage => storage.Initial == CreatePosition());
+        }
+
+        private static IPosition CreatePosition()
+        {
+            return Mock.Of<IPosition>(position => position.GetCellAt(It.IsAny<ICoordinates>()) == new EmptyCell() && position.Clone() == CreatePosition());
         }
 
         [Test]
