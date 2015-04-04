@@ -11,7 +11,7 @@ namespace Valker.PlayOnLan.GoPlugin
     /// <summary>
     ///     Implements Go rules
     /// </summary>
-    public class Engine : IEngine
+    public sealed class Engine : IEngine
     {
         /// <summary>
         ///     Создать объект "движка"
@@ -32,7 +32,7 @@ namespace Valker.PlayOnLan.GoPlugin
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -74,6 +74,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public void Move(IMove move)
         {
+            var oldPosition = CurrentPosition;
             Tuple<bool, ExceptionReason> isAcceptable = _rules.IsMoveAcceptableInPosition(move, CurrentPosition);
             if (!isAcceptable.Item1)
             {
@@ -87,28 +88,32 @@ namespace Valker.PlayOnLan.GoPlugin
             }
             _score[CurrentPlayer.PlayerName] += newPosition.Item2.Eated;
             CurrentPosition = newPosition.Item1;
+            foreach (var tuple in oldPosition.CompareStoneField(CurrentPosition))
+            {
+                OnCellChanged(new CellChangedEventArgs(tuple.Item1, tuple.Item2));
+            }
         }
 
         #endregion
 
-//        /// <summary>
-//        ///     Сделать ход текущим игроком
-//        /// </summary>
-//        /// <param name="point"></param>
-//        public void Move(Point point)
-//        {
-//            var reply = _positionStorage.Move(CurrentPosition, point, CurrentPlayer);
-//
-//            CheckStoneField(CurrentPosition, reply.Item1);
-//
-//            CurrentPosition = reply.Item1;
-//            if (reply.Item2 != null && reply.Item2.Eated != 0)
-//            {
-//                _eated[CurrentPlayer] += reply.Item2.Eated;
-//                InvokeEatedChanged(EventArgs.Empty);
-//            }
-//            CurrentPlayer = Util.Opposite(CurrentPlayer);
-//        }
+        //        /// <summary>
+        //        ///     Сделать ход текущим игроком
+        //        /// </summary>
+        //        /// <param name="point"></param>
+        //        public void Move(Point point)
+        //        {
+        //            var reply = _positionStorage.Move(CurrentPosition, point, CurrentPlayer);
+        //
+        //            CheckStoneField(CurrentPosition, reply.Item1);
+        //
+        //            CurrentPosition = reply.Item1;
+        //            if (reply.Item2 != null && reply.Item2.Eated != 0)
+        //            {
+        //                _eated[CurrentPlayer] += reply.Item2.Eated;
+        //                InvokeEatedChanged(EventArgs.Empty);
+        //            }
+        //            CurrentPlayer = Util.Opposite(CurrentPlayer);
+        //        }
 
         #region private fields
 
@@ -122,11 +127,15 @@ namespace Valker.PlayOnLan.GoPlugin
         /// </summary>
         private readonly Dictionary<string, double> _score;
 
-        private IPlayer _currentPlayer;
         private readonly IRules _rules;
         private IPosition _currentPosition;
         public IPlayerProvider PlayerProvider { get; }
 
         #endregion
+
+        private void OnCellChanged(CellChangedEventArgs e)
+        {
+            CellChanged?.Invoke(this, e);
+        }
     }
 }

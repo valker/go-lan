@@ -170,6 +170,11 @@ namespace Valker.PlayOnLan.GoPlugin
             Player = player;
         }
 
+        public override string ToString()
+        {
+            return string.Format("PLAYER:{0}", Player.PlayerName);
+        }
+
         public IPlayer Player { get; set; }
     }
 }

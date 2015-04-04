@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Valker.PlayOnLan.GoPlugin
@@ -67,6 +68,11 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             yield return new TwoDimensionsCoordinates(_x - 1, _y);
             yield return new TwoDimensionsCoordinates(_x + 1, _y);
+        }
+
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture, "{0},{1}", _x, _y);
         }
     }
 }

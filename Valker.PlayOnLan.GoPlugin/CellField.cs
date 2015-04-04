@@ -1,9 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    public class CellField
+    public class CellField : IEnumerable<KeyValuePair<ICoordinates, ICell>>
     {
         private readonly Dictionary<ICoordinates, ICell> _field; 
 
@@ -44,6 +45,11 @@ namespace Valker.PlayOnLan.GoPlugin
             return _field.All(keyValuePair => other.GetAt(keyValuePair.Key).Equals(keyValuePair.Value));
         }
 
+        public IEnumerator<KeyValuePair<ICoordinates, ICell>> GetEnumerator()
+        {
+            return _field.GetEnumerator();
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -55,6 +61,11 @@ namespace Valker.PlayOnLan.GoPlugin
         public override int GetHashCode()
         {
             return Size.GetHashCode();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         public bool Exist(ICoordinates coordinates)

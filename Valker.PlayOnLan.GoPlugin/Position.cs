@@ -130,6 +130,19 @@ namespace Valker.PlayOnLan.GoPlugin
             return Field.Exist(coordinates);
         }
 
+        public IEnumerable<Tuple<ICoordinates, ICell>> CompareStoneField(IPosition position)
+        {
+            var p = (Position) position;
+            foreach (var keyValuePair in Field)
+            {
+                var cellAt = position.GetCellAt(keyValuePair.Key);
+                if (!keyValuePair.Value.Equals(cellAt))
+                {
+                    yield return Tuple.Create(keyValuePair.Key, cellAt);
+                }
+            }
+        }
+
 /*
         public void ChangeCellState(ICoordinates coordinates, IPlayer currentPlayer)
         {
@@ -181,46 +194,6 @@ namespace Valker.PlayOnLan.GoPlugin
                     }
                 }
             }
-        }
-*/
-
-//        public IPlayer GetCellAt(Point point)
-//        {
-//            return Field.GetAt(point);
-//        }
-
-/*
-        public int Size
-        {
-            get { return Field.Size; }
-        }
-*/
-
-/*
-        /// <summary>
-        /// Проверяем, что группа жива
-        /// </summary>
-        /// <param name="grp">группа, которая подлажит проверке</param>
-        /// <param name="position">позиция</param>
-        /// <returns>true - группа жива</returns>
-        private static bool CheckIsLive(Group grp, Position position)
-        {
-            var dame = GetDame(grp, position);
-            return dame.Take(1).Count() > 0;
-        }
-*/
-
-/*
-        private static IEnumerable<ICoordinates> GetDame(Group grp, IPosition position)
-        {
-            return grp.SelectMany(point => GetDame(point, position));
-        }
-*/
-
-/*
-        private static IEnumerable<ICoordinates> GetDame(ICoordinates point, IPosition position)
-        {
-            return point.Neighbours(position).Where(pnt => position.GetCellAt(pnt) is EmptyCell);
         }
 */
 

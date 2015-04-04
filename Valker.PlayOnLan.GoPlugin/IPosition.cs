@@ -26,5 +26,6 @@ namespace Valker.PlayOnLan.GoPlugin
         void RemoveGroup(Group grp);
         void ExcludeGroups(List<Group> groups);
         bool Exist(ICoordinates coordinates);
+        IEnumerable<Tuple<ICoordinates, ICell>> CompareStoneField(IPosition position);
     }
 }
