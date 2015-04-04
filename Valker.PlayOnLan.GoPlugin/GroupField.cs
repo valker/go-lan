@@ -25,7 +25,9 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public Group GetAt(ICoordinates point)
         {
-            return _field[point];
+            Group value;
+            if (!_field.TryGetValue(point, out value)) return null;
+            return value;
         }
     }
 }

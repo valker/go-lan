@@ -48,9 +48,20 @@ namespace Valker.PlayOnLan.GoPlugin
             return Tuple.Create<IPosition, IMoveInfo>(position, new MoveInfo(stoneCount));
         }
 
-        private bool CheckIsLive(Group grp, IPosition position)
+        private static bool CheckIsLive(Group grp, IPosition position)
         {
-            throw new NotImplementedException();
+            var dame = GetDame(grp, position);
+            return dame.Take(1).Any();
+        }
+
+        private static IEnumerable<ICoordinates> GetDame(Group grp, IPosition position)
+        {
+            return grp.SelectMany(point => GetDame(point, position));
+        }
+
+        private static IEnumerable<ICoordinates> GetDame(ICoordinates point, IPosition position)
+        {
+            return point.Neighbours(position).Where(pnt => position.GetCellAt(pnt) is EmptyCell);
         }
 
         private int RemoveDeathOppositeGroups(IPosition position, Group grp, IPlayerProvider playerProvider)

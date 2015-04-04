@@ -56,5 +56,10 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             return Size.GetHashCode();
         }
+
+        public bool Exist(ICoordinates coordinates)
+        {
+            return _field.ContainsKey(coordinates);
+        }
     }
 }

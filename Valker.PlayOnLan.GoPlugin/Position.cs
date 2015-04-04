@@ -107,12 +107,12 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public void AddGroup(Group grp)
         {
-            throw new NotImplementedException();
+            Groups.Add(grp);
         }
 
         public void SetGroupAt(ICoordinates coordinates, Group grp)
         {
-            throw new NotImplementedException();
+            _groupField.SetAt(coordinates, grp);
         }
 
         public void RemoveGroup(Group grp)
@@ -123,6 +123,11 @@ namespace Valker.PlayOnLan.GoPlugin
         public void ExcludeGroups(List<Group> groups)
         {
             throw new NotImplementedException();
+        }
+
+        public bool Exist(ICoordinates coordinates)
+        {
+            return Field.Exist(coordinates);
         }
 
 /*

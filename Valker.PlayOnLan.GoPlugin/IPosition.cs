@@ -25,5 +25,6 @@ namespace Valker.PlayOnLan.GoPlugin
         void SetGroupAt(ICoordinates coordinates, Group grp);
         void RemoveGroup(Group grp);
         void ExcludeGroups(List<Group> groups);
+        bool Exist(ICoordinates coordinates);
     }
 }

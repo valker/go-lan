@@ -304,7 +304,8 @@ namespace Valker.PlayOnLan.Server2008
 
         public void ExecuteServerGameMessage(IAgentInfo sender, string text, int id)
         {
-            var server = _partyStates.First(state => state.PartyId == id).Server;
+            PartyState partyState = _partyStates.First(state => state.PartyId == id);
+            var server = partyState.Server;
             var player1 = _players.First(player => player.Agent.ClientIdentifier.Equals(sender.ClientIdentifier));
             server.ProcessMessage(player1, text);
         }
