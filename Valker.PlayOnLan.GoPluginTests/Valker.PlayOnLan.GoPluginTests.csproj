@@ -63,13 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test\EngineTest.cs" />
-    <Compile Include="Test\GroupTest.cs" />
-    <Compile Include="Test\KoTest.cs" />
-    <Compile Include="Test\PositionStorageTest.cs" />
-    <Compile Include="Test\PositionTest.cs" />
-    <Compile Include="Test\ScoreCalculatorTest.cs" />
-    <Compile Include="Test\StoneFieldTest.cs" />
+    <Compile Include="EngineTest.cs" />
+    <Compile Include="GroupTest.cs" />
+    <Compile Include="KoTest.cs" />
+    <Compile Include="PositionStorageTest.cs" />
+    <Compile Include="PositionTest.cs" />
+    <Compile Include="ScoreCalculatorTest.cs" />
+    <Compile Include="StoneFieldTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

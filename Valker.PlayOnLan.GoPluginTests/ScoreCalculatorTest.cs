@@ -1,9 +1,6 @@
 ﻿using NUnit.Framework;
-using Valker.PlayOnLan.Api;
-using Valker.PlayOnLan.GoPlugin;
-using Valker.PlayOnLan.Utilities;
 
-namespace Valker.PlayOnLan.GoPluginTests.Test
+namespace Valker.PlayOnLan.GoPluginTests
 {
     [TestFixture]
     public class ScoreCalculatorTest
