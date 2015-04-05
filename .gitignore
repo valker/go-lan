@@ -5,3 +5,5 @@ packages/NUnit.2.6.4/
 packages/NUnitTestAdapter.1.2/
 packages/agsXMPP.1.1.1.0/
 packages/Moq.4.0.10827/
+TestResults/
+Valker.PlayOnLan.sln.DotSettings
