@@ -117,12 +117,15 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public void RemoveGroup(Group grp)
         {
-            throw new NotImplementedException();
+            Groups.Remove(grp);
         }
 
         public void ExcludeGroups(List<Group> groups)
         {
-            throw new NotImplementedException();
+            foreach (var @group in groups)
+            {
+                Groups.Remove(group);
+            }
         }
 
         public bool Exist(ICoordinates coordinates)

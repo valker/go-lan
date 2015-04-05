@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    internal class TwoDimensionsCoordinates : ICoordinates, IEquatable<TwoDimensionsCoordinates>
+    public class TwoDimensionsCoordinates : ICoordinates, IEquatable<TwoDimensionsCoordinates>
     {
         public bool Equals(TwoDimensionsCoordinates other)
         {
@@ -60,7 +60,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public IEnumerable<ICoordinates> Neighbours(IPosition position)
         {
-            IEnumerable<ICoordinates> neighbours = GetNeibours();
+            IEnumerable<ICoordinates> neighbours = GetNeibours().ToArray();
             return neighbours.Where(c => position.Exist(c));
         }
 
@@ -68,6 +68,8 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             yield return new TwoDimensionsCoordinates(_x - 1, _y);
             yield return new TwoDimensionsCoordinates(_x + 1, _y);
+            yield return new TwoDimensionsCoordinates(_x, _y - 1);
+            yield return new TwoDimensionsCoordinates(_x, _y + 1);
         }
 
         public override string ToString()

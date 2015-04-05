@@ -65,7 +65,8 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private static IEnumerable<ICoordinates> GetDame(ICoordinates point, IPosition position)
         {
-            return point.Neighbours(position).Where(pnt => position.GetCellAt(pnt) is EmptyCell);
+            IEnumerable<ICoordinates> coordinateses = point.Neighbours(position).ToArray();
+            return coordinateses.Where(pnt => position.GetCellAt(pnt) is EmptyCell);
         }
 
         private int RemoveDeathOppositeGroups(IPosition position, Group grp, IPlayerProvider playerProvider)
@@ -73,19 +74,19 @@ namespace Valker.PlayOnLan.GoPlugin
             // находим соседние группы противника
             IEnumerable<Group> oppositeGroups = FindOppositeGroup(position, grp, playerProvider);
 
-            var toKill = oppositeGroups.Where(g => !CheckIsLive(g, position)).ToArray();
+            var groupsToKill = oppositeGroups.Where(g => !CheckIsLive(g, position)).ToArray();
 
             int count = 0;
 
             // для всех групп из списка "на удаление"
-            foreach (Group toKillGrp in toKill)
+            foreach (Group groupToKill in groupsToKill)
             {
                 // добавляем количество камней в группе к количеству снятых с доски камней
-                count += toKillGrp.Count;
+                count += groupToKill.Count;
                 // убираем группу
-                position.RemoveGroup(toKillGrp);
+                position.RemoveGroup(groupToKill);
                 // модифицируем поле
-                foreach (var pnt in toKillGrp)
+                foreach (var pnt in groupToKill)
                 {
                     position.ChangeCellState(pnt, new EmptyCell());
                     position.SetGroupAt(pnt, null);
@@ -169,6 +170,24 @@ namespace Valker.PlayOnLan.GoPlugin
 
     public class PlayerCell : ICell
     {
+        protected bool Equals(PlayerCell other)
+        {
+            return Equals(Player, other.Player);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PlayerCell) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Player != null ? Player.GetHashCode() : 0);
+        }
+
         public PlayerCell(IPlayer player)
         {
             Player = player;
