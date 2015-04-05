@@ -87,6 +87,11 @@ namespace Valker.PlayOnLan.GoPlugin
                 throw new GoException(isAcceptable.Item2);
             }
             _score[CurrentPlayer.PlayerName] += newPosition.Item2.Eated;
+            if (newPosition.Item2.Eated != 0)
+            {
+                OnScoreChanged();
+            }
+
             CurrentPosition = newPosition.Item1;
             foreach (var tuple in oldPosition.CompareStoneField(CurrentPosition))
             {
@@ -136,6 +141,11 @@ namespace Valker.PlayOnLan.GoPlugin
         private void OnCellChanged(CellChangedEventArgs e)
         {
             CellChanged?.Invoke(this, e);
+        }
+
+        private void OnScoreChanged()
+        {
+            ScoreChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
