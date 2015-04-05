@@ -72,7 +72,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0},{1}", _x, _y);
+            return string.Format(CultureInfo.InvariantCulture, "{0};{1}", _x, _y);
         }
     }
 }

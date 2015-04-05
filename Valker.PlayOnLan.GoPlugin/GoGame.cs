@@ -43,9 +43,9 @@ namespace Valker.PlayOnLan.GoPlugin
         /// Creates client component of the game
         /// </summary>
         /// <returns></returns>
-        public IGameClient CreateClient(IForm parent)
+        public IGameClient CreateClient(IForm parent, IPlayerProvider playerProvider)
         {
-            return new GoClient();
+            return new GoClient(playerProvider);
         }
 
         /// <summary>

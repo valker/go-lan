@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
-using Valker.PlayOnLan.Api;
-using Valker.PlayOnLan.Utilities;
 
-namespace Valker.PlayOnLan.GoPlugin.Test
+namespace Valker.PlayOnLan.GoPluginTests
 {
     [TestFixture]
     public class KoTest

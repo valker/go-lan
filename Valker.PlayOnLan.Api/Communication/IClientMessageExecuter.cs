@@ -34,7 +34,8 @@ namespace Valker.PlayOnLan.Api.Communication
         /// <param name="partyId">unique identifier of the party across one server</param>
         /// <param name="gameTypeId">type of the game</param>
         /// <param name="parameters">parameters of the game</param>
-        void PartyBeginNotification(IMessageConnector sender, int partyId, string gameTypeId, string parameters);
+        /// <param name="playerProvider"></param>
+        void PartyBeginNotification(IMessageConnector sender, int partyId, string gameTypeId, string parameters, string[] players, string thisPlayer);
 
         /// <summary>
         /// Server notifies about new game event

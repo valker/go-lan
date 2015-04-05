@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Valker.PlayOnLan.Api;
 using Valker.PlayOnLan.Api.Game;
@@ -146,15 +147,15 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             var score = Engine.PlayerProvider.GetPlayers()
                 .OrderBy(player => player.PlayerName)
-                .Select(player => Engine.GetScore(player).ToString());
+                .Select(player => Engine.GetScore(player).ToString(CultureInfo.InvariantCulture));
             var joined = string.Join(",", score);
-            var message = string.Format("EATED[{0}]", joined);
+            var message = string.Format(CultureInfo.InvariantCulture, "EATED[{0}]", joined);
             SendMessageToAllPlayers(message);
         }
 
         private void EngineOnCellChanged(object sender, CellChangedEventArgs args)
         {
-            string message = string.Format("FIELD[{0},{1}]", args.Coordinates.ToString(), args.Cell.ToString());
+            string message = string.Format(CultureInfo.InvariantCulture, "FIELD[{0},{1}]", args.Coordinates, args.Cell);
             SendMessageToAllPlayers(message);
         }
 
@@ -168,7 +169,12 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private void SendInitialState()
         {
-            string message = "PARAMS[width=" + Parameters.Width + "]";
+            Dictionary<string, string> p = new Dictionary<string, string>();
+            p["width"] = Parameters.Width.ToString();
+            p["player1"] = Players[0].PlayerName;
+            p["player2"] = Players[1].PlayerName;
+            string prms = string.Join(",", p.Select(pair => pair.Key + "=" + pair.Value));
+            string message = "PARAMS[" + prms + "]";
             SendMessageToAllPlayers(message);
         }
 

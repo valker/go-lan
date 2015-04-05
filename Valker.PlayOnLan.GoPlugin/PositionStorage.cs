@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Valker.PlayOnLan.Api;
+using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin

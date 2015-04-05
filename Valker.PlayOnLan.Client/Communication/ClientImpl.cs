@@ -141,11 +141,13 @@ namespace Valker.PlayOnLan.Client2008.Communication
             AcceptedPlayer(this, new AcceptedPlayerEventArgs() { Status = status });
         }
 
-        public void PartyBeginNotification(IMessageConnector sender, int partyId, string gameTypeId, string parameters)
+        public void PartyBeginNotification(IMessageConnector sender, int partyId, string gameTypeId, string parameters, string[] players, string thisPlayer)
         {
             if (_client != null) return;
 
-            _client = _gameDict[gameTypeId].CreateClient(Parent);
+            var playerProvider = new ClientPlayerProvider(players, thisPlayer);
+
+            _client = _gameDict[gameTypeId].CreateClient(Parent, playerProvider);
 
             _client.OnMessageReady +=
                 (delegate(object o, MessageEventArgs args)
@@ -167,11 +169,48 @@ namespace Valker.PlayOnLan.Client2008.Communication
                                          }));
         }
 
+        private IPlayerProvider CreatePlayerProvider()
+        {
+            throw new NotImplementedException();
+        }
+
         public void ExecuteGameMessage(IMessageConnector sender, string message)
         {
             _client.ExecuteMessage(message);
         }
 
         #endregion
+    }
+
+    public class ClientPlayerProvider : IPlayerProvider
+    {
+        private readonly Player[] _players;
+        private readonly Player _thisPlayer;
+
+        public ClientPlayerProvider(string[] players, string thisPlayer)
+        {
+            _players = players.Select(s => new Player() {PlayerName = s}).ToArray();
+            _thisPlayer = new Player() {PlayerName = thisPlayer};
+        }
+
+        public IPlayer[] GetPlayers()
+        {
+            return _players;
+        }
+
+        public IPlayer GetFirstPlayer()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPlayer GetNextPlayer(IPlayer player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPlayer GetMe()
+        {
+            return _thisPlayer;
+        }
     }
 }

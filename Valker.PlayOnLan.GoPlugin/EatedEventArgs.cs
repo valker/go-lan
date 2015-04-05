@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Valker.PlayOnLan.GoPlugin
@@ -8,9 +9,9 @@ namespace Valker.PlayOnLan.GoPlugin
     {
         public EatedEventArgs(IEnumerable<string> strings)
         {
-            Eated = strings.Select(s => int.Parse(s)).ToArray();
+            Eated = strings.Select(s => double.Parse(s, CultureInfo.InvariantCulture)).ToArray();
         }
 
-        public int[] Eated { get; set; }
+        public double[] Eated { get; private set; }
     }
 }

@@ -28,5 +28,10 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             get { return _dict[key]; }
         }
+
+        public bool TryGetValue(string key, out string value)
+        {
+            return _dict.TryGetValue(key, out value);
+        }
     }
 }

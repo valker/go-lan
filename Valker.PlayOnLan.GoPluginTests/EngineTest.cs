@@ -2,10 +2,10 @@
 using System.Linq;
 using Moq;
 using NUnit.Framework;
-using Valker.PlayOnLan.Api;
 using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin;
 
-namespace Valker.PlayOnLan.GoPlugin.Test
+namespace Valker.PlayOnLan.GoPluginTests
 {
     [TestFixture]
     public class EngineTest
@@ -59,6 +59,7 @@ namespace Valker.PlayOnLan.GoPlugin.Test
                     rules1 =>
                         rules1.IsMoveAcceptableInPosition(It.IsAny<IMove>(), It.IsAny<IPosition>()) ==
                         Tuple.Create(true, ExceptionReason.None));
+
             IEngine engine = new Engine(positionStorage, playerProvider, rules);
             bool eventFired = false;
             engine.ScoreChanged += (sender, args) => eventFired = true;
@@ -77,7 +78,10 @@ namespace Valker.PlayOnLan.GoPlugin.Test
 
         private static IPosition CreatePosition()
         {
-            return Mock.Of<IPosition>(position => position.GetCellAt(It.IsAny<ICoordinates>()) == new EmptyCell() && position.Clone() == CreatePosition());
+            var positionMock = new Mock<IPosition>();
+            positionMock.Setup(position => position.Clone()).Returns(CreatePosition);
+            positionMock.Setup(position => position.GetCellAt(It.IsAny<ICoordinates>())).Returns(new EmptyCell());
+            return positionMock.Object;
         }
 
         [Test]

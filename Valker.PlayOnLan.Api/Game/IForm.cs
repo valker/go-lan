@@ -1,10 +1,9 @@
 using System;
+using System.Diagnostics.Contracts;
 
 namespace Valker.PlayOnLan.Api.Game
 {
-    /// <summary>
-    /// Define an interface of form (gui engine independent)
-    /// </summary>
+    [ContractClass(typeof(FormContract))]
     public interface IForm
     {
         /// <summary>
@@ -23,5 +22,24 @@ namespace Valker.PlayOnLan.Api.Game
         /// Identifies the gui type ("winforms", "gtk", etc.)
         /// </summary>
         string Gui { get; }
+    }
+
+    [ContractClassFor(typeof(IForm))]
+    public abstract class FormContract : IForm
+    {
+        public void Show(IForm parent)
+        {
+            Contract.Requires(parent != null);
+        }
+
+        public void RunInUiThread(Action action)
+        {
+            Contract.Requires(action != null);
+        }
+
+        public string Gui
+        {
+            get { return null; }
+        }
     }
 }

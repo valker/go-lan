@@ -66,6 +66,7 @@
     <Compile Include="Game\IGameType.cs" />
     <Compile Include="Game\IMainForm.cs" />
     <Compile Include="Game\IPlayer.cs" />
+    <Compile Include="Game\IPlayerProvider.cs" />
     <Compile Include="Game\IPlayingForm.cs" />
     <Compile Include="Game\IServerForm.cs" />
     <Compile Include="Game\NewAgentCreatingEventArgs.cs" />

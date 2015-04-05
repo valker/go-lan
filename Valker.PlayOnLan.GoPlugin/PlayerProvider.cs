@@ -32,5 +32,10 @@ namespace Valker.PlayOnLan.GoPlugin
             }
             return _players[index];
         }
+
+        public IPlayer GetMe()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

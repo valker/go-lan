@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -14,6 +15,12 @@ namespace Valker.PlayOnLan.GoPlugin
     /// </summary>
     public class GoClient : IGameClient
     {
+        private IPlayerProvider _playerProvider;
+
+        public GoClient(IPlayerProvider playerProvider)
+        {
+            _playerProvider = playerProvider;
+        }
         #region IGameClient Members
 
         /// <summary>
@@ -50,7 +57,7 @@ namespace Valker.PlayOnLan.GoPlugin
                     ShowMessage(this, new ShowMessageEventArgs(Util.ExtractParams(message)));
                     break;
                 case "FIELD":
-                    FieldChanged(this, new CellChangedEventArgs(Util.ExtractParams(message)));
+                    FieldChanged(this, new CellChangedEventArgs(Util.ExtractParams(message), _playerProvider));
                     break;
                 case "MARK":
                     Mark(this, EventArgs.Empty);
@@ -89,7 +96,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public void Click(int x, int y)
         {
-            SendMessageToServer(string.Format("MOVE[{0},{1}]", x, y));
+            SendMessageToServer(string.Format(CultureInfo.InvariantCulture, "MOVE[{0},{1}]", x, y));
         }
 
         private void SendMessageToServer(string text)

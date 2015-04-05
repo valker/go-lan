@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
-using Valker.PlayOnLan.Api;
+﻿using NUnit.Framework;
+using Valker.PlayOnLan.GoPlugin;
 
-namespace Valker.PlayOnLan.GoPlugin.Test
+namespace Valker.PlayOnLan.GoPluginTests
 {
     [TestFixture]
     public class StoneFieldTest

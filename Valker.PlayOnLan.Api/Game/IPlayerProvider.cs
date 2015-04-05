@@ -1,11 +1,10 @@
-using Valker.PlayOnLan.Api.Game;
-
-namespace Valker.PlayOnLan.GoPlugin
+namespace Valker.PlayOnLan.Api.Game
 {
     public interface IPlayerProvider
     {
         IPlayer[] GetPlayers();
         IPlayer GetFirstPlayer();
         IPlayer GetNextPlayer(IPlayer player);
+        IPlayer GetMe();
     }
 }

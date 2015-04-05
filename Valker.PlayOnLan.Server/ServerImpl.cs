@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Xml.Serialization;
-
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.PluginLoader;
@@ -19,41 +18,35 @@ namespace Valker.PlayOnLan.Server2008
 {
     public class ServerImpl : IServerMessageExecuter, IDisposable
     {
-        private readonly IEnumerable<IGameType> _games;
-
+        // Added when new transport is attached to the server
+        private readonly List<IMessageConnector> _connectors;
         private readonly IDictionary<string, IGameType> _gameDict;
-
+        private readonly IEnumerable<IGameType> _games;
         // Added when new party registred
         // Removed when party is removed, OR client that register the party is removed
         private readonly List<PartyState> _partyStates;
-
-        private int _partyStateId;
-
-        // Added when new transport is attached to the server
-        private readonly List<IMessageConnector> _connectors;
-
         // Added when new player is registred
         private readonly List<IPlayer> _players;
-        
         private readonly BackgroundWorker _worker;
+        private int _partyStateId;
 
         public ServerImpl(IEnumerable<IMessageConnector> connectors)
         {
             if (connectors == null) throw new ArgumentNullException("connectors");
 
-        	_games = new List<IGameType>(Loader.Load(Environment.CurrentDirectory));
+            _games = new List<IGameType>(Loader.Load(Environment.CurrentDirectory));
 
-        	_gameDict = new Dictionary<string, IGameType>();
-			
-        	_partyStates = new List<PartyState>();
-			
-	        _connectors = new List<IMessageConnector>();
+            _gameDict = new Dictionary<string, IGameType>();
 
-			_players = new List<IPlayer>();
-        
-        	_worker = new BackgroundWorker();
-			
-			foreach (var game in _games)
+            _partyStates = new List<PartyState>();
+
+            _connectors = new List<IMessageConnector>();
+
+            _players = new List<IPlayer>();
+
+            _worker = new BackgroundWorker();
+
+            foreach (var game in _games)
             {
                 Trace.WriteLine(game.Name);
                 _gameDict.Add(game.Id, game);
@@ -72,14 +65,11 @@ namespace Valker.PlayOnLan.Server2008
             _worker.RunWorkerAsync();
         }
 
-        private void WorkerOnDoWork(object sender, DoWorkEventArgs args)
+        public void Dispose()
         {
-            var me = (BackgroundWorker) sender;
-            while (!me.CancellationPending)
-            {
-                Thread.Sleep(15000);
-                UpdatePartyStates(null);
-            }
+            _worker.CancelAsync();
+            _worker.Dispose();
+            InvokeClosed(EventArgs.Empty);
         }
 
         public void UpdatePartyStates(IAgentInfo agentInfo)
@@ -90,12 +80,121 @@ namespace Valker.PlayOnLan.Server2008
             Send(agentInfo, msg.ToString());
         }
 
+        private void WorkerOnDoWork(object sender, DoWorkEventArgs args)
+        {
+            var me = (BackgroundWorker) sender;
+            while (!me.CancellationPending)
+            {
+                Thread.Sleep(15000);
+                UpdatePartyStates(null);
+            }
+        }
+
+        private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
+        {
+            Console.WriteLine("ConnectorOnMessageArrived");
+            var message = args.Message;
+            var serializer = new XmlSerializer(typeof (ServerMessage), ServerMessageTypes.Types);
+            var msgObject = (ServerMessage) serializer.Deserialize(new StringReader(message));
+            Console.WriteLine(msgObject.GetType().ToString());
+            msgObject.Execute(this,
+                new AgentInfo {ClientConnector = (IMessageConnector) sender, ClientIdentifier = args.FromIdentifier});
+        }
+
+        public void AddConnector(IMessageConnector connector)
+        {
+            if (connector == null) throw new ArgumentNullException();
+
+            connector.MessageArrived += ConnectorOnMessageArrived;
+            connector.Closed += ConnectorOnClosed;
+            connector.DisconnectedOther += ConnectorOnDisconnectedClient;
+            _connectors.Add(connector);
+        }
+
+        private void ConnectorOnDisconnectedClient(object sender, DisconnectedClientEventArgs args)
+        {
+            var playersToRemove =
+                _players.Where(player => player.Agent.ClientIdentifier.Equals(args.Identifier)).ToArray();
+            foreach (var player in playersToRemove)
+            {
+                RemovePlayer(player);
+            }
+        }
+
+        private void ConnectorOnClosed(object sender, EventArgs args)
+        {
+            Console.WriteLine("ConnectorOnClosed");
+            var connector = (IMessageConnector) sender;
+
+            foreach (var player in GetPlayersByConnection(connector))
+            {
+                RemovePlayer(player);
+            }
+
+            UpdatePartyStates(null);
+        }
+
+        private IPlayer[] GetPlayersByConnection(IMessageConnector connector)
+        {
+            var players = _players.Where(pl => pl.Agent.ClientConnector.Equals(connector)).ToArray();
+            return players;
+        }
+
+        private void RemovePlayer(IPlayer playerInfo)
+        {
+            var parties =
+                _partyStates.Where(
+                    state => state.Players.FirstOrDefault(player => player.PlayerName == playerInfo.PlayerName) != null)
+                    .ToArray();
+            foreach (var partyState in parties)
+            {
+                partyState.Dispose();
+                _partyStates.Remove(partyState);
+            }
+
+            _players.Remove(playerInfo);
+        }
+
+        #region IServerMessageExecuter Members
+
+        /// <summary>
+        ///     Send the message to the given recepient
+        /// </summary>
+        /// <param name="recepient">if null, then to all recepient</param>
+        /// <param name="message"></param>
+        private void Send(IAgentInfo recepient, string message)
+        {
+            if (recepient != null)
+            {
+                recepient.ClientConnector.Send(recepient.ClientConnector.ConnectorName, recepient.ClientIdentifier,
+                    message);
+            }
+            else
+            {
+                foreach (var client in _players.Select(p => p.Agent).ToArray())
+                {
+                    Send(client, message);
+                }
+            }
+        }
+
+        #endregion
+
+        public event EventHandler Closed;
+
+        private void InvokeClosed(EventArgs e)
+        {
+            var handler = Closed;
+            if (handler != null) handler(this, e);
+        }
+
         #region IServerMessageExecuter Members
 
         public void RegisterNewParty(IAgentInfo agent, string gameId, string parameters)
         {
             var status = RegisterNewPartyImpl(agent, gameId, parameters);
-            var message = new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred, parameters).ToString();
+            var message =
+                new AcknowledgeRegistrationMessage(status == PartyStatus.PartyRegistred, parameters).ToString();
             Send(agent, message);
             UpdatePartyStates(null);
         }
@@ -108,12 +207,14 @@ namespace Valker.PlayOnLan.Server2008
                 throw new ArgumentException("Cannot find player of this agent");
             }
 
-            if (_partyStates.FirstOrDefault(partyState => partyState.Players.FirstOrDefault(pl => pl.Equals(player)) != null) != null)
+            if (
+                _partyStates.FirstOrDefault(
+                    partyState => partyState.Players.FirstOrDefault(pl => pl.Equals(player)) != null) != null)
             {
                 return PartyStatus.ClientDuplicated;
             }
 
-            PartyState state = CreatePartyState(player, gameId, parameters);
+            var state = CreatePartyState(player, gameId, parameters);
 
             _partyStates.Add(state);
 
@@ -123,13 +224,13 @@ namespace Valker.PlayOnLan.Server2008
         private PartyState CreatePartyState(IPlayer player, string gameId, string parameters)
         {
             return new PartyState
-                       {
-                           Status = PartyStatus.PartyRegistred,
-                           GameTypeId = gameId,
-                           Players = new[] {player},
-                           Parameters = parameters,
-                           PartyId = _partyStateId++,
-                       };
+            {
+                Status = PartyStatus.PartyRegistred,
+                GameTypeId = gameId,
+                Players = new[] {player},
+                Parameters = parameters,
+                PartyId = _partyStateId++
+            };
         }
 
         public void RetrieveSupportedGames(IAgentInfo sender)
@@ -159,10 +260,10 @@ namespace Valker.PlayOnLan.Server2008
             UpdatePartyStates(null);
 
             //notify players
-            var message = CreatePartyBeginMessage(party);
-            foreach (var clientInfo in party.Players.Select(p=>p.Agent))
+            foreach (var player in party.Players)
             {
-                Send(clientInfo, message);
+                var message = CreatePartyBeginMessage(party, player);
+                Send(player.Agent, message);
             }
 
             party.Server.Start();
@@ -178,9 +279,11 @@ namespace Valker.PlayOnLan.Server2008
             }
         }
 
-        private static string CreatePartyBeginMessage(PartyState party)
+        private static string CreatePartyBeginMessage(PartyState party, IPlayer player)
         {
-            return new PartyBeginNotificationMessage(party.PartyId, party.GameTypeId, party.Parameters).ToString();
+            return
+                new PartyBeginNotificationMessage(party.PartyId, party.GameTypeId, party.Parameters, party.Players.Select(player1 => player1.PlayerName).ToArray(), player.PlayerName)
+                    .ToString();
         }
 
         private static void AddPlayerToParty(PartyState party, IPlayer player)
@@ -189,7 +292,7 @@ namespace Valker.PlayOnLan.Server2008
         }
 
         private IPlayer FindPlayer(string accepterName)
-        {            
+        {
             if (accepterName == null) throw new ArgumentNullException();
 
             var player = _players.FirstOrDefault(p => p.PlayerName == accepterName);
@@ -207,71 +310,7 @@ namespace Valker.PlayOnLan.Server2008
 
         #endregion
 
-        private void ConnectorOnMessageArrived(object sender, MessageEventArgs args)
-        {
-            Console.WriteLine("ConnectorOnMessageArrived");
-            string message = args.Message;
-            var serializer = new XmlSerializer(typeof (ServerMessage), ServerMessageTypes.Types);
-            var msgObject = (ServerMessage) serializer.Deserialize(new StringReader(message));
-            Console.WriteLine(msgObject.GetType().ToString());
-            msgObject.Execute(this, new AgentInfo { ClientConnector = (IMessageConnector)sender, ClientIdentifier = args.FromIdentifier });
-        }
-
-        public void AddConnector(IMessageConnector connector)
-        {
-            if (connector == null) throw new ArgumentNullException();
-
-            connector.MessageArrived += ConnectorOnMessageArrived;
-            connector.Closed += ConnectorOnClosed;
-            connector.DisconnectedOther += ConnectorOnDisconnectedClient;
-            _connectors.Add(connector);
-        }
-
-        private void ConnectorOnDisconnectedClient(object sender, DisconnectedClientEventArgs args)
-        {
-            var playersToRemove = _players.Where(player => player.Agent.ClientIdentifier.Equals(args.Identifier)).ToArray();
-            foreach (var player in playersToRemove)
-            {
-                RemovePlayer(player);
-            }
-        }
-
-
-        private void ConnectorOnClosed(object sender, EventArgs args)
-        {
-            Console.WriteLine("ConnectorOnClosed");
-            var connector = (IMessageConnector)sender;
-
-            foreach (var player in GetPlayersByConnection(connector))
-            {
-                RemovePlayer(player);
-            }
-
-            UpdatePartyStates(null);
-        }
-
-        private IPlayer[] GetPlayersByConnection(IMessageConnector connector)
-        {
-            var players = _players.Where(pl => pl.Agent.ClientConnector.Equals(connector)).ToArray();
-            return players;
-        }
-
-        private void RemovePlayer(IPlayer playerInfo)
-        {
-            var parties = _partyStates.Where(state => state.Players.FirstOrDefault(player => player.PlayerName == playerInfo.PlayerName) != null).ToArray();
-            foreach (var partyState in parties)
-            {
-                partyState.Dispose();
-                _partyStates.Remove(partyState);
-            }
-
-            _players.Remove(playerInfo);
-        }
-
-
-
         #region IServerMessageExecuter Members
-
 
         public void RegisterNewPlayer(IAgentInfo agent, string name)
         {
@@ -280,7 +319,7 @@ namespace Valker.PlayOnLan.Server2008
                 throw new ArgumentNullException("agent");
             }
 
-            bool status = false;
+            var status = false;
             if (_players.FirstOrDefault(pl => pl.PlayerName == name) == null)
             {
                 var player = new Player {PlayerName = name, Agent = agent, Order = _players.Count};
@@ -289,8 +328,8 @@ namespace Valker.PlayOnLan.Server2008
             }
 
             agent.ClientConnector.WatchOther(agent.ClientIdentifier);
-            
-            Send(agent, new AcceptNewPlayerMessage { Status = status }.ToString());
+
+            Send(agent, new AcceptNewPlayerMessage {Status = status}.ToString());
             if (status)
             {
                 UpdatePartyStates(agent);
@@ -304,51 +343,44 @@ namespace Valker.PlayOnLan.Server2008
 
         public void ExecuteServerGameMessage(IAgentInfo sender, string text, int id)
         {
-            PartyState partyState = _partyStates.First(state => state.PartyId == id);
+            var partyState = _partyStates.First(state => state.PartyId == id);
             var server = partyState.Server;
             var player1 = _players.First(player => player.Agent.ClientIdentifier.Equals(sender.ClientIdentifier));
             server.ProcessMessage(player1, text);
         }
 
         #endregion
+    }
 
-        #region IServerMessageExecuter Members
+    internal class ServerPlayerProvider : IPlayerProvider
+    {
+        private IPlayer[] _players;
+        private IPlayer _player;
 
-        /// <summary>
-        /// Send the message to the given recepient
-        /// </summary>
-        /// <param name="recepient">if null, then to all recepient</param>
-        /// <param name="message"></param>
-        private void Send(IAgentInfo recepient, string message)
+        public ServerPlayerProvider(IPlayer[] players, IPlayer player)
         {
-            if (recepient != null)
-            {
-                recepient.ClientConnector.Send(recepient.ClientConnector.ConnectorName, recepient.ClientIdentifier, message);
-            }
-            else
-            {
-                foreach (var client in _players.Select(p => p.Agent).ToArray())
-                {
-                    Send(client, message);
-                }
-            }
+            _players = players;
+            _player = player;
         }
 
-        #endregion
-
-        public void Dispose()
+        public IPlayer[] GetPlayers()
         {
-            _worker.CancelAsync();
-            _worker.Dispose();
-            InvokeClosed(EventArgs.Empty);
+            return _players;
         }
 
-        public event EventHandler Closed;
-
-        private void InvokeClosed(EventArgs e)
+        public IPlayer GetFirstPlayer()
         {
-            EventHandler handler = Closed;
-            if (handler != null) handler(this, e);
+            throw new NotImplementedException();
+        }
+
+        public IPlayer GetNextPlayer(IPlayer player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPlayer GetMe()
+        {
+            return _player;
         }
     }
 }

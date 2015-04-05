@@ -50,13 +50,17 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private static bool CheckIsLive(Group grp, IPosition position)
         {
-            var dame = GetDame(grp, position);
+            var dame = GetDame(grp, position).ToArray();
             return dame.Take(1).Any();
         }
 
         private static IEnumerable<ICoordinates> GetDame(Group grp, IPosition position)
         {
-            return grp.SelectMany(point => GetDame(point, position));
+            return grp.SelectMany(delegate(ICoordinates point)
+            {
+                var coordinateses = GetDame(point, position).ToArray();
+                return coordinateses;
+            });
         }
 
         private static IEnumerable<ICoordinates> GetDame(ICoordinates point, IPosition position)

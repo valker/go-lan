@@ -29,6 +29,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -73,7 +74,6 @@
     <Compile Include="Abstract\IGameLine.cs" />
     <Compile Include="Abstract\IInfo.cs" />
     <Compile Include="Abstract\IMove.cs" />
-    <Compile Include="Abstract\IPlayerProvider.cs" />
     <Compile Include="Abstract\IPosition.cs" />
     <Compile Include="Abstract\IPositionStorage.cs" />
     <Compile Include="Abstract\IRules.cs" />
