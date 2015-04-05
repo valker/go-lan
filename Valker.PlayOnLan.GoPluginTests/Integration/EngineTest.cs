@@ -18,6 +18,8 @@ namespace Valker.PlayOnLan.GoPluginTests.Integration
             IPositionStorage positionStorage = new PositionStorage(9, playerProvider);
             IRules rules = new Rules() ;
             var engine = new Engine(positionStorage, playerProvider, rules);
+            bool score = false;
+            engine.ScoreChanged += (sender, args) => score = true;
             engine.Move(new Move(0, 0));
             engine.Move(new Move(1, 0));
             engine.Move(new Move(1, 1));
@@ -25,6 +27,7 @@ namespace Valker.PlayOnLan.GoPluginTests.Integration
             Assert.That(engine.CurrentPosition.GetCellAt(new TwoDimensionsCoordinates(0, 0)), Is.InstanceOf<EmptyCell>());
             Assert.That(engine.GetScore(aPlayer), Is.EqualTo(0.0));
             Assert.That(engine.GetScore(bPlayer), Is.EqualTo(1.0));
+            Assert.That(score, Is.EqualTo(true));
         }
     }
 }
