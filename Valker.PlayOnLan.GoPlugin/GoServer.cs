@@ -146,7 +146,7 @@ namespace Valker.PlayOnLan.GoPlugin
         private void EngineOnEatedChanged(object sender, EventArgs args)
         {
             var score = Engine.PlayerProvider.GetPlayers()
-                .OrderBy(player => player.PlayerName)
+                .OrderBy(player => player.Order)
                 .Select(player => Engine.GetScore(player).ToString(CultureInfo.InvariantCulture));
             var joined = string.Join(",", score);
             var message = string.Format(CultureInfo.InvariantCulture, "EATED[{0}]", joined);
