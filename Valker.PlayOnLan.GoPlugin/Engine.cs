@@ -81,11 +81,14 @@ namespace Valker.PlayOnLan.GoPlugin
                 throw new GoException(isAcceptable.Item2);
             }
             Tuple<IPosition, IMoveInfo> newPosition = move.Perform(CurrentPosition, PlayerProvider);
-            isAcceptable = _rules.IsPositionAcceptableInGameLine(newPosition.Item1, _positionStorage);
+            isAcceptable = _rules.IsPositionAcceptableInGameLine(oldPosition, newPosition.Item1, _positionStorage);
             if (!isAcceptable.Item1)
             {
                 throw new GoException(isAcceptable.Item2);
             }
+
+            _positionStorage.AddChildPosition(oldPosition, newPosition.Item1);
+
             _score[CurrentPlayer.PlayerName] += newPosition.Item2.Eated;
             if (newPosition.Item2.Eated != 0)
             {

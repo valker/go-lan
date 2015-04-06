@@ -10,7 +10,7 @@ namespace Valker.PlayOnLan.GoPlugin
     {
         Tuple<bool, ExceptionReason> IsMoveAcceptableInPosition(IMove move, IPosition position);
 
-        Tuple<bool, ExceptionReason> IsPositionAcceptableInGameLine(IPosition position, IPositionStorage gameLine);
+        Tuple<bool, ExceptionReason> IsPositionAcceptableInGameLine(IPosition oldPosition, IPosition position, IPositionStorage gameLine);
 
         double GetInitialScore(IPlayer player);
     }

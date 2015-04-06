@@ -12,6 +12,9 @@ namespace Valker.PlayOnLan.GoPlugin
         /// </summary>
         IPosition Initial { get; }
 
+        void AddChildPosition(IPosition parent, IPosition child);
+
+        bool ExistParent(IPosition knownChild, IPosition possibleParent);
 //        /// <summary>
 //        /// ¬озвращает позиции, которые встречались при анализе ситуации
 //        /// после данной позиции

@@ -1,40 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Valker.PlayOnLan.Api;
+﻿using System.Collections.Generic;
 using Valker.PlayOnLan.Api.Game;
-using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
     public class PositionStorage : IPositionStorage
     {
-        /// <summary>
-        /// First - parent, second - child
-        /// </summary>
-        readonly List<RelationInfo> _relationship = new List<RelationInfo>();
+        readonly Dictionary<IPosition, IPosition> _childToParentDirectory = new Dictionary<IPosition, IPosition>(); 
 
-        public PositionStorage(int size, IPlayerProvider playerProvider)
+        public PositionStorage(int size, IPlayerProvider playerProvider) : this(Position.CreateInitial(size, playerProvider))
         {
-            Initial = Position.CreateInitial(size, playerProvider);
         }
 
         public PositionStorage(IPosition initial)
         {
             Initial = initial;
-//            Rules = rules;
         }
-
-//        public PositionStorage(int size) : this(size)
-//        {
-//        }
-
-//        protected IRules Rules { get; set; }
 
         /// <summary>
         /// Возвращает исходную позицию в дереве игры
         /// </summary>
         public IPosition Initial { get; }
+
+        public void AddChildPosition(IPosition parent, IPosition child)
+        {
+            _childToParentDirectory.Add(child, parent);
+        }
+
+        public bool ExistParent(IPosition knownChild, IPosition possibleParent)
+        {
+            while (true)
+            {
+                IPosition value;
+                if (!_childToParentDirectory.TryGetValue(knownChild, out value))
+                {
+                    return false;
+                }
+                if (possibleParent.Equals(value))
+                {
+                    return true;
+                }
+                knownChild = value;
+            }
+        }
 
 //        public IEnumerable<IPosition> GetChildPositions(IPosition position)
 //        {

@@ -30,11 +30,7 @@ namespace Valker.PlayOnLan.GoPlugin
             // создать новую позицию, как копию исходной
             var position = (IPosition) (currentPosition.Clone());
 
-            // поставить точку на поле
-            position.ChangeCellState(coordinates, new PlayerCell(currentPosition.CurrentPlayer));
-
-            // обновить группы для новой позиции
-            var group = UpdateGroups(position, coordinates, currentPosition.CurrentPlayer);
+            var @group = PutStone(position, coordinates, currentPosition.CurrentPlayer);
 
             // удалить соседние группы, которые остались без дыханий
             var stoneCount = RemoveDeathOppositeGroups(position, @group, playerProvider);
@@ -46,6 +42,16 @@ namespace Valker.PlayOnLan.GoPlugin
             }
 
             return Tuple.Create<IPosition, IMoveInfo>(position, new MoveInfo(stoneCount));
+        }
+
+        public static Group PutStone(IPosition position, ICoordinates coordinates, IPlayer currentPlayer)
+        {
+            // поставить точку на поле
+            position.ChangeCellState(coordinates, new PlayerCell(currentPlayer));
+
+            // обновить группы для новой позиции
+            var group = UpdateGroups(position, coordinates, currentPlayer);
+            return @group;
         }
 
         private static bool CheckIsLive(Group grp, IPosition position)
@@ -118,7 +124,7 @@ namespace Valker.PlayOnLan.GoPlugin
             return allGroups;
         }
 
-        private Group UpdateGroups(IPosition position, ICoordinates coordinates, IPlayer currentPlayer)
+        private static Group UpdateGroups(IPosition position, ICoordinates coordinates, IPlayer currentPlayer)
         {
             // получить соседние группы того же цвета
             List<Group> groups = position.GetNearestGroups(coordinates, currentPlayer);

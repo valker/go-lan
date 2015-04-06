@@ -41,7 +41,7 @@ namespace Valker.PlayOnLan.GoPlugin
         private readonly GroupField _groupField;
         public List<Group> Groups { get; } = new List<Group>();
 
-        private Position(int size, IPlayerProvider playerProvider)
+        public Position(int size, IPlayerProvider playerProvider)
         {
             // создаём новое поле для камней и инициализируем его
             Field = new CellField(size);

@@ -18,8 +18,14 @@ namespace Valker.PlayOnLan.GoPlugin
             return Tuple.Create(true, ExceptionReason.None);
         }
 
-        public Tuple<bool, ExceptionReason> IsPositionAcceptableInGameLine(IPosition position, IPositionStorage gameLine)
+        public Tuple<bool, ExceptionReason> IsPositionAcceptableInGameLine(IPosition oldPosition, IPosition position, IPositionStorage gameLine)
         {
+            var value = gameLine.ExistParent(oldPosition, position);
+            if (value)
+            {
+                return Tuple.Create(false, ExceptionReason.Ko);
+            }
+
             return Tuple.Create(true, ExceptionReason.None);
         }
 
