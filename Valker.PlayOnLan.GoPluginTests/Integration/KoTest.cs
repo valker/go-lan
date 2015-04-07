@@ -9,7 +9,6 @@ namespace Valker.PlayOnLan.GoPluginTests.Integration
     public class KoTest
     {
         [Test]
-        [ExpectedException(typeof (GoException))]
         public void SimpleKoDetected()
         {
             var black = Mock.Of<IPlayer>(player => player.Order == 0 && player.PlayerName == "black");
@@ -36,7 +35,9 @@ namespace Valker.PlayOnLan.GoPluginTests.Integration
             var engine = new Engine(positionStorage, playerProvider, rules);
 
             engine.Move(new Move(2, 2));
-            engine.Move(new Move(3, 2));
+
+            GoException ex = Assert.Throws<GoException>(() => engine.Move(new Move(3, 2)));
+            Assert.That(ex.Reason, Is.EqualTo(ExceptionReason.Ko));
         }
     }
 }
