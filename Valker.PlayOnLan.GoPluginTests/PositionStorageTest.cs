@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
+using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin;
 
 namespace Valker.PlayOnLan.GoPluginTests
 {
@@ -6,6 +9,32 @@ namespace Valker.PlayOnLan.GoPluginTests
     public class PositionStorageTest
     {
         private const int Size = 9;
+
+        [Test]
+        public void RepeatedPositionDetectionTest()
+        {
+            IPlayer playerA = Mock.Of<IPlayer>(player => player.PlayerName == "a");
+            IPlayer playerB = Mock.Of<IPlayer>(player => player.PlayerName == "b");
+            IPlayerProvider playerProvider =
+                Mock.Of<IPlayerProvider>(provider => provider.GetPlayers() == new[] {playerA, playerB});
+            var storage = new PositionStorage(3, playerProvider);
+
+            var pos1 = storage.Initial;
+
+            var pos2 = (IPosition)pos1.Clone();
+            pos2.ChangeCellState(new TwoDimensionsCoordinates(0,0), new PlayerCell(playerA));
+            storage.AddChildPosition(pos1, pos2);
+
+            var pos3 = (IPosition)pos2.Clone();
+            pos3.ChangeCellState(new TwoDimensionsCoordinates(0,0), new EmptyCell());
+            storage.AddChildPosition(pos2, pos3);
+
+            var pos4 = (IPosition)pos3.Clone();
+            pos4.ChangeCellState(new TwoDimensionsCoordinates(0, 0), new PlayerCell(playerA));
+
+            bool result = storage.ExistParent(pos3, pos4);
+            Assert.That(result, Is.True);
+        }
 
 //        [Test]
 //        public void TestInitial()
