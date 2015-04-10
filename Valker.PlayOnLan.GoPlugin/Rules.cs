@@ -5,13 +5,9 @@ namespace Valker.PlayOnLan.GoPlugin
 {
     public class Rules : IRules
     {
+        private IKomiRule _komiRule;
         public KoRule Ko { get; set; }
         public ScoreRule Score { get; set; }
-        public bool IsAcceptable(Tuple<IPosition, IMoveInfo> newPosition, Pair<int, IPosition> distance)
-        {
-            //TODO: implement logic here
-            return true;
-        }
 
         public Tuple<bool, ExceptionReason> IsMoveAcceptableInPosition(IMove move, IPosition position)
         {
@@ -31,8 +27,12 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public double GetInitialScore(IPlayer player)
         {
-            if (player.Order == 0) return 0.0;
-            return 6.5;
+            return _komiRule.GetScore(player.Order);
+        }
+
+        public void IsAcceptable(IMoveConsequences moveConsequences)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using Valker.PlayOnLan.Api;
 using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin

@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.GoPlugin;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPluginTests
 {
@@ -54,11 +55,7 @@ namespace Valker.PlayOnLan.GoPluginTests
                 Mock.Of<IPlayer>(player => player.PlayerName == "aaa"),
             });
 
-            var rules =
-                Mock.Of<IRules>(
-                    rules1 =>
-                        rules1.IsMoveAcceptableInPosition(It.IsAny<IMove>(), It.IsAny<IPosition>()) ==
-                        Tuple.Create(true, ExceptionReason.None));
+            var rules = Mock.Of<IRules>();
 
             IEngine engine = new Engine(positionStorage, playerProvider, rules);
             bool eventFired = false;

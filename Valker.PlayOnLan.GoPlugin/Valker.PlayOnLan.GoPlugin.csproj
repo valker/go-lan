@@ -30,6 +30,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IMoveConsequences.cs" />
     <Compile Include="EatedEventArgs.cs" />
     <Compile Include="EmptyCell.cs" />
     <Compile Include="Engine.cs" />
@@ -79,11 +81,13 @@
     <Compile Include="Abstract\IRules.cs" />
     <Compile Include="KoRule.cs" />
     <Compile Include="Move.cs" />
+    <Compile Include="MoveConsequences.cs" />
     <Compile Include="OneDimension.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="ParamsEventArgs.cs" />
     <Compile Include="Pass.cs" />
+    <Compile Include="PlayerCell.cs" />
     <Compile Include="PlayerProvider.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="PositionStorage.cs" />
@@ -92,6 +96,7 @@
     <Compile Include="RelationInfo.cs" />
     <Compile Include="Rules.cs" />
     <Compile Include="ScoreCalculator.cs" />
+    <Compile Include="ScoreChangedEventArgs.cs" />
     <Compile Include="ScoreRule.cs" />
     <Compile Include="ShowMessageEventArgs.cs" />
     <Compile Include="CellField.cs" />

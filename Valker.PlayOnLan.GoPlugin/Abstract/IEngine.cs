@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using Valker.PlayOnLan.Api.Game;
 
-namespace Valker.PlayOnLan.GoPlugin
+namespace Valker.PlayOnLan.GoPlugin.Abstract
 {
     [ContractClass(typeof(EngineContract))]
     public interface IEngine : INotifyPropertyChanged
@@ -15,7 +15,7 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <summary>
         /// Счёт изменился
         /// </summary>
-        event EventHandler ScoreChanged;
+        event EventHandler<ScoreChangedEventArgs> ScoreChanged;
         /// <summary>
         /// Получить очки игрока
         /// </summary>
@@ -46,7 +46,7 @@ namespace Valker.PlayOnLan.GoPlugin
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<CellChangedEventArgs> CellChanged;
-        public event EventHandler ScoreChanged;
+        public event EventHandler<ScoreChangedEventArgs> ScoreChanged;
         public double GetScore(IPlayer player)
         {
             Contract.Requires(player != null);

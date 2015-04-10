@@ -17,8 +17,6 @@ namespace Valker.PlayOnLan.GoPlugin
         /// </summary>
         IPlayer CurrentPlayer { get; }
 
-        List<Group> Groups { get; }
-
         void ChangeCellState(ICoordinates coordinates, ICell currentPlayer);
         List<Group> GetNearestGroups(ICoordinates coordinates, IPlayer currentPlayer);
         void AddGroup(Group grp);
@@ -27,5 +25,8 @@ namespace Valker.PlayOnLan.GoPlugin
         void ExcludeGroups(List<Group> groups);
         bool Exist(ICoordinates coordinates);
         IEnumerable<Tuple<ICoordinates, ICell>> CompareStoneField(IPosition position);
+        IEnumerable<Tuple<IPlayer, double>> CompareScore(IPosition position);
+        double GetScore(IPlayer player);
+        IEnumerable<Group> GetGroupsOnPoints(IEnumerable<ICoordinates> oppositePoints);
     }
 }

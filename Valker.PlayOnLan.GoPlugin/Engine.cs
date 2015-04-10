@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 using Valker.PlayOnLan.GoPlugin.Annotations;
 
 namespace Valker.PlayOnLan.GoPlugin
@@ -19,13 +18,13 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <param name="positionStorage"></param>
         /// <param name="playerProvider"></param>
         /// <param name="rules"></param>
+        /// <param name="scoreStorageFactory"></param>
         public Engine(
             IPositionStorage positionStorage,
             IPlayerProvider playerProvider,
             IRules rules)
         {
             PlayerProvider = playerProvider;
-            _score = playerProvider.GetPlayers().ToDictionary(player => player.PlayerName, rules.GetInitialScore);
             _rules = rules;
             _positionStorage = positionStorage;
             CurrentPosition = _positionStorage.Initial;
@@ -51,6 +50,11 @@ namespace Valker.PlayOnLan.GoPlugin
             }
         }
 
+        public double GetScore(IPlayer player)
+        {
+            return CurrentPosition.GetScore(player);
+        }
+
         public IPlayer CurrentPlayer => _currentPosition.CurrentPlayer;
 
         #endregion
@@ -59,7 +63,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public event EventHandler<CellChangedEventArgs> CellChanged;
 
-        public event EventHandler ScoreChanged;
+        public event EventHandler<ScoreChangedEventArgs> ScoreChanged;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -67,61 +71,28 @@ namespace Valker.PlayOnLan.GoPlugin
 
         #region methods
 
-        public double GetScore(IPlayer player)
-        {
-            return _score[player.PlayerName];
-        }
-
         public void Move(IMove move)
         {
-            var oldPosition = CurrentPosition;
-            Tuple<bool, ExceptionReason> isAcceptable = _rules.IsMoveAcceptableInPosition(move, CurrentPosition);
-            if (!isAcceptable.Item1)
-            {
-                throw new GoException(isAcceptable.Item2);
-            }
-            Tuple<IPosition, IMoveInfo> newPosition = move.Perform(CurrentPosition, PlayerProvider);
-            isAcceptable = _rules.IsPositionAcceptableInGameLine(oldPosition, newPosition.Item1, _positionStorage);
-            if (!isAcceptable.Item1)
-            {
-                throw new GoException(isAcceptable.Item2);
-            }
+            IPosition oldPosition = CurrentPosition;
+            IMoveConsequences moveConsequences = move.Perform(CurrentPosition, PlayerProvider);
+            _rules.IsAcceptable(moveConsequences);
 
-            _positionStorage.AddChildPosition(oldPosition, newPosition.Item1);
+            _positionStorage.AddChildPosition(oldPosition, moveConsequences.Position);
 
-            _score[CurrentPlayer.PlayerName] += newPosition.Item2.Eated;
-            if (newPosition.Item2.Eated != 0)
-            {
-                OnScoreChanged();
-            }
-
-            CurrentPosition = newPosition.Item1;
-            foreach (var tuple in oldPosition.CompareStoneField(CurrentPosition))
+            foreach (Tuple<ICoordinates, ICell> tuple in oldPosition.CompareStoneField(moveConsequences.Position))
             {
                 OnCellChanged(new CellChangedEventArgs(tuple.Item1, tuple.Item2));
             }
+
+            foreach(Tuple<IPlayer, double> tuple in oldPosition.CompareScore(moveConsequences.Position))
+            {
+                OnScoreChanged(new ScoreChangedEventArgs(tuple.Item1, tuple.Item2));
+            }
+
+            CurrentPosition = moveConsequences.Position;
         }
 
         #endregion
-
-        //        /// <summary>
-        //        ///     Сделать ход текущим игроком
-        //        /// </summary>
-        //        /// <param name="point"></param>
-        //        public void Move(Point point)
-        //        {
-        //            var reply = _positionStorage.Move(CurrentPosition, point, CurrentPlayer);
-        //
-        //            CheckStoneField(CurrentPosition, reply.Item1);
-        //
-        //            CurrentPosition = reply.Item1;
-        //            if (reply.Item2 != null && reply.Item2.Eated != 0)
-        //            {
-        //                _eated[CurrentPlayer] += reply.Item2.Eated;
-        //                InvokeEatedChanged(EventArgs.Empty);
-        //            }
-        //            CurrentPlayer = Util.Opposite(CurrentPlayer);
-        //        }
 
         #region private fields
 
@@ -129,11 +100,6 @@ namespace Valker.PlayOnLan.GoPlugin
         ///     Storage of positions with relations between them
         /// </summary>
         private readonly IPositionStorage _positionStorage;
-
-        /// <summary>
-        ///     Information about eated stones
-        /// </summary>
-        private readonly Dictionary<string, double> _score;
 
         private readonly IRules _rules;
         private IPosition _currentPosition;
@@ -146,9 +112,9 @@ namespace Valker.PlayOnLan.GoPlugin
             CellChanged?.Invoke(this, e);
         }
 
-        private void OnScoreChanged()
+        private void OnScoreChanged(ScoreChangedEventArgs e)
         {
-            ScoreChanged?.Invoke(this, EventArgs.Empty);
+            ScoreChanged?.Invoke(this, e);
         }
     }
 }

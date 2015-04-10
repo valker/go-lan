@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Valker.PlayOnLan.Api;
 using Valker.PlayOnLan.Api.Game;
-using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
@@ -18,7 +16,7 @@ namespace Valker.PlayOnLan.GoPlugin
         private int Y { get; }
         private int X { get; }
 
-        public Tuple<IPosition, IMoveInfo> Perform(IPosition currentPosition, IPlayerProvider playerProvider)
+        public IMoveConsequences Perform(IPosition currentPosition, IPlayerProvider playerProvider)
         {
             var coordinates = CreateCoordinates(X, Y);
             var state = currentPosition.GetCellAt(coordinates);
@@ -41,7 +39,7 @@ namespace Valker.PlayOnLan.GoPlugin
                 throw new GoException(ExceptionReason.SelfDead);
             }
 
-            return Tuple.Create<IPosition, IMoveInfo>(position, new MoveInfo(stoneCount));
+            return new MoveConsequences() {Position = position, ScoreDelta = stoneCount};
         }
 
         public static Group PutStone(IPosition position, ICoordinates coordinates, IPlayer currentPlayer)
@@ -118,7 +116,8 @@ namespace Valker.PlayOnLan.GoPlugin
                 IEnumerable<ICoordinates> oppositePoints = grp.SelectMany(point => point.Neighbours(position)).Where(point => position.GetCellAt(point).Equals(new PlayerCell(player)));
                 oppositePoints = oppositePoints.ToArray();
                 // группы противника, примыкающие к указанной точке
-                IEnumerable<Group> opposGroups = position.Groups.Where(g => g.Intersect(oppositePoints).Any());
+//                IEnumerable<Group> opposGroups = position.Groups.Where(g => g.Intersect(oppositePoints).Any());
+                IEnumerable<Group> opposGroups = position.GetGroupsOnPoints(oppositePoints);
                 allGroups.AddRange(opposGroups);
             }
             return allGroups;
@@ -172,38 +171,5 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             return new TwoDimensionsCoordinates(x, y);
         }
-    }
-
-    public class PlayerCell : ICell
-    {
-        protected bool Equals(PlayerCell other)
-        {
-            return Equals(Player, other.Player);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((PlayerCell) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return (Player != null ? Player.GetHashCode() : 0);
-        }
-
-        public PlayerCell(IPlayer player)
-        {
-            Player = player;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("PLAYER:{0}", Player.PlayerName);
-        }
-
-        public IPlayer Player { get; set; }
     }
 }
