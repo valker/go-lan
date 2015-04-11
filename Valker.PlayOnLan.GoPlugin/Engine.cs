@@ -75,7 +75,7 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             IPosition oldPosition = CurrentPosition;
             IMoveConsequences moveConsequences = move.Perform(CurrentPosition, PlayerProvider);
-            _rules.IsAcceptable(moveConsequences);
+            _rules.IsAcceptable(oldPosition, moveConsequences, _positionStorage);
 
             _positionStorage.AddChildPosition(oldPosition, moveConsequences.Position);
 

@@ -125,12 +125,12 @@ namespace Valker.PlayOnLan.GoPlugin
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Group> GetGroupsOnPoints(IEnumerable<ICoordinates> oppositePoints)
+        private IEnumerable<Group> GetGroupsOnPoints(IEnumerable<ICoordinates> oppositePoints)
         {
-            throw new NotImplementedException();
+            return oppositePoints.Select(coordinates => _groupField.GetAt(coordinates)).OrderBy(@group => @group).Distinct();
         }
 
-        public bool Equals(Position other)
+        private bool Equals(Position other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -164,7 +164,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public IMoveConsequences MoveConsequences(IPlayerProvider playerProvider, ICoordinates coordinates)
         {
-            var state = GetCellAt(coordinates);
+            ICell state = GetCellAt(coordinates);
 
             if (!(state is EmptyCell))
             {
@@ -174,10 +174,12 @@ namespace Valker.PlayOnLan.GoPlugin
             var newPosition = (Position) (Clone());
 
             // поставить камень, определить, в какую группу он входит
-            var @group = newPosition.PutStone(coordinates, CurrentPlayer);
+            Group @group = newPosition.PutStone(coordinates, CurrentPlayer);
 
             // удалить соседние группы, которые остались без дыханий
-            var stoneCount = newPosition.RemoveDeathOppositeGroups(@group, playerProvider);
+            IPlayer[] opposite = Util.Opposite(@group.Player, playerProvider);
+
+            int stoneCount = newPosition.RemoveDeathOppositeGroups(@group, opposite);
 
             // проверить живость новой группы
             if (!newPosition.CheckIsLive(@group))
@@ -198,12 +200,12 @@ namespace Valker.PlayOnLan.GoPlugin
             return @group;
         }
 
-        private int RemoveDeathOppositeGroups(Group grp, IPlayerProvider playerProvider)
+        private int RemoveDeathOppositeGroups(Group grp, IPlayer[] opposite)
         {
             // находим соседние группы противника
-            IEnumerable<Group> oppositeGroups = FindOppositeGroup(grp, playerProvider);
+            IEnumerable<Group> oppositeGroups = FindOppositeGroup(grp, opposite);
 
-            var groupsToKill = oppositeGroups.Where(g => !CheckIsLive(g)).ToArray();
+            var groupsToKill = oppositeGroups.Where(g => !CheckIsLive(g));
 
             int count = 0;
 
@@ -221,6 +223,7 @@ namespace Valker.PlayOnLan.GoPlugin
                     SetGroupAt(pnt, null);
                 }
             }
+
             // возвращаем количество снятых камней
             return count;
         }
@@ -231,7 +234,7 @@ namespace Valker.PlayOnLan.GoPlugin
             return dame.Take(1).Any();
         }
 
-        public Group UpdateGroups(ICoordinates coordinates, IPlayer currentPlayer)
+        private Group UpdateGroups(ICoordinates coordinates, IPlayer currentPlayer)
         {
             // получить соседние группы того же цвета
             List<Group> groups = GetNearestGroups(coordinates, currentPlayer);
@@ -275,7 +278,7 @@ namespace Valker.PlayOnLan.GoPlugin
             }
         }
 
-        public IEnumerable<ICoordinates> GetDame(Group grp)
+        private IEnumerable<ICoordinates> GetDame(Group grp)
         {
             return grp.SelectMany(delegate(ICoordinates point)
             {
@@ -290,19 +293,26 @@ namespace Valker.PlayOnLan.GoPlugin
             return coordinateses.Where(pnt => GetCellAt(pnt) is EmptyCell);
         }
 
-        public IEnumerable<Group> FindOppositeGroup(Group grp, IPlayerProvider playerProvider)
+        /// <summary>
+        /// Найти группы противника примыкающие к указанной
+        /// </summary>
+        /// <param name="grp"></param>
+        /// <param name="players"></param>
+        /// <returns></returns>
+        private IEnumerable<Group> FindOppositeGroup(Group grp, IPlayer[] players)
         {
-            var players = Util.Opposite(grp.Player, playerProvider);
             List<Group> allGroups = new List<Group>();
             foreach (var player in players)
             {
                 // координаты соседних точек, в которых находятся камни противника
-                IEnumerable<ICoordinates> oppositePoints = grp.SelectMany(point => point.Neighbours(this)).Where(point => GetCellAt(point).Equals(new PlayerCell(player)));
+                var player1 = player;
+                IEnumerable<ICoordinates> oppositePoints = grp.SelectMany(point => point.Neighbours(this)).Where(point => GetCellAt(point).Equals(new PlayerCell(player1))).OrderBy(coordinates => coordinates).Distinct();
                 oppositePoints = oppositePoints.ToArray();
                 // группы противника, примыкающие к указанной точке
                 IEnumerable<Group> opposGroups = GetGroupsOnPoints(oppositePoints);
                 allGroups.AddRange(opposGroups);
             }
+
             return allGroups;
         }
     }

@@ -11,12 +11,8 @@ namespace Valker.PlayOnLan.GoPlugin
     /// </summary>
     public interface IRules
     {
-        Tuple<bool, ExceptionReason> IsMoveAcceptableInPosition(IMove move, IPosition position);
-
-        Tuple<bool, ExceptionReason> IsPositionAcceptableInGameLine(IPosition oldPosition, IPosition position, IPositionStorage gameLine);
-
         double GetInitialScore(IPlayer player);
-        void IsAcceptable(IMoveConsequences moveConsequences);
+        void IsAcceptable(IPosition oldPosition, IMoveConsequences moveConsequences, IPositionStorage positionStorage);
     }
 
     /// <summary>

@@ -14,25 +14,15 @@ namespace Valker.PlayOnLan.GoPlugin
             return Tuple.Create(true, ExceptionReason.None);
         }
 
-        public Tuple<bool, ExceptionReason> IsPositionAcceptableInGameLine(IPosition oldPosition, IPosition position, IPositionStorage gameLine)
-        {
-            var value = gameLine.ExistParent(oldPosition, position);
-            if (value)
-            {
-                return Tuple.Create(false, ExceptionReason.Ko);
-            }
-
-            return Tuple.Create(true, ExceptionReason.None);
-        }
-
         public double GetInitialScore(IPlayer player)
         {
             return _komiRule.GetScore(player.Order);
         }
 
-        public void IsAcceptable(IMoveConsequences moveConsequences)
+        public void IsAcceptable(IPosition oldPosition, IMoveConsequences moveConsequences, IPositionStorage positionStorage)
         {
-            throw new NotImplementedException();
+            var x = positionStorage.ExistParent(oldPosition, moveConsequences.Position);
+            if(x > 0) throw new GoException(ExceptionReason.Ko);
         }
     }
 }

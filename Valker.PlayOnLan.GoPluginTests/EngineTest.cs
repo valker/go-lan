@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.GoPlugin;
 using Valker.PlayOnLan.GoPlugin.Abstract;
+using Valker.PlayOnLan.Server;
 
 namespace Valker.PlayOnLan.GoPluginTests
 {
@@ -48,37 +49,50 @@ namespace Valker.PlayOnLan.GoPluginTests
         [Test]
         public void TestEatedChangedEvent()
         {
-            var positionStorage = CreatePositionStorage();
-            var playerProvider = Mock.Of<IPlayerProvider>(provider => provider.GetPlayers() == new IPlayer[]
-            {
-                Mock.Of<IPlayer>(player => player.PlayerName == "vvv"),
-                Mock.Of<IPlayer>(player => player.PlayerName == "aaa"),
-            });
-
-            var rules = Mock.Of<IRules>();
-
-            IEngine engine = new Engine(positionStorage, playerProvider, rules);
+            var positionStorage = new Mock<IPositionStorage>();
+            IPlayer white = Mock.Of<IPlayer>(player => player.PlayerName == "white");
+            var startPosition = new Mock<IPosition>();
+            startPosition.Setup(position => position.CompareScore(It.IsAny<IPosition>()))
+                .Returns(() => new[] { new Tuple<IPlayer, double>(white, 1), });
+            startPosition.Setup(position => position.CompareStoneField(It.IsAny<IPosition>())).Returns(() => new Tuple<ICoordinates, ICell>[0]);
+            positionStorage.Setup(storage => storage.Initial).Returns(() => startPosition.Object);
+            var playerProvider = new Mock<IPlayerProvider>();
+            var rules = new Mock<IRules>();
+            IEngine engine = new Engine(positionStorage.Object, playerProvider.Object, rules.Object);
             bool eventFired = false;
             engine.ScoreChanged += (sender, args) => eventFired = true;
-            engine.Move(new Move(0, 1));
-            Assert.That(eventFired, Is.EqualTo(false));
-            engine.Move(new Move(0, 0));
-            Assert.That(eventFired, Is.EqualTo(false));
-            engine.Move(new Move(1, 0));
+            var move = new Mock<IMove>();
+            move.Setup(move1 => move1.Perform(It.IsAny<IPosition>(), It.IsAny<IPlayerProvider>()))
+                .Returns(Mock.Of<IMoveConsequences>);
+            engine.Move(move.Object);
             Assert.That(eventFired, Is.EqualTo(true));
+//
+//
+//            var playerProvider = Mock.Of<IPlayerProvider>(provider => provider.GetPlayers() == new IPlayer[]
+//            {
+//                Mock.Of<IPlayer>(player => player.PlayerName == "vvv"),
+//                Mock.Of<IPlayer>(player => player.PlayerName == "aaa"),
+//            });
+//            var positionStorage = CreatePositionStorage(playerProvider);
+//
+//            var rules = Mock.Of<IRules>();
+//
+//            engine.Move(new Move(0, 1));
+//            Assert.That(eventFired, Is.EqualTo(false));
+//            engine.Move(new Move(0, 0));
+//            Assert.That(eventFired, Is.EqualTo(false));
+//            engine.Move(new Move(1, 0));
+//            Assert.That(eventFired, Is.EqualTo(true));
         }
 
-        private static IPositionStorage CreatePositionStorage()
+        private static IPositionStorage CreatePositionStorage(IPlayerProvider playerProvider)
         {
-            return Mock.Of<IPositionStorage>(storage => storage.Initial == CreatePosition());
+            return Mock.Of<IPositionStorage>(storage => storage.Initial == CreatePosition(playerProvider));
         }
 
-        private static IPosition CreatePosition()
+        private static IPosition CreatePosition(IPlayerProvider playerProvider)
         {
-            var positionMock = new Mock<IPosition>();
-            positionMock.Setup(position => position.Clone()).Returns(CreatePosition);
-            positionMock.Setup(position => position.GetCellAt(It.IsAny<ICoordinates>())).Returns(new EmptyCell());
-            return positionMock.Object;
+            return new Mock<Position>(9, playerProvider).As<IPosition>().Object;
         }
 
         [Test]

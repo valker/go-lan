@@ -32,8 +32,8 @@ namespace Valker.PlayOnLan.GoPluginTests
             var pos4 = (IPosition)pos3.Clone();
             pos4.ChangeCellState(new TwoDimensionsCoordinates(0, 0), new PlayerCell(playerA));
 
-            bool result = storage.ExistParent(pos3, pos4);
-            Assert.That(result, Is.True);
+            var result = storage.ExistParent(pos3, pos4);
+            Assert.That(result, Is.GreaterThan(0));
         }
 
 //        [Test]
