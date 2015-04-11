@@ -46,7 +46,6 @@ namespace Valker.PlayOnLan.GoPlugin
                 return new PlayerCell(playerProvider.GetPlayers().First(player => player.PlayerName == name));
             }
             throw new InvalidOperationException(string.Format("Unknown command:{0}",s));
-            throw new NotImplementedException();
         }
 
         private static ICoordinates CreateCoordinates(string s)

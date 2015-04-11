@@ -162,19 +162,4 @@ namespace Valker.PlayOnLan.GoPlugin
             return position;
         }
     }
-
-    public class MoveInfo : IMoveInfo
-    {
-        public MoveInfo(int eated)
-        {
-            Eated = eated;
-        }
-
-        public int Eated { get; }
-    }
-
-    public interface IMoveInfo
-    {
-        int Eated { get; }
-    }
 }
