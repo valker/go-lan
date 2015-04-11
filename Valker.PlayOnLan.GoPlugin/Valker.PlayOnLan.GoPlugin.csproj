@@ -101,6 +101,7 @@
     <Compile Include="ShowMessageEventArgs.cs" />
     <Compile Include="CellField.cs" />
     <Compile Include="TwoDimensionsCoordinates.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Valker.PlayOnLan.Api\Valker.PlayOnLan.Api2008.csproj">

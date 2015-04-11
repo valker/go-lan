@@ -41,10 +41,10 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public void ProcessMessage(IPlayer sender, string message)
         {
-            switch (Util.ExtractCommand(message))
+            switch (Utilities.Util.ExtractCommand(message))
             {
                 case "MOVE":
-                    Move(Util.ExtractParams(message));
+                    Move(Utilities.Util.ExtractParams(message));
                     break;
                 case "PASS":
                     Pass();
@@ -53,13 +53,13 @@ namespace Valker.PlayOnLan.GoPlugin
                     Resign(sender);
                     break;
                 case "SEND":
-                    Send(Util.ExtractParams(message));
+                    Send(Utilities.Util.ExtractParams(message));
                     break;
                 case "DEAD":
-                    Dead(Util.ExtractCommand(message));
+                    Dead(Utilities.Util.ExtractCommand(message));
                     break;
                 case "LIVE":
-                    Live(Util.ExtractParams(message));
+                    Live(Utilities.Util.ExtractParams(message));
                     break;
                 case "AGREEMENT":
                     Agreement(sender);
@@ -68,7 +68,7 @@ namespace Valker.PlayOnLan.GoPlugin
                     Disagreement(sender);
                     break;
                 case "ASK":
-                    Ask(sender, Util.ExtractParams(message));
+                    Ask(sender, Utilities.Util.ExtractParams(message));
                     break;
                 default:
                     throw new InvalidOperationException("wrong message " + message);

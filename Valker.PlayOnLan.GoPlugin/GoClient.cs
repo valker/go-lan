@@ -45,7 +45,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public void ExecuteMessage(string message)
         {
-            switch (Util.ExtractCommand(message))
+            switch (Utilities.Util.ExtractCommand(message))
             {
                 case "ALLOW":
                     Allow(this, EventArgs.Empty);
@@ -54,19 +54,19 @@ namespace Valker.PlayOnLan.GoPlugin
                     Wait(this, EventArgs.Empty);
                     break;
                 case "MSG":
-                    ShowMessage(this, new ShowMessageEventArgs(Util.ExtractParams(message)));
+                    ShowMessage(this, new ShowMessageEventArgs(Utilities.Util.ExtractParams(message)));
                     break;
                 case "FIELD":
-                    FieldChanged(this, new CellChangedEventArgs(Util.ExtractParams(message), _playerProvider));
+                    FieldChanged(this, new CellChangedEventArgs(Utilities.Util.ExtractParams(message), _playerProvider));
                     break;
                 case "MARK":
                     Mark(this, EventArgs.Empty);
                     break;
                 case "PARAMS":
-                    Params(this, new ParamsEventArgs(Util.ExtractParams(message)));
+                    Params(this, new ParamsEventArgs(Utilities.Util.ExtractParams(message)));
                     break;
                 case "EATED":
-                    Eated(this, new EatedEventArgs(Util.ExtractParams(message)));
+                    Eated(this, new EatedEventArgs(Utilities.Util.ExtractParams(message)));
                     break;
                 default:
                     throw new InvalidOperationException("wrong message "
