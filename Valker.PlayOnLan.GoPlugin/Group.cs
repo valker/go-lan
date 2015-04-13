@@ -6,7 +6,12 @@ using Valker.PlayOnLan.Api.Game;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    public class Group : ICollection<ICoordinates>
+    public interface IGroup : ICollection<ICoordinates>, IComparable<Group>
+    {
+        IPlayer Player { get; }
+    }
+
+    public class Group : IGroup
     {
         private List<ICoordinates> _points = new List<ICoordinates>();
         public IPlayer Player { get; private set; }
@@ -21,6 +26,21 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             return (Player == other.Player) && (_points.Except(other._points).Take(1).Count() == 0) &&
                    (other._points.Except(_points).Take(1).Count() == 0);
+        }
+
+        public int CompareTo(Group other)
+        {
+            var result = _points.Count.CompareTo(other.Count);
+            if (result == 0)
+            {
+                for (int i = 0; i < _points.Count; ++i)
+                {
+                    result = _points[i].CompareTo(other._points[i]);
+                    if (result != 0) break;
+                }
+            }
+
+            return result;
         }
 
         public override bool Equals(object obj)
@@ -45,9 +65,9 @@ namespace Valker.PlayOnLan.GoPlugin
             return 0;
         }
 
-        public Group(Group first, Group second)
+        private Group(IGroup first, IGroup second)
         {
-            if (first.Player != second.Player)
+            if (!Equals(first.Player, second.Player))
             {
                 throw new ArgumentException("Different players of parent group");
             }
@@ -75,11 +95,9 @@ namespace Valker.PlayOnLan.GoPlugin
             grp.Player = Player;
             return grp;
         }
-        public int Count { get { return _points.Count; } }
-        public bool IsReadOnly
-        {
-            get { return true; }
-        }
+        public int Count => _points.Count;
+
+        public bool IsReadOnly => true;
 
         public void Add(ICoordinates point)
         {

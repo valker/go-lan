@@ -27,7 +27,7 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <param name="currentPlayer"></param>
         void ChangeCellState(ICoordinates coordinates, ICell currentPlayer);
 
-        Group PutStone(ICoordinates coordinates, IPlayer player);
+        IGroup PutStone(ICoordinates coordinates, IPlayer player);
         /// <summary>
         /// Проверить, существует ли клетка с такими координатами в этой позиции
         /// </summary>
@@ -52,12 +52,12 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <param name="player"></param>
         /// <returns></returns>
         double GetScore(IPlayer player);
+
         /// <summary>
         /// Выполнить ход по базовым правилам го: постановка камня, удаление мёртвых групп, подсчёт количества съеденных камней
         /// </summary>
-        /// <param name="playerProvider"></param>
         /// <param name="coordinates"></param>
         /// <returns></returns>
-        IMoveConsequences MoveConsequences(IPlayerProvider playerProvider, ICoordinates coordinates);
+        IMoveConsequences MoveConsequences(ICoordinates coordinates);
     }
 }

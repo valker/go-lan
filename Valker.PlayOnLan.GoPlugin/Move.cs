@@ -16,7 +16,7 @@ namespace Valker.PlayOnLan.GoPlugin
         public IMoveConsequences Perform(IPosition currentPosition, IPlayerProvider playerProvider)
         {
             ICoordinates coordinates = Util.CreateCoordinates(X, Y);
-            return currentPosition.MoveConsequences(playerProvider, coordinates);
+            return currentPosition.MoveConsequences(coordinates);
         }
     }
 }

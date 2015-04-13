@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 
@@ -70,6 +71,20 @@ namespace Valker.PlayOnLan.GoPlugin
             yield return new TwoDimensionsCoordinates(_x + 1, _y);
             yield return new TwoDimensionsCoordinates(_x, _y - 1);
             yield return new TwoDimensionsCoordinates(_x, _y + 1);
+        }
+
+        public int CompareTo(ICoordinates other)
+        {
+            var o = other as TwoDimensionsCoordinates;
+            if (o == null) throw new ArgumentException("should be TwoDimensionsCoordinates", "other");
+            Contract.EndContractBlock();
+            var result = GetCoordinate(0).CompareTo(o.GetCoordinate(0));
+            if (result == 0)
+            {
+                result = GetCoordinate(1).CompareTo(o.GetCoordinate(1));
+            }
+
+            return result;
         }
 
         public override string ToString()

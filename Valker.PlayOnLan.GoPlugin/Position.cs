@@ -11,7 +11,8 @@ namespace Valker.PlayOnLan.GoPlugin
         private readonly CellField _field;
         private readonly GroupField _groupField;
         private readonly IPlayerProvider _playerProvider;
-        private readonly List<Group> _groups;
+        private readonly List<IGroup> _groups;
+        private readonly Dictionary<IPlayer, double> _score; 
 
         public Position(int size, IPlayerProvider playerProvider)
         {
@@ -32,7 +33,9 @@ namespace Valker.PlayOnLan.GoPlugin
 
             // создаём новое поле для ссылок на группы (инициализируется нулями)
             _groupField = new GroupField(size);
-            _groups = new List<Group>();
+            _groups = new List<IGroup>();
+
+            _score = playerProvider.GetPlayers().ToDictionary(player => player, player => 0.0);
 
             CurrentPlayer = playerProvider.GetFirstPlayer();
         }
@@ -43,8 +46,9 @@ namespace Valker.PlayOnLan.GoPlugin
             if (p == null) throw new ArgumentException("parameter should be instance of Position class");
             _field = new CellField(p._field);
             _groupField = new GroupField(p._groupField);
-            _groups = new List<Group>(p._groups);
+            _groups = new List<IGroup>(p._groups);
             _playerProvider = p._playerProvider;
+            _score = new Dictionary<IPlayer, double>(p._score);
             CurrentPlayer = _playerProvider.GetNextPlayer(p.CurrentPlayer);
         }
 
@@ -117,12 +121,20 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public IEnumerable<Tuple<IPlayer, double>> CompareScore(IPosition position)
         {
-            throw new NotImplementedException();
+            foreach (var player in _playerProvider.GetPlayers())
+            {
+                var previousScore = GetScore(player);
+                var newScore = position.GetScore(player);
+                if (newScore != previousScore)
+                {
+                    yield return Tuple.Create(player, newScore);
+                }
+            }
         }
 
         public double GetScore(IPlayer player)
         {
-            throw new NotImplementedException();
+            return _score[player];
         }
 
         private IEnumerable<Group> GetGroupsOnPoints(IEnumerable<ICoordinates> oppositePoints)
@@ -162,7 +174,7 @@ namespace Valker.PlayOnLan.GoPlugin
             return position;
         }
 
-        public IMoveConsequences MoveConsequences(IPlayerProvider playerProvider, ICoordinates coordinates)
+        public IMoveConsequences MoveConsequences(ICoordinates coordinates)
         {
             ICell state = GetCellAt(coordinates);
 
@@ -174,12 +186,13 @@ namespace Valker.PlayOnLan.GoPlugin
             var newPosition = (Position) (Clone());
 
             // поставить камень, определить, в какую группу он входит
-            Group @group = newPosition.PutStone(coordinates, CurrentPlayer);
+            IGroup @group = newPosition.PutStone(coordinates, CurrentPlayer);
 
             // удалить соседние группы, которые остались без дыханий
-            IPlayer[] opposite = Util.Opposite(@group.Player, playerProvider);
+            IPlayer[] opposite = Util.Opposite(@group.Player, _playerProvider);
 
             int stoneCount = newPosition.RemoveDeathOppositeGroups(@group, opposite);
+
 
             // проверить живость новой группы
             if (!newPosition.CheckIsLive(@group))
@@ -187,10 +200,12 @@ namespace Valker.PlayOnLan.GoPlugin
                 throw new GoException(ExceptionReason.SelfDead);
             }
 
+            newPosition._score[CurrentPlayer] += stoneCount;
+
             return new MoveConsequences {Position = newPosition, ScoreDelta = stoneCount};
         }
 
-        public Group PutStone(ICoordinates coordinates, IPlayer currentPlayer)
+        public IGroup PutStone(ICoordinates coordinates, IPlayer currentPlayer)
         {
             // поставить точку на поле
             ChangeCellState(coordinates, new PlayerCell(currentPlayer));
@@ -200,7 +215,7 @@ namespace Valker.PlayOnLan.GoPlugin
             return @group;
         }
 
-        private int RemoveDeathOppositeGroups(Group grp, IPlayer[] opposite)
+        private int RemoveDeathOppositeGroups(IGroup grp, IPlayer[] opposite)
         {
             // находим соседние группы противника
             IEnumerable<Group> oppositeGroups = FindOppositeGroup(grp, opposite);
@@ -228,7 +243,7 @@ namespace Valker.PlayOnLan.GoPlugin
             return count;
         }
 
-        private bool CheckIsLive(Group grp)
+        private bool CheckIsLive(IGroup grp)
         {
             var dame = GetDame(grp).ToArray();
             return dame.Take(1).Any();
@@ -278,7 +293,7 @@ namespace Valker.PlayOnLan.GoPlugin
             }
         }
 
-        private IEnumerable<ICoordinates> GetDame(Group grp)
+        private IEnumerable<ICoordinates> GetDame(IGroup grp)
         {
             return grp.SelectMany(delegate(ICoordinates point)
             {
@@ -299,7 +314,7 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <param name="grp"></param>
         /// <param name="players"></param>
         /// <returns></returns>
-        private IEnumerable<Group> FindOppositeGroup(Group grp, IPlayer[] players)
+        private IEnumerable<Group> FindOppositeGroup(IGroup grp, IPlayer[] players)
         {
             List<Group> allGroups = new List<Group>();
             foreach (var player in players)
