@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
@@ -15,11 +16,13 @@ namespace Valker.PlayOnLan.GoPlugin
     /// </summary>
     public class GoClient : IGameClient
     {
-        private IPlayerProvider _playerProvider;
+        private readonly IPlayerProvider _playerProvider;
+        private readonly ICoordinatesFactory _coordinatesFactory;
 
-        public GoClient(IPlayerProvider playerProvider)
+        public GoClient(IPlayerProvider playerProvider, ICoordinatesFactory coordinatesFactory)
         {
             _playerProvider = playerProvider;
+            _coordinatesFactory = coordinatesFactory;
         }
         #region IGameClient Members
 
@@ -57,7 +60,7 @@ namespace Valker.PlayOnLan.GoPlugin
                     ShowMessage(this, new ShowMessageEventArgs(Utilities.Util.ExtractParams(message)));
                     break;
                 case "FIELD":
-                    FieldChanged(this, new CellChangedEventArgs(Utilities.Util.ExtractParams(message), _playerProvider));
+                    FieldChanged(this, new CellChangedEventArgs(Utilities.Util.ExtractParams(message), _playerProvider, _coordinatesFactory));
                     break;
                 case "MARK":
                     Mark(this, EventArgs.Empty);

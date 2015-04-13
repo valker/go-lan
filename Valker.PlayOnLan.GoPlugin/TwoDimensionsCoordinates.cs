@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPlugin
 {

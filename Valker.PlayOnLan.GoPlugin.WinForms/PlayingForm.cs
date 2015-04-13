@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Goban;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPlugin.WinForms
 {

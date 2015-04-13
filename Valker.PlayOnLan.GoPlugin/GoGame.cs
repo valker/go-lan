@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Valker.PlayOnLan.Api.Communication;
+using System.Diagnostics.Contracts;
+using Autofac;
+using Autofac.Core;
 using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
@@ -12,6 +12,17 @@ namespace Valker.PlayOnLan.GoPlugin
     /// </summary>
     public class GoGame : IGameType
     {
+        private readonly ICoordinatesFactory _coordinatesFactory;
+
+        public GoGame()
+        {
+            var builder = new ContainerBuilder();
+            builder.Register(c => new CoordinatesFactory()).As<ICoordinatesFactory>();
+
+            var container = builder.Build();
+            _coordinatesFactory = container.Resolve<ICoordinatesFactory>();
+        }
+
         /// <summary>
         /// Describes the name of the game on original language
         /// </summary>
@@ -45,7 +56,7 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <returns></returns>
         public IGameClient CreateClient(IForm parent, IPlayerProvider playerProvider)
         {
-            return new GoClient(playerProvider);
+            return new GoClient(playerProvider, _coordinatesFactory);
         }
 
         /// <summary>
@@ -56,7 +67,23 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <returns>the server componend of the game</returns>
         public IGameServer CreateServer(IPlayer[] players, string parameters)
         {
-            return new GoServer(players, parameters);
+            return new GoServer(players, parameters, _coordinatesFactory);
+        }
+    }
+
+    public class CoordinatesFactory : ICoordinatesFactory
+    {
+        public ICoordinates Create(int[] parts)
+        {
+            switch (parts.Length)
+            {
+                case 1:
+                    return new OneDimensionCoordinates(parts[0]);
+                case 2:
+                    return new TwoDimensionsCoordinates(parts[0], parts[1]);
+                default:
+                    throw new ArgumentException("unsupported dimenstion of coordinates");
+            }
         }
     }
 }

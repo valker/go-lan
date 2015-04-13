@@ -1,11 +1,11 @@
 using System;
-using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
     class Pass : IMove
     {
-        public IMoveConsequences Perform(IPosition position, IPlayerProvider playerProvider)
+        public IMoveConsequences Perform(IPosition position)
         {
             throw new NotImplementedException();
         }

@@ -1,3 +1,5 @@
+using Valker.PlayOnLan.GoPlugin.Abstract;
+
 namespace Valker.PlayOnLan.GoPlugin
 {
     public class MoveConsequences : IMoveConsequences

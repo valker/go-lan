@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.GoPlugin;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPluginTests.Integration
 {
@@ -19,7 +20,8 @@ namespace Valker.PlayOnLan.GoPluginTests.Integration
             playerProviderMock.Setup(p => p.GetFirstPlayer()).Returns(white);
             playerProviderMock.Setup(p => p.GetNextPlayer(It.IsAny<IPlayer>())).Returns((IPlayer pp) => players[(pp.Order + 1) % players.Length]);
             var playerProvider = playerProviderMock.Object;
-            IPosition position = new Position(9, playerProvider);
+            ICoordinatesFactory coordinatesFactory = new CoordinatesFactory();
+            IPosition position = new Position(9, playerProvider, coordinatesFactory);
             position.PutStone(new TwoDimensionsCoordinates(2, 1), black);
             position.PutStone(new TwoDimensionsCoordinates(2, 3), black);
             position.PutStone(new TwoDimensionsCoordinates(1, 2), black);
@@ -34,9 +36,9 @@ namespace Valker.PlayOnLan.GoPluginTests.Integration
             var rules = new Rules {Ko = KoRule.Simple, Score = ScoreRule.EmptyTerritory};
             var engine = new Engine(positionStorage, playerProvider, rules);
 
-            engine.Move(new Move(2, 2));
+            engine.Move(new Move(new TwoDimensionsCoordinates(2,2)));
 
-            GoException ex = Assert.Throws<GoException>(() => engine.Move(new Move(3, 2)));
+            GoException ex = Assert.Throws<GoException>(() => engine.Move(new Move(new TwoDimensionsCoordinates(3,2))));
             Assert.That(ex.Reason, Is.EqualTo(ExceptionReason.Ko));
         }
     }

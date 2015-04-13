@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
@@ -14,7 +15,7 @@ namespace Valker.PlayOnLan.GoPlugin
         private readonly List<IGroup> _groups;
         private readonly Dictionary<IPlayer, double> _score; 
 
-        public Position(int size, IPlayerProvider playerProvider)
+        public Position(int size, IPlayerProvider playerProvider, ICoordinatesFactory coordinatesFactory)
         {
             if (playerProvider == null) throw new ArgumentNullException("playerProvider");
             Contract.EndContractBlock();
@@ -27,7 +28,7 @@ namespace Valker.PlayOnLan.GoPlugin
             {
                 for (var y = 0; y < size; y++)
                 {
-                    _field.SetAt(new TwoDimensionsCoordinates(x, y), emptyCell);
+                    _field.SetAt(coordinatesFactory.Create(new []{x, y}), emptyCell);
                 }
             }
 
@@ -168,9 +169,9 @@ namespace Valker.PlayOnLan.GoPlugin
             }
         }
 
-        public static IPosition CreateInitial(int size, IPlayerProvider playerProvider)
+        public static IPosition CreateInitial(int size, IPlayerProvider playerProvider, ICoordinatesFactory coordinatesFactory)
         {
-            var position = new Position(size, playerProvider);
+            var position = new Position(size, playerProvider, coordinatesFactory);
             return position;
         }
 

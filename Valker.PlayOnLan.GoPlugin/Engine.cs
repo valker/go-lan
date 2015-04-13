@@ -18,7 +18,6 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <param name="positionStorage"></param>
         /// <param name="playerProvider"></param>
         /// <param name="rules"></param>
-        /// <param name="scoreStorageFactory"></param>
         public Engine(
             IPositionStorage positionStorage,
             IPlayerProvider playerProvider,
@@ -74,7 +73,7 @@ namespace Valker.PlayOnLan.GoPlugin
         public void Move(IMove move)
         {
             IPosition oldPosition = CurrentPosition;
-            IMoveConsequences moveConsequences = move.Perform(CurrentPosition, PlayerProvider);
+            IMoveConsequences moveConsequences = move.Perform(CurrentPosition);
             _rules.IsAcceptable(oldPosition, moveConsequences, _positionStorage);
 
             _positionStorage.AddChildPosition(oldPosition, moveConsequences.Position);

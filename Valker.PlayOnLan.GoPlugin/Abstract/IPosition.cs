@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Valker.PlayOnLan.Api.Game;
 
-namespace Valker.PlayOnLan.GoPlugin
+namespace Valker.PlayOnLan.GoPlugin.Abstract
 {
     /// <summary>
     /// Интерфейс описывает конкретную позицию в партии.

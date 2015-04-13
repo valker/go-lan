@@ -1,5 +1,5 @@
-using System;
 using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
@@ -9,11 +9,6 @@ namespace Valker.PlayOnLan.GoPlugin
         public KoRule Ko { get; set; }
         public ScoreRule Score { get; set; }
 
-        public Tuple<bool, ExceptionReason> IsMoveAcceptableInPosition(IMove move, IPosition position)
-        {
-            return Tuple.Create(true, ExceptionReason.None);
-        }
-
         public double GetInitialScore(IPlayer player)
         {
             return _komiRule.GetScore(player.Order);
@@ -21,7 +16,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public void IsAcceptable(IPosition oldPosition, IMoveConsequences moveConsequences, IPositionStorage positionStorage)
         {
-            var x = positionStorage.ExistParent(oldPosition, moveConsequences.Position);
+            int x = positionStorage.ExistParent(oldPosition, moveConsequences.Position);
             if(x > 0) throw new GoException(ExceptionReason.Ko);
         }
     }

@@ -1,10 +1,7 @@
-using System;
-using Valker.PlayOnLan.Api.Game;
-
-namespace Valker.PlayOnLan.GoPlugin
+namespace Valker.PlayOnLan.GoPlugin.Abstract
 {
     public interface IMove
     {
-        IMoveConsequences Perform(IPosition position, IPlayerProvider playerProvider);
+        IMoveConsequences Perform(IPosition position);
     }
 }

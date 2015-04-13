@@ -1,22 +1,20 @@
-using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
     public class Move : IMove
     {
-        public Move(int x, int y)
+        public Move(ICoordinates coordinates)
         {
-            X = x;
-            Y = y;
+            Coordinates = coordinates;
         }
 
-        private int Y { get; }
-        private int X { get; }
+        private ICoordinates Coordinates { get; }
 
-        public IMoveConsequences Perform(IPosition currentPosition, IPlayerProvider playerProvider)
+
+        public IMoveConsequences Perform(IPosition currentPosition)
         {
-            ICoordinates coordinates = Util.CreateCoordinates(X, Y);
-            return currentPosition.MoveConsequences(coordinates);
+            return currentPosition.MoveConsequences(Coordinates);
         }
     }
 }

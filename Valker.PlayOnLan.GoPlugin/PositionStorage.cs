@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Valker.PlayOnLan.Api.Game;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
@@ -7,7 +8,7 @@ namespace Valker.PlayOnLan.GoPlugin
     {
         readonly Dictionary<IPosition, IPosition> _childToParentDirectory = new Dictionary<IPosition, IPosition>(); 
 
-        public PositionStorage(int size, IPlayerProvider playerProvider) : this(Position.CreateInitial(size, playerProvider))
+        public PositionStorage(int size, IPlayerProvider playerProvider, ICoordinatesFactory coordinatesFactory) : this(Position.CreateInitial(size, playerProvider, coordinatesFactory))
         {
         }
 

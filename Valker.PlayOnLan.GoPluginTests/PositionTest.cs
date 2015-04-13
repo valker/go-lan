@@ -13,7 +13,7 @@ namespace Valker.PlayOnLan.GoPluginTests
         {
             var  playerProviderMock = new Mock<IPlayerProvider>();
             IPlayerProvider playerProvider = playerProviderMock.Object;
-            var position = new Position(9, playerProvider);
+            var position = new Position(9, playerProvider, new CoordinatesFactory());
             IPlayer player = Mock.Of<IPlayer>(player1 => player1.PlayerName == "a");
             position.PutStone(new TwoDimensionsCoordinates(0, 0), player);
 
@@ -27,7 +27,7 @@ namespace Valker.PlayOnLan.GoPluginTests
         {
             var playerProviderMock = new Mock<IPlayerProvider>();
             IPlayerProvider playerProvider = playerProviderMock.Object;
-            var position = new Position(9, playerProvider);
+            var position = new Position(9, playerProvider, new CoordinatesFactory());
             IPlayer player = Mock.Of<IPlayer>(player1 => player1.PlayerName == "a");
             position.PutStone(new TwoDimensionsCoordinates(0, 0), player);
             position.PutStone(new TwoDimensionsCoordinates(1, 1), player);

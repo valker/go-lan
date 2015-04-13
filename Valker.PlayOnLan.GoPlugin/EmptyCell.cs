@@ -1,4 +1,5 @@
 using Valker.PlayOnLan.Api;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPlugin
 {

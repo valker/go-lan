@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Valker.PlayOnLan.Api;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.GoPlugin.Abstract;
-using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
@@ -14,15 +12,18 @@ namespace Valker.PlayOnLan.GoPlugin
     /// </summary>
     class GoServer : IGameServer
     {
-        public GoServer(IPlayer[] players, string parameters)
+        private ICoordinatesFactory _coordinatesFactory;
+
+        public GoServer(IPlayer[] players, string parameters, ICoordinatesFactory coordinatesFactory)
         {
+            _coordinatesFactory = coordinatesFactory;
             if (players.Length != 2) throw new ArgumentException("Wrong number of players");
             Players = players;
 
             Parameters = Parameters.Parse(parameters);
 
             IPlayerProvider playerProvider = new PlayerProvider(players);
-            Engine = new Engine(new PositionStorage(Parameters.Width, playerProvider), playerProvider, new Rules());
+            Engine = new Engine(new PositionStorage(Parameters.Width, playerProvider, coordinatesFactory), playerProvider, new Rules());
             Engine.CellChanged += EngineOnCellChanged;
             Engine.ScoreChanged += EngineOnEatedChanged;
 
@@ -118,8 +119,8 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private void Move(IEnumerable<string> strings)
         {
-            int[] coordinates = strings.Take(2).Select(int.Parse).ToArray();
-            Engine.Move(new Move(coordinates[0], coordinates[1]));
+            int[] coordinates = strings.Select(int.Parse).ToArray();
+            Engine.Move(new Move(_coordinatesFactory.Create(coordinates)));
             AllowMove();
         }
 

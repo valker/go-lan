@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.GoPlugin;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPluginTests
 {
@@ -17,7 +18,7 @@ namespace Valker.PlayOnLan.GoPluginTests
             IPlayer playerB = Mock.Of<IPlayer>(player => player.PlayerName == "b");
             IPlayerProvider playerProvider =
                 Mock.Of<IPlayerProvider>(provider => provider.GetPlayers() == new[] {playerA, playerB});
-            var storage = new PositionStorage(3, playerProvider);
+            var storage = new PositionStorage(3, playerProvider, new CoordinatesFactory());
 
             var pos1 = storage.Initial;
 

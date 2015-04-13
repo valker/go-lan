@@ -38,7 +38,7 @@ namespace Valker.PlayOnLan.GoPluginTests
             var newPositionMock = new Mock<IPosition>();
             newPositionMock.Setup(position => position.CurrentPlayer).Returns(playerBbb);
             moveConsequencesMock.Setup(consequences => consequences.Position).Returns(newPositionMock.Object);
-            moveMock.Setup(move => move.Perform(It.IsAny<IPosition>(), It.IsAny<IPlayerProvider>())).Returns(
+            moveMock.Setup(move => move.Perform(It.IsAny<IPosition>())).Returns(
                 () => moveConsequencesMock.Object);
 
             engine.Move(moveMock.Object);
@@ -59,7 +59,7 @@ namespace Valker.PlayOnLan.GoPluginTests
             var playerProvider = new Mock<IPlayerProvider>();
             var rules = new Mock<IRules>();
             var move = new Mock<IMove>();
-            move.Setup(move1 => move1.Perform(It.IsAny<IPosition>(), It.IsAny<IPlayerProvider>()))
+            move.Setup(move1 => move1.Perform(It.IsAny<IPosition>()))
                 .Returns(Mock.Of<IMoveConsequences>);
             bool eventFired = false;
 
@@ -85,7 +85,7 @@ namespace Valker.PlayOnLan.GoPluginTests
             var playerProvider = new Mock<IPlayerProvider>();
             var rules = new Mock<IRules>();
             var move = new Mock<IMove>();
-            move.Setup(move1 => move1.Perform(It.IsAny<IPosition>(), It.IsAny<IPlayerProvider>()))
+            move.Setup(move1 => move1.Perform(It.IsAny<IPosition>()))
                 .Returns(Mock.Of<IMoveConsequences>);
             bool eventFired = false;
 

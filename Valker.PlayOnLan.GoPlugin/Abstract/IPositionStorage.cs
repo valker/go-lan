@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Valker.PlayOnLan.Api;
-using Valker.PlayOnLan.Utilities;
-
-namespace Valker.PlayOnLan.GoPlugin
+namespace Valker.PlayOnLan.GoPlugin.Abstract
 {
     public interface IPositionStorage
     {

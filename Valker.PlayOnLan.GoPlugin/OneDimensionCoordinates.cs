@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using Valker.PlayOnLan.GoPlugin.Abstract;
 
 namespace Valker.PlayOnLan.GoPlugin
 {
-    public class OneDimension : ICoordinates
+    public class OneDimensionCoordinates : ICoordinates
     {
         private int _x;
 
-        public OneDimension(int x)
+        public OneDimensionCoordinates(int x)
         {
             _x = x;
         }
@@ -31,8 +32,8 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public int CompareTo(ICoordinates other)
         {
-            var o = other as OneDimension;
-            if(o == null) throw new ArgumentException("should be OneDimension", "other");
+            var o = other as OneDimensionCoordinates;
+            if(o == null) throw new ArgumentException("should be OneDimensionCoordinates", "other");
             Contract.EndContractBlock();
 
             return GetCoordinate(0).CompareTo(o.GetCoordinate(0));

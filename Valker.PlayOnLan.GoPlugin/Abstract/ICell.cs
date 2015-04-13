@@ -1,6 +1,4 @@
-using Valker.PlayOnLan.Api;
-
-namespace Valker.PlayOnLan.GoPlugin
+namespace Valker.PlayOnLan.GoPlugin.Abstract
 {
     public interface ICell
     {
