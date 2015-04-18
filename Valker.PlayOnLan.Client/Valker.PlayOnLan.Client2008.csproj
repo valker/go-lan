@@ -71,7 +71,6 @@
     <Compile Include="GameIdentifier.cs" />
     <Compile Include="MainForm.cs">
     </Compile>
-    <Compile Include="NewAgentCreatingEventArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

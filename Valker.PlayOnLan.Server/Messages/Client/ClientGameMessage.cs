@@ -1,5 +1,4 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Server.Messages.Client;
 

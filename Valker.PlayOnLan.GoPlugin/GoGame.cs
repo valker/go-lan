@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using Autofac;
-using Autofac.Core;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.GoPlugin.Abstract;
 

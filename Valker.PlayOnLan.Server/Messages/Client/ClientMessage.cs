@@ -1,4 +1,3 @@
-using System;
 using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Server.Messages.Client

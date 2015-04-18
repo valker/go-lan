@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Valker.PlayOnLan.Api.Communication;
 
 namespace Valker.PlayOnLan.Client.Communication
 {

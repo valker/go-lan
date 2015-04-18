@@ -27,7 +27,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public IEnumerable<ICoordinates> Neighbours(IPosition position)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public int CompareTo(ICoordinates other)

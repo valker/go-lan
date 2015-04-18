@@ -7,7 +7,6 @@ using System.Reflection;
 using Valker.PlayOnLan.Api.Communication;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.GoPlugin.Abstract;
-using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {

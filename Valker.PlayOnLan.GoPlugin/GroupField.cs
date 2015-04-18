@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using Valker.PlayOnLan.GoPlugin.Abstract;
-using Valker.PlayOnLan.Utilities;
 
 namespace Valker.PlayOnLan.GoPlugin
 {

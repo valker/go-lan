@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Valker.PlayOnLan.Api.Communication;
+using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Client.Communication;
 using Valker.PlayOnLan.PluginLoader;
 using Valker.PlayOnLan.Server;
+using Valker.PlayOnLan.Server.Messages;
 using Valker.PlayOnLan.Server.Messages.Client;
 using Valker.PlayOnLan.Server.Messages.Server;
-using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.Server2008.Messages.Server;
 
 namespace Valker.PlayOnLan.Client2008.Communication
@@ -70,7 +70,7 @@ namespace Valker.PlayOnLan.Client2008.Communication
             SendMessage(new RetrieveSupportedGamesMessage());
         }
 
-        private void SendMessage(Server.Messages.Message message)
+        private void SendMessage(Message message)
         {
             var messageText = message.ToString();
             foreach (var agentInfo in _servers)

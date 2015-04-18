@@ -1,7 +1,5 @@
 ﻿using System.Xml.Serialization;
 using Valker.PlayOnLan.Api.Communication;
-using Valker.PlayOnLan.Api.Game;
-using Valker.PlayOnLan.Server2008;
 
 namespace Valker.PlayOnLan.Server.Messages.Client
 {
