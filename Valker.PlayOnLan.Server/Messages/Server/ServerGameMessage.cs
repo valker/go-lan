@@ -6,7 +6,7 @@ namespace Valker.PlayOnLan.Server2008.Messages.Server
 {
     public class ServerGameMessage : ServerMessage
     {
-        private static readonly XmlSerializer _serializer = new XmlSerializer(typeof(ServerMessage), new []{typeof(ServerGameMessage)});
+        private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ServerMessage), new []{typeof(ServerGameMessage)});
 
         public ServerGameMessage(string s)
         {
@@ -23,7 +23,7 @@ namespace Valker.PlayOnLan.Server2008.Messages.Server
 
         public override XmlSerializer GetSerializer()
         {
-            return _serializer;
+            return Serializer;
         }
 
         public override void Execute(IServerMessageExecuter server, IAgentInfo sender)

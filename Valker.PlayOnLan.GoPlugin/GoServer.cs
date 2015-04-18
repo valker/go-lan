@@ -12,7 +12,7 @@ namespace Valker.PlayOnLan.GoPlugin
     /// </summary>
     class GoServer : IGameServer
     {
-        private ICoordinatesFactory _coordinatesFactory;
+        private readonly ICoordinatesFactory _coordinatesFactory;
 
         public GoServer(IPlayer[] players, string parameters, ICoordinatesFactory coordinatesFactory)
         {

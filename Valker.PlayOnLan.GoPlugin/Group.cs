@@ -25,8 +25,8 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public bool Equals(Group other)
         {
-            return (Player == other.Player) && (_points.Except(other._points).Take(1).Count() == 0) &&
-                   (other._points.Except(_points).Take(1).Count() == 0);
+            return (Equals(Player, other.Player)) && (!_points.Except(other._points).Take(1).Any()) &&
+                   (!other._points.Except(_points).Take(1).Any());
         }
 
         public int CompareTo(Group other)

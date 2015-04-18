@@ -6,7 +6,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 {
     public sealed class RegisterNewPartyMessage : ServerMessage
     {
-        private static XmlSerializer Serializer = new XmlSerializer(typeof(ServerMessage), new[] {typeof(RegisterNewPartyMessage)});
+        private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ServerMessage), new[] {typeof(RegisterNewPartyMessage)});
 
         public string GameId { get; set; }
 
@@ -27,7 +27,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
         public override void Execute(IServerMessageExecuter server, IAgentInfo agent)
         {
             if (server == null) throw new ArgumentNullException("server");
-            if (agent == null) throw new ArgumentNullException("client");
+            if (agent == null) throw new ArgumentNullException("agent");
             server.RegisterNewParty(agent, GameId, Parameters);
         }
 

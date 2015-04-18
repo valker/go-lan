@@ -6,7 +6,7 @@ namespace Valker.PlayOnLan.Server.Messages.Server
 {
     public class AcceptNewPartyMessage : ServerMessage
     {
-        private static XmlSerializer Serializer = new XmlSerializer(typeof(ServerMessage), new[]{typeof(AcceptNewPartyMessage)});
+        private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ServerMessage), new[]{typeof(AcceptNewPartyMessage)});
 
         public string AccepterName { get; set; }
 

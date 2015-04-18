@@ -64,7 +64,7 @@ namespace Valker.PlayOnLan.XmppTransport
 
         private void ConnectionOnOnRosterItem(object sender, RosterItem item)
         {
-            Trace.WriteLine("ConnectionOnOnRosterItem:" + item.ToString());
+            Trace.WriteLine("ConnectionOnOnRosterItem:" + item);
         }
 
         private void ConnectionOnOnPresence(object sender, Presence presence)
@@ -165,7 +165,6 @@ namespace Valker.PlayOnLan.XmppTransport
         public void Dispose()
         {
             // TODO: to be implemented
-            return;
         }
 
         #endregion

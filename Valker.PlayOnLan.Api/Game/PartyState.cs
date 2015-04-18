@@ -7,11 +7,6 @@ namespace Valker.PlayOnLan.Api.Game
 {
     public class PartyState
     {
-        public PartyState()
-        {
-            
-        }
-
         public int PartyId { get; set; }
 
         public PartyStatus Status { get; set; }
@@ -22,13 +17,13 @@ namespace Valker.PlayOnLan.Api.Game
         public IPlayer[] Players { 
             get 
             {
-                return this._players;
+                return _players;
             } 
             set 
             {
                 if(value == null) throw new ArgumentNullException();
-                this._players = value;
-                this.Names = this._players.Select(delegate(IPlayer p)
+                _players = value;
+                Names = _players.Select(delegate(IPlayer p)
                 {
                     if (p == null)
                     {

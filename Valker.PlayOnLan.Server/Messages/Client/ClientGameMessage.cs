@@ -9,7 +9,7 @@ namespace Valker.PlayOnLan.Server2008.Messages.Client
     /// </summary>
     public class ClientGameMessage : ClientMessage
     {
-        private static readonly XmlSerializer _serializer = new XmlSerializer(typeof(ClientMessage), new []{typeof(ClientGameMessage)});
+        private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(ClientMessage), new []{typeof(ClientGameMessage)});
 
         public ClientGameMessage(string msg)
         {
@@ -24,7 +24,7 @@ namespace Valker.PlayOnLan.Server2008.Messages.Client
 
         public override XmlSerializer GetSerializer()
         {
-            return _serializer;
+            return Serializer;
         }
 
         public override void Execute(IClientMessageExecuter client, IMessageConnector sender)

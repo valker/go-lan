@@ -17,8 +17,6 @@ namespace Valker.PlayOnLan.Server.Messages.Client
                                                     typeof(ClientGameMessage),
                                                 };
 
-        private static readonly XmlSerializer _serializer = new XmlSerializer(typeof (ClientMessage), Types);
-
-        public static XmlSerializer Serializer { get { return _serializer; } }
+        public static XmlSerializer Serializer { get; } = new XmlSerializer(typeof (ClientMessage), Types);
     }
 }

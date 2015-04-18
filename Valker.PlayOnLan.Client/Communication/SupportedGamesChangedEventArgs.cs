@@ -6,8 +6,8 @@ namespace Valker.PlayOnLan.Client.Communication
     {
         public SupportedGamesChangedEventArgs(string[] games, object sender)
         {
-            this.Games = games;
-            this.Sender = sender;
+            Games = games;
+            Sender = sender;
         }
 
         public object Sender { get; set; }

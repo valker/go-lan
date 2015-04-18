@@ -12,6 +12,9 @@ namespace Valker.PlayOnLan.Api.Game
         /// Create the form for playing
         /// </summary>
         /// <param playerName="parameters">parameters of the party</param>
+        /// <param name="parameters"></param>
+        /// <param name="playerName"></param>
+        /// <param name="gui"></param>
         /// <returns>Form to be shown</returns>
         IPlayingForm CreatePlayingForm(string parameters, string playerName, string gui);
 

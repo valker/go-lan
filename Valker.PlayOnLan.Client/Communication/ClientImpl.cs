@@ -19,18 +19,13 @@ namespace Valker.PlayOnLan.Client2008.Communication
     /// </summary>
     public class ClientImpl : IClientMessageExecuter, IDisposable
     {
-        /// <summary>
-        /// Available connections (local, xmpp)
-        /// </summary>
-//        private List<IMessageConnector> _connectors = new List<IMessageConnector>();
-
-        private List<IAgentInfo> _servers = new List<IAgentInfo>();
+        private readonly List<IAgentInfo> _servers = new List<IAgentInfo>();
 
         private IGameClient _client;
 
-        private IEnumerable<IGameType> _games = new List<IGameType>(Loader.Load(Environment.CurrentDirectory));
+        private readonly IEnumerable<IGameType> _games = new List<IGameType>(Loader.Load(Environment.CurrentDirectory));
 
-        private IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
+        private readonly IDictionary<string, IGameType> _gameDict = new Dictionary<string, IGameType>();
 
         /// <summary>
         /// ClientName of the player
@@ -157,16 +152,16 @@ namespace Valker.PlayOnLan.Client2008.Communication
                          sender.Send(Name, sender.ConnectorName, message);
                      });
 
-            Parent.RunInUiThread(new Action(delegate
-                                         {
-                                             var playingForm = _client.CreatePlayingForm(parameters, Name, Parent.Gui);
-                                             if (playingForm != null)
-                                             {
-                                                 playingForm.Show(Parent);
-                                             } else
-                                             {
-                                             }
-                                         }));
+            Parent.RunInUiThread(delegate
+            {
+                var playingForm = _client.CreatePlayingForm(parameters, Name, Parent.Gui);
+                if (playingForm != null)
+                {
+                    playingForm.Show(Parent);
+                } else
+                {
+                }
+            });
         }
 
         private IPlayerProvider CreatePlayerProvider()
@@ -184,12 +179,12 @@ namespace Valker.PlayOnLan.Client2008.Communication
 
     public class ClientPlayerProvider : IPlayerProvider
     {
-        private readonly Player[] _players;
+        private readonly IPlayer[] _players;
         private readonly Player _thisPlayer;
 
         public ClientPlayerProvider(string[] players, string thisPlayer)
         {
-            _players = players.Select(s => new Player() {PlayerName = s}).ToArray();
+            _players = players.Select(s => new Player() {PlayerName = s}).Cast<IPlayer>().ToArray();
             _thisPlayer = new Player() {PlayerName = thisPlayer};
         }
 

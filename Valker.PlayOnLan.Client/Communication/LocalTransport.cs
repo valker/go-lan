@@ -4,14 +4,14 @@ namespace Valker.PlayOnLan.Client.Communication
 {
     public class LocalTransport : IDisposable
     {
-        LocalMessageConnector _serverConnector;
+        readonly LocalMessageConnector _serverConnector;
 
         public LocalMessageConnector ServerConnector
         {
             get { return _serverConnector; }
         }
 
-        LocalMessageConnector _clientConnector;
+        readonly LocalMessageConnector _clientConnector;
 
         public LocalMessageConnector ClientConnector
         {

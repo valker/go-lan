@@ -8,8 +8,8 @@ namespace Valker.PlayOnLan.Client.Communication
     {
         public PartyStatesArgs(PartyState[] states, IMessageConnector connector)
         {
-            this.States = states;
-            this.Connector = connector;
+            States = states;
+            Connector = connector;
         }
 
         public IMessageConnector Connector { get; set; }

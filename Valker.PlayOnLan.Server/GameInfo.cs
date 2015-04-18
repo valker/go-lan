@@ -11,9 +11,9 @@ namespace Valker.PlayOnLan.Server
             if (connector == null) throw new ArgumentNullException();
             var gameId = gameName.Split(',');
             if (gameId.Length < 2) throw new ArgumentException();
-            this.GameName = gameId[0];
-            this.GameTypeId = gameId[1];
-            this.Connector = connector;
+            GameName = gameId[0];
+            GameTypeId = gameId[1];
+            Connector = connector;
         }
 
         public IMessageConnector Connector { get; set; }
@@ -24,7 +24,7 @@ namespace Valker.PlayOnLan.Server
 
         public override string ToString()
         {
-            return this.GameName;
+            return GameName;
         }
     }
 }

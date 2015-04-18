@@ -22,8 +22,8 @@ namespace Valker.PlayOnLan.Server
 
         public bool Equals(IAgentInfo other)
         {
-            return this.ClientConnector.Equals(other.ClientConnector) 
-                && this.ClientIdentifier.Equals(other.ClientIdentifier);
+            return ClientConnector.Equals(other.ClientConnector) 
+                && ClientIdentifier.Equals(other.ClientIdentifier);
         }
 
         #endregion

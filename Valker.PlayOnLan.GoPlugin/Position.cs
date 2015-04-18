@@ -109,7 +109,6 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public IEnumerable<Tuple<ICoordinates, ICell>> CompareStoneField(IPosition position)
         {
-            var p = (Position) position;
             foreach (var keyValuePair in _field)
             {
                 var cellAt = position.GetCellAt(keyValuePair.Key);

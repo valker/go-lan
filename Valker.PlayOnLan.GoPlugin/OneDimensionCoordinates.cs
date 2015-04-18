@@ -7,7 +7,7 @@ namespace Valker.PlayOnLan.GoPlugin
 {
     public class OneDimensionCoordinates : ICoordinates
     {
-        private int _x;
+        private readonly int _x;
 
         public OneDimensionCoordinates(int x)
         {

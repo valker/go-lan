@@ -6,12 +6,12 @@ namespace Valker.PlayOnLan.Client
 {
     public class LocalMessageConnector : IMessageConnector
     {
-        private LocalTransport _parent;
+        private readonly LocalTransport _parent;
 
         public LocalMessageConnector(LocalTransport transport, string name)
         {
-            this._parent = transport;
-            this.ConnectorName = name;
+            _parent = transport;
+            ConnectorName = name;
         }
 
         #region Implementation of IMessageConnector
@@ -24,7 +24,7 @@ namespace Valker.PlayOnLan.Client
 
         public void OnMessageArrived(object fromIdentifier, object toIdentifier, string message)
         {
-            this.MessageArrived(this, new MessageEventArgs(fromIdentifier, toIdentifier, message));
+            MessageArrived(this, new MessageEventArgs(fromIdentifier, toIdentifier, message));
         }
 
         #region Implementation of IDisposable
