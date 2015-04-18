@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -33,7 +35,6 @@ namespace Valker.PlayOnLan.Server2008
         public ServerImpl(IEnumerable<IMessageConnector> connectors)
         {
             if (connectors == null) throw new ArgumentNullException("connectors");
-
             _games = new List<IGameType>(Loader.Load(Environment.CurrentDirectory));
 
             _gameDict = new Dictionary<string, IGameType>();

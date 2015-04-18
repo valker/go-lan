@@ -17,14 +17,6 @@ namespace Valker.PlayOnLan.GoPluginTests
         }
 
         [Test]
-        public void TestNotEquals()
-        {
-            var a = new CellField(2);
-            var b = new CellField(3);
-            Assert.AreNotEqual(a.GetHashCode(), b.GetHashCode());
-        }
-
-        [Test]
         public void AccessNotInitializedFieldTest()
         {
             var field = new CellField(9);

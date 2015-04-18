@@ -13,11 +13,11 @@ namespace Valker.PlayOnLan.XmppTransport
 {
     public class XmppTransportImpl : IMessageConnector
     {
-        Jid _my;
-        private XmppClientConnection _connection;
+        readonly Jid _my;
+        private readonly XmppClientConnection _connection;
         private static readonly Encoding MyEncoding;
-        List<object> _followers = new List<object>();
-        private List<string> _allowSubscribtionFrom = new List<string>();
+        readonly List<object> _followers = new List<object>();
+        private readonly List<string> _allowSubscribtionFrom = new List<string>();
         private Exception _exception;
 
         public XmppTransportImpl(string name)
@@ -153,8 +153,7 @@ namespace Valker.PlayOnLan.XmppTransport
 
         private void InvokeDisconnectedClient(DisconnectedClientEventArgs e)
         {
-            EventHandler<DisconnectedClientEventArgs> handler = DisconnectedOther;
-            if (handler != null) handler(this, e);
+            DisconnectedOther?.Invoke(this, e);
         }
 
         public event EventHandler<MessageEventArgs> MessageArrived = delegate { };
@@ -175,13 +174,6 @@ namespace Valker.PlayOnLan.XmppTransport
         public void AllowSubscibtionFrom(string jid)
         {
             _allowSubscribtionFrom.Add(jid);
-        }
-    }
-
-    class XmppTransportException : Exception
-    {
-        public XmppTransportException(string message, Exception innerException) : base(message, innerException)
-        {
         }
     }
 }

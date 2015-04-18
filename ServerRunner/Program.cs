@@ -1,8 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Threading;
-using System.Xml.Serialization;
-using Valker.PlayOnLan.Server.Messages.Server;
 using Valker.PlayOnLan.Server2008;
 using Valker.PlayOnLan.XmppTransport;
 
@@ -26,7 +23,6 @@ namespace ServerRunner
                 var ev = new AutoResetEvent(false);
                 server.Closed += delegate { ev.Set(); };
                 ev.WaitOne();
-
             }
             catch (Exception ex)
             {

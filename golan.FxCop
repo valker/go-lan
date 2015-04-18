@@ -1,0 +1,2245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="10.0" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">$(FxCopDir)\Xml\FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded, Good, Noise" NewOnly="False" />
+   <Report Status="Active, Good, Noise" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="ru-RU" />
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+  <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
+ </ProjectOptions>
+ <Targets>
+  <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.Api.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.Client2008.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.Goban.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.GoPlugin.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.GoPlugin.WinForms.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.PluginLoader.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.Server2008.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.Utilities.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/WinFormsClient.exe" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityTransparencyRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="10.0">
+  <Namespaces>
+   <Namespace Name="Valker.PlayOnLan.Client">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2015-04-15 17:52:55Z">
+      <Issue>
+       <Item>Valker.PlayOnLan.Client</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="Valker.PlayOnLan.Client2008.Communication">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2015-04-15 17:52:55Z">
+      <Issue>
+       <Item>Valker.PlayOnLan.Client2008.Communication</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="Valker.PlayOnLan.Server">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2015-04-15 17:52:55Z">
+      <Issue>
+       <Item>Valker.PlayOnLan.Server</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="Valker.PlayOnLan.Server.Messages">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2015-04-15 17:52:55Z">
+      <Issue>
+       <Item>Valker.PlayOnLan.Server.Messages</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="Valker.PlayOnLan.Server2008">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2015-04-15 17:52:55Z">
+      <Issue>
+       <Item>Valker.PlayOnLan.Server2008</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="Valker.PlayOnLan.Server2008.Messages.Client">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2015-04-15 17:52:55Z">
+      <Issue>
+       <Item>Valker.PlayOnLan.Server2008.Messages.Client</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="Valker.PlayOnLan.Server2008.Messages.Server">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2015-04-15 17:52:55Z">
+      <Issue>
+       <Item>Valker.PlayOnLan.Server2008.Messages.Server</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
+  <Targets>
+   <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.Api.dll">
+    <Modules>
+     <Module Name="valker.playonlan.api.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2015-04-15 17:52:55Z">
+        <Issue Name="NoStrongName">
+         <Item>'Valker.PlayOnLan.Api.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'Valker.PlayOnLan.Api.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Valker.PlayOnLan.Api.Communication">
+        <Types>
+         <Type Name="IMessage">
+          <Members>
+           <Member Name="#GetSerializer()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2015-04-15 17:52:55Z">
+              <Issue Certainty="50">
+               <Item>'IMessage.GetSerializer()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Valker.PlayOnLan.Api.Game">
+        <Types>
+         <Type Name="IForm">
+          <Members>
+           <Member Name="#RunInUiThread(System.Action)">
+            <Messages>
+             <Message Id="Ui" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>Ui</Item>
+               <Item>'IForm.RunInUiThread(Action)'</Item>
+               <Item>UI</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="IMainForm">
+          <Messages>
+           <Message TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040" Created="2015-04-15 17:52:55Z">
+            <Issue>
+             <Item>'IMainForm'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="IPlayerProvider">
+          <Members>
+           <Member Name="#GetFirstPlayer()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2015-04-15 17:52:55Z">
+              <Issue Certainty="50">
+               <Item>'IPlayerProvider.GetFirstPlayer()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetMe()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2015-04-15 17:52:55Z">
+              <Issue Certainty="50">
+               <Item>'IPlayerProvider.GetMe()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="IPlayingForm">
+          <Messages>
+           <Message TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040" Created="2015-04-15 17:52:55Z">
+            <Issue>
+             <Item>'IPlayingForm'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="PartyState">
+          <Members>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2015-04-15 17:52:55Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'PartyState.Dispose()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Names">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'PartyState.Names'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Players">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'PartyState.Players'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+            <Accessors>
+             <Accessor Name="#set_Players(Valker.PlayOnLan.Api.Game.IPlayer[])">
+              <Messages>
+               <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+                <Issue Name="NoArguments">
+                 <Item>'ArgumentNullException'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.Client2008.dll">
+    <Modules>
+     <Module Name="valker.playonlan.client2008.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2015-04-15 17:52:55Z">
+        <Issue Name="NoStrongName">
+         <Item>'Valker.PlayOnLan.Client2008.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'Valker.PlayOnLan.Client2008.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Valker.PlayOnLan.Client">
+        <Types>
+         <Type Name="LocalMessageConnector">
+          <Messages>
+           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2015-04-15 17:52:55Z">
+            <Issue Name="ProvideDisposeBool">
+             <Item>'LocalMessageConnector'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NotCalled">
+               <Item>'LocalMessageConnector.Dispose()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2015-04-15 17:52:55Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'LocalMessageConnector.Dispose()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Valker.PlayOnLan.Client.Communication">
+        <Types>
+         <Type Name="LocalTransport">
+          <Messages>
+           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2015-04-15 17:52:55Z">
+            <Issue Name="ProvideDisposeBool">
+             <Item>'LocalTransport'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NotCalled">
+               <Item>'LocalTransport.Dispose()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="_clientConnector" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'LocalTransport'</Item>
+               <Item>'LocalTransport._clientConnector'</Item>
+               <Item>'LocalMessageConnector'</Item>
+              </Issue>
+             </Message>
+             <Message Id="_serverConnector" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'LocalTransport'</Item>
+               <Item>'LocalTransport._serverConnector'</Item>
+               <Item>'LocalMessageConnector'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2015-04-15 17:52:55Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'LocalTransport.Dispose()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PartyStatesArgs">
+          <Members>
+           <Member Name="#States">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'PartyStatesArgs.States'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SupportedGamesChangedEventArgs">
+          <Members>
+           <Member Name="#Games">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'SupportedGamesChangedEventArgs.Games'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Valker.PlayOnLan.Client2008">
+        <Types>
+         <Type Name="AuthentificationParams">
+          <Members>
+           <Member Name="#Password">
+            <Accessors>
+             <Accessor Name="#get_Password()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2015-04-15 17:52:55Z">
+                <Issue>
+                 <Item>'AuthentificationParams.Password.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_Password(System.String)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2015-04-15 17:52:55Z">
+                <Issue>
+                 <Item>'AuthentificationParams.Password.set(string)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MainForm">
+          <Members>
+           <Member Name="#GetPartyStates()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'MainForm.GetPartyStates()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#MainForm_FormClosed()">
+            <Messages>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>'MainForm.MainForm_FormClosed()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Program">
+          <Members>
+           <Member Name="#GetAuthParams()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2015-04-15 17:52:55Z">
+              <Issue Certainty="50">
+               <Item>'Program.GetAuthParams()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="UpdateGameInfoEventArgs">
+          <Members>
+           <Member Name="#GameInfos">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'UpdateGameInfoEventArgs.GameInfos'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Valker.PlayOnLan.Client2008.Communication">
+        <Types>
+         <Type Name="ClientImpl">
+          <Messages>
+           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2015-04-15 17:52:55Z">
+            <Issue Name="ProvideDisposeBool">
+             <Item>'ClientImpl'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#CreatePlayerProvider()">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'ClientImpl.CreatePlayerProvider()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'ClientImpl.CreatePlayerProvider()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NotCalled">
+               <Item>'ClientImpl.Dispose()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2015-04-15 17:52:55Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'ClientImpl.Dispose()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RegisterNewParty(Valker.PlayOnLan.Server.GameInfo,Valker.PlayOnLan.Api.Game.IMainForm)">
+            <Messages>
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'parent'</Item>
+               <Item>'ClientImpl.RegisterNewParty(GameInfo, IMainForm)'</Item>
+               <Item>'IMainForm'</Item>
+               <Item>'IForm'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.Goban.dll">
+    <Modules>
+     <Module Name="valker.playonlan.goban.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2015-04-15 17:52:55Z">
+        <Issue Name="NoStrongName">
+         <Item>'Valker.PlayOnLan.Goban.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'Valker.PlayOnLan.Goban.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'Valker.PlayOnLan.Goban.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Valker.PlayOnLan.Goban">
+        <Types>
+         <Type Name="GobanControl">
+          <Members>
+           <Member Name="#_field">
+            <Messages>
+             <Message Id="Member" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'GobanControl._field'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Field">
+            <Messages>
+             <Message Id="Member" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'GobanControl.Field'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetStone(System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'GobanControl.GetStone(int, int)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'GobanControl.GetStone(int, int)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentOutOfRangeException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#K">
+            <Messages>
+             <Message Id="K" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberMoreMeaningfulName">
+               <Item>'GobanControl.K'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#N">
+            <Messages>
+             <Message Id="N" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberMoreMeaningfulName">
+               <Item>'GobanControl.N'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+            <Accessors>
+             <Accessor Name="#set_N(System.Int32)">
+              <Messages>
+               <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+                <Issue Name="NoArguments">
+                 <Item>'ArgumentOutOfRangeException'</Item>
+                </Issue>
+               </Message>
+               <Message Id="Body" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Created="2015-04-15 17:52:55Z">
+                <Issue Name="Body">
+                 <Item>'GobanControl.N.set(int)'</Item>
+                 <Item>'Stone[,]'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#SetStone(System.Int32,System.Int32,Valker.PlayOnLan.Goban.Stone,System.Boolean)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'GobanControl.SetStone(int, int, Stone, bool)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'GobanControl.SetStone(int, int, Stone, bool)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentOutOfRangeException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.GoPlugin.dll">
+    <Modules>
+     <Module Name="valker.playonlan.goplugin.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2015-04-15 17:52:55Z">
+        <Issue Name="NoStrongName">
+         <Item>'Valker.PlayOnLan.GoPlugin.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'Valker.PlayOnLan.GoPlugin.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Valker.PlayOnLan.GoPlugin">
+        <Types>
+         <Type Name="CellChangedEventArgs">
+          <Members>
+           <Member Name="#CreateCell(System.String,Valker.PlayOnLan.Api.Game.IPlayerProvider)">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2015-04-15 17:52:55Z">
+              <Issue Name="IFormatProviderAlternateString">
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'CellChangedEventArgs.CreateCell(string, IPlayerProvider)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.StartsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'CellChangedEventArgs.CreateCell(string, IPlayerProvider)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'CellChangedEventArgs.CreateCell(string, IPlayerProvider)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="EatedEventArgs">
+          <Members>
+           <Member Name="#Eated">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'EatedEventArgs.Eated'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="EmptyCell">
+          <Messages>
+           <Message TypeName="OverrideGetHashCodeOnOverridingEquals" Category="Microsoft.Usage" CheckId="CA2218" Created="2015-04-15 17:52:55Z">
+            <Issue>
+             <Item>'EmptyCell'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ExceptionReason">
+          <Members>
+           <Member Name="#Ko">
+            <Messages>
+             <Message Id="Ko" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>Ko</Item>
+               <Item>'ExceptionReason.Ko'</Item>
+               <Item>KO</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GoClient">
+          <Members>
+           <Member Name="#Click(System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'GoClient.Click(int, int)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'GoClient.Click(int, int)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GoException">
+          <Messages>
+           <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Created="2015-04-15 17:52:55Z">
+            <Issue Name="MissingConstructor">
+             <Item>'GoException'</Item>
+             <Item>protected GoException(SerializationInfo, StreamingContext)</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'GoException'</Item>
+             <Item>public GoException()</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'GoException'</Item>
+             <Item>public GoException(String)</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'GoException'</Item>
+             <Item>public GoException(String, Exception)</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2015-04-15 17:52:55Z">
+            <Issue Certainty="95" Level="Error">
+             <Item>'GoException'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="GoServer">
+          <Members>
+           <Member Name="#Agreement(Valker.PlayOnLan.Api.Game.IPlayer)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'GoServer.Agreement(IPlayer)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="player" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'player'</Item>
+               <Item>'GoServer.Agreement(IPlayer)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Ask(Valker.PlayOnLan.Api.Game.IPlayer,System.String[])">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'GoServer.Ask(IPlayer, string[])'</Item>
+              </Issue>
+             </Message>
+             <Message Id="player" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'player'</Item>
+               <Item>'GoServer.Ask(IPlayer, string[])'</Item>
+              </Issue>
+             </Message>
+             <Message Id="strings" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'strings'</Item>
+               <Item>'GoServer.Ask(IPlayer, string[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dead(System.String)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'GoServer.Dead(string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="command" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'command'</Item>
+               <Item>'GoServer.Dead(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Disagreement(Valker.PlayOnLan.Api.Game.IPlayer)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'GoServer.Disagreement(IPlayer)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="player" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'player'</Item>
+               <Item>'GoServer.Disagreement(IPlayer)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Live(System.String[])">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'GoServer.Live(string[])'</Item>
+              </Issue>
+             </Message>
+             <Message Id="strings" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'strings'</Item>
+               <Item>'GoServer.Live(string[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Resign(Valker.PlayOnLan.Api.Game.IPlayer)">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'GoServer.Resign(IPlayer)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="player" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'player'</Item>
+               <Item>'GoServer.Resign(IPlayer)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Send(System.String[])">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'GoServer.Send(string[])'</Item>
+              </Issue>
+             </Message>
+             <Message Id="strings" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'strings'</Item>
+               <Item>'GoServer.Send(string[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SendInitialState()">
+            <Messages>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2015-04-15 17:52:55Z">
+              <Issue Name="IFormatProviderAlternateString">
+               <Item>'int.ToString()'</Item>
+               <Item>'GoServer.SendInitialState()'</Item>
+               <Item>'int.ToString(IFormatProvider)'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Group">
+          <Messages>
+           <Message TypeName="OverrideMethodsOnComparableTypes" Category="Microsoft.Design" CheckId="CA1036" Created="2015-04-15 17:52:55Z">
+            <Issue Name="Operator">
+             <Item>'Group'</Item>
+             <Item>!=</Item>
+            </Issue>
+            <Issue Name="Operator">
+             <Item>'Group'</Item>
+             <Item>&lt;</Item>
+            </Issue>
+            <Issue Name="Operator">
+             <Item>'Group'</Item>
+             <Item>==</Item>
+            </Issue>
+            <Issue Name="Operator">
+             <Item>'Group'</Item>
+             <Item>&gt;</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Add(Valker.PlayOnLan.GoPlugin.Abstract.ICoordinates)">
+            <Messages>
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'Group.Add(ICoordinates)'</Item>
+               <Item>'point'</Item>
+               <Item>'item'</Item>
+               <Item>'ICollection&lt;ICoordinates&gt;.Add(ICoordinates)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GroupField">
+          <Members>
+           <Member Name="#.ctor(System.Int32)">
+            <Messages>
+             <Message Id="size" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2015-04-15 17:52:55Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'size'</Item>
+               <Item>'GroupField.GroupField(int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="KoRule">
+          <Messages>
+           <Message Id="Ko" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2015-04-15 17:52:55Z">
+            <Issue Name="Type">
+             <Item>Ko</Item>
+             <Item>'KoRule'</Item>
+             <Item>KO</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Move">
+          <Members>
+           <Member Name="#Perform(Valker.PlayOnLan.GoPlugin.Abstract.IPosition)">
+            <Messages>
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'Move.Perform(IPosition)'</Item>
+               <Item>'currentPosition'</Item>
+               <Item>'position'</Item>
+               <Item>'IMove.Perform(IPosition)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OneDimensionCoordinates">
+          <Messages>
+           <Message TypeName="OverrideMethodsOnComparableTypes" Category="Microsoft.Design" CheckId="CA1036" Created="2015-04-15 17:52:55Z">
+            <Issue Name="Equals">
+             <Item>'OneDimensionCoordinates'</Item>
+            </Issue>
+            <Issue Name="Operator">
+             <Item>'OneDimensionCoordinates'</Item>
+             <Item>!=</Item>
+            </Issue>
+            <Issue Name="Operator">
+             <Item>'OneDimensionCoordinates'</Item>
+             <Item>&lt;</Item>
+            </Issue>
+            <Issue Name="Operator">
+             <Item>'OneDimensionCoordinates'</Item>
+             <Item>==</Item>
+            </Issue>
+            <Issue Name="Operator">
+             <Item>'OneDimensionCoordinates'</Item>
+             <Item>&gt;</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(System.Int32)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'OneDimensionCoordinates.OneDimensionCoordinates(int)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Pair`2">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2015-04-15 17:52:55Z">
+            <Issue Name="Equals">
+             <Item>'Pair&lt;T1, T2&gt;'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'Pair&lt;T1, T2&gt;'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ParamsEventArgs">
+          <Members>
+           <Member Name="#Keys">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'ParamsEventArgs.Keys'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PlayerCell">
+          <Members>
+           <Member Name="#ToString()">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2015-04-15 17:52:55Z">
+              <Issue Name="IFormatProviderAlternateString">
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'PlayerCell.ToString()'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Position">
+          <Members>
+           <Member Name="#ChangeCellState(Valker.PlayOnLan.GoPlugin.Abstract.ICoordinates,Valker.PlayOnLan.GoPlugin.Abstract.ICell)">
+            <Messages>
+             <Message Id="1#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'Position.ChangeCellState(ICoordinates, ICell)'</Item>
+               <Item>'cell'</Item>
+               <Item>'currentPlayer'</Item>
+               <Item>'IPosition.ChangeCellState(ICoordinates, ICell)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ExcludeGroups(System.Collections.Generic.List`1&lt;Valker.PlayOnLan.GoPlugin.Group&gt;)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'List&lt;Group&gt;'</Item>
+               <Item>'Position.ExcludeGroups(List&lt;Group&gt;)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetNearestGroups(Valker.PlayOnLan.GoPlugin.Abstract.ICoordinates,Valker.PlayOnLan.Api.Game.IPlayer)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'List&lt;Group&gt;'</Item>
+               <Item>'Position.GetNearestGroups(ICoordinates, IPlayer)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#PutStone(Valker.PlayOnLan.GoPlugin.Abstract.ICoordinates,Valker.PlayOnLan.Api.Game.IPlayer)">
+            <Messages>
+             <Message Id="1#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'Position.PutStone(ICoordinates, IPlayer)'</Item>
+               <Item>'currentPlayer'</Item>
+               <Item>'player'</Item>
+               <Item>'IPosition.PutStone(ICoordinates, IPlayer)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Rules">
+          <Members>
+           <Member Name="#Ko">
+            <Messages>
+             <Message Id="Ko" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>Ko</Item>
+               <Item>'Rules.Ko'</Item>
+               <Item>KO</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ShowMessageEventArgs">
+          <Members>
+           <Member Name="#.ctor(System.String[])">
+            <Messages>
+             <Message Id="strings" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2015-04-15 17:52:55Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'ShowMessageEventArgs.ShowMessageEventArgs(string[])'</Item>
+               <Item>strings</Item>
+               <Item>'strings'</Item>
+              </Issue>
+             </Message>
+             <Message Id="strings" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2015-04-15 17:52:55Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'strings'</Item>
+               <Item>'ShowMessageEventArgs.ShowMessageEventArgs(string[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TwoDimensionsCoordinates">
+          <Messages>
+           <Message TypeName="OverrideMethodsOnComparableTypes" Category="Microsoft.Design" CheckId="CA1036" Created="2015-04-15 17:52:55Z">
+            <Issue Name="Operator">
+             <Item>'TwoDimensionsCoordinates'</Item>
+             <Item>&lt;</Item>
+            </Issue>
+            <Issue Name="Operator">
+             <Item>'TwoDimensionsCoordinates'</Item>
+             <Item>&gt;</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'TwoDimensionsCoordinates.TwoDimensionsCoordinates(int, int)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'TwoDimensionsCoordinates.TwoDimensionsCoordinates(int, int)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Util">
+          <Members>
+           <Member Name="#CreateCoordinates(System.Int32,System.Int32)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'Util.CreateCoordinates(int, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Valker.PlayOnLan.GoPlugin.Abstract">
+        <Types>
+         <Type Name="ICell">
+          <Messages>
+           <Message TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040" Created="2015-04-15 17:52:55Z">
+            <Issue>
+             <Item>'ICell'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="IEngine">
+          <Members>
+           <Member Name="#Move(Valker.PlayOnLan.GoPlugin.Abstract.IMove)">
+            <Messages>
+             <Message Id="0#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'move'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="IPosition">
+          <Members>
+           <Member Name="#CompareScore(Valker.PlayOnLan.GoPlugin.Abstract.IPosition)">
+            <Messages>
+             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'IPosition.CompareScore(IPosition)'</Item>
+               <Item>'IEnumerable&lt;Tuple&lt;IPlayer, double&gt;&gt;'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CompareStoneField(Valker.PlayOnLan.GoPlugin.Abstract.IPosition)">
+            <Messages>
+             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'IPosition.CompareStoneField(IPosition)'</Item>
+               <Item>'IEnumerable&lt;Tuple&lt;ICoordinates, ICell&gt;&gt;'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="IRule">
+          <Messages>
+           <Message TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040" Created="2015-04-15 17:52:55Z">
+            <Issue>
+             <Item>'IRule'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Valker.PlayOnLan.GoPlugin.Annotations">
+        <Types>
+         <Type Name="AssertionConditionType">
+          <Members>
+           <Member Name="#IS_FALSE">
+            <Messages>
+             <Message Id="FALSE" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>FALSE</Item>
+               <Item>'AssertionConditionType.IS_FALSE'</Item>
+               <Item>False</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>'AssertionConditionType.IS_FALSE'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IS_NOT_NULL">
+            <Messages>
+             <Message Id="NOT" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>NOT</Item>
+               <Item>'AssertionConditionType.IS_NOT_NULL'</Item>
+               <Item>Not</Item>
+              </Issue>
+             </Message>
+             <Message Id="NULL" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>NULL</Item>
+               <Item>'AssertionConditionType.IS_NOT_NULL'</Item>
+               <Item>Null</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>'AssertionConditionType.IS_NOT_NULL'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IS_NULL">
+            <Messages>
+             <Message Id="NULL" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>NULL</Item>
+               <Item>'AssertionConditionType.IS_NULL'</Item>
+               <Item>Null</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>'AssertionConditionType.IS_NULL'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IS_TRUE">
+            <Messages>
+             <Message Id="TRUE" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>TRUE</Item>
+               <Item>'AssertionConditionType.IS_TRUE'</Item>
+               <Item>True</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2015-04-15 17:52:55Z">
+              <Issue Name="Member">
+               <Item>'AssertionConditionType.IS_TRUE'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CollectionAccessType">
+          <Messages>
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2015-04-15 17:52:55Z">
+            <Issue>
+             <Item>'CollectionAccessType'</Item>
+             <Item>0x4</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ImplicitUseKindFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'ImplicitUseKindFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ImplicitUseTargetFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'ImplicitUseTargetFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MeansImplicitUseAttribute">
+          <Members>
+           <Member Name="#.ctor(Valker.PlayOnLan.GoPlugin.Annotations.ImplicitUseKindFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseKindFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'useKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(Valker.PlayOnLan.GoPlugin.Annotations.ImplicitUseKindFlags,Valker.PlayOnLan.GoPlugin.Annotations.ImplicitUseTargetFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'targetFlags'</Item>
+              </Issue>
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'useKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(Valker.PlayOnLan.GoPlugin.Annotations.ImplicitUseTargetFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'targetFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TargetFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'MeansImplicitUseAttribute.TargetFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UseKindFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'MeansImplicitUseAttribute.UseKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PathReferenceAttribute">
+          <Messages>
+           <Message TypeName="AvoidUnsealedAttributes" Category="Microsoft.Performance" CheckId="CA1813" Created="2015-04-15 17:52:55Z">
+            <Issue>
+             <Item>'PathReferenceAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="PublicAPIAttribute">
+          <Messages>
+           <Message Id="API" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2015-04-15 17:52:55Z">
+            <Issue Name="Type">
+             <Item>API</Item>
+             <Item>'PublicAPIAttribute'</Item>
+             <Item>Api</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="MarkAttributesWithAttributeUsage" Category="Microsoft.Design" CheckId="CA1018" Created="2015-04-15 17:52:55Z">
+            <Issue Level="Error">
+             <Item>'PublicAPIAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="RazorInjectionAttribute">
+          <Members>
+           <Member Name="#Type">
+            <Messages>
+             <Message TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721" Created="2015-04-15 17:52:55Z">
+              <Issue Name="BaseType">
+               <Item>'RazorInjectionAttribute.Type'</Item>
+               <Item>'object.GetType()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="UsedImplicitlyAttribute">
+          <Members>
+           <Member Name="#.ctor(Valker.PlayOnLan.GoPlugin.Annotations.ImplicitUseKindFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseKindFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'useKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(Valker.PlayOnLan.GoPlugin.Annotations.ImplicitUseKindFlags,Valker.PlayOnLan.GoPlugin.Annotations.ImplicitUseTargetFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'targetFlags'</Item>
+              </Issue>
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'useKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(Valker.PlayOnLan.GoPlugin.Annotations.ImplicitUseTargetFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'targetFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TargetFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'UsedImplicitlyAttribute.TargetFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UseKindFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'UsedImplicitlyAttribute.UseKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.GoPlugin.WinForms.dll">
+    <Modules>
+     <Module Name="valker.playonlan.goplugin.winforms.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2015-04-15 17:52:55Z">
+        <Issue Name="NoStrongName">
+         <Item>'Valker.PlayOnLan.GoPlugin.WinForms.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'Valker.PlayOnLan.GoPlugin.WinForms.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'Valker.PlayOnLan.GoPlugin.WinForms.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Valker.PlayOnLan.GoPlugin.WinForms">
+        <Types>
+         <Type Name="PlayingForm">
+          <Members>
+           <Member Name="#ClientOnEated(System.Object,Valker.PlayOnLan.GoPlugin.EatedEventArgs)">
+            <Messages>
+             <Message Id="System.Double.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2015-04-15 17:52:55Z">
+              <Issue Name="IFormatProviderAlternateString">
+               <Item>'double.ToString()'</Item>
+               <Item>'PlayingForm.ClientOnEated(object, EatedEventArgs)'</Item>
+               <Item>'double.ToString(IFormatProvider)'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+              <Issue Name="IFormatProviderAlternateString">
+               <Item>'double.ToString()'</Item>
+               <Item>'PlayingForm.ClientOnEated(object, EatedEventArgs)'</Item>
+               <Item>'double.ToString(IFormatProvider)'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ClientOnParams(System.Object,Valker.PlayOnLan.GoPlugin.ParamsEventArgs)">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2015-04-15 17:52:55Z">
+              <Issue Name="IFormatProviderAlternateString">
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'PlayingForm.ClientOnParams(object, ParamsEventArgs)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Convert(Valker.PlayOnLan.GoPlugin.Abstract.ICell)">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2015-04-15 17:52:55Z">
+              <Issue Name="IFormatProviderAlternateString">
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'PlayingForm.Convert(ICell)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Gui">
+            <Accessors>
+             <Accessor Name="#get_Gui()">
+              <Messages>
+               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2015-04-15 17:52:55Z" FixCategory="Breaking">
+                <Issue Name="PropertyGetter" Level="Warning">
+                 <Item>'PlayingForm.Gui.get()'</Item>
+                 <Item>'NotImplementedException'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.PluginLoader.dll">
+    <Modules>
+     <Module Name="valker.playonlan.pluginloader.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2015-04-15 17:52:55Z">
+        <Issue Name="NoStrongName">
+         <Item>'Valker.PlayOnLan.PluginLoader.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'Valker.PlayOnLan.PluginLoader.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Valker.PlayOnLan.PluginLoader">
+        <Types>
+         <Type Name="Loader">
+          <Members>
+           <Member Name="#TryFindGameType(System.String)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'Loader.TryFindGameType(string)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message Id="e" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'Loader.TryFindGameType(string)'</Item>
+               <Item>'e'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.Server2008.dll">
+    <Modules>
+     <Module Name="valker.playonlan.server2008.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2015-04-15 17:52:55Z">
+        <Issue Name="NoStrongName">
+         <Item>'Valker.PlayOnLan.Server2008.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'Valker.PlayOnLan.Server2008.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Valker.PlayOnLan.Server">
+        <Types>
+         <Type Name="GameInfo">
+          <Members>
+           <Member Name="#.ctor(System.String,Valker.PlayOnLan.Api.Communication.IMessageConnector)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentException'</Item>
+              </Issue>
+              <Issue Name="NoArguments">
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+              <Issue Name="NoArguments">
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Valker.PlayOnLan.Server.Messages">
+        <Types>
+         <Type Name="XmlSerializerImpl">
+          <Members>
+           <Member Name="#Perform(System.Xml.Serialization.XmlSerializer,System.Object)">
+            <Messages>
+             <Message Id="object" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2015-04-15 17:52:55Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'XmlSerializerImpl.Perform(XmlSerializer, object)'</Item>
+               <Item>object</Item>
+               <Item>'objectToSerialize'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.IO.StringWriter.#ctor" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2015-04-15 17:52:55Z">
+              <Issue Name="IFormatProviderAlternate">
+               <Item>'StringWriter.StringWriter()'</Item>
+               <Item>'XmlSerializerImpl.Perform(XmlSerializer, object)'</Item>
+               <Item>'StringWriter.StringWriter(IFormatProvider)'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Valker.PlayOnLan.Server.Messages.Client">
+        <Types>
+         <Type Name="AcceptNewPlayerMessage">
+          <Members>
+           <Member Name="#Execute(Valker.PlayOnLan.Api.Communication.IClientMessageExecuter,Valker.PlayOnLan.Api.Communication.IMessageConnector)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PartyBeginNotificationMessage">
+          <Members>
+           <Member Name="#Players">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'PartyBeginNotificationMessage.Players'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RetrieveSupportedGamesResponceMessage">
+          <Members>
+           <Member Name="#Execute(Valker.PlayOnLan.Api.Communication.IClientMessageExecuter,Valker.PlayOnLan.Api.Communication.IMessageConnector)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Responce">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'RetrieveSupportedGamesResponceMessage.Responce'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="UpdatePartyStatesMessage">
+          <Members>
+           <Member Name="#.ctor(System.Collections.Generic.List`1&lt;Valker.PlayOnLan.Api.Game.PartyState&gt;)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'List&lt;PartyState&gt;'</Item>
+               <Item>'UpdatePartyStatesMessage.UpdatePartyStatesMessage(List&lt;PartyState&gt;)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Execute(Valker.PlayOnLan.Api.Communication.IClientMessageExecuter,Valker.PlayOnLan.Api.Communication.IMessageConnector)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentException'</Item>
+              </Issue>
+              <Issue Name="NoArguments">
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Info">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'UpdatePartyStatesMessage.Info'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Valker.PlayOnLan.Server.Messages.Server">
+        <Types>
+         <Type Name="AcceptNewPartyMessage">
+          <Members>
+           <Member Name="#Execute(Valker.PlayOnLan.Api.Communication.IServerMessageExecuter,Valker.PlayOnLan.Api.Communication.IAgentInfo)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RegisterNewPartyMessage">
+          <Members>
+           <Member Name="#Execute(Valker.PlayOnLan.Api.Communication.IServerMessageExecuter,Valker.PlayOnLan.Api.Communication.IAgentInfo)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="IncorrectParameterName">
+               <Item>'RegisterNewPartyMessage.Execute(IServerMessageExecuter, IAgentInfo)'</Item>
+               <Item>client</Item>
+               <Item>'paramName'</Item>
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'RegisterNewPartyMessage.Execute(IServerMessageExecuter, IAgentInfo)'</Item>
+               <Item>'agent'</Item>
+               <Item>'sender'</Item>
+               <Item>'ServerMessage.Execute(IServerMessageExecuter, IAgentInfo)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RegisterNewPlayerMessage">
+          <Members>
+           <Member Name="#Execute(Valker.PlayOnLan.Api.Communication.IServerMessageExecuter,Valker.PlayOnLan.Api.Communication.IAgentInfo)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ServerMessageTypes">
+          <Members>
+           <Member Name="#Types">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'ServerMessageTypes.Types'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Valker.PlayOnLan.Server2008">
+        <Types>
+         <Type Name="ServerImpl">
+          <Messages>
+           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2015-04-15 17:52:55Z">
+            <Issue Name="ProvideDisposeBool">
+             <Item>'ServerImpl'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#AddConnector(Valker.PlayOnLan.Api.Communication.IMessageConnector)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NotCalled">
+               <Item>'ServerImpl.Dispose()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2015-04-15 17:52:55Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'ServerImpl.Dispose()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FindParty(System.Int32)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FindPlayer(System.String)">
+            <Messages>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2015-04-15 17:52:55Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentException'</Item>
+              </Issue>
+              <Issue Name="NoArguments">
+               <Item>'ArgumentNullException'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UpdatePartyStates(Valker.PlayOnLan.Api.Communication.IAgentInfo)">
+            <Messages>
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'ServerImpl.UpdatePartyStates(IAgentInfo)'</Item>
+               <Item>'agentInfo'</Item>
+               <Item>'agent'</Item>
+               <Item>'IServerMessageExecuter.UpdatePartyStates(IAgentInfo)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Valker.PlayOnLan.Server2008.Messages.Server">
+        <Types>
+         <Type Name="ServerGameMessage">
+          <Members>
+           <Member Name="#.ctor(System.String)">
+            <Messages>
+             <Message Id="s" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'ServerGameMessage.ServerGameMessage(string)'</Item>
+               <Item>'s'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/Valker.PlayOnLan.Utilities.dll">
+    <Modules>
+     <Module Name="valker.playonlan.utilities.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2015-04-15 17:52:55Z">
+        <Issue Name="NoStrongName">
+         <Item>'Valker.PlayOnLan.Utilities.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'Valker.PlayOnLan.Utilities.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Valker.PlayOnLan.Utilities">
+        <Types>
+         <Type Name="Point">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2015-04-15 17:52:55Z">
+            <Issue Name="Equals">
+             <Item>'Point'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'Point'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Point.Point(int, int)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Point.Point(int, int)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#X">
+            <Messages>
+             <Message Id="X" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberMoreMeaningfulName">
+               <Item>'Point.X'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Y">
+            <Messages>
+             <Message Id="Y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2015-04-15 17:52:55Z">
+              <Issue Name="MemberMoreMeaningfulName">
+               <Item>'Point.Y'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Util">
+          <Messages>
+           <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Created="2015-04-15 17:52:55Z">
+            <Issue>
+             <Item>'Util'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2015-04-15 17:52:55Z">
+            <Issue Name="System">
+             <Item>'Util'</Item>
+             <Item>System.Web.Util</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/WinFormsClient/bin/Debug/WinFormsClient.exe">
+    <Modules>
+     <Module Name="winformsclient.exe">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2015-04-15 17:52:55Z">
+        <Issue Name="NoStrongName">
+         <Item>'WinFormsClient.exe'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'WinFormsClient.exe'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2015-04-15 17:52:55Z">
+        <Issue>
+         <Item>'WinFormsClient.exe'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="WinFormsClient">
+        <Types>
+         <Type Name="ServerForm">
+          <Members>
+           <Member Name="#Show(Valker.PlayOnLan.Api.Game.IForm)">
+            <Messages>
+             <Message Id="0#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2015-04-15 17:52:55Z">
+              <Issue>
+               <Item>'ServerForm.Show(IForm)'</Item>
+               <Item>'form'</Item>
+               <Item>'parent'</Item>
+               <Item>'IForm.Show(IForm)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Rules>
+   <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+    <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
+    <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
+    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUnsealedAttributes" Category="Microsoft.Performance" CheckId="CA1813">
+    <Resolution Name="Default">Seal {0}, if possible.</Resolution>
+   </Rule>
+   <Rule TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816">
+    <Resolution Name="NotCalled">Change {0} to call {1}. This will prevent derived types that introduce a finalizer from needing to re-implement 'IDisposable' to call it.</Resolution>
+   </Rule>
+   <Rule TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011">
+    <Resolution Name="Default">Consider changing the type of parameter {0} in {1} from {2} to its base type {3}. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Resolution>
+   </Rule>
+   <Rule TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213">
+    <Resolution Name="Default">{0} contains field {1} that is of IDisposable type: {2}. Change the Dispose method on {0} to call Dispose or Close on this field.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+    <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
+    <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217">
+    <Resolution Name="Default">{0} is marked with FlagsAttribute but a discrete member cannot be found for every settable bit that is used across the range of enum values. Remove FlagsAttribute from the type or define new members for the following (currently missing) values: {1}</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
+    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065">
+    <Resolution Name="PropertyGetter">{0} creates an exception of type {1}, an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+    <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+    <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+    <Resolution Name="MemberMoreMeaningfulName">Consider providing a more meaningful name than member name {0}.</Resolution>
+    <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
+    <Resolution Name="LanguageIndependentMemberParameter">In member {0}, consider replacing the data type identifier '{1}' in parameter name {2} with a more generic term, such as 'value'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+    <Resolution Name="Member">Remove the underscores from member name {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
+    <Resolution Name="DisposeImplementation">Modify {0} so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Resolution>
+    <Resolution Name="ProvideDisposeBool">Provide an overridable implementation of Dispose(bool) on {0} or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Resolution>
+   </Rule>
+   <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
+    <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
+    <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
+    <Resolution Name="NoArguments">Call the {0} constructor that contains a message and/or paramName parameter.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
+    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
+    <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAttributesWithAttributeUsage" Category="Microsoft.Design" CheckId="CA1018">
+    <Resolution Name="Default">Specify AttributeUsage on {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
+    <Resolution Name="Default">Add [Serializable] to {0} as this type implements ISerializable.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   </Rule>
+   <Rule TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815">
+    <Resolution Name="Equals">{0} should override Equals.</Resolution>
+    <Resolution Name="op_Equality">{0} should override the equality (==) and inequality (!=) operators.</Resolution>
+   </Rule>
+   <Rule TypeName="OverrideGetHashCodeOnOverridingEquals" Category="Microsoft.Usage" CheckId="CA2218">
+    <Resolution Name="Default">Since {0} redefines Equals, it should also redefine GetHashCode.</Resolution>
+   </Rule>
+   <Rule TypeName="OverrideMethodsOnComparableTypes" Category="Microsoft.Design" CheckId="CA1036">
+    <Resolution Name="Equals">{0} should override Equals since it implements IComparable.</Resolution>
+    <Resolution Name="Operator">{0} should define operator '{1}' since it implements IComparable.</Resolution>
+   </Rule>
+   <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
+    <Resolution Name="Default">In member {0}, change parameter name {1} to {2} in order to match the identifier as it has been declared in {3}.</Resolution>
+   </Rule>
+   <Rule TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719">
+    <Resolution Name="Default">Change either member or parameter name {0} so that one differs from the other.</Resolution>
+   </Rule>
+   <Rule TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814">
+    <Resolution Name="Body">{0} uses a multidimensional array of {1}. Replace it with a jagged array if possible.</Resolution>
+    <Resolution Name="Default">{0} is a multidimensional array. Replace it with a jagged array if possible.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
+    <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
+    <Resolution Name="BaseType">The property name {0} is confusing given the existence of inherited method {1}. Rename or remove this property.</Resolution>
+   </Rule>
+   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="IFormatProviderAlternate">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be based on input from the user, specify {3} as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify {4}.</Resolution>
+    <Resolution Name="IFormatProviderAlternateString">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify {3} as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify {4}.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307">
+    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, such as when sorting a list of items for display in a list box, specify 'StringComparison.CurrentCulture' or 'StringComparison.CurrentCultureIgnoreCase' as the 'StringComparison' parameter. If comparing case-insensitive identifiers, such as file paths, environment variables, or registry keys and values, specify 'StringComparison.OrdinalIgnoreCase'. Otherwise, if comparing case-sensitive identifiers, specify 'StringComparison.Ordinal'.</Resolution>
+   </Rule>
+   <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
+    <Resolution Name="Default">Because type {0} contains only 'static' ('Shared' in Visual Basic) members, add a default private constructor to prevent the compiler from adding a default public constructor.</Resolution>
+   </Rule>
+   <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
+    <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
+   </Rule>
+   <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
+    <Resolution Name="MemberNoAlternate">Replace the term '{0}' in member name {1} with an appropriate alternate or remove it entirely.</Resolution>
+    <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>
+    <Resolution Name="TypeNoAlternate">Replace the term '{0}' in type name {1} with an appropriate alternate or remove it entirely.</Resolution>
+   </Rule>
+   <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
+    <Resolution Name="Default">Change {0} to a property if appropriate.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

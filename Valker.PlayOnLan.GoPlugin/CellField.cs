@@ -12,16 +12,12 @@ namespace Valker.PlayOnLan.GoPlugin
         public CellField(CellField parent)
         {
             _field = new Dictionary<ICoordinates, ICell>(parent._field);
-            Size = parent.Size;
         }
 
         public CellField(int size)
         {
-            Size = size;
             _field = new Dictionary<ICoordinates, ICell>();
         }
-
-        public int Size { get; }
 
         public void SetAt(ICoordinates coordinates, ICell cell)
         {
@@ -61,7 +57,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public override int GetHashCode()
         {
-            return Size.GetHashCode();
+            return _field.Count.GetHashCode();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

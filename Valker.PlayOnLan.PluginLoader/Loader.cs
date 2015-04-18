@@ -5,15 +5,19 @@ using System.Linq;
 using System.Reflection;
 using Valker.PlayOnLan.Api.Game;
 using System.Diagnostics;
+using log4net;
 
 namespace Valker.PlayOnLan.PluginLoader
 {
 	public static class Loader
 	{
+
+	    private static readonly ILog Log = LogManager.GetLogger(typeof (Loader));
+
 		public static IGameType[] Load (string path)
 		{
 			var directoryInfo = new DirectoryInfo (path);
-			var files = directoryInfo.GetFiles ("*.dll", SearchOption.TopDirectoryOnly);
+			FileInfo[] files = directoryInfo.GetFiles ("*.dll", SearchOption.TopDirectoryOnly);
 			return GetTypes (files).ToArray ();
 		}
 
@@ -29,13 +33,14 @@ namespace Valker.PlayOnLan.PluginLoader
 				assembly = Assembly.LoadFile (fileName);
 			} catch (Exception e) {
 				// skip any errors
+                Log.Warn("cannot load plugin", e);
 			}
 			
 			if (assembly == null)
 				return null;
 			
-			var types = assembly.GetTypes ();
-			foreach (var type in types) {
+			Type[] types = assembly.GetTypes ();
+			foreach (Type type in types) {
 				if (typeof(IGameType).IsAssignableFrom (type) && !type.IsInterface && !type.IsAbstract) {
 					var gameType = (IGameType)Activator.CreateInstance (type);
 					return gameType;
@@ -47,11 +52,11 @@ namespace Valker.PlayOnLan.PluginLoader
 
 		private static IEnumerable<IGameType> GetTypes (IEnumerable<FileInfo> files)
 		{
-			var fileNames = files.Select (fi => fi.FullName).ToArray ();
-			List<IGameType> gameTypes = new List<IGameType> ();
+			string[] fileNames = files.Select (fi => fi.FullName).ToArray ();
+			var gameTypes = new List<IGameType> ();
 			
-			foreach (var fileName in fileNames) {
-				var gameType = TryFindGameType (fileName);
+			foreach (string fileName in fileNames) {
+				IGameType gameType = TryFindGameType (fileName);
 				if (gameType != null)
 					gameTypes.Add (gameType);
 			}
