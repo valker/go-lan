@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Valker.PlayOnLan.Api.Game;
 using Valker.PlayOnLan.GoPlugin.Abstract;
 
@@ -5,19 +7,33 @@ namespace Valker.PlayOnLan.GoPlugin
 {
     public class Rules : IRules
     {
-        private IKomiRule _komiRule;
-        public KoRule Ko { get; set; }
-        public ScoreRule Score { get; set; }
+        private readonly List<IRule> _rules = new List<IRule>();
 
-        public double GetInitialScore(IPlayer player)
+        public bool IsAcceptableMove(bool previousAcceptableMove, IPosition oldPosition, IMoveConsequences moveConsequences,
+            IPositionStorage positionStorage)
         {
-            return _komiRule.GetScore(player.Order);
+            return _rules.Aggregate(
+                previousAcceptableMove,
+                (current, rule) => rule.IsAcceptableMove(current, oldPosition, moveConsequences, positionStorage));
         }
 
-        public void IsAcceptable(IPosition oldPosition, IMoveConsequences moveConsequences, IPositionStorage positionStorage)
+        public IPosition GetInitialPosition(IPosition previousHandicapPosition, IPlayer player, IPlayer[] players)
         {
-            int x = positionStorage.ExistParent(oldPosition, moveConsequences.Position);
-            if(x > 0) throw new GoException(ExceptionReason.Ko);
+            return _rules.Aggregate(
+                previousHandicapPosition,
+                (position, rule) => rule.GetInitialPosition(position, player, players));
+        }
+
+        public bool CheckFinish(bool previousFinish, IPosition currentPosition, IPositionStorage positionStorage)
+        {
+            return _rules.Aggregate(
+                previousFinish,
+                (b, rule) => rule.CheckFinish(b, currentPosition, positionStorage));
+        }
+
+        public void Add(IRule item)
+        {
+            _rules.Add(item);
         }
     }
 }

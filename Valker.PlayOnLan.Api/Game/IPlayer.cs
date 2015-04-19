@@ -4,12 +4,12 @@ namespace Valker.PlayOnLan.Api.Game
 {
     public interface IPlayerBase
     {
-        string PlayerName { get; set; }
+        string PlayerName { get; }
     }
 
     public interface IPlayer : IPlayerBase
     {
-        IAgentInfo Agent { get; set; }
+        IAgentInfo Agent { get; }
         int Order { get; }
     }
 }

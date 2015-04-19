@@ -70,11 +70,14 @@ namespace Valker.PlayOnLan.GoPlugin
 
         #region methods
 
-        public void Move(IMove move)
+        public bool Move(IMove move)
         {
             IPosition oldPosition = CurrentPosition;
             IMoveConsequences moveConsequences = move.Perform(CurrentPosition);
-            _rules.IsAcceptable(oldPosition, moveConsequences, _positionStorage);
+            if (!_rules.IsAcceptableMove(true, oldPosition, moveConsequences, _positionStorage))
+            {
+                throw new GoException(ExceptionReason.Ko);
+            }
 
             _positionStorage.AddChildPosition(oldPosition, moveConsequences.Position);
 
@@ -89,6 +92,8 @@ namespace Valker.PlayOnLan.GoPlugin
             }
 
             CurrentPosition = moveConsequences.Position;
+
+            return _rules.CheckFinish(false, CurrentPosition, _positionStorage);
         }
 
         #endregion

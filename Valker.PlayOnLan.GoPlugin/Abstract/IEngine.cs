@@ -35,7 +35,7 @@ namespace Valker.PlayOnLan.GoPlugin.Abstract
         /// либо выдаётся исключение, если ход недопустимый
         /// </summary>
         /// <param name="move"></param>
-        void Move(IMove move);
+        bool Move(IMove move);
 
         // Вопросы:
         // нужно ли включать в этот интерфейс описатель правил
@@ -79,7 +79,7 @@ namespace Valker.PlayOnLan.GoPlugin.Abstract
             }
         }
 
-        public void Move(IMove move)
+        public bool Move(IMove move)
         {
             Contract.Requires(move != null);
             throw new NotImplementedException();

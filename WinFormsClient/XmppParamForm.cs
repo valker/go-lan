@@ -12,16 +12,10 @@ namespace WinFormsClient
             txtServerAccount.Text = "server@" + host;
         }
 
-        public string PlayerName { get { return txtPlayerName.Text; } }
+        public string PlayerName => txtPlayerName.Text;
 
-        public string UserAccount
-        {
-            get { return txtUserAccount.Text; }
-        }
+        public string UserAccount => txtUserAccount.Text;
 
-        public string ServerAccount
-        {
-            get { return txtServerAccount.Text; }
-        }
+        public string ServerAccount => txtServerAccount.Text;
     }
 }

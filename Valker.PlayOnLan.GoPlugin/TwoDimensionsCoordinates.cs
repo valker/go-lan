@@ -63,7 +63,7 @@ namespace Valker.PlayOnLan.GoPlugin
         public IEnumerable<ICoordinates> Neighbours(IPosition position)
         {
             IEnumerable<ICoordinates> neighbours = GetNeibours().ToArray();
-            return neighbours.Where(c => position.Exist(c));
+            return neighbours.Where(position.Exist);
         }
 
         private IEnumerable<ICoordinates> GetNeibours()

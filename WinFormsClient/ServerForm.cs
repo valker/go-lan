@@ -24,17 +24,13 @@ namespace WinFormsClient
             Invoke(action);
         }
 
-        public string Gui
-        {
-            get { return "winforms"; }
-        }
+        public string Gui => "winforms";
 
         public event EventHandler<NewAgentCreatingEventArgs> NewAgentCreating;
 
         private void InvokeNewAgentCreating(NewAgentCreatingEventArgs e)
         {
-            var creating = NewAgentCreating;
-            if (creating != null) creating(this, e);
+            NewAgentCreating?.Invoke(this, e);
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -20,14 +20,19 @@ namespace Valker.PlayOnLan.GoPluginTests
             var positionStorageMock = new Mock<IPositionStorage>();
             positionStorageMock.Setup(storage => storage.Initial).Returns(startPosition.Object);
             IPositionStorage positionStorage = positionStorageMock.Object;
-            var playerProvider = Mock.Of<IPlayerProvider>(provider => provider.GetPlayers() == new IPlayer[]
+            var playerProvider = Mock.Of<IPlayerProvider>(provider => provider.GetPlayers() == new[]
             {
                 playerAaa,
                 playerBbb,
             } && provider.GetFirstPlayer() == playerAaa);
-            IRules rules = new Mock<IRules>().Object;
 
-            IEngine engine = new Engine(positionStorage, playerProvider, rules);
+            var rules = new Mock<IRules>();
+            rules.Setup(
+                rules1 =>
+                    rules1.IsAcceptableMove(It.IsAny<bool>(), It.IsAny<IPosition>(), It.IsAny<IMoveConsequences>(),
+                        It.IsAny<IPositionStorage>())).Returns(true);
+
+            IEngine engine = new Engine(positionStorage, playerProvider, rules.Object);
 
             Assert.That(engine.CurrentPlayer, Is.EqualTo(playerAaa));
 
@@ -56,6 +61,10 @@ namespace Valker.PlayOnLan.GoPluginTests
             positionStorage.Setup(storage => storage.Initial).Returns(() => startPosition.Object);
             var playerProvider = new Mock<IPlayerProvider>();
             var rules = new Mock<IRules>();
+            rules.Setup(
+                rules1 =>
+                    rules1.IsAcceptableMove(It.IsAny<bool>(), It.IsAny<IPosition>(), It.IsAny<IMoveConsequences>(),
+                        It.IsAny<IPositionStorage>())).Returns(true);
             var move = new Mock<IMove>();
             move.Setup(move1 => move1.Perform(It.IsAny<IPosition>()))
                 .Returns(Mock.Of<IMoveConsequences>);
@@ -75,13 +84,17 @@ namespace Valker.PlayOnLan.GoPluginTests
             var startPosition = new Mock<IPosition>();
             startPosition.Setup(position => position.CompareScore(It.IsAny<IPosition>()))
                 .Returns(() => new Tuple<IPlayer, double>[0]);
-            startPosition.Setup(position => position.CompareStoneField(It.IsAny<IPosition>())).Returns(() => new Tuple<ICoordinates, ICell>[]
+            startPosition.Setup(position => position.CompareStoneField(It.IsAny<IPosition>())).Returns(() => new []
             {
                 Tuple.Create(Mock.Of<ICoordinates>(), Mock.Of<ICell>()), 
             });
             positionStorage.Setup(storage => storage.Initial).Returns(() => startPosition.Object);
             var playerProvider = new Mock<IPlayerProvider>();
             var rules = new Mock<IRules>();
+            rules.Setup(
+                rules1 =>
+                    rules1.IsAcceptableMove(It.IsAny<bool>(), It.IsAny<IPosition>(), It.IsAny<IMoveConsequences>(),
+                        It.IsAny<IPositionStorage>())).Returns(true);
             var move = new Mock<IMove>();
             move.Setup(move1 => move1.Perform(It.IsAny<IPosition>()))
                 .Returns(Mock.Of<IMoveConsequences>);

@@ -24,18 +24,12 @@ namespace Valker.PlayOnLan.GoPlugin
         /// <summary>
         /// Describes the name of the game on original language
         /// </summary>
-        public string Name
-        {
-            get { return "Go"; }
-        }
+        public string Name => "Go";
 
         /// <summary>
         /// Defines the unique identifier of the game type
         /// </summary>
-        public string Id
-        {
-            get { return "19873C0D-1E8B-40ce-9633-590A5601ECFD"; }
-        }
+        public string Id => "19873C0D-1E8B-40ce-9633-590A5601ECFD";
 
         /// <summary>
         /// Ask user about parameters of the game. It depends on the game type

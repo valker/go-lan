@@ -14,10 +14,7 @@ namespace Valker.PlayOnLan.GoPlugin
             _x = x;
         }
 
-        public int NumberOfDimensions
-        {
-            get { return 1; }
-        }
+        public int NumberOfDimensions => 1;
 
         public int GetCoordinate(int dimension)
         {

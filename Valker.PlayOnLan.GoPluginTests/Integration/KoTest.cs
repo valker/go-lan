@@ -33,13 +33,34 @@ namespace Valker.PlayOnLan.GoPluginTests.Integration
 
             var positionStorage = new PositionStorage(position);
 
-            var rules = new Rules {Ko = KoRule.Simple, Score = ScoreRule.EmptyTerritory};
+            var rules = new Rules();
+            rules.Add(new SimleKoRule());
             var engine = new Engine(positionStorage, playerProvider, rules);
 
             engine.Move(new Move(new TwoDimensionsCoordinates(2,2)));
 
             GoException ex = Assert.Throws<GoException>(() => engine.Move(new Move(new TwoDimensionsCoordinates(3,2))));
             Assert.That(ex.Reason, Is.EqualTo(ExceptionReason.Ko));
+        }
+    }
+
+    public class SimleKoRule : IRule
+    {
+        public bool IsAcceptableMove(bool previousAcceptableMove, IPosition oldPosition, IMoveConsequences moveConsequences,
+            IPositionStorage positionStorage)
+        {
+            int distance = positionStorage.ExistParent(oldPosition, moveConsequences.Position);
+            return distance <= 0;
+        }
+
+        public IPosition GetInitialPosition(IPosition previousHandicapPosition, IPlayer player, IPlayer[] players)
+        {
+            return previousHandicapPosition;
+        }
+
+        public bool CheckFinish(bool previousFinish, IPosition currentPosition, IPositionStorage positionStorage)
+        {
+            return previousFinish;
         }
     }
 }

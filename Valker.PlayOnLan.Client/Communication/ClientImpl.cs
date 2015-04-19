@@ -30,7 +30,7 @@ namespace Valker.PlayOnLan.Client2008.Communication
         /// <summary>
         /// ClientName of the player
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         public ClientImpl(string name, IServerForm parent, IEnumerable<IAgentInfo> serverConnectors)
         {
@@ -154,13 +154,8 @@ namespace Valker.PlayOnLan.Client2008.Communication
 
             Parent.RunInUiThread(delegate
             {
-                var playingForm = _client.CreatePlayingForm(parameters, Name, Parent.Gui);
-                if (playingForm != null)
-                {
-                    playingForm.Show(Parent);
-                } else
-                {
-                }
+                IPlayingForm playingForm = _client.CreatePlayingForm(parameters, Name, Parent.Gui);
+                playingForm?.Show(Parent);
             });
         }
 

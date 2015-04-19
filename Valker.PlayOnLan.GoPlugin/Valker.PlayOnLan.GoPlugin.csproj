@@ -85,6 +85,7 @@
     <Compile Include="Abstract\IPosition.cs" />
     <Compile Include="Abstract\IPositionStorage.cs" />
     <Compile Include="Abstract\IRules.cs" />
+    <Compile Include="IRules.cs" />
     <Compile Include="KoRule.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="MoveConsequences.cs" />

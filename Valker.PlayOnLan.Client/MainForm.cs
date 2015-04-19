@@ -37,8 +37,7 @@ namespace Valker.PlayOnLan.Client2008
 
         private void InvokeOnUpdatePartyStatesView(EventArgs e)
         {
-            EventHandler handler = OnUpdatePartyStatesView;
-            if (handler != null) handler(this, e);
+            OnUpdatePartyStatesView?.Invoke(this, e);
         }
 
         private void UpdatePartyStatesData(PartyStatesArgs args)
@@ -86,10 +85,8 @@ namespace Valker.PlayOnLan.Client2008
 
         private void InvokeOnUpdateGameInfo(UpdateGameInfoEventArgs e)
         {
-            EventHandler<UpdateGameInfoEventArgs> handler = OnUpdateGameInfo;
-            if (handler != null) handler(this, e);
+            OnUpdateGameInfo?.Invoke(this, e);
         }
-
 
         //protected abstract void UpdateGameInfo(GameInfo[] infos);
 
@@ -103,8 +100,7 @@ namespace Valker.PlayOnLan.Client2008
 
         private void InvokeOnSetPlayerName(SetPlayerNameEventArgs e)
         {
-            EventHandler<SetPlayerNameEventArgs> handler = OnSetPlayerName;
-            if (handler != null) handler(this, e);
+            OnSetPlayerName?.Invoke(this, e);
         }
 
         //protected void SetPlayerName(string name);
@@ -122,8 +118,7 @@ namespace Valker.PlayOnLan.Client2008
 
         private void InvokeOnGetSelectedGameInfo(GetSelectedGameInfoEventArgs e)
         {
-            EventHandler<GetSelectedGameInfoEventArgs> handler = OnGetSelectedGameInfo;
-            if (handler != null) handler(this, e);
+            OnGetSelectedGameInfo?.Invoke(this, e);
         }
 
         /// <summary>
@@ -148,8 +143,7 @@ namespace Valker.PlayOnLan.Client2008
 
         private void InvokeOnGetSelectedPartyInfo(GetSelectedPartyInfoEventArgs e)
         {
-            EventHandler<GetSelectedPartyInfoEventArgs> handler = OnGetSelectedPartyInfo;
-            if (handler != null) handler(this, e);
+            OnGetSelectedPartyInfo?.Invoke(this, e);
         }
 
         public IEnumerable<PartyInfo> GetPartyStates()

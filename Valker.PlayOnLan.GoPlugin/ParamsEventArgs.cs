@@ -22,12 +22,9 @@ namespace Valker.PlayOnLan.GoPlugin
             }
         }
 
-        public string[] Keys { get { return _dict.Keys.ToArray(); } }
+        public string[] Keys => _dict.Keys.ToArray();
 
-        public string this [string key]
-        {
-            get { return _dict[key]; }
-        }
+        public string this [string key] => _dict[key];
 
         public bool TryGetValue(string key, out string value)
         {

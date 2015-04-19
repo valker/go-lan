@@ -103,7 +103,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private void SendMessageToServer(string text)
         {
-            OnMessageReady(this, new MessageEventArgs("", "_server", text));
+            OnMessageReady?.Invoke(this, new MessageEventArgs("", "_server", text));
         }
 
         private static IEnumerable<IInfo> GetPlayingFormsPlugins()

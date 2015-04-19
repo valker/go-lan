@@ -5,10 +5,7 @@ namespace Valker.PlayOnLan.GoPlugin.WinForms
 {
     public class Info : IInfo
     {
-        public string Gui
-        {
-            get { return "winforms"; }
-        }
+        public string Gui => "winforms";
 
         public IPlayingForm CreatePlayingForm(string parameters, string playerName, GoClient client)
         {

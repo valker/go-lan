@@ -1,4 +1,4 @@
-namespace Valker.PlayOnLan.Api.Communication
+namespace Valker.PlayOnLan.Api.Game
 {
     public enum PartyStatus
     {

@@ -183,8 +183,7 @@ namespace Valker.PlayOnLan.Server2008
 
         private void InvokeClosed(EventArgs e)
         {
-            var handler = Closed;
-            if (handler != null) handler(this, e);
+            Closed?.Invoke(this, e);
         }
 
         #region IServerMessageExecuter Members

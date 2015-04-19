@@ -14,8 +14,8 @@ namespace Valker.PlayOnLan.GoPlugin
 
     public class Group : IGroup
     {
-        private List<ICoordinates> _points = new List<ICoordinates>();
-        public IPlayer Player { get; private set; }
+        private readonly List<ICoordinates> _points = new List<ICoordinates>();
+        public IPlayer Player { get; }
 
         public Group(ICoordinates point, IPlayer player)
         {
@@ -77,32 +77,18 @@ namespace Valker.PlayOnLan.GoPlugin
             _points.AddRange(second);
         }
 
-        private Group()
-        {
-        }
-
         public bool Remove(ICoordinates item)
         {
-            throw new InvalidOperationException();
+            throw new NotImplementedException("not implemented by intention");
         }
-        public Group RemovePoint(ICoordinates item)
-        {
-            Group grp = new Group();
-            grp._points = new List<ICoordinates>(_points);
-            if (!grp._points.Remove(item))
-            {
-                throw new ArgumentException("This point is not in this group.");
-            }
-            grp.Player = Player;
-            return grp;
-        }
+
         public int Count => _points.Count;
 
         public bool IsReadOnly => true;
 
         public void Add(ICoordinates point)
         {
-            throw new InvalidOperationException();
+            throw new NotImplementedException("not implemented by intention");
         }
 
         public Group AddPoint(ICoordinates point)

@@ -37,9 +37,6 @@ namespace Valker.PlayOnLan.Api.Game
             Contract.Requires(action != null);
         }
 
-        public string Gui
-        {
-            get { return null; }
-        }
+        public string Gui => null;
     }
 }

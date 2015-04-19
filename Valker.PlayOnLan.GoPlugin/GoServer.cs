@@ -26,19 +26,13 @@ namespace Valker.PlayOnLan.GoPlugin
             Engine = new Engine(new PositionStorage(Parameters.Width, playerProvider, coordinatesFactory), playerProvider, new Rules());
             Engine.CellChanged += EngineOnCellChanged;
             Engine.ScoreChanged += EngineOnEatedChanged;
-
-//            _colors = new Stone[2];
-//            _colors[0] = Stone.Black;
-//            _colors[1] = Stone.White;
         }
 
-        protected Parameters Parameters { get; set; }
+        private Parameters Parameters { get; }
 
-        protected IPlayer[] Players { get; set; }
+        private IPlayer[] Players { get; }
 
-        protected IEngine Engine { get; set; }
-
-        //private Stone[] _colors; 
+        private IEngine Engine { get; }
 
         public void ProcessMessage(IPlayer sender, string message)
         {
@@ -131,8 +125,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private void InvokeOnMessage(OnMessageEventArgs e)
         {
-            EventHandler<OnMessageEventArgs> handler = OnMessageReady;
-            if (handler != null) handler(this, e);
+            OnMessageReady?.Invoke(this, e);
         }
 
         /// <summary>
@@ -150,8 +143,8 @@ namespace Valker.PlayOnLan.GoPlugin
             var score = Engine.PlayerProvider.GetPlayers()
                 .OrderBy(player => player.Order)
                 .Select(player => Engine.GetScore(player).ToString(CultureInfo.InvariantCulture));
-            var joined = string.Join(",", score);
-            var message = string.Format(CultureInfo.InvariantCulture, "EATED[{0}]", joined);
+            string joined = string.Join(",", score);
+            string message = string.Format(CultureInfo.InvariantCulture, "EATED[{0}]", joined);
             SendMessageToAllPlayers(message);
         }
 
@@ -163,7 +156,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private void SendMessageToAllPlayers(string message)
         {
-            foreach (var player in Players)
+            foreach (IPlayer player in Players)
             {
                 SendMessageToPlayer(player, message);
             }
@@ -187,7 +180,7 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             IPlayer currentPlayer = Engine.CurrentPlayer;
 
-            foreach (var player in Engine.PlayerProvider.GetPlayers())
+            foreach (IPlayer player in Engine.PlayerProvider.GetPlayers())
             {
                 if (!player.Equals(currentPlayer))
                 {
@@ -200,7 +193,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         private void SendMessageToPlayer(IPlayer player, string message)
         {
-            InvokeOnMessage(new OnMessageEventArgs() { Receipients = new[] { player }, Message = message });
+            InvokeOnMessage(new OnMessageEventArgs { Receipients = new[] { player }, Message = message });
         }
     }
 }

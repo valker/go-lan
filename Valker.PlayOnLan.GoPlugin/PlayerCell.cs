@@ -20,7 +20,7 @@ namespace Valker.PlayOnLan.GoPlugin
 
         public override int GetHashCode()
         {
-            return (Player != null ? Player.GetHashCode() : 0);
+            return Player?.GetHashCode() ?? 0;
         }
 
         public PlayerCell(IPlayer player)
@@ -33,6 +33,6 @@ namespace Valker.PlayOnLan.GoPlugin
             return string.Format("PLAYER:{0}", Player.PlayerName);
         }
 
-        public IPlayer Player { get; set; }
+        public IPlayer Player { get; }
     }
 }

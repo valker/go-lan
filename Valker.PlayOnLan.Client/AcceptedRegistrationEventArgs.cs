@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Valker.PlayOnLan.Client
+namespace Valker.PlayOnLan.Client2008
 {
     public class AcceptedRegistrationEventArgs : EventArgs
     {

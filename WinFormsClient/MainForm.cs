@@ -33,7 +33,7 @@ namespace WinFormsClient
             if (InvokeRequired)
             {
                 Invoke(new Action<object, UpdateGameInfoEventArgs>(OnUpdateGameInfo)
-                    , new[]{sender,args});
+                    , sender, args);
             }
             else
             {
@@ -66,10 +66,7 @@ namespace WinFormsClient
             BeginInvoke(action);
         }
 
-        public string Gui
-        {
-            get { return "winforms"; }
-        }
+        public string Gui => "winforms";
 
         private void OnLoad(object sender, EventArgs e)
         {

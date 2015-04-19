@@ -148,7 +148,8 @@ namespace Valker.PlayOnLan.GoPlugin
             if (ReferenceEquals(this, other)) return true;
             var b = Equals(other._groups.Count, _groups.Count);
             var b1 = b && Equals(other._field, _field);
-            return b1;
+            var b2 = b1 && Equals(other.CurrentPlayer, CurrentPlayer);
+            return b2;
         }
 
         public override bool Equals(object obj)
@@ -192,7 +193,6 @@ namespace Valker.PlayOnLan.GoPlugin
             IPlayer[] opposite = Util.Opposite(@group.Player, _playerProvider);
 
             int stoneCount = newPosition.RemoveDeathOppositeGroups(@group, opposite);
-
 
             // проверить живость новой группы
             if (!newPosition.CheckIsLive(@group))

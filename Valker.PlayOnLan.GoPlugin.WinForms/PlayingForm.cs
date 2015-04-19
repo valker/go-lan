@@ -55,8 +55,8 @@ namespace Valker.PlayOnLan.GoPlugin.WinForms
         {
             RunInUiThread(delegate
             {
-                lblBlack.Text = args.Eated[0].ToString();
-                lblWhite.Text = args.Eated[1].ToString();
+                lblBlack.Text = args.Eated[0].ToString(CultureInfo.CurrentCulture);
+                lblWhite.Text = args.Eated[1].ToString(CultureInfo.CurrentCulture);
             });
         }
 

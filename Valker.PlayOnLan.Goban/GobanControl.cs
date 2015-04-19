@@ -19,7 +19,6 @@ namespace Valker.PlayOnLan.Goban
         private const int Offset = 10;
         private const double StoneDiameter = 22.5;
 
-        private Stone[,] _field = new Stone[19,19];
         private int _n;
 
         public GobanControl()
@@ -63,11 +62,7 @@ namespace Valker.PlayOnLan.Goban
 
         protected IEnumerable<Point> Hoshi { get; set; }
 
-        internal Stone[,] Field
-        {
-            get { return _field; }
-            set { _field = value; }
-        }
+        internal Stone[,] Field { get; set; } = new Stone[19,19];
 
         #region INotifyPropertyChanged Members
 
@@ -79,11 +74,7 @@ namespace Valker.PlayOnLan.Goban
 
         private void InvokeClickedOnBoard(MouseEventArgs e)
         {
-            EventHandler<MouseEventArgs> handler = ClickedOnBoard;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            ClickedOnBoard?.Invoke(this, e);
         }
 
         // size in millimeters
@@ -233,11 +224,7 @@ namespace Valker.PlayOnLan.Goban
 
         private void InvokePropertyChanged(PropertyChangedEventArgs e)
         {
-            PropertyChangedEventHandler changed = PropertyChanged;
-            if (changed != null)
-            {
-                changed(this, e);
-            }
+            PropertyChanged?.Invoke(this, e);
         }
 
         private void UserControl1_Resize(object sender, EventArgs e)

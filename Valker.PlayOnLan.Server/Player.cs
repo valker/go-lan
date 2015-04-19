@@ -20,7 +20,7 @@ namespace Valker.PlayOnLan.Server
 
         public override int GetHashCode()
         {
-            return (PlayerName != null ? PlayerName.GetHashCode() : 0);
+            return PlayerName?.GetHashCode() ?? 0;
         }
 
         #region Implementation of IPlayer
@@ -32,10 +32,7 @@ namespace Valker.PlayOnLan.Server
 
         public int Order { get; set; }
 
-        public string PlayerName
-        {
-            get; set;
-        }
+        public string PlayerName { get; set; }
 
         #endregion
     }
