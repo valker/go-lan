@@ -17,7 +17,6 @@ namespace Valker.PlayOnLan.GoPlugin
         public GoServer(IPlayer[] players, string parameters, ICoordinatesFactory coordinatesFactory)
         {
             _coordinatesFactory = coordinatesFactory;
-            if (players.Length != 2) throw new ArgumentException("Wrong number of players");
             Players = players;
 
             Parameters = Parameters.Parse(parameters);
@@ -166,8 +165,11 @@ namespace Valker.PlayOnLan.GoPlugin
         {
             Dictionary<string, string> p = new Dictionary<string, string>();
             p["width"] = Parameters.Width.ToString();
-            p["player1"] = Players[0].PlayerName;
-            p["player2"] = Players[1].PlayerName;
+            foreach (var player in Players.Select((player, i) => Tuple.Create(player.PlayerName, i)))
+            {
+                string key = string.Format("player{0}", player.Item2);
+                p[key] = player.Item1;
+            }
             string prms = string.Join(",", p.Select(pair => pair.Key + "=" + pair.Value));
             string message = "PARAMS[" + prms + "]";
             SendMessageToAllPlayers(message);
